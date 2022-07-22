@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32516.85
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RobinTTY.NordigenApiClient", "RobinTTY.NordigenApiClient\RobinTTY.NordigenApiClient.csproj", "{9E2F5964-72CD-439D-9D60-E9F7430BDEF9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RobinTTY.NordigenApiClient.Tests", "RobinTTY.NordigenApiClient.Tests\RobinTTY.NordigenApiClient.Tests.csproj", "{931AF6DC-558F-4B84-AB71-2FDAA56BC21A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9E2F5964-72CD-439D-9D60-E9F7430BDEF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E2F5964-72CD-439D-9D60-E9F7430BDEF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E2F5964-72CD-439D-9D60-E9F7430BDEF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E2F5964-72CD-439D-9D60-E9F7430BDEF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{931AF6DC-558F-4B84-AB71-2FDAA56BC21A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{931AF6DC-558F-4B84-AB71-2FDAA56BC21A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{931AF6DC-558F-4B84-AB71-2FDAA56BC21A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{931AF6DC-558F-4B84-AB71-2FDAA56BC21A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6B7D1030-8F8D-4ECF-B679-4D83E59BA787}
+	EndGlobalSection
+EndGlobal
