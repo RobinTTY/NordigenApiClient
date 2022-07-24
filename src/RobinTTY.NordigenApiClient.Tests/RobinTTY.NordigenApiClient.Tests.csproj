@@ -16,4 +16,14 @@
     <PackageReference Include="coverlet.collector" Version="3.1.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\RobinTTY.NordigenApiClient\RobinTTY.NordigenApiClient.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="secrets.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
