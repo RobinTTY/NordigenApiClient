@@ -14,7 +14,7 @@ public class TokenEndpoint : ITokenEndpoint
         _credentials = credentials;
     }
 
-    public async Task<NordigenApiResponse<JwtTokenPair>> GetToken(CancellationToken cancellationToken)
+    public async Task<NordigenApiResponse<JwtTokenPair>> GetToken(CancellationToken cancellationToken = default)
     {
         var requestBody = JsonContent.Create(_credentials);
         var response = await _httpClient.PostAsync($"{NordigenEndpointUrls.TokensEndpoint}new/", requestBody, cancellationToken);
