@@ -15,6 +15,6 @@ public class JwtSecurityTokenConverter : JsonConverter<JwtSecurityToken>
 
     public override void Write(Utf8JsonWriter writer, JwtSecurityToken value, JsonSerializerOptions options)
     {
-        throw new NotImplementedException();
+        writer.WriteStringValue(value.RawData);
     }
 }

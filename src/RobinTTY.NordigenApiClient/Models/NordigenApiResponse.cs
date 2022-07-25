@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
+using System.Text.Json;
 
 namespace RobinTTY.NordigenApiClient.Models;
 
@@ -47,16 +48,16 @@ public class NordigenApiResponse<T> where T : class
     /// <param name="response">The <see cref="HttpResponseMessage"/> to parse.</param>
     /// <param name="cancellationToken">A cancellation token to be used to notify in case of cancellation.</param>
     /// <returns>The parsed <see cref="NordigenApiResponse{T}"/>.</returns>
-    public static async Task<NordigenApiResponse<T>> FromHttpResponse(HttpResponseMessage response, CancellationToken cancellationToken)
+    public static async Task<NordigenApiResponse<T>> FromHttpResponse(HttpResponseMessage response, CancellationToken cancellationToken, JsonSerializerOptions? options = null)
     {
         if (response.IsSuccessStatusCode)
         {
-            var result = await response.Content.ReadFromJsonAsync<T>(cancellationToken: cancellationToken);
+            var result = await response.Content.ReadFromJsonAsync<T>(options, cancellationToken);
             return new NordigenApiResponse<T>(response.StatusCode, response.IsSuccessStatusCode, result, null);
         }
         else
         {
-            var result = await response.Content.ReadFromJsonAsync<NordigenApiError>(cancellationToken: cancellationToken);
+            var result = await response.Content.ReadFromJsonAsync<NordigenApiError>(options, cancellationToken);
             return new NordigenApiResponse<T>(response.StatusCode, response.IsSuccessStatusCode, null, result);
         }
     }
