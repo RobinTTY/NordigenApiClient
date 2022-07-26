@@ -1,23 +1,23 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
+using Microsoft.IdentityModel.JsonWebTokens;
 
 namespace RobinTTY.NordigenApiClient.Models.Jwt;
 
 /// <summary>
 /// Represents the JWT token pair returned by the Nordigen API.
 /// </summary>
-public class JwtTokenPair
+public class JsonWebTokenPair
 {
     /// <summary>
     /// The JWT access token returned by the Nordigen API.
     /// </summary>
     [JsonPropertyName("access")]
-    public JwtSecurityToken AccessToken { get; init; }
+    public JsonWebToken AccessToken { get; init; }
     /// <summary>
     /// The JWT refresh token returned by the Nordigen API.
     /// </summary>
     [JsonPropertyName("refresh")]
-    public JwtSecurityToken RefreshToken { get; init; }
+    public JsonWebToken RefreshToken { get; init; }
     /// <summary>
     /// Indicates the time in seconds after which the access token expires.
     /// </summary>

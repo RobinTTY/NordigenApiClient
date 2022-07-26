@@ -1,20 +1,20 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using System.Text.Json;
+﻿using System.Text.Json;
 using System.Text.Json.Serialization;
+using Microsoft.IdentityModel.JsonWebTokens;
 
 namespace RobinTTY.NordigenApiClient.JsonConverters;
 
-public class JwtSecurityTokenConverter : JsonConverter<JwtSecurityToken>
+public class JsonWebTokenConverter : JsonConverter<JsonWebToken>
 {
-    private static readonly JwtSecurityTokenHandler JwtTokenHandler = new();
+    private static readonly JsonWebTokenHandler JwtTokenHandler = new();
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
-    public override JwtSecurityToken? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    public override JsonWebToken? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        return JwtTokenHandler.ReadJwtToken(reader.GetString());
+        return JwtTokenHandler.ReadJsonWebToken(reader.GetString());
     }
 
-    public override void Write(Utf8JsonWriter writer, JwtSecurityToken value, JsonSerializerOptions options)
+    public override void Write(Utf8JsonWriter writer, JsonWebToken value, JsonSerializerOptions options)
     {
-        writer.WriteStringValue(value.RawData);
+        writer.WriteStringValue(value.EncodedToken);
     }
 }
