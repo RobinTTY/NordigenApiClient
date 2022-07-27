@@ -48,7 +48,7 @@ public class NordigenApiResponse<T> where T : class
     /// <param name="response">The <see cref="HttpResponseMessage"/> to parse.</param>
     /// <param name="cancellationToken">A cancellation token to be used to notify in case of cancellation.</param>
     /// <returns>The parsed <see cref="NordigenApiResponse{T}"/>.</returns>
-    public static async Task<NordigenApiResponse<T>> FromHttpResponse(HttpResponseMessage response, CancellationToken cancellationToken, JsonSerializerOptions? options = null)
+    public static async Task<NordigenApiResponse<T>> FromHttpResponse(HttpResponseMessage response, CancellationToken cancellationToken = default, JsonSerializerOptions? options = null)
     {
         if (response.IsSuccessStatusCode)
         {
