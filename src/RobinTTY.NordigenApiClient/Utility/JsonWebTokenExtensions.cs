@@ -2,7 +2,7 @@
 
 namespace RobinTTY.NordigenApiClient.Utility;
 
-public static class JsonWebTokenExtensions
+internal static class JsonWebTokenExtensions
 {
     /// <summary>
     /// Checks whether the token has expired using the current time.
@@ -10,5 +10,5 @@ public static class JsonWebTokenExtensions
     /// <param name="token">The token to check for expiration.</param>
     /// <param name="timeToExpiry">Optional <see cref="TimeSpan"/> added to the current time.</param>
     /// <returns>True if token is expired otherwise false.</returns>
-    public static bool IsExpired(this SecurityToken token, TimeSpan timeToExpiry = default) => token.ValidTo < DateTime.Now.Add(timeToExpiry);
+    internal static bool IsExpired(this SecurityToken token, TimeSpan timeToExpiry = default) => token.ValidTo < DateTime.Now.Add(timeToExpiry);
 }

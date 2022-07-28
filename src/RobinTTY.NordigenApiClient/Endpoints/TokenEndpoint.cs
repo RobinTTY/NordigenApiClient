@@ -13,10 +13,10 @@ public class TokenEndpoint : ITokenEndpoint
     private readonly NordigenClientCredentials _credentials;
     private readonly JsonSerializerOptions _serializerOptions;
 
-    public TokenEndpoint(HttpClient client, NordigenClientCredentials credentials)
+    public TokenEndpoint(NordigenClient client)
     {
-        _httpClient = client;
-        _credentials = credentials;
+        _httpClient = client.HttpClient;
+        _credentials = client.Credentials;
         _serializerOptions = new JsonSerializerOptions
         {
             Converters = { new JsonWebTokenConverter() }
@@ -32,7 +32,7 @@ public class TokenEndpoint : ITokenEndpoint
     public async Task<NordigenApiResponse<JsonWebTokenPair>> GetToken(CancellationToken cancellationToken = default)
     {
         var requestBody = JsonContent.Create(_credentials);
-        var response = await _httpClient.PostAsync($"{NordigenEndpointUrls.TokensEndpoint}new/", requestBody, cancellationToken);
+        var response = await _httpClient.PostAsync($"{NordigenEndpointUrls.TokensEndpoint}/new/", requestBody, cancellationToken);
         return await NordigenApiResponse<JsonWebTokenPair>.FromHttpResponse(response, cancellationToken, _serializerOptions);
     }
 
@@ -47,7 +47,7 @@ public class TokenEndpoint : ITokenEndpoint
     public async Task<NordigenApiResponse<JsonWebAccessToken>> RefreshToken(JsonWebToken refreshToken, CancellationToken cancellationToken = default)
     {
         var requestBody = JsonContent.Create(new { refresh = refreshToken.EncodedToken });
-        var response = await _httpClient.PostAsync($"{NordigenEndpointUrls.TokensEndpoint}refresh/", requestBody, cancellationToken);
+        var response = await _httpClient.PostAsync($"{NordigenEndpointUrls.TokensEndpoint}/refresh/", requestBody, cancellationToken);
         return await NordigenApiResponse<JsonWebAccessToken>.FromHttpResponse(response, cancellationToken, _serializerOptions);
     }
 }
