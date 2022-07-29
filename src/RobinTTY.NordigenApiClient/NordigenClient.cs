@@ -24,6 +24,16 @@ public class NordigenClient
         InstitutionsEndpoint = new InstitutionsEndpoint(this);
     }
 
+    public NordigenClient(HttpClient httpClient, NordigenClientCredentials credentials, JsonWebTokenPair jwtTokenPair)
+    {
+        HttpClient = httpClient;
+        Credentials = credentials;
+        _jwtTokenPair = jwtTokenPair;
+
+        TokenEndpoint = new TokenEndpoint(this);
+        InstitutionsEndpoint = new InstitutionsEndpoint(this);
+    }
+    
     /// <summary>
     /// Tries to retrieve a valid <see cref="JsonWebTokenPair"/>.
     /// </summary>
