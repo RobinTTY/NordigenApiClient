@@ -13,10 +13,9 @@ public class InstitutionsEndpoint : IInstitutionsEndpoint
         _httpClient = client.HttpClient;
     }
 
-    public async Task<NordigenApiResponse<List<Institution>>> GetInstitutions(string country, CancellationToken cancellationToken = default)
+    public async Task<NordigenApiResponse<List<Institution>>> GetInstitutions(string country, bool paymentsEnabled = false, CancellationToken cancellationToken = default)
     {
-        
-        var query = new KeyValuePair<string, string>[] {new("country", country)};
+        var query = new KeyValuePair<string, string>[] {new("country", country), new("payments_enabled", paymentsEnabled.ToString())};
         var requestUri = UriQueryBuilder.BuildUriWithQueryString(NordigenEndpointUrls.InstitutionsEndpoint, query);
         var authToken = await _nordigenClient.TryGetValidTokenPair(cancellationToken);
         var response = await _httpClient.UseNordigenAuthenticationHeader(authToken).GetAsync(requestUri, cancellationToken);
