@@ -34,7 +34,7 @@ public class NordigenApiResponse<T> where T : class
     /// <param name="isSuccess">Indicates whether the HTTP response was successful.</param>
     /// <param name="result">The result returned by the API. Null if the the HTTP response was not successful.</param>
     /// <param name="apiError">The error returned by the API. Null if the HTTP response was successful.</param>
-    public NordigenApiResponse(HttpStatusCode statusCode, bool isSuccess, T? result, NordigenApiError? apiError)
+    private NordigenApiResponse(HttpStatusCode statusCode, bool isSuccess, T? result, NordigenApiError? apiError)
     {
         StatusCode = statusCode;
         IsSuccess = isSuccess;

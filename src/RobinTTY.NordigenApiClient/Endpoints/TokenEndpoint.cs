@@ -1,7 +1,5 @@
 ﻿using System.Net.Http.Json;
-using System.Text.Json;
 using Microsoft.IdentityModel.JsonWebTokens;
-using RobinTTY.NordigenApiClient.JsonConverters;
 using RobinTTY.NordigenApiClient.Models;
 using RobinTTY.NordigenApiClient.Models.Jwt;
 
@@ -9,18 +7,11 @@ namespace RobinTTY.NordigenApiClient.Endpoints;
 
 public class TokenEndpoint : ITokenEndpoint
 {
-    private readonly HttpClient _httpClient;
-    private readonly NordigenClientCredentials _credentials;
-    private readonly JsonSerializerOptions _serializerOptions;
+    private readonly NordigenClient _nordigenClient;
 
     public TokenEndpoint(NordigenClient client)
     {
-        _httpClient = client.HttpClient;
-        _credentials = client.Credentials;
-        _serializerOptions = new JsonSerializerOptions
-        {
-            Converters = { new JsonWebTokenConverter() }
-        };
+        _nordigenClient = client;
     }
 
     /// <summary>
@@ -28,14 +19,12 @@ public class TokenEndpoint : ITokenEndpoint
     /// Route: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/token/JWT%20Obtain"></see>
     /// </summary>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
-    /// <returns>The obtained <see cref="JsonWebTokenPair"/>.</returns>
+    /// <returns>A <see cref="NordigenApiResponse{T}"/> containing the obtained <see cref="JsonWebTokenPair"/> if the request was successful.</returns>
     public async Task<NordigenApiResponse<JsonWebTokenPair>> GetToken(CancellationToken cancellationToken = default)
     {
-        var requestBody = JsonContent.Create(_credentials);
-        var response = await _httpClient.PostAsync($"{NordigenEndpointUrls.TokensEndpoint}new/", requestBody, cancellationToken);
-        return await NordigenApiResponse<JsonWebTokenPair>.FromHttpResponse(response, cancellationToken, _serializerOptions);
+        var requestBody = JsonContent.Create(_nordigenClient.Credentials);
+        return await _nordigenClient.MakeRequest<JsonWebTokenPair>($"{NordigenEndpointUrls.TokensEndpoint}new/", HttpMethod.Post, cancellationToken, body: requestBody, useAuthentication: false);
     }
-
 
     /// <summary>
     /// Refreshes the JWT access token.
@@ -43,11 +32,10 @@ public class TokenEndpoint : ITokenEndpoint
     /// </summary>
     /// <param name="refreshToken">The refresh token previously obtained through the <see cref="GetToken"/> method.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
-    /// <returns>The refreshed <see cref="JsonWebToken"/>.</returns>
+    /// <returns>A <see cref="NordigenApiResponse{T}"/> containing the refreshed <see cref="JsonWebAccessToken"/> if the request was successful.</returns>
     public async Task<NordigenApiResponse<JsonWebAccessToken>> RefreshToken(JsonWebToken refreshToken, CancellationToken cancellationToken = default)
     {
         var requestBody = JsonContent.Create(new { refresh = refreshToken.EncodedToken });
-        var response = await _httpClient.PostAsync($"{NordigenEndpointUrls.TokensEndpoint}refresh/", requestBody, cancellationToken);
-        return await NordigenApiResponse<JsonWebAccessToken>.FromHttpResponse(response, cancellationToken, _serializerOptions);
+        return await _nordigenClient.MakeRequest<JsonWebAccessToken>($"{NordigenEndpointUrls.TokensEndpoint}refresh/", HttpMethod.Post, cancellationToken, body: requestBody, useAuthentication: false);
     }
 }

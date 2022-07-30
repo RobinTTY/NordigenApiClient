@@ -11,7 +11,7 @@ public interface ITokenEndpoint
     /// Route: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/token/JWT%20Obtain"></see>
     /// </summary>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
-    /// <returns>The obtained <see cref="JsonWebTokenPair"/>.</returns>
+    /// <returns>A <see cref="NordigenApiResponse{T}"/> containing the obtained <see cref="JsonWebTokenPair"/> if the request was successful.</returns>
     Task<NordigenApiResponse<JsonWebTokenPair>> GetToken(CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -20,6 +20,6 @@ public interface ITokenEndpoint
     /// </summary>
     /// <param name="refreshToken">The refresh token previously obtained through the <see cref="TokenEndpoint.GetToken"/> method.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
-    /// <returns>The refreshed <see cref="JsonWebAccessToken"/>.</returns>
+    /// <returns>A <see cref="NordigenApiResponse{T}"/> containing the refreshed <see cref="JsonWebAccessToken"/> if the request was successful.</returns>
     Task<NordigenApiResponse<JsonWebAccessToken>> RefreshToken(JsonWebToken refreshToken, CancellationToken cancellationToken = default);
 }
