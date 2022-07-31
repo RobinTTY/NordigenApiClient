@@ -14,8 +14,8 @@ public class NordigenClient
     private readonly JsonWebTokenPair? _jwtTokenPair;
     private readonly JsonSerializerOptions _serializerOptions;
 
-    public ITokenEndpoint TokenEndpoint { get; }
-    public IInstitutionsEndpoint InstitutionsEndpoint { get; }
+    public TokenEndpoint TokenEndpoint { get; }
+    public InstitutionsEndpoint InstitutionsEndpoint { get; }
 
     public NordigenClient(HttpClient httpClient, NordigenClientCredentials credentials)
     {

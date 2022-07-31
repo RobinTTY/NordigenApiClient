@@ -5,7 +5,7 @@ using RobinTTY.NordigenApiClient.Models.Jwt;
 
 namespace RobinTTY.NordigenApiClient.Endpoints;
 
-public class TokenEndpoint : ITokenEndpoint
+public class TokenEndpoint
 {
     private readonly NordigenClient _nordigenClient;
 

@@ -1,7 +1,7 @@
 ﻿using RobinTTY.NordigenApiClient.Models;
 using RobinTTY.NordigenApiClient.Models.Jwt;
 
-namespace RobinTTY.NordigenApiClient.Tests;
+namespace RobinTTY.NordigenApiClient.Tests.Endpoints;
 
 internal class InstitutionEndpointTests
 {
@@ -29,7 +29,7 @@ internal class InstitutionEndpointTests
         TestExtensions.AssertNordigenApiResponseIsSuccessful(response);
         var response2 = await _apiClient.InstitutionsEndpoint.GetInstitutions("GB");
         TestExtensions.AssertNordigenApiResponseIsSuccessful(response2);
-        
+
         var result = response.Result!.ToList();
         var result2 = response2.Result!.ToList();
 
@@ -39,18 +39,19 @@ internal class InstitutionEndpointTests
     }
 
     /// <summary>
-    /// 
+    /// Tests the retrieving of a specific institution.
+    /// Route: https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/institutions/retrieve%20institution
     /// </summary>
     /// <returns></returns>
     [Test]
     public async Task GetInstitution()
     {
-        var response = await _apiClient.InstitutionsEndpoint.GetInstitution("STRIPE_STPUIE21");
+        var response = await _apiClient.InstitutionsEndpoint.GetInstitution("SANDBOXFINANCE_SFIN0000");
         TestExtensions.AssertNordigenApiResponseIsSuccessful(response);
 
         var result = response.Result!;
-        Assert.That(result.Bic, Is.EqualTo("STPUIE21"));
-        Assert.That(result.Id, Is.EqualTo("STRIPE_STPUIE21"));
-        Assert.That(result.Name, Is.EqualTo("Stripe"));
+        Assert.That(result.Bic, Is.EqualTo("SFIN0000"));
+        Assert.That(result.Id, Is.EqualTo("SANDBOXFINANCE_SFIN0000"));
+        Assert.That(result.Name, Is.EqualTo("Sandbox Finance"));
     }
 }
