@@ -10,28 +10,30 @@ namespace RobinTTY.NordigenApiClient;
 public class NordigenClient
 {
     private readonly HttpClient _httpClient;
-    internal readonly NordigenClientCredentials Credentials;
     private readonly JsonWebTokenPair? _jwtTokenPair;
     private readonly JsonSerializerOptions _serializerOptions;
+    internal readonly NordigenClientCredentials Credentials;
 
+    /// <summary>
+    /// TODO
+    /// </summary>
     public TokenEndpoint TokenEndpoint { get; }
+    /// <summary>
+    /// TODO
+    /// </summary>
     public InstitutionsEndpoint InstitutionsEndpoint { get; }
+    /// <summary>
+    /// TODO
+    /// </summary>
+    public AgreementsEndpoint AgreementsEndpoint { get; }
 
-    public NordigenClient(HttpClient httpClient, NordigenClientCredentials credentials)
-    {
-        _httpClient = httpClient;
-        _jwtTokenPair = null;
-        _serializerOptions = new JsonSerializerOptions
-        {
-            Converters = { new JsonWebTokenConverter() }
-        };
-
-        Credentials = credentials;
-        TokenEndpoint = new TokenEndpoint(this);
-        InstitutionsEndpoint = new InstitutionsEndpoint(this);
-    }
-
-    public NordigenClient(HttpClient httpClient, NordigenClientCredentials credentials, JsonWebTokenPair jwtTokenPair)
+    /// <summary>
+    /// Creates a new instance of <see cref="NordigenClient"/>.
+    /// </summary>
+    /// <param name="httpClient">The <see cref="HttpClient"/> to use.</param>
+    /// <param name="credentials">The Nordigen credentials for API access.</param>
+    /// <param name="jwtTokenPair">An optional JSON web token pair consisting of access and refresh token to use.</param>
+    public NordigenClient(HttpClient httpClient, NordigenClientCredentials credentials, JsonWebTokenPair? jwtTokenPair = null)
     {
         _httpClient = httpClient;
         _jwtTokenPair = jwtTokenPair;
@@ -43,9 +45,10 @@ public class NordigenClient
         Credentials = credentials;
         TokenEndpoint = new TokenEndpoint(this);
         InstitutionsEndpoint = new InstitutionsEndpoint(this);
+        AgreementsEndpoint = new AgreementsEndpoint(this);
     }
 
-    public async Task<NordigenApiResponse<T>> MakeRequest<T>(
+    internal async Task<NordigenApiResponse<T>> MakeRequest<T>(
         string uri,
         HttpMethod method,
         CancellationToken cancellationToken,
@@ -77,7 +80,7 @@ public class NordigenClient
     /// Otherwise returns null.</returns>
     private async Task<JsonWebTokenPair?> TryGetValidTokenPair(CancellationToken cancellationToken = default)
     {
-        // Request a new token if it is null or the refresh token is expired
+        // Request a new token if it is null or if the refresh token has expired
         if (_jwtTokenPair == null || _jwtTokenPair.RefreshToken.IsExpired(TimeSpan.FromMinutes(1)))
         {
             var response = await TokenEndpoint.GetToken(cancellationToken);
