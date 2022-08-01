@@ -1,7 +1,4 @@
-﻿using RobinTTY.NordigenApiClient.Models;
-using RobinTTY.NordigenApiClient.Models.Jwt;
-
-namespace RobinTTY.NordigenApiClient.Tests.Endpoints;
+﻿namespace RobinTTY.NordigenApiClient.Tests.Endpoints;
 
 internal class InstitutionEndpointTests
 {
@@ -10,11 +7,7 @@ internal class InstitutionEndpointTests
     [OneTimeSetUp]
     public void Setup()
     {
-        var httpClient = new HttpClient();
-        var secrets = File.ReadAllLines("secrets.txt");
-        var credentials = new NordigenClientCredentials(secrets[0], secrets[1]);
-        var tokenPair = new JsonWebTokenPair(secrets[2], secrets[3]);
-        _apiClient = new NordigenClient(httpClient, credentials, tokenPair);
+        _apiClient = TestExtensions.GetConfiguredClient();
     }
 
     /// <summary>

@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using RobinTTY.NordigenApiClient.Models;
+using RobinTTY.NordigenApiClient.Models.Jwt;
 
 namespace RobinTTY.NordigenApiClient.Tests;
 
@@ -14,5 +15,14 @@ internal static class TestExtensions
             Assert.That(response.Error, Is.Null);
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         });
+    }
+
+    internal static NordigenClient GetConfiguredClient(bool useExistingJwt = true)
+    {
+        var httpClient = new HttpClient();
+        var secrets = File.ReadAllLines("secrets.txt");
+        var credentials = new NordigenClientCredentials(secrets[0], secrets[1]);
+        var tokenPair = new JsonWebTokenPair(secrets[2], secrets[3]);
+        return useExistingJwt ? new NordigenClient(httpClient, credentials, tokenPair) : new NordigenClient(httpClient, credentials);
     }
 }

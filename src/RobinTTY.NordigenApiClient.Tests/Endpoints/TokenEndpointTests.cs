@@ -1,6 +1,4 @@
-﻿using RobinTTY.NordigenApiClient.Models;
-
-namespace RobinTTY.NordigenApiClient.Tests;
+﻿namespace RobinTTY.NordigenApiClient.Tests.Endpoints;
 
 public class TokenEndpointTests
 {
@@ -9,10 +7,7 @@ public class TokenEndpointTests
     [OneTimeSetUp]
     public void Setup()
     {
-        var httpClient = new HttpClient();
-        var secrets = File.ReadAllLines("secrets.txt");
-        var apiOptions = new NordigenClientCredentials(secrets[0], secrets[1]);
-        _apiClient = new NordigenClient(httpClient, apiOptions);
+        _apiClient = TestExtensions.GetConfiguredClient(false);
     }
 
     /// <summary>
