@@ -17,5 +17,5 @@ public class JsonWebAccessToken
     /// Indicates the time in seconds after which the access token expires.
     /// </summary>
     [JsonPropertyName("access_expires")]
-    public uint AccessExpires { get; init; }
+    public int AccessExpires { get; init; }
 }

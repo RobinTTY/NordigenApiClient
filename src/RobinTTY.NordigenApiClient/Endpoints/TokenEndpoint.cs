@@ -9,7 +9,11 @@ public class TokenEndpoint
 {
     private readonly NordigenClient _nordigenClient;
 
-    public TokenEndpoint(NordigenClient client)
+    /// <summary>
+    /// Creates a new instance of <see cref="TokenEndpoint"/>.
+    /// </summary>
+    /// <param name="client">The <see cref="NordigenClient"/> to use for token handling and request processing.</param>
+    internal TokenEndpoint(NordigenClient client)
     {
         _nordigenClient = client;
     }

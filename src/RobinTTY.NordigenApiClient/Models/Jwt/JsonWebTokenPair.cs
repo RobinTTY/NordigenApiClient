@@ -22,12 +22,12 @@ public class JsonWebTokenPair
     /// Indicates the time in seconds after which the access token expires.
     /// </summary>
     [JsonPropertyName("access_expires")]
-    public uint AccessExpires { get; set; }
+    public int AccessExpires { get; set; }
     /// <summary>
     /// Indicates the time in seconds after which the access token expires.
     /// </summary>
     [JsonPropertyName("refresh_expires")]
-    public uint RefreshExpires { get; set; }
+    public int RefreshExpires { get; set; }
 
     /// <summary>
     /// Creates a new instance of <see cref="JsonWebTokenPair"/>.
@@ -37,7 +37,7 @@ public class JsonWebTokenPair
     /// <param name="accessExpires">The time in seconds after which the access token expires.</param>
     /// <param name="refreshExpires">The time in seconds after which the refresh token expires.</param>
     [JsonConstructor]
-    public JsonWebTokenPair(JsonWebToken accessToken, JsonWebToken refreshToken, uint accessExpires, uint refreshExpires)
+    public JsonWebTokenPair(JsonWebToken accessToken, JsonWebToken refreshToken, int accessExpires, int refreshExpires)
     {
         AccessToken = accessToken;
         RefreshToken = refreshToken;
@@ -55,7 +55,7 @@ public class JsonWebTokenPair
         var handler = new JsonWebTokenHandler();
         AccessToken = handler.ReadJsonWebToken(accessToken);
         RefreshToken = handler.ReadJsonWebToken(refreshToken);
-        AccessExpires = (uint) (AccessToken.ValidTo - DateTime.Now).TotalSeconds;
-        RefreshExpires = (uint) (RefreshToken.ValidTo - DateTime.Now).TotalSeconds;
+        AccessExpires = (int)(AccessToken.ValidTo - DateTime.Now).TotalSeconds;
+        RefreshExpires = (int)(RefreshToken.ValidTo - DateTime.Now).TotalSeconds;
     }
 }

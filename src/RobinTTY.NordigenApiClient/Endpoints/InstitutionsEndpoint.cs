@@ -6,7 +6,11 @@ public class InstitutionsEndpoint
 {
     private readonly NordigenClient _nordigenClient;
 
-    public InstitutionsEndpoint(NordigenClient client)
+    /// <summary>
+    /// Creates a new instance of <see cref="InstitutionsEndpoint"/>.
+    /// </summary>
+    /// <param name="client">The <see cref="NordigenClient"/> to use for token handling and request processing.</param>
+    internal InstitutionsEndpoint(NordigenClient client)
     {
         _nordigenClient = client;
     }
