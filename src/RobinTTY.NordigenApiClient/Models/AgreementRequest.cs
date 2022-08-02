@@ -36,6 +36,7 @@ public class AgreementRequest
     /// <param name="accessValidForDays">The length the access to the account will be valid for.</param>
     /// <param name="accessScope">The scope of information that can be accessed.</param>
     /// <param name="institutionId">The institution this agreement refers to.</param>
+    [JsonConstructor]
     public AgreementRequest(uint maxHistoricalDays, uint accessValidForDays, List<string> accessScope, string institutionId)
     {
         MaxHistoricalDays = maxHistoricalDays;

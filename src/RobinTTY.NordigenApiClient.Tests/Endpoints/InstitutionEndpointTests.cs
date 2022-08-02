@@ -1,4 +1,6 @@
-﻿namespace RobinTTY.NordigenApiClient.Tests.Endpoints;
+﻿using System.Net;
+
+namespace RobinTTY.NordigenApiClient.Tests.Endpoints;
 
 internal class InstitutionEndpointTests
 {
@@ -19,9 +21,9 @@ internal class InstitutionEndpointTests
     public async Task GetInstitutions()
     {
         var response = await _apiClient.InstitutionsEndpoint.GetInstitutions();
-        TestExtensions.AssertNordigenApiResponseIsSuccessful(response);
+        TestExtensions.AssertNordigenApiResponseIsSuccessful(response, HttpStatusCode.OK);
         var response2 = await _apiClient.InstitutionsEndpoint.GetInstitutions("GB");
-        TestExtensions.AssertNordigenApiResponseIsSuccessful(response2);
+        TestExtensions.AssertNordigenApiResponseIsSuccessful(response2, HttpStatusCode.OK);
 
         var result = response.Result!.ToList();
         var result2 = response2.Result!.ToList();
@@ -40,7 +42,7 @@ internal class InstitutionEndpointTests
     public async Task GetInstitution()
     {
         var response = await _apiClient.InstitutionsEndpoint.GetInstitution("SANDBOXFINANCE_SFIN0000");
-        TestExtensions.AssertNordigenApiResponseIsSuccessful(response);
+        TestExtensions.AssertNordigenApiResponseIsSuccessful(response, HttpStatusCode.OK);
 
         var result = response.Result!;
         Assert.That(result.Bic, Is.EqualTo("SFIN0000"));

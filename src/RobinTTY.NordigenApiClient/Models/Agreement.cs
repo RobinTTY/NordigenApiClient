@@ -11,7 +11,7 @@ public class Agreement : AgreementRequest
     /// The id of the agreement assigned by the Nordigen API.
     /// </summary>
     [JsonPropertyName("id")]
-    public string Id { get; set; }
+    public Guid Id { get; set; }
     /// <summary>
     /// Time when the agreement was created.
     /// </summary>
@@ -22,7 +22,8 @@ public class Agreement : AgreementRequest
     /// Time when the agreement was accepted.
     /// </summary>
     [JsonPropertyName("accepted")]
-    public DateTime Accepted { get; set; }
+    public DateTime? Accepted { get; set; }
+
 
     /// <summary>
     /// Creates a new instance of <see cref="Agreement"/>.
@@ -34,8 +35,16 @@ public class Agreement : AgreementRequest
     /// <param name="accessScope">The scope of information that can be accessed.</param>
     /// <param name="accepted">Time when the agreement was accepted.</param>
     /// <param name="institutionId">The institution this agreement refers to.</param>
-    public Agreement(string id, DateTime created, uint maxHistoricalDays, uint accessValidForDays, List<string> accessScope,
-        DateTime accepted, string institutionId) : base(maxHistoricalDays, accessValidForDays, accessScope, institutionId)
+    [JsonConstructor]
+    public Agreement(
+        uint maxHistoricalDays,
+        uint accessValidForDays,
+        List<string> accessScope,
+        string institutionId,
+        Guid id,
+        DateTime created,
+        DateTime? accepted
+        ) : base(maxHistoricalDays, accessValidForDays, accessScope, institutionId)
     {
         Id = id;
         Created = created;

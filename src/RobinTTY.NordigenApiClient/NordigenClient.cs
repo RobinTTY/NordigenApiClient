@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Diagnostics;
+using System.Text.Json;
 using RobinTTY.NordigenApiClient.Endpoints;
 using RobinTTY.NordigenApiClient.JsonConverters;
 using RobinTTY.NordigenApiClient.Models;
@@ -48,14 +49,14 @@ public class NordigenClient
         AgreementsEndpoint = new AgreementsEndpoint(this);
     }
 
-    internal async Task<NordigenApiResponse<T>> MakeRequest<T>(
+    internal async Task<NordigenApiResponse<TResponse, TError>> MakeRequest<TResponse, TError>(
         string uri,
         HttpMethod method,
         CancellationToken cancellationToken,
         IEnumerable<KeyValuePair<string, string>>? query = null,
         HttpContent? body = null,
         bool useAuthentication = true
-        ) where T : class
+        ) where TResponse : class where TError : class
     {
         var requestUri = query != null ? UriQueryBuilder.BuildUriWithQueryString(uri, query) : uri;
         var authToken = useAuthentication ? await TryGetValidTokenPair(cancellationToken) : null;
@@ -69,7 +70,9 @@ public class NordigenClient
         else
             throw new NotImplementedException();
 
-        return await NordigenApiResponse<T>.FromHttpResponse(response, cancellationToken, _serializerOptions);
+        var str = await response.Content.ReadAsStringAsync(cancellationToken);
+        Debug.WriteLine(str);
+        return await NordigenApiResponse<TResponse, TError>.FromHttpResponse(response, cancellationToken, _serializerOptions);
     }
 
     /// <summary>

@@ -1,5 +1,6 @@
 ﻿using System.Net.Http.Json;
 using RobinTTY.NordigenApiClient.Models;
+using RobinTTY.NordigenApiClient.Models.Errors;
 
 namespace RobinTTY.NordigenApiClient.Endpoints;
 
@@ -23,11 +24,11 @@ public class AgreementsEndpoint
     /// <param name="limit">Number of results to return per page.</param>
     /// <param name="offset">The initial index from which to return the results.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
-    /// <returns>A <see cref="NordigenApiResponse{T}"/> containing a <see cref="ResponsePage{T}"/> which contains a list of end user agreements.</returns>
-    public async Task<NordigenApiResponse<ResponsePage<Agreement>>> GetAgreements(int limit, int offset, CancellationToken cancellationToken = default)
+    /// <returns>A <see cref="NordigenApiResponse{TResponse, TError}"/> containing a <see cref="ResponsePage{T}"/> which contains a list of end user agreements.</returns>
+    public async Task<NordigenApiResponse<ResponsePage<Agreement>, BasicError>> GetAgreements(int limit, int offset, CancellationToken cancellationToken = default)
     {
         var query = new KeyValuePair<string, string>[] { new("limit", limit.ToString()), new("offset", offset.ToString()) };
-        return await _nordigenClient.MakeRequest<ResponsePage<Agreement>>(NordigenEndpointUrls.AgreementsEndpoint, HttpMethod.Get, cancellationToken, query);
+        return await _nordigenClient.MakeRequest<ResponsePage<Agreement>, BasicError>(NordigenEndpointUrls.AgreementsEndpoint, HttpMethod.Get, cancellationToken, query);
     }
 
     /// <summary>
@@ -35,10 +36,10 @@ public class AgreementsEndpoint
     /// </summary>
     /// <param name="agreement">The agreement to create.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
-    /// <returns>A <see cref="NordigenApiResponse{T}"/> containing the created <see cref="Agreement"/>.</returns>
-    public async Task<NordigenApiResponse<Agreement>> CreateAgreement(AgreementRequest agreement, CancellationToken cancellationToken = default)
+    /// <returns>A <see cref="NordigenApiResponse{TResponse, TError}"/> containing the created <see cref="Agreement"/>.</returns>
+    public async Task<NordigenApiResponse<Agreement, AgreementsError>> CreateAgreement(AgreementRequest agreement, CancellationToken cancellationToken = default)
     {
         var body = JsonContent.Create(agreement);
-        return await _nordigenClient.MakeRequest<Agreement>(NordigenEndpointUrls.AgreementsEndpoint, HttpMethod.Post, cancellationToken, body: body);
+        return await _nordigenClient.MakeRequest<Agreement, AgreementsError>(NordigenEndpointUrls.AgreementsEndpoint, HttpMethod.Post, cancellationToken, body: body);
     }
 }

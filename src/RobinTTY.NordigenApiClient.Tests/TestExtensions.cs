@@ -6,14 +6,28 @@ namespace RobinTTY.NordigenApiClient.Tests;
 
 internal static class TestExtensions
 {
-    internal static void AssertNordigenApiResponseIsSuccessful<T>(NordigenApiResponse<T> response) where T : class
+    internal static void AssertNordigenApiResponseIsSuccessful<TResponse, TError>(NordigenApiResponse<TResponse, TError> response, HttpStatusCode statusCode)
+        where TResponse : class where TError : class
     {
         Assert.Multiple(() =>
         {
             Assert.That(response.IsSuccess, Is.True);
             Assert.That(response.Result, Is.Not.Null);
             Assert.That(response.Error, Is.Null);
-            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            Assert.That(response.StatusCode, Is.EqualTo(statusCode));
+        });
+    }
+
+    internal static void AssertNordigenApiResponseIsUnsuccessful<TResponse, TError>(NordigenApiResponse<TResponse, TError> response, HttpStatusCode statusCode)
+        where TResponse : class where TError : class
+    {
+        Assert.Multiple(() =>
+        {
+            Assert.That(response.IsSuccess, Is.False);
+            Assert.That(response.Result, Is.Null);
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
+            Assert.That(response.Error, Is.Not.Null);
+            Assert.That(response.StatusCode, Is.EqualTo(statusCode));
         });
     }
 

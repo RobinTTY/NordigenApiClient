@@ -1,4 +1,5 @@
 ﻿using RobinTTY.NordigenApiClient.Models;
+using RobinTTY.NordigenApiClient.Models.Errors;
 
 namespace RobinTTY.NordigenApiClient.Endpoints;
 
@@ -22,11 +23,11 @@ public class InstitutionsEndpoint
     /// <param name="country">The two-letter country code (<see href="https://wikipedia.org/wiki/ISO_3166-1">ISO 3166</see>) in which the institutions operate.</param>
     /// <param name="paymentsEnabled">Whether or not payments are enabled for the institutions.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
-    /// <returns>A <see cref="NordigenApiResponse{T}"/> containing a list of supported institutions if the request was successful.</returns>
-    public async Task<NordigenApiResponse<List<Institution>>> GetInstitutions(string country = "", bool paymentsEnabled = false, CancellationToken cancellationToken = default)
+    /// <returns>A <see cref="NordigenApiResponse{TResponse, TError}"/> containing a list of supported institutions if the request was successful.</returns>
+    public async Task<NordigenApiResponse<List<Institution>, InstitutionsError>> GetInstitutions(string country = "", bool paymentsEnabled = false, CancellationToken cancellationToken = default)
     {
         var query = new KeyValuePair<string, string>[] {new("country", country), new("payments_enabled", paymentsEnabled.ToString())};
-        return await _nordigenClient.MakeRequest<List<Institution>>(NordigenEndpointUrls.InstitutionsEndpoint, HttpMethod.Get, cancellationToken, query);
+        return await _nordigenClient.MakeRequest<List<Institution>, InstitutionsError>(NordigenEndpointUrls.InstitutionsEndpoint, HttpMethod.Get, cancellationToken, query);
     }
 
     /// <summary>
@@ -35,9 +36,9 @@ public class InstitutionsEndpoint
     /// </summary>
     /// <param name="id">The id assigned to the institution by Nordigen (can be retrieved via <see cref="GetInstitutions"/>).</param>
     /// <param name="cancellationToken">>Optional token to signal cancellation of the operation.</param>
-    /// <returns>A <see cref="NordigenApiResponse{T}"/> containing the institution matching the id if the request was successful.</returns>
-    public async Task<NordigenApiResponse<Institution>> GetInstitution(string id, CancellationToken cancellationToken = default)
+    /// <returns>A <see cref="NordigenApiResponse{TResponse, TError}"/> containing the institution matching the id if the request was successful.</returns>
+    public async Task<NordigenApiResponse<Institution, BasicError>> GetInstitution(string id, CancellationToken cancellationToken = default)
     {
-        return await _nordigenClient.MakeRequest<Institution>($"{NordigenEndpointUrls.InstitutionsEndpoint}{id}/", HttpMethod.Get, cancellationToken);
+        return await _nordigenClient.MakeRequest<Institution, BasicError>($"{NordigenEndpointUrls.InstitutionsEndpoint}{id}/", HttpMethod.Get, cancellationToken);
     }
 }

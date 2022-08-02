@@ -1,4 +1,5 @@
-﻿using RobinTTY.NordigenApiClient.Models;
+﻿using System.Net;
+using RobinTTY.NordigenApiClient.Models;
 
 namespace RobinTTY.NordigenApiClient.Tests.Endpoints;
 
@@ -21,13 +22,30 @@ public class AgreementsEndpointTests
     public async Task GetAgreements()
     {
         var response = await _apiClient.AgreementsEndpoint.GetAgreements(100, 0);
-        TestExtensions.AssertNordigenApiResponseIsSuccessful(response);
+        TestExtensions.AssertNordigenApiResponseIsSuccessful(response, HttpStatusCode.OK);
     }
 
     [Test]
     public async Task CreateAgreement()
     {
-        var agreement = new AgreementRequest(180, 30, new List<string> { "balances", "details", "transactions" }, "SANDBOXFINANCE_SFIN0000");
+        var agreement = new AgreementRequest(90, 90, new List<string> { "balances", "details", "transactions" }, "SANDBOXFINANCE_SFIN0000");
         var response = await _apiClient.AgreementsEndpoint.CreateAgreement(agreement);
+        TestExtensions.AssertNordigenApiResponseIsSuccessful(response, HttpStatusCode.Created);
+
+
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    [Test]
+    public async Task CreateAgreementWithInvalidInstitutionId()
+    {
+        var agreement = new AgreementRequest(180, 30, new List<string> { "balances", "details", "transactions", "invalid", "invalid2" }, "SANDBOXFINANCE_SFIN000");
+        var response = await _apiClient.AgreementsEndpoint.CreateAgreement(agreement);
+
+        Assert.That(response.Error!.Detail.Length > 0);
+        Assert.That(response.Error!.Summary.Length > 0);
     }
 }
