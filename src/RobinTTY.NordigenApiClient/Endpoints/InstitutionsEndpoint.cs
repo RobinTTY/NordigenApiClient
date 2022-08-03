@@ -1,5 +1,5 @@
-﻿using RobinTTY.NordigenApiClient.Models;
-using RobinTTY.NordigenApiClient.Models.Errors;
+﻿using RobinTTY.NordigenApiClient.Models.Errors;
+using RobinTTY.NordigenApiClient.Models.Responses;
 
 namespace RobinTTY.NordigenApiClient.Endpoints;
 

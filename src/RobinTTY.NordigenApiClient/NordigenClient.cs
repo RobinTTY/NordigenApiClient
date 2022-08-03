@@ -4,6 +4,7 @@ using RobinTTY.NordigenApiClient.Endpoints;
 using RobinTTY.NordigenApiClient.JsonConverters;
 using RobinTTY.NordigenApiClient.Models;
 using RobinTTY.NordigenApiClient.Models.Jwt;
+using RobinTTY.NordigenApiClient.Models.Responses;
 using RobinTTY.NordigenApiClient.Utility;
 
 namespace RobinTTY.NordigenApiClient;
@@ -67,11 +68,11 @@ public class NordigenClient
             response = await client.GetAsync(requestUri, cancellationToken);
         else if (method == HttpMethod.Post)
             response = await client.PostAsync(requestUri, body, cancellationToken);
+        else if (method == HttpMethod.Delete)
+            response = await client.DeleteAsync(requestUri, cancellationToken);
         else
             throw new NotImplementedException();
 
-        var str = await response.Content.ReadAsStringAsync(cancellationToken);
-        Debug.WriteLine(str);
         return await NordigenApiResponse<TResponse, TError>.FromHttpResponse(response, cancellationToken, _serializerOptions);
     }
 

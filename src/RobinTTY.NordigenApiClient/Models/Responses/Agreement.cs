@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace RobinTTY.NordigenApiClient.Models;
+namespace RobinTTY.NordigenApiClient.Models.Responses;
 
 /// <summary>
 /// An end user agreement which determines the scope and length of access to data provided by institutions.

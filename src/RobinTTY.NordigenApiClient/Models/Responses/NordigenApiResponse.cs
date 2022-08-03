@@ -2,7 +2,7 @@
 using System.Net.Http.Json;
 using System.Text.Json;
 
-namespace RobinTTY.NordigenApiClient.Models;
+namespace RobinTTY.NordigenApiClient.Models.Responses;
 
 /// <summary>
 /// A response returned by the Nordigen API.

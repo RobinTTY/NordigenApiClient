@@ -1,8 +1,8 @@
 ﻿using System.Net.Http.Json;
 using Microsoft.IdentityModel.JsonWebTokens;
-using RobinTTY.NordigenApiClient.Models;
 using RobinTTY.NordigenApiClient.Models.Errors;
 using RobinTTY.NordigenApiClient.Models.Jwt;
+using RobinTTY.NordigenApiClient.Models.Responses;
 
 namespace RobinTTY.NordigenApiClient.Endpoints;
 

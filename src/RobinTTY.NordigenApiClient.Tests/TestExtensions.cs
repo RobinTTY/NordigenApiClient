@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using RobinTTY.NordigenApiClient.Models;
 using RobinTTY.NordigenApiClient.Models.Jwt;
+using RobinTTY.NordigenApiClient.Models.Responses;
 
 namespace RobinTTY.NordigenApiClient.Tests;
 
@@ -25,7 +26,6 @@ internal static class TestExtensions
         {
             Assert.That(response.IsSuccess, Is.False);
             Assert.That(response.Result, Is.Null);
-            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
             Assert.That(response.Error, Is.Not.Null);
             Assert.That(response.StatusCode, Is.EqualTo(statusCode));
         });

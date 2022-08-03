@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace RobinTTY.NordigenApiClient.Models;
+namespace RobinTTY.NordigenApiClient.Models.Responses;
 
 /// <summary>
 /// Represents a banking institution as returned by the Nordigen API.

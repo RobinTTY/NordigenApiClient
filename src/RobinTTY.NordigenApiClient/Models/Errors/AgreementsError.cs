@@ -11,11 +11,11 @@ public class AgreementsError : BasicError
     [JsonPropertyName("institution_id")]
     public BasicError InstitutionIdError { get; }
     [JsonPropertyName("access_scope")]
-    public BasicError AccessScopeErrors { get; }
+    public BasicError AccessScopeError { get; }
     [JsonPropertyName("max_historical_days")]
-    public BasicError MaxHistoricalDaysErrors { get; }
+    public BasicError MaxHistoricalDaysError { get; }
     [JsonPropertyName("access_valid_for_days")]
-    public BasicError AccessValidForDaysErrors { get; }
+    public BasicError AccessValidForDaysError { get; }
     [JsonPropertyName("agreement")]
     public BasicError AgreementError { get; }
 
@@ -26,25 +26,25 @@ public class AgreementsError : BasicError
     /// <param name="summary"></param>
     /// <param name="detail"></param>
     /// <param name="institutionIdError"></param>
-    /// <param name="accessScopeErrors"></param>
-    /// <param name="maxHistoricalDaysErrors"></param>
-    /// <param name="accessValidForDaysErrors"></param>
+    /// <param name="accessScopeError"></param>
+    /// <param name="maxHistoricalDaysError"></param>
+    /// <param name="accessValidForDaysError"></param>
     /// <param name="agreementError"></param>
     [JsonConstructor]
     public AgreementsError(
         string summary,
         string detail,
         BasicError institutionIdError,
-        BasicError accessScopeErrors,
-        BasicError maxHistoricalDaysErrors,
-        BasicError accessValidForDaysErrors,
+        BasicError accessScopeError,
+        BasicError maxHistoricalDaysError,
+        BasicError accessValidForDaysError,
         BasicError agreementError
         ) : base(summary, detail)
     {
         InstitutionIdError = institutionIdError;
-        AccessScopeErrors = accessScopeErrors;
-        MaxHistoricalDaysErrors = maxHistoricalDaysErrors;
-        AccessValidForDaysErrors = accessValidForDaysErrors;
+        AccessScopeError = accessScopeError;
+        MaxHistoricalDaysError = maxHistoricalDaysError;
+        AccessValidForDaysError = accessValidForDaysError;
         AgreementError = agreementError;
     }
 }
