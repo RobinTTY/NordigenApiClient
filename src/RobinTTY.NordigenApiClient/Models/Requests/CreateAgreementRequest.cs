@@ -1,12 +1,12 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace RobinTTY.NordigenApiClient.Models;
+namespace RobinTTY.NordigenApiClient.Models.Requests;
 
 /// <summary>
 /// The parts of an end user agreement that are necessary to create it via the Nordigen API.
 /// Determines the scope and length of access to data provided by institutions.
 /// </summary>
-public class AgreementRequest
+public class CreateAgreementRequest
 {
     /// <summary>
     /// The length of the transaction history in days.
@@ -30,14 +30,14 @@ public class AgreementRequest
     public string InstitutionId { get; set; }
 
     /// <summary>
-    /// Creates a new instance of <see cref="AgreementRequest"/>.
+    /// Creates a new instance of <see cref="CreateAgreementRequest"/>.
     /// </summary>
     /// <param name="maxHistoricalDays">The length of the transaction history in days.</param>
     /// <param name="accessValidForDays">The length the access to the account will be valid for.</param>
     /// <param name="accessScope">The scope of information that can be accessed.</param>
     /// <param name="institutionId">The institution this agreement refers to.</param>
     [JsonConstructor]
-    public AgreementRequest(uint maxHistoricalDays, uint accessValidForDays, List<string> accessScope, string institutionId)
+    public CreateAgreementRequest(uint maxHistoricalDays, uint accessValidForDays, List<string> accessScope, string institutionId)
     {
         MaxHistoricalDays = maxHistoricalDays;
         AccessValidForDays = accessValidForDays;

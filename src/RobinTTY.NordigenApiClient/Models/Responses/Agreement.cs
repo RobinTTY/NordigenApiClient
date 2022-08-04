@@ -1,11 +1,12 @@
-﻿using System.Text.Json.Serialization;
+﻿using RobinTTY.NordigenApiClient.Models.Requests;
+using System.Text.Json.Serialization;
 
 namespace RobinTTY.NordigenApiClient.Models.Responses;
 
 /// <summary>
 /// An end user agreement which determines the scope and length of access to data provided by institutions.
 /// </summary>
-public class Agreement : AgreementRequest
+public class Agreement : CreateAgreementRequest
 {
     /// <summary>
     /// The id of the agreement assigned by the Nordigen API.

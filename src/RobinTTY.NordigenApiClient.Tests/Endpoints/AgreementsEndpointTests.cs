@@ -1,7 +1,6 @@
-﻿using System.Diagnostics;
-using System.Net;
-using RobinTTY.NordigenApiClient.Models;
+﻿using System.Net;
 using RobinTTY.NordigenApiClient.Models.Errors;
+using RobinTTY.NordigenApiClient.Models.Requests;
 using RobinTTY.NordigenApiClient.Models.Responses;
 
 namespace RobinTTY.NordigenApiClient.Tests.Endpoints;
@@ -26,7 +25,7 @@ public class AgreementsEndpointTests
     public async Task GetAgreementsPaged()
     {
         // Create 3 example agreements
-        var agreementRequest = new AgreementRequest(90, 90, new List<string> { "balances", "details", "transactions" }, "SANDBOXFINANCE_SFIN0000");
+        var agreementRequest = new CreateAgreementRequest(90, 90, new List<string> { "balances", "details", "transactions" }, "SANDBOXFINANCE_SFIN0000");
         var ids = new List<string>();
         for (var i = 0; i < 3; i++)
         {
@@ -36,7 +35,7 @@ public class AgreementsEndpointTests
         }
         
         // Get a response page for each agreement
-        var page1Response = await _apiClient.AgreementsEndpoint.GetAgreementsPage(1, 0);
+        var page1Response = await _apiClient.AgreementsEndpoint.GetAgreements(1, 0);
         AssertThatAgreementPageContainsAgreement(page1Response, ids);
 
         var page2Response = await _apiClient.AgreementsEndpoint.GetNextAgreementsPage(page1Response.Result!);
@@ -79,7 +78,7 @@ public class AgreementsEndpointTests
     public async Task GetAgreementWithGuid()
     {
         // Create agreement
-        var agreementRequest = new AgreementRequest(90, 90, new List<string> { "balances", "details", "transactions" }, "SANDBOXFINANCE_SFIN0000");
+        var agreementRequest = new CreateAgreementRequest(90, 90, new List<string> { "balances", "details", "transactions" }, "SANDBOXFINANCE_SFIN0000");
         var createResponse = await _apiClient.AgreementsEndpoint.CreateAgreement(agreementRequest);
         TestExtensions.AssertNordigenApiResponseIsSuccessful(createResponse, HttpStatusCode.Created);
         var id = createResponse.Result!.Id;
@@ -116,9 +115,13 @@ public class AgreementsEndpointTests
     /// </summary>
     /// <returns></returns>
     [Test]
-    public async Task CreateAgreementAndDeleteIt()
+    public async Task CreateAcceptAndDeleteAgreement()
     {
-        var agreement = new AgreementRequest(90, 90, new List<string> { "balances", "details", "transactions" }, "SANDBOXFINANCE_SFIN0000");
+        var agreements = await _apiClient.AgreementsEndpoint.GetAgreements(100, 0);
+        await _apiClient.AgreementsEndpoint.DeleteAgreement(agreements.Result!.Results.First().Id);
+
+        // Create the agreement
+        var agreement = new CreateAgreementRequest(90, 90, new List<string> { "balances", "details", "transactions" }, "SANDBOXFINANCE_SFIN0000");
         var response = await _apiClient.AgreementsEndpoint.CreateAgreement(agreement);
         TestExtensions.AssertNordigenApiResponseIsSuccessful(response, HttpStatusCode.Created);
 
@@ -133,6 +136,12 @@ public class AgreementsEndpointTests
             Assert.That(result.AccessValidForDays, Is.EqualTo(90));
         });
 
+        // Accept the agreement (should fail)
+        var acceptMetadata = new AcceptAgreementRequest("example_user_agent", "192.168.178.1");
+        var acceptResponse = await _apiClient.AgreementsEndpoint.AcceptAgreement(response.Result!.Id, acceptMetadata);
+        TestExtensions.AssertNordigenApiResponseIsUnsuccessful(acceptResponse, HttpStatusCode.Forbidden);
+
+        // Delete the agreement
         var deletionResponse = await _apiClient.AgreementsEndpoint.DeleteAgreement(result.Id);
         TestExtensions.AssertNordigenApiResponseIsSuccessful(deletionResponse, HttpStatusCode.OK);
         Assert.That(deletionResponse.Result!.Summary, Is.EqualTo("End User Agreement deleted"));
@@ -146,7 +155,7 @@ public class AgreementsEndpointTests
     [Test]
     public async Task CreateAgreementWithInvalidInstitutionId()
     {
-        var agreement = new AgreementRequest(90, 90, new List<string> { "balances", "details", "transactions" }, "SANDBOXFINANCE_SFIN000");
+        var agreement = new CreateAgreementRequest(90, 90, new List<string> { "balances", "details", "transactions" }, "SANDBOXFINANCE_SFIN000");
         var response = await _apiClient.AgreementsEndpoint.CreateAgreement(agreement);
         TestExtensions.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.BadRequest);
 
@@ -162,7 +171,7 @@ public class AgreementsEndpointTests
     [Test]
     public async Task CreateAgreementWithInvalidParams()
     {
-        var agreement = new AgreementRequest(200, 200, new List<string> { "balances", "details", "transactions", "invalid", "invalid2" }, "SANDBOXFINANCE_SFIN0000");
+        var agreement = new CreateAgreementRequest(200, 200, new List<string> { "balances", "details", "transactions", "invalid", "invalid2" }, "SANDBOXFINANCE_SFIN0000");
         var response = await _apiClient.AgreementsEndpoint.CreateAgreement(agreement);
         TestExtensions.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.BadRequest);
 

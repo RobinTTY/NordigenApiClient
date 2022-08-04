@@ -70,6 +70,8 @@ public class NordigenClient
             response = await client.PostAsync(requestUri, body, cancellationToken);
         else if (method == HttpMethod.Delete)
             response = await client.DeleteAsync(requestUri, cancellationToken);
+        else if(method == HttpMethod.Put)
+            response = await client.PutAsync(requestUri, body, cancellationToken);
         else
             throw new NotImplementedException();
 
