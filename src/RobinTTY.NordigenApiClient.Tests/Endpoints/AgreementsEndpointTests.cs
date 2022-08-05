@@ -38,11 +38,11 @@ public class AgreementsEndpointTests
         var page1Response = await _apiClient.AgreementsEndpoint.GetAgreements(1, 0);
         AssertThatAgreementPageContainsAgreement(page1Response, ids);
 
-        var page2Response = await _apiClient.AgreementsEndpoint.GetNextAgreementsPage(page1Response.Result!);
+        var page2Response = await page1Response.Result!.GetNextPage(_apiClient);
         Assert.That(page2Response, Is.Not.Null);
         AssertThatAgreementPageContainsAgreement(page2Response!, ids);
 
-        var page3Response = await _apiClient.AgreementsEndpoint.GetNextAgreementsPage(page2Response!.Result!);
+        var page3Response = await page2Response!.Result!.GetNextPage(_apiClient);
         Assert.That(page3Response, Is.Not.Null);
         AssertThatAgreementPageContainsAgreement(page3Response!, ids);
         
@@ -51,7 +51,7 @@ public class AgreementsEndpointTests
         Assert.That(page3Response.Result!.Previous, Is.Not.Null);
 
         // Go to previous page
-        var previousPageResponse = await _apiClient.AgreementsEndpoint.GetPreviousAgreementsPage(page3Response!.Result!);
+        var previousPageResponse = await page3Response.Result!.GetPreviousPage(_apiClient);
         Assert.That(previousPageResponse, Is.Not.Null);
 
         AssertThatAgreementPageContainsAgreement(previousPageResponse!, ids);
@@ -117,9 +117,6 @@ public class AgreementsEndpointTests
     [Test]
     public async Task CreateAcceptAndDeleteAgreement()
     {
-        var agreements = await _apiClient.AgreementsEndpoint.GetAgreements(100, 0);
-        await _apiClient.AgreementsEndpoint.DeleteAgreement(agreements.Result!.Results.First().Id);
-
         // Create the agreement
         var agreement = new CreateAgreementRequest(90, 90, new List<string> { "balances", "details", "transactions" }, "SANDBOXFINANCE_SFIN0000");
         var response = await _apiClient.AgreementsEndpoint.CreateAgreement(agreement);
@@ -140,6 +137,7 @@ public class AgreementsEndpointTests
         var acceptMetadata = new AcceptAgreementRequest("example_user_agent", "192.168.178.1");
         var acceptResponse = await _apiClient.AgreementsEndpoint.AcceptAgreement(response.Result!.Id, acceptMetadata);
         TestExtensions.AssertNordigenApiResponseIsUnsuccessful(acceptResponse, HttpStatusCode.Forbidden);
+        Assert.That(acceptResponse.Error!.Detail, Is.EqualTo("Your company doesn't have permission to accept EUA. You'll have to use our default form for this action."));
 
         // Delete the agreement
         var deletionResponse = await _apiClient.AgreementsEndpoint.DeleteAgreement(result.Id);
