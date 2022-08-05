@@ -2,7 +2,7 @@
 
 namespace RobinTTY.NordigenApiClient.Tests.Endpoints;
 
-internal class InstitutionEndpointTests
+internal class InstitutionsEndpointTests
 {
     private NordigenClient _apiClient = null!;
 

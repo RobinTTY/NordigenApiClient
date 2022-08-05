@@ -18,7 +18,7 @@ public class InstitutionsEndpoint
 
     /// <summary>
     /// Gets a list of institutions supported by the Nordigen API.
-    /// Route: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/institutions/retrieve%20all%20supported%20Institutions%20in%20a%20given%20country"></see>
+    /// <para>Route: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/institutions/retrieve%20all%20supported%20Institutions%20in%20a%20given%20country"></see></para>
     /// </summary>
     /// <param name="country">The two-letter country code (<see href="https://wikipedia.org/wiki/ISO_3166-1">ISO 3166</see>) in which the institutions operate.</param>
     /// <param name="paymentsEnabled">Whether or not payments are enabled for the institutions.</param>
@@ -32,7 +32,7 @@ public class InstitutionsEndpoint
 
     /// <summary>
     /// Gets a specific institution by id.
-    /// Route: https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/institutions/retrieve%20institution
+    /// <para>Route: https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/institutions/retrieve%20institution</para>
     /// </summary>
     /// <param name="id">The id assigned to the institution by Nordigen (can be retrieved via <see cref="GetInstitutions"/>).</param>
     /// <param name="cancellationToken">>Optional token to signal cancellation of the operation.</param>
