@@ -29,14 +29,4 @@ public class BasicError
         Summary = summary;
         Detail = detail;
     }
-
-    /// <summary>
-    /// Creates a new instance of <see cref="BasicError"/>.
-    /// </summary>
-    /// <param name="agreementsError">The <see cref="AgreementsError"/> to convert.</param>
-    public BasicError(AgreementsError agreementsError)
-    {
-        Summary = agreementsError.InstitutionIdError.Summary;
-        Detail = agreementsError.InstitutionIdError.Detail;
-    }
 }

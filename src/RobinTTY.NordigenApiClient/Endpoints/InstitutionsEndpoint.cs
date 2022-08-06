@@ -32,7 +32,7 @@ public class InstitutionsEndpoint
 
     /// <summary>
     /// Gets a specific institution by id.
-    /// <para>Route: https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/institutions/retrieve%20institution</para>
+    /// <para>Route: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/institutions/retrieve%20institution"/></para>
     /// </summary>
     /// <param name="id">The id assigned to the institution by Nordigen (can be retrieved via <see cref="GetInstitutions"/>).</param>
     /// <param name="cancellationToken">>Optional token to signal cancellation of the operation.</param>

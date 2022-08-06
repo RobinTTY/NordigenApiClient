@@ -184,8 +184,8 @@ public class AgreementsEndpointTests
 
     private void AssertThatAgreementPageContainsAgreement(NordigenApiResponse<ResponsePage<Agreement>, BasicError> pagedResponse, List<string> ids)
     {
-        TestExtensions.AssertNordigenApiResponseIsSuccessful(pagedResponse!, HttpStatusCode.OK);
-        var page2Result = pagedResponse!.Result!;
+        TestExtensions.AssertNordigenApiResponseIsSuccessful(pagedResponse, HttpStatusCode.OK);
+        var page2Result = pagedResponse.Result!;
         var page2Agreements = page2Result.Results.ToList();
         Assert.Multiple(() =>
         {

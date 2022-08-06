@@ -3,7 +3,7 @@
 namespace RobinTTY.NordigenApiClient.Models.Errors;
 
 /// <summary>
-/// An error description returned by the institutions endpoint of the Nordigen API.
+/// An error description as returned by the institutions endpoint of the Nordigen API.
 /// </summary>
 public class InstitutionsError : BasicError
 {
