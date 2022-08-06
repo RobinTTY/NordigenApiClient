@@ -17,17 +17,25 @@ public class NordigenClient
     internal readonly NordigenClientCredentials Credentials;
 
     /// <summary>
-    /// TODO
+    /// Provides support for the API operations of the tokens endpoint.
+    /// <para>Reference: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/token"/></para>
     /// </summary>
     public TokenEndpoint TokenEndpoint { get; }
     /// <summary>
-    /// TODO
+    /// Provides support for the API operations of the institutions endpoint.
+    /// <para>Reference: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/institutions"/></para>
     /// </summary>
     public InstitutionsEndpoint InstitutionsEndpoint { get; }
     /// <summary>
-    /// TODO
+    /// Provides support for the API operations of the agreements endpoint.
+    /// <para>Reference: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/agreements"/></para>
     /// </summary>
     public AgreementsEndpoint AgreementsEndpoint { get; }
+    /// <summary>
+    /// Provides support for the API operations of the requisitions endpoint.
+    /// <para>Reference: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/requisitions"/></para>
+    /// </summary>
+    public RequisitionsEndpoint RequisitionsEndpoint { get; }
 
     /// <summary>
     /// Creates a new instance of <see cref="NordigenClient"/>.
@@ -41,13 +49,14 @@ public class NordigenClient
         _jwtTokenPair = jwtTokenPair;
         _serializerOptions = new JsonSerializerOptions
         {
-            Converters = { new JsonWebTokenConverter() }
+            Converters = { new JsonWebTokenConverter(), new GuidConverter() }
         };
 
         Credentials = credentials;
         TokenEndpoint = new TokenEndpoint(this);
         InstitutionsEndpoint = new InstitutionsEndpoint(this);
         AgreementsEndpoint = new AgreementsEndpoint(this);
+        RequisitionsEndpoint = new RequisitionsEndpoint(this);
     }
 
     internal async Task<NordigenApiResponse<TResponse, TError>> MakeRequest<TResponse, TError>(
@@ -75,6 +84,7 @@ public class NordigenClient
         else
             throw new NotImplementedException();
 
+        var content = await response.Content.ReadAsStringAsync(cancellationToken);
         return await NordigenApiResponse<TResponse, TError>.FromHttpResponse(response, cancellationToken, _serializerOptions);
     }
 

@@ -4,6 +4,9 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Authors>RobinTTY</Authors>
+    <PackageProjectUrl>https://github.com/RobinTTY/NordigenApiClient</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>
