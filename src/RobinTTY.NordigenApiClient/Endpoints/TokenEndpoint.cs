@@ -6,6 +6,10 @@ using RobinTTY.NordigenApiClient.Models.Responses;
 
 namespace RobinTTY.NordigenApiClient.Endpoints;
 
+/// <summary>
+/// Provides support for the API operations of the tokens endpoint.
+/// <para>Reference: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/token"/></para>
+/// </summary>
 public class TokenEndpoint
 {
     private readonly NordigenClient _nordigenClient;

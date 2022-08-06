@@ -3,6 +3,10 @@ using RobinTTY.NordigenApiClient.Models.Responses;
 
 namespace RobinTTY.NordigenApiClient.Endpoints;
 
+/// <summary>
+/// Provides support for the API operations of the institutions endpoint.
+/// <para>Reference: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/institutions"/></para>
+/// </summary>
 public class InstitutionsEndpoint
 {
     private readonly NordigenClient _nordigenClient;

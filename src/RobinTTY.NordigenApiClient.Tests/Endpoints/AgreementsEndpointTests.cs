@@ -75,7 +75,7 @@ public class AgreementsEndpointTests
     /// </summary>
     /// <returns></returns>
     [Test]
-    public async Task GetAgreementWithGuid()
+    public async Task GetAgreement()
     {
         // Create agreement
         var agreementRequest = new CreateAgreementRequest(90, 90, new List<string> { "balances", "details", "transactions" }, "SANDBOXFINANCE_SFIN0000");

@@ -16,9 +16,10 @@ public class RequisitionsEndpointTests
     }
 
     /// <summary>
-    /// Tests the paging mechanism of retrieving requisitions.
+    /// Tests all methods of the requisitions endpoint.
     /// Creates 3 requisitions, retrieves them using 3 <see cref="ResponsePage{T}"/>s and deletes the requisitions after.
-    /// Route: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/requisitions/retrieve%20all%20requisitions"></see>
+    /// <para>Route: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/requisitions/retrieve%20all%20requisitions"/></para>
+    /// <para>Route: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/requisitions/delete%20requisition%20by%20id%20v2"/></para>
     /// </summary>
     /// <returns></returns>
     [Test]
@@ -46,6 +47,7 @@ public class RequisitionsEndpointTests
         // Get a response page for each requisition
         var page1Response = await _apiClient.RequisitionsEndpoint.GetRequisitions(1, 0);
         AssertThatRequisitionsPageContainsRequisition(page1Response, ids);
+        Assert.That(page1Response.Result!.Results.Single().AuthenticationLink.ToString(), Is.Not.Empty);
 
         var page2Response = await page1Response.Result!.GetNextPage(_apiClient);
         Assert.That(page2Response, Is.Not.Null);
@@ -70,6 +72,13 @@ public class RequisitionsEndpointTests
         var page2RequisitionId = page2Response.Result!.Results.First().Id;
         Assert.That(prevRequisitionId, Is.EqualTo(page2RequisitionId));
 
+        // Retrieve a single requisition via guid/string id
+        var requisitionResponseGuid = await _apiClient.RequisitionsEndpoint.GetRequisition(page2RequisitionId);
+        TestExtensions.AssertNordigenApiResponseIsSuccessful(requisitionResponseGuid, HttpStatusCode.OK);
+        var requisitionResponseString = await _apiClient.RequisitionsEndpoint.GetRequisition(page2RequisitionId.ToString());
+        TestExtensions.AssertNordigenApiResponseIsSuccessful(requisitionResponseString, HttpStatusCode.OK);
+        Assert.That(requisitionResponseString.Result!.Id, Is.EqualTo(requisitionResponseGuid.Result!.Id));
+
         // Delete created resources
         var agreementDeletion = await _apiClient.AgreementsEndpoint.DeleteAgreement(agreementId);
         TestExtensions.AssertNordigenApiResponseIsSuccessful(agreementDeletion, HttpStatusCode.OK);
@@ -79,6 +88,38 @@ public class RequisitionsEndpointTests
             var result = await _apiClient.RequisitionsEndpoint.DeleteRequisition(id);
             TestExtensions.AssertNordigenApiResponseIsSuccessful(result, HttpStatusCode.OK);
         }
+    }
+
+    /// <summary>
+    /// Tests the retrieval of a requisition with an invalid guid.
+    /// Route: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/requisitions/requisition%20by%20id"/>
+    /// </summary>
+    /// <returns></returns>
+    [Test]
+    public async Task GetRequisitionWithInvalidGuid()
+    {
+        const string guid = "f84d7b8-dee4-4cd9-bc6d-842ef78f6028";
+        var response = await _apiClient.RequisitionsEndpoint.GetRequisition(guid);
+        TestExtensions.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.NotFound);
+        Assert.That(response.Error!.Detail, Is.EqualTo("Not found."));
+    }
+
+    /// <summary>
+    /// Tests the creation of an end user agreement with invalid id.
+    /// Route: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/requisitions/requisition%20created"/>
+    /// </summary>
+    /// <returns></returns>
+    [Test]
+    public async Task CreateRequisitionWithInvalidId()
+    {
+        var redirect = new Uri("ftp://ftp.test.com");
+        var agreementId = Guid.Empty;
+        var requisitionRequest = new CreateRequisitionRequest(redirect, "123", agreementId, "internal_reference", "EN", null, true, true);
+        var response = await _apiClient.RequisitionsEndpoint.CreateRequisition(requisitionRequest);
+
+        TestExtensions.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.BadRequest);
+        Assert.That(response.Error!.Summary, Is.EqualTo("Agreement: 00000000-0000-0000-0000-000000000000 not found"));
+        Assert.That(response.Error!.Detail, Is.EqualTo("Please specify valid agreement from /agreements/enduser/?={enduser_id} or create a new one"));
     }
 
     private void AssertThatRequisitionsPageContainsRequisition(NordigenApiResponse<ResponsePage<Requisition>, BasicError> pagedResponse, List<string> ids)

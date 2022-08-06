@@ -5,6 +5,10 @@ using RobinTTY.NordigenApiClient.Models.Responses;
 
 namespace RobinTTY.NordigenApiClient.Endpoints;
 
+/// <summary>
+/// Provides support for the API operations of the agreements endpoint.
+/// <para>Reference: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/agreements"/></para>
+/// </summary>
 public class AgreementsEndpoint
 {
     private readonly NordigenClient _nordigenClient;
