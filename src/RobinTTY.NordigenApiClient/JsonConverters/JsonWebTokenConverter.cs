@@ -4,7 +4,7 @@ using Microsoft.IdentityModel.JsonWebTokens;
 
 namespace RobinTTY.NordigenApiClient.JsonConverters;
 
-public class JsonWebTokenConverter : JsonConverter<JsonWebToken>
+internal class JsonWebTokenConverter : JsonConverter<JsonWebToken>
 {
     private static readonly JsonWebTokenHandler JwtTokenHandler = new();
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   

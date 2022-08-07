@@ -2,6 +2,7 @@
 using System.Text.Json.Serialization;
 
 namespace RobinTTY.NordigenApiClient.JsonConverters;
+
 internal class GuidConverter : JsonConverter<Guid>
 {
     public override Guid Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

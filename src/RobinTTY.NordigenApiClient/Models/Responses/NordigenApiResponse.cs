@@ -48,8 +48,9 @@ public class NordigenApiResponse<TResult, TError> where TResult : class where TE
     /// </summary>
     /// <param name="response">The <see cref="HttpResponseMessage"/> to parse.</param>
     /// <param name="cancellationToken">A cancellation token to be used to notify in case of cancellation.</param>
+    /// <param name="options"><see cref="JsonSerializerOptions"/> to apply to the deserialization process.</param>
     /// <returns>The parsed <see cref="NordigenApiResponse{TResult, TError}"/>.</returns>
-    public static async Task<NordigenApiResponse<TResult, TError>> FromHttpResponse(HttpResponseMessage response, CancellationToken cancellationToken = default, JsonSerializerOptions? options = null)
+    internal static async Task<NordigenApiResponse<TResult, TError>> FromHttpResponse(HttpResponseMessage response, CancellationToken cancellationToken = default, JsonSerializerOptions? options = null)
     {
         if (response.IsSuccessStatusCode)
         {

@@ -1,6 +1,10 @@
 ﻿using System.Text.Json.Serialization;
 
 namespace RobinTTY.NordigenApiClient.Models.Responses;
+
+/// <summary>
+/// Minimal information about an account at a banking institution.
+/// </summary>
 public class MinimalBankAccount
 {
     /// <summary>

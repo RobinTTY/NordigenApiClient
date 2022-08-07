@@ -18,4 +18,16 @@ public class JsonWebAccessToken
     /// </summary>
     [JsonPropertyName("access_expires")]
     public int AccessExpires { get; init; }
+
+    /// <summary>
+    /// Creates a new instance of <see cref="JsonWebAccessToken"/>.
+    /// </summary>
+    /// <param name="accessToken">The JWT access token returned by the Nordigen API.</param>
+    /// <param name="accessExpires">Indicates the time in seconds after which the access token expires.</param>
+    [JsonConstructor]
+    public JsonWebAccessToken(JsonWebToken accessToken, int accessExpires)
+    {
+        AccessToken = accessToken;
+        AccessExpires = accessExpires;
+    }
 }

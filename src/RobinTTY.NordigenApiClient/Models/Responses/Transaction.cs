@@ -103,7 +103,7 @@ public class Transaction
     public string PurposeCode { get; }
 
     /// <summary>
-    /// 
+    /// Creates a new instance of <see cref="Transaction"/>.
     /// </summary>
     /// <param name="transactionId">Used as access-ID in the PSD2 interface, where more details on an transaction are offered. If this data
     /// attribute is provided this shows that the AIS (Account Information Service) can get access on more details about this transaction.</param>
