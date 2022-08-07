@@ -11,7 +11,7 @@ public class InstitutionsError : BasicError
     /// A list of errors related to the requested institutions.
     /// </summary>
     [JsonPropertyName("country")]
-    public List<string> Country { get; set; }
+    public List<string> Country { get; }
 
     /// <summary>
     /// Creates a new instance of <see cref="InstitutionsError"/>.
