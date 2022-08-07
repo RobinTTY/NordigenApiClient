@@ -7,6 +7,8 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Authors>RobinTTY</Authors>
     <PackageProjectUrl>https://github.com/RobinTTY/NordigenApiClient</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/RobinTTY/NordigenApiClient</RepositoryUrl>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
