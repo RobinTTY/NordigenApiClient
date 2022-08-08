@@ -102,24 +102,36 @@ public class AccountsEndpoint
     /// <para>Route: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/accounts/accounts_transactions_retrieve"/></para>
     /// </summary>
     /// <param name="id">The id of the account for which to retrieve the transactions.</param>
+    /// <param name="startDate">Optional date to limit the transactions which are returned to those after the specified date.</param>
+    /// <param name="endDate">Optional date to limit the transactions which are returned to those before the specified date.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
     /// <returns>A <see cref="NordigenApiResponse{TResponse, TError}"/> which contains transaction data of the specified account.</returns>
-    public async Task<NordigenApiResponse<AccountTransactions, AccountsError>> GetTransactions(Guid id, CancellationToken cancellationToken = default)
-        => await GetTransactionsInternal(id.ToString(), cancellationToken);
+    public async Task<NordigenApiResponse<AccountTransactions, AccountsError>> GetTransactions(Guid id, DateOnly? startDate = null, DateOnly? endDate = null, CancellationToken cancellationToken = default)
+        => await GetTransactionsInternal(id.ToString(), startDate, endDate, cancellationToken);
 
     /// <summary>
     /// Gets the transactions of the specified bank account.
     /// <para>Route: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/accounts/accounts_transactions_retrieve"/></para>
     /// </summary>
     /// <param name="id">The id of the account for which to retrieve the transactions.</param>
+    /// <param name="startDate">Optional date to limit the transactions which are returned to those after the specified date.</param>
+    /// <param name="endDate">Optional date to limit the transactions which are returned to those before the specified date.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
     /// <returns>A <see cref="NordigenApiResponse{TResponse, TError}"/> which contains transaction data of the specified account.</returns>
-    public async Task<NordigenApiResponse<AccountTransactions, AccountsError>> GetTransactions(string id, CancellationToken cancellationToken = default)
-        => await GetTransactionsInternal(id, cancellationToken);
+    public async Task<NordigenApiResponse<AccountTransactions, AccountsError>> GetTransactions(string id, DateOnly? startDate = null, DateOnly? endDate = null, CancellationToken cancellationToken = default)
+        => await GetTransactionsInternal(id, startDate, endDate, cancellationToken);
 
-    private async Task<NordigenApiResponse<AccountTransactions, AccountsError>> GetTransactionsInternal(string id, CancellationToken cancellationToken)
+    private async Task<NordigenApiResponse<AccountTransactions, AccountsError>> GetTransactionsInternal(string id, DateOnly? startDate, DateOnly? endDate, CancellationToken cancellationToken)
     {
-        var response = await _nordigenClient.MakeRequest<AccountTransactionsWrapper, AccountsError>($"{NordigenEndpointUrls.AccountsEndpoint}{id}/transactions/", HttpMethod.Get, cancellationToken);
+        var query = new List<KeyValuePair<string, string>>();
+        if (startDate != null)
+            query.Add(new KeyValuePair<string, string>("date_from", DateToIso8601(startDate.Value)));
+        if (endDate != null)
+            query.Add(new KeyValuePair<string, string>("date_to", DateToIso8601(endDate.Value)));
+            
+        var response = await _nordigenClient.MakeRequest<AccountTransactionsWrapper, AccountsError>($"{NordigenEndpointUrls.AccountsEndpoint}{id}/transactions/", HttpMethod.Get, cancellationToken, query);
         return new NordigenApiResponse<AccountTransactions, AccountsError>(response.StatusCode, response.IsSuccess, response.Result?.Transactions, response.Error);
     }
+
+    private string DateToIso8601(DateOnly date) => date.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
 }
