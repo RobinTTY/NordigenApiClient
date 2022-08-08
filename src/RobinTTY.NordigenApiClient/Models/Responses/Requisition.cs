@@ -65,37 +65,3 @@ public class Requisition : CreateRequisitionRequest
         AuthenticationLink = authenticationLink;
     }
 }
-
-/// <summary>
-/// The status of the requisition.
-/// TODO: is this actually returned by the API at any point?
-/// </summary>
-public class RequisitionStatus
-{
-    /// <summary>
-    /// Abbreviation of the requisition status.
-    /// </summary>
-    public string Short { get; }
-    /// <summary>
-    /// The requisition status.
-    /// </summary>
-    public string Long { get; }
-    /// <summary>
-    /// Description of the requisition status.
-    /// </summary>
-    public string Description { get; }
-
-    /// <summary>
-    /// Creates a new instance of <see cref="RequisitionStatus"/>
-    /// </summary>
-    /// <param name="s">Abbreviation of the requisition status.</param>
-    /// <param name="l">The requisition status.</param>
-    /// <param name="description">Description of the requisition status.</param>
-    [JsonConstructor]
-    public RequisitionStatus(string s, string l, string description)
-    {
-        Short = s;
-        Long = l;
-        Description = description;
-    }
-}

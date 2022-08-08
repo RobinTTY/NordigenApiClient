@@ -8,12 +8,12 @@ namespace RobinTTY.NordigenApiClient.Models.Requests;
 public class AcceptAgreementRequest
 {
     /// <summary>
-    /// TODO: User agent of the client that accepts the request.
+    /// User agent of the client that accepts the request.
     /// </summary>
     [JsonPropertyName("user_agent")]
     public string UserAgent { get; set; }
     /// <summary>
-    /// TODO: IP address of the client.
+    /// IP address of the client.
     /// </summary>
     [JsonPropertyName("ip_address")]
     public string IpAddress { get; set; }

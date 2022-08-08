@@ -9,6 +9,9 @@ using RobinTTY.NordigenApiClient.Utility;
 
 namespace RobinTTY.NordigenApiClient;
 
+/// <summary>
+/// Client used to access the Nordigen API endpoints.
+/// </summary>
 public class NordigenClient
 {
     private readonly HttpClient _httpClient;
@@ -36,6 +39,11 @@ public class NordigenClient
     /// <para>Reference: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/requisitions"/></para>
     /// </summary>
     public RequisitionsEndpoint RequisitionsEndpoint { get; }
+    /// <summary>
+    /// Provides support for the API operations of the accounts endpoint.
+    /// <para>Reference: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/accounts"/></para>
+    /// </summary>
+    public AccountsEndpoint AccountsEndpoint { get; }
 
     /// <summary>
     /// Creates a new instance of <see cref="NordigenClient"/>.
@@ -57,6 +65,7 @@ public class NordigenClient
         InstitutionsEndpoint = new InstitutionsEndpoint(this);
         AgreementsEndpoint = new AgreementsEndpoint(this);
         RequisitionsEndpoint = new RequisitionsEndpoint(this);
+        AccountsEndpoint = new AccountsEndpoint(this);
     }
 
     internal async Task<NordigenApiResponse<TResponse, TError>> MakeRequest<TResponse, TError>(
@@ -84,7 +93,6 @@ public class NordigenClient
         else
             throw new NotImplementedException();
 
-        var content = await response.Content.ReadAsStringAsync(cancellationToken);
         return await NordigenApiResponse<TResponse, TError>.FromHttpResponse(response, cancellationToken, _serializerOptions);
     }
 
