@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Globalization;
+using System.Text.Json.Serialization;
 
 namespace RobinTTY.NordigenApiClient.Models.Responses;
 
@@ -19,7 +20,7 @@ public class AmountCurrencyPair
     {
         get
         {
-            var success = decimal.TryParse(Amount, out var amount);
+            var success = decimal.TryParse(Amount, NumberStyles.Number, CultureInfo.GetCultureInfo("en-US"), out var amount);
             return success ? amount : null;
         }
     }

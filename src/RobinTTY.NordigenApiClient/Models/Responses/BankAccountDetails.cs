@@ -68,3 +68,25 @@ public class BankAccountDetails
         CashAccountType = cashAccountType;
     }
 }
+
+/// <summary>
+/// Only used for deserialization purposes (to deal with returned JSON structure).
+/// </summary>
+internal class BankAccountDetailsWrapper
+{
+    /// <summary>
+    /// Detailed information about a bank account.
+    /// </summary>
+    [JsonPropertyName("account")]
+    public BankAccountDetails Account { get; set; }
+
+    /// <summary>
+    /// Creates a new instance of <see cref="BankAccountDetailsWrapper"/>.
+    /// </summary>
+    /// <param name="account">Detailed information about a bank account.</param>
+    [JsonConstructor]
+    public BankAccountDetailsWrapper(BankAccountDetails account)
+    {
+        Account = account;
+    }
+}

@@ -13,32 +13,32 @@ public class Transaction
     /// about this transaction.
     /// </summary>
     [JsonPropertyName("transactionId")]
-    public string TransactionId { get; set; }
+    public string? TransactionId { get; set; }
     /// <summary>
     /// The name of the party which owes the money.
     /// </summary>
     [JsonPropertyName("debtorName")]
-    public string DebtorName { get; }
+    public string? DebtorName { get; }
     /// <summary>
     /// The account of the party which owes the money.
     /// </summary>
     [JsonPropertyName("debtorAccount")]
-    public MinimalBankAccount DebtorAccount { get; }
+    public MinimalBankAccount? DebtorAccount { get; }
     /// <summary>
     /// Ultimate party that owes an amount of money to the (ultimate) creditor.
     /// </summary>
     [JsonPropertyName("ultimateDebtor")]
-    public string UltimateDebtor { get; }
+    public string? UltimateDebtor { get; }
     /// <summary>
     /// The name of the party which is owed the money.
     /// </summary>
     [JsonPropertyName("creditorName")]
-    public string CreditorName { get; }
+    public string? CreditorName { get; }
     /// <summary>
     /// The account of the party which is owed the money.
     /// </summary>
     [JsonPropertyName("creditorAccount")]
-    public MinimalBankAccount CreditorAccount { get; }
+    public MinimalBankAccount? CreditorAccount { get; }
     /// <summary>
     /// The transaction amount including details about the currency the amount is denominated in.
     /// </summary>
@@ -51,18 +51,18 @@ public class Transaction
     /// to the family of ReceivedCreDitTransfer(RCDT) that facilitated the EuropeanSEPACreditTransfer(ESCT).</para>
     /// </summary>
     [JsonPropertyName("bankTransactionCode")]
-    public string BankTransactionCode { get; }
+    public string? BankTransactionCode { get; }
     /// <summary>
     /// The date when the transaction was posted to the account.
     /// </summary>
     [JsonPropertyName("bookingDate")]
-    public DateTime BookingDate { get; }
+    public DateTime? BookingDate { get; }
     /// <summary>
     /// Date at which assets become available to the account owner in case of a credit entry, or cease to be
     /// available to the account owner in case of a debit entry.
     /// </summary>
     [JsonPropertyName("valueDate")]
-    public DateTime ValueDate { get; }
+    public DateTime? ValueDate { get; }
     /// <summary>
     /// Unstructured reference issued by the seller used to establish a link between the payment of an invoice
     /// and the invoice instance. The reference helps the seller to assign an incoming payment to the invoice by
@@ -70,7 +70,7 @@ public class Transaction
     /// <para><b>Limited by the PSD2 specification to 140 characters, truncates additional information if necessary.</b></para>
     /// </summary>
     [JsonPropertyName("remittanceInformationUnstructured")]
-    public string RemittanceInformationUnstructured { get; }
+    public string? RemittanceInformationUnstructured { get; }
     /// <summary>
     /// Unstructured reference issued by the seller used to establish a link between the payment of an invoice
     /// and the invoice instance. The reference helps the seller to assign an incoming payment to the invoice by
@@ -78,29 +78,29 @@ public class Transaction
     /// <para><b>Might contain more information than <see cref="RemittanceInformationUnstructured"/> (if contents were truncated).</b></para>
     /// </summary>
     [JsonPropertyName("remittanceInformationUnstructuredArray")]
-    public IEnumerable<string> RemittanceInformationUnstructuredArray { get; }
+    public IEnumerable<string>? RemittanceInformationUnstructuredArray { get; }
     /// <summary>
     /// Unique identification assigned by the initiating party to unambiguously identify the transaction. This 
     /// identification is passed on, unchanged, throughout the entire end-to-end chain.
     /// </summary>
     [JsonPropertyName("endToEndId")]
-    public string EndToEndId { get; }
+    public string? EndToEndId { get; }
     /// <summary>
     /// Identification of mandates, e.g. a SEPA mandate id.
     /// </summary>
     [JsonPropertyName("mandateId")]
-    public string MandateId { get; }
+    public string? MandateId { get; }
     /// <summary>
     /// Proprietary bank transaction code to identify the underlying transaction.
     /// </summary>
     [JsonPropertyName("proprietaryBankTransactionCode")]
-    public string ProprietaryBankTransactionCode { get; }
+    public string? ProprietaryBankTransactionCode { get; }
     /// <summary>
     /// Underlying reason for the transaction, as published in an external purpose code list.
     /// <para>For reference see: <see href="https://www.iso20022.org/catalogue-messages/additional-content-messages/external-code-sets"/></para>
     /// </summary>
     [JsonPropertyName("purposeCode")]
-    public string PurposeCode { get; }
+    public string? PurposeCode { get; }
 
     /// <summary>
     /// Creates a new instance of <see cref="Transaction"/>.
@@ -135,7 +135,7 @@ public class Transaction
     /// <param name="purposeCode">Underlying reason for the transaction, as published in an external purpose code list.
     /// <para>For reference see: <see href="https://www.iso20022.org/catalogue-messages/additional-content-messages/external-code-sets"/></para></param>
     [JsonConstructor]
-    public Transaction(string transactionId, string debtorName, MinimalBankAccount debtorAccount, string ultimateDebtor, string creditorName, MinimalBankAccount creditorAccount, AmountCurrencyPair transactionAmount, string bankTransactionCode, DateTime bookingDate, DateTime valueDate, string remittanceInformationUnstructured, IEnumerable<string> remittanceInformationUnstructuredArray, string endToEndId, string mandateId, string proprietaryBankTransactionCode, string purposeCode)
+    public Transaction(string? transactionId, string? debtorName, MinimalBankAccount? debtorAccount, string? ultimateDebtor, string? creditorName, MinimalBankAccount? creditorAccount, AmountCurrencyPair transactionAmount, string? bankTransactionCode, DateTime? bookingDate, DateTime? valueDate, string? remittanceInformationUnstructured, IEnumerable<string>? remittanceInformationUnstructuredArray, string? endToEndId, string? mandateId, string? proprietaryBankTransactionCode, string? purposeCode)
     {
         TransactionId = transactionId;
         DebtorName = debtorName;
