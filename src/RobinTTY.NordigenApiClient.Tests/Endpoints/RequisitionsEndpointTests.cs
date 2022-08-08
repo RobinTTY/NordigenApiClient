@@ -5,7 +5,7 @@ using RobinTTY.NordigenApiClient.Models.Responses;
 
 namespace RobinTTY.NordigenApiClient.Tests.Endpoints;
 
-public class RequisitionsEndpointTests
+internal class RequisitionsEndpointTests
 {
     private NordigenClient _apiClient = null!;
 
@@ -33,9 +33,16 @@ public class RequisitionsEndpointTests
         TestExtensions.AssertNordigenApiResponseIsSuccessful(agreementResponse, HttpStatusCode.Created);
         var agreementId = agreementResponse.Result!.Id;
 
+        // Get existing requisitions
+        var existingRequisitions = await _apiClient.RequisitionsEndpoint.GetRequisitions(100, 0);
+        TestExtensions.AssertNordigenApiResponseIsSuccessful(existingRequisitions, HttpStatusCode.OK);
+
         // Create 3 example requisitions
         var redirect = new Uri("https://github.com/RobinTTY/NordigenApiClient");
         var ids = new List<string>();
+
+        var existingIds = existingRequisitions.Result!.Results.Select(agreement => agreement.Id.ToString()).ToList();;
+        ids.AddRange(existingIds);
         for (var i = 0; i < 3; i++)
         {
             var requisitionRequest = new CreateRequisitionRequest(redirect, institutionId, agreementId, $"internal_reference_{i}", "EN", null, false, false);
@@ -43,7 +50,7 @@ public class RequisitionsEndpointTests
             TestExtensions.AssertNordigenApiResponseIsSuccessful(createResponse, HttpStatusCode.Created);
             ids.Add(createResponse.Result!.Id.ToString());
         }
-
+        
         // Get a response page for each requisition
         var page1Response = await _apiClient.RequisitionsEndpoint.GetRequisitions(1, 0);
         AssertThatRequisitionsPageContainsRequisition(page1Response, ids);
@@ -57,9 +64,8 @@ public class RequisitionsEndpointTests
         Assert.That(page3Response, Is.Not.Null);
         AssertThatRequisitionsPageContainsRequisition(page3Response!, ids);
 
-        // On the last page there should be no Url to a next page, but one for the previous one
-        Assert.That(page3Response!.Result!.Next, Is.Null);
-        Assert.That(page3Response.Result!.Previous, Is.Not.Null);
+        // On the last page there should be a Url to the previous one
+        Assert.That(page3Response!.Result!.Previous, Is.Not.Null);
 
         // Go to previous page
         var previousPageResponse = await page3Response.Result!.GetPreviousPage(_apiClient);
@@ -82,7 +88,7 @@ public class RequisitionsEndpointTests
         // Delete created resources
         var agreementDeletion = await _apiClient.AgreementsEndpoint.DeleteAgreement(agreementId);
         TestExtensions.AssertNordigenApiResponseIsSuccessful(agreementDeletion, HttpStatusCode.OK);
-
+        existingIds.ForEach(id => ids.Remove(id));
         foreach (var id in ids)
         {
             var result = await _apiClient.RequisitionsEndpoint.DeleteRequisition(id);

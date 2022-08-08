@@ -4,7 +4,7 @@ using RobinTTY.NordigenApiClient.Models.Requests;
 namespace RobinTTY.NordigenApiClient.Models.Errors;
 
 /// <summary>
-/// An error description as returned by the requisitions endpoint of the Nordigen API.
+/// An error description as returned by the create operation of the requisitions endpoint of the Nordigen API.
 /// </summary>
 public class CreateRequisitionError : BasicError
 {
