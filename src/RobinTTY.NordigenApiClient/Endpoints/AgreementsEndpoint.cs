@@ -100,7 +100,7 @@ public class AgreementsEndpoint
     }
 
     /// <summary>
-    /// Accepts an end user agreement.
+    /// Accepts an end user agreement. Only available to customers with an enterprise contract at Nordigen.
     /// <para>Route: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/agreements/accept%20EUA"/></para>
     /// </summary>
     /// <param name="id">The id of the end user agreement to accept.</param>
@@ -111,7 +111,7 @@ public class AgreementsEndpoint
         => await AcceptAgreementInternal(id.ToString(), metadata, cancellationToken);
 
     /// <summary>
-    /// Accepts an end user agreement.
+    /// Accepts an end user agreement. Only available to customers with an enterprise contract at Nordigen.
     /// <para>Route: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/agreements/accept%20EUA"/></para>
     /// </summary>
     /// <param name="id">The id of the end user agreement to accept.</param>

@@ -5,7 +5,7 @@ using RobinTTY.NordigenApiClient.Models.Responses;
 
 namespace RobinTTY.NordigenApiClient.Tests.Endpoints;
 
-public class AgreementsEndpointTests
+internal class AgreementsEndpointTests
 {
     private NordigenClient _apiClient = null!;
 
@@ -24,16 +24,23 @@ public class AgreementsEndpointTests
     [Test]
     public async Task GetAgreementsPaged()
     {
+        // Get existing agreements
+        var existingAgreements = await _apiClient.AgreementsEndpoint.GetAgreements(100, 0);
+        TestExtensions.AssertNordigenApiResponseIsSuccessful(existingAgreements, HttpStatusCode.OK);
+
         // Create 3 example agreements
         var agreementRequest = new CreateAgreementRequest(90, 90, new List<string> { "balances", "details", "transactions" }, "SANDBOXFINANCE_SFIN0000");
         var ids = new List<string>();
+
+        var existingIds = existingAgreements.Result!.Results.Select(agreement => agreement.Id.ToString()).ToList();
+        ids.AddRange(existingIds);
         for (var i = 0; i < 3; i++)
         {
             var createResponse = await _apiClient.AgreementsEndpoint.CreateAgreement(agreementRequest);
             TestExtensions.AssertNordigenApiResponseIsSuccessful(createResponse, HttpStatusCode.Created);
             ids.Add(createResponse.Result!.Id.ToString());
         }
-        
+
         // Get a response page for each agreement
         var page1Response = await _apiClient.AgreementsEndpoint.GetAgreements(1, 0);
         AssertThatAgreementPageContainsAgreement(page1Response, ids);
@@ -45,10 +52,9 @@ public class AgreementsEndpointTests
         var page3Response = await page2Response!.Result!.GetNextPage(_apiClient);
         Assert.That(page3Response, Is.Not.Null);
         AssertThatAgreementPageContainsAgreement(page3Response!, ids);
-        
-        // On the last page there should be no Url to a next page, but one for the previous one
-        Assert.That(page3Response!.Result!.Next, Is.Null);
-        Assert.That(page3Response.Result!.Previous, Is.Not.Null);
+
+        // On the last page there should be a Url to the previous one
+        Assert.That(page3Response!.Result!.Previous, Is.Not.Null);
 
         // Go to previous page
         var previousPageResponse = await page3Response.Result!.GetPreviousPage(_apiClient);
@@ -62,6 +68,7 @@ public class AgreementsEndpointTests
         Assert.That(prevAgreementId, Is.EqualTo(page2AgreementId));
 
         // Delete created agreements
+        existingIds.ForEach(id => ids.Remove(id));
         foreach (var id in ids)
         {
             var result = await _apiClient.AgreementsEndpoint.DeleteAgreement(id);

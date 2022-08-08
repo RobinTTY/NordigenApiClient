@@ -3,7 +3,7 @@ using RobinTTY.NordigenApiClient.Models;
 
 namespace RobinTTY.NordigenApiClient.Tests.Endpoints;
 
-public class TokenEndpointTests
+internal class TokenEndpointTests
 {
     private NordigenClient _apiClient = null!;
 
