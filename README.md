@@ -77,7 +77,7 @@ Here is how you would go about retrieving the balances and transactions for a ba
     if (requisitionResponse.IsSuccess)
     {
         Console.WriteLine($"Requisition id: {requisitionResponse.Result!.Id}");
-        Console.WriteLine($"Start authentication here: {requisitionResponse.Result!.AuthenticationLink}");
+        Console.WriteLine($"Start authentication: {requisitionResponse.Result!.AuthenticationLink}");
     }
 
     else
