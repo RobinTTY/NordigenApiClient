@@ -45,7 +45,7 @@ internal class RequisitionsEndpointTests
         ids.AddRange(existingIds);
         for (var i = 0; i < 3; i++)
         {
-            var requisitionRequest = new CreateRequisitionRequest(redirect, institutionId, agreementId, $"internal_reference_{i}", "EN", null, false, false);
+            var requisitionRequest = new CreateRequisitionRequest(redirect, institutionId, $"internal_reference_{i}", "EN", agreementId);
             var createResponse = await _apiClient.RequisitionsEndpoint.CreateRequisition(requisitionRequest);
             TestExtensions.AssertNordigenApiResponseIsSuccessful(createResponse, HttpStatusCode.Created);
             ids.Add(createResponse.Result!.Id.ToString());
@@ -120,7 +120,7 @@ internal class RequisitionsEndpointTests
     {
         var redirect = new Uri("ftp://ftp.test.com");
         var agreementId = Guid.Empty;
-        var requisitionRequest = new CreateRequisitionRequest(redirect, "123", agreementId, "internal_reference", "EN", null, true, true);
+        var requisitionRequest = new CreateRequisitionRequest(redirect, "123", "internal_reference", "EN", agreementId , null, true, true);
         var response = await _apiClient.RequisitionsEndpoint.CreateRequisition(requisitionRequest);
 
         TestExtensions.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.BadRequest);
