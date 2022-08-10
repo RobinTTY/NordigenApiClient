@@ -21,9 +21,9 @@ internal class TokenEndpointTests
     [Test]
     public async Task GetJwtTokenPairAndRefresh()
     {
-        var response = await _apiClient.TokenEndpoint.GetToken();
+        var response = await _apiClient.TokenEndpoint.GetTokenPair();
         TestExtensions.AssertNordigenApiResponseIsSuccessful(response, HttpStatusCode.OK);
-        var response2 = await _apiClient.TokenEndpoint.RefreshToken(response.Result!.RefreshToken);
+        var response2 = await _apiClient.TokenEndpoint.RefreshAccessToken(response.Result!.RefreshToken);
         TestExtensions.AssertNordigenApiResponseIsSuccessful(response2, HttpStatusCode.OK);
     }
 
@@ -38,7 +38,7 @@ internal class TokenEndpointTests
         var httpClient = new HttpClient();
         var credentials = new NordigenClientCredentials("invalid", "invalid");
         var apiClient = new NordigenClient(httpClient, credentials);
-        var response = await apiClient.TokenEndpoint.GetToken();
+        var response = await apiClient.TokenEndpoint.GetTokenPair();
 
         Assert.That(response.IsSuccess, Is.False);
         Assert.That(response.Result, Is.Null);

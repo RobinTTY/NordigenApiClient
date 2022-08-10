@@ -14,10 +14,13 @@ namespace RobinTTY.NordigenApiClient;
 public class NordigenClient
 {
     private readonly HttpClient _httpClient;
-    private readonly JsonWebTokenPair? _jwtTokenPair;
     private readonly JsonSerializerOptions _serializerOptions;
     internal readonly NordigenClientCredentials Credentials;
 
+    /// <summary>
+    /// A pair consisting of access/refresh token used to authenticate with the Nordigen API.
+    /// </summary>
+    public JsonWebTokenPair? JwtTokenPair { get; set; }
     /// <summary>
     /// Provides support for the API operations of the tokens endpoint.
     /// <para>Reference: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/token"/></para>
@@ -53,13 +56,13 @@ public class NordigenClient
     public NordigenClient(HttpClient httpClient, NordigenClientCredentials credentials, JsonWebTokenPair? jwtTokenPair = null)
     {
         _httpClient = httpClient;
-        _jwtTokenPair = jwtTokenPair;
         _serializerOptions = new JsonSerializerOptions
         {
             Converters = { new JsonWebTokenConverter(), new GuidConverter() }
         };
 
         Credentials = credentials;
+        JwtTokenPair = jwtTokenPair;
         TokenEndpoint = new TokenEndpoint(this);
         InstitutionsEndpoint = new InstitutionsEndpoint(this);
         AgreementsEndpoint = new AgreementsEndpoint(this);
@@ -104,25 +107,25 @@ public class NordigenClient
     private async Task<JsonWebTokenPair?> TryGetValidTokenPair(CancellationToken cancellationToken = default)
     {
         // Request a new token if it is null or if the refresh token has expired
-        if (_jwtTokenPair == null || _jwtTokenPair.RefreshToken.IsExpired(TimeSpan.FromMinutes(1)))
+        if (JwtTokenPair == null || JwtTokenPair.RefreshToken.IsExpired(TimeSpan.FromMinutes(1)))
         {
-            var response = await TokenEndpoint.GetToken(cancellationToken);
+            var response = await TokenEndpoint.GetTokenPair(cancellationToken);
             return response.IsSuccess ? response.Result : null;
         }
 
         // Refresh the current access token if it's expired (or valid for less than a minute)
-        if (_jwtTokenPair.AccessToken.IsExpired(TimeSpan.FromMinutes(1)))
+        if (JwtTokenPair.AccessToken.IsExpired(TimeSpan.FromMinutes(1)))
         {
-            var response = await TokenEndpoint.RefreshToken(_jwtTokenPair.RefreshToken, cancellationToken);
+            var response = await TokenEndpoint.RefreshAccessToken(JwtTokenPair.RefreshToken, cancellationToken);
             if (!response.IsSuccess) return null;
-            
+
             // Update the token pair with the response
-            _jwtTokenPair.AccessToken = response.Result!.AccessToken;
-            _jwtTokenPair.AccessExpires = response.Result!.AccessExpires;
-            return _jwtTokenPair;
+            JwtTokenPair.AccessToken = response.Result!.AccessToken;
+            JwtTokenPair.AccessExpires = response.Result!.AccessExpires;
+            return JwtTokenPair;
         }
 
         // Token pair is still valid and can be returned
-        return _jwtTokenPair;
+        return JwtTokenPair;
     }
 }

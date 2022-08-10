@@ -29,7 +29,7 @@ public class TokenEndpoint
     /// </summary>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
     /// <returns>A <see cref="NordigenApiResponse{TResponse, TError}"/> containing the obtained <see cref="JsonWebTokenPair"/> if the request was successful.</returns>
-    public async Task<NordigenApiResponse<JsonWebTokenPair, BasicError>> GetToken(CancellationToken cancellationToken = default)
+    public async Task<NordigenApiResponse<JsonWebTokenPair, BasicError>> GetTokenPair(CancellationToken cancellationToken = default)
     {
         var requestBody = JsonContent.Create(_nordigenClient.Credentials);
         return await _nordigenClient.MakeRequest<JsonWebTokenPair, BasicError>($"{NordigenEndpointUrls.TokensEndpoint}new/", HttpMethod.Post, cancellationToken, body: requestBody, useAuthentication: false);
@@ -39,10 +39,10 @@ public class TokenEndpoint
     /// Refreshes the JWT access token.
     /// <para>Route: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/token/JWT%20Refresh"></see></para>
     /// </summary>
-    /// <param name="refreshToken">The refresh token previously obtained through the <see cref="GetToken"/> method.</param>
+    /// <param name="refreshToken">The refresh token previously obtained through the <see cref="GetTokenPair"/> method.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
     /// <returns>A <see cref="NordigenApiResponse{TResponse, TError}"/> containing the refreshed <see cref="JsonWebAccessToken"/> if the request was successful.</returns>
-    public async Task<NordigenApiResponse<JsonWebAccessToken, BasicError>> RefreshToken(JsonWebToken refreshToken, CancellationToken cancellationToken = default)
+    public async Task<NordigenApiResponse<JsonWebAccessToken, BasicError>> RefreshAccessToken(JsonWebToken refreshToken, CancellationToken cancellationToken = default)
     {
         var requestBody = JsonContent.Create(new { refresh = refreshToken.EncodedToken });
         return await _nordigenClient.MakeRequest<JsonWebAccessToken, BasicError>($"{NordigenEndpointUrls.TokensEndpoint}refresh/", HttpMethod.Post, cancellationToken, body: requestBody, useAuthentication: false);

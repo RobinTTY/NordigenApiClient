@@ -71,7 +71,7 @@ public class CreateRequisitionRequest
     /// instead of waiting for transaction data being processed. Accounts endpoint status will be PROCESSING and you have to wait until account status is READY
     /// before you're able to query the transactions.
     /// <para>For details see: <see href="https://ob.helpscoutdocs.com/article/145-immediate-end-user-redirect-from-bank-after-consent"/>.</para></param>
-    public CreateRequisitionRequest(Uri redirect, string institutionId, Guid? agreementId, string reference, string userLanguage, string? socialSecurityNumber, bool accountSelection, bool redirectImmediate)
+    public CreateRequisitionRequest(Uri redirect, string institutionId, string reference, string userLanguage, Guid? agreementId = null, string? socialSecurityNumber = null, bool accountSelection = false, bool redirectImmediate = false)
     {
         Redirect = redirect;
         InstitutionId = institutionId;

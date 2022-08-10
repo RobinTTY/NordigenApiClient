@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -9,6 +9,7 @@
     <PackageProjectUrl>https://github.com/RobinTTY/NordigenApiClient</PackageProjectUrl>
     <RepositoryUrl>https://github.com/RobinTTY/NordigenApiClient</RepositoryUrl>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <Description>A C# client for the API of https://nordigen.com/</Description>
   </PropertyGroup>
 
   <ItemGroup>
