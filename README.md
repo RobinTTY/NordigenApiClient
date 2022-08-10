@@ -5,7 +5,7 @@ This project provides a C# client for the [Nordigen API](https://www.nordigen.co
 - Token
 - Institutions
 - Agreements
-- Requisitons
+- Requisitions
 - Accounts
 
 Since the documentations provided by Nordigen is not complete as it comes to the returned data, I tried to be as comprehensive as possible in adding undocumented fields. If you notice any missing fields, please feel free to open an issue/PR.
@@ -84,7 +84,7 @@ Here is how you would go about retrieving the balances and transactions for a ba
         Console.WriteLine($"Requisition couldn't be created: {requisitionResponse.Error!.Summary}");
    ```
 
-3. You will now need to accept the end user agrrement by following the authentication link. After that you will be able to retrieve the accounts linked to your bank account:
+3. You will now need to accept the end user agreement by following the authentication link. After that you will be able to retrieve the accounts linked to your bank account:
 
    ```cs
    var requisitionId = "your-requisition-id";
