@@ -67,11 +67,11 @@ Here is how you would go about retrieving the balances and transactions for a ba
 2. Choose the institution your bank account is registered with and create a requisition for it:
 
    ```cs
-   var institutionId = "BANK_OF_SCOTLAND_BOFSGBS1";
+   var institution = "BANK_OF_SCOTLAND_BOFSGBS1";
    var userLanguage = "EN";
    var reference = "your-internal-reference";
    var redirect = new Uri("https://where-nordigen-will-redirect-after-authentication.com");
-   var requisitionRequest = new CreateRequisitionRequest(redirect, institutionId, reference, userLanguage);
+   var requisitionRequest = new CreateRequisitionRequest(redirect, institution, reference, userLanguage);
    var requisitionResponse = await client.RequisitionsEndpoint.CreateRequisition(requisitionRequest);
 
     if (requisitionResponse.IsSuccess)
@@ -113,8 +113,9 @@ Here is how you would go about retrieving the balances and transactions for a ba
    if(balancesResponse.IsSuccess)
        balancesResponse.Result!.ForEach(balance =>
        {
+           var balanceAmount = balance.BalanceAmount;
            Console.WriteLine($"Type: {balance.BalanceType}");
-           Console.WriteLine($"Balance: {balance.BalanceAmount.AmountParsed} {balance.BalanceAmount.Currency}");
+           Console.WriteLine($"Balance: {balanceAmount.AmountParsed} {balanceAmount.Currency}");
        });
 
    var transactionsResponse = await client.AccountsEndpoint.GetTransactions(accountId);
