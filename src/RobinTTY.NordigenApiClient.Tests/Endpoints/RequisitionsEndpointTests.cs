@@ -41,7 +41,7 @@ internal class RequisitionsEndpointTests
         var redirect = new Uri("https://github.com/RobinTTY/NordigenApiClient");
         var ids = new List<string>();
 
-        var existingIds = existingRequisitions.Result!.Results.Select(agreement => agreement.Id.ToString()).ToList();;
+        var existingIds = existingRequisitions.Result!.Results.Select(agreement => agreement.Id.ToString()).ToList();
         ids.AddRange(existingIds);
         for (var i = 0; i < 3; i++)
         {
