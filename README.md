@@ -39,24 +39,27 @@ Since the documentations provided by Nordigen is not complete as it comes to the
    ```cs
    // If the response is successful the Result will not be null (the Error will be null)
    if(response.IsSuccess){
-    var institutions = response.Result!;
-    institutions.ForEach(institution => Console.WriteLine(institution.Name));
+      var institutions = response.Result!;
+      institutions.ForEach(institution => Console.WriteLine(institution.Name));
    }
    // If the response is not successful the Error will not be null (the Result will be null)
    else
-    Console.WriteLine(response.Error!.Summary);
+      Console.WriteLine(response.Error!.Summary);
    ```
 
 ## Getting balances and transactions for a bank account
 
-Here is how you would go about retrieving the balances and transactions for a bank account (you can find this example [here](TODO)):
+Here is how you would go about retrieving the balances and transactions for a bank account:
 
 1. Get a list of institutions in your country (e.g. Great Britain):
 
    ```cs
    var institutionsResponse = await client.InstitutionsEndpoint.GetInstitutions(country: "GB");
    if(institutionsResponse.IsSuccess)
-      institutionsResponse.Result!.ForEach(institution => Console.WriteLine($"Institution: {institution.Name}, Id: {institution.Id}"));
+      institutionsResponse.Result!.ForEach(institution =>
+      {
+          Console.WriteLine($"Institution: {institution.Name}, Id: {institution.Id}");
+      });
    else
       Console.WriteLine($"Couldn't retrieve institutions, error: {institutionsResponse.Error!.Summary}");
    ```
@@ -65,15 +68,20 @@ Here is how you would go about retrieving the balances and transactions for a ba
 
    ```cs
    var institutionId = "BANK_OF_SCOTLAND_BOFSGBS1";
-   var userLanguageCode = "EN";
-   var redirectUri = new Uri("https://where-nordigen-will-redirect-after-authentication.com");
-   var requisitionRequest = new CreateRequisitionRequest(redirectUri, institutionId, "your-internal-reference", userLanguageCode);
+   var userLanguage = "EN";
+   var reference = "your-internal-reference";
+   var redirect = new Uri("https://where-nordigen-will-redirect-after-authentication.com");
+   var requisitionRequest = new CreateRequisitionRequest(redirect, institutionId, reference, userLanguage);
    var requisitionResponse = await client.RequisitionsEndpoint.CreateRequisition(requisitionRequest);
 
-   if(requisitionResponse.IsSuccess)
-       Console.WriteLine($"Requisition id: {requisitionResponse.Result!.Id} Start authentication here: {requisitionResponse.Result!.AuthenticationLink}");
-   else
-       Console.WriteLine($"Requisition couldn't be created: {requisitionResponse.Error!.Summary}");
+    if (requisitionResponse.IsSuccess)
+    {
+        Console.WriteLine($"Requisition id: {requisitionResponse.Result!.Id}");
+        Console.WriteLine($"Start authentication here: {requisitionResponse.Result!.AuthenticationLink}");
+    }
+
+    else
+        Console.WriteLine($"Requisition couldn't be created: {requisitionResponse.Error!.Summary}");
    ```
 
 3. You will now need to accept the end user agrrement by following the authentication link. After that you will be able to retrieve the accounts linked to your bank account:
@@ -82,7 +90,10 @@ Here is how you would go about retrieving the balances and transactions for a ba
    var requisitionId = "your-requisition-id";
    var accountsResponse = await client.RequisitionsEndpoint.GetRequisition(requisitionId);
    if(accountsResponse.IsSuccess)
-       accountsResponse.Result!.Accounts.ForEach(accountId => Console.WriteLine($"Account id: {accountId}"));
+       accountsResponse.Result!.Accounts.ForEach(accountId =>
+       {
+            Console.WriteLine($"Account id: {accountId}");
+       });
    else
        Console.WriteLine($"Accounts couldn't be retrieved: {accountsResponse.Error!.Summary}");
    ```
@@ -93,21 +104,27 @@ Here is how you would go about retrieving the balances and transactions for a ba
    var accountId = "your-account-id";
    var bankAccountDetailsResponse = await client.AccountsEndpoint.GetAccountDetails(accountId);
    if(bankAccountDetailsResponse.IsSuccess)
-       Console.WriteLine($"IBAN: {bankAccountDetailsResponse.Result!.Iban}, Account name: {bankAccountDetailsResponse.Result!.Name}");
+   {
+        Console.WriteLine($"IBAN: {bankAccountDetailsResponse.Result!.Iban}");
+        Console.WriteLine($"Account name: {bankAccountDetailsResponse.Result!.Name}");
+   }
 
    var balancesResponse = await client.AccountsEndpoint.GetBalances(accountId);
    if(balancesResponse.IsSuccess)
        balancesResponse.Result!.ForEach(balance =>
        {
-           Console.WriteLine($"Type: {balance.BalanceType}, Balance: {balance.BalanceAmount.AmountParsed} {balance.BalanceAmount.Currency}");
+           Console.WriteLine($"Type: {balance.BalanceType}");
+           Console.WriteLine($"Balance: {balance.BalanceAmount.AmountParsed} {balance.BalanceAmount.Currency}");
        });
 
    var transactionsResponse = await client.AccountsEndpoint.GetTransactions(accountId);
    if (transactionsResponse.IsSuccess)
        transactionsResponse.Result!.BookedTransactions.ForEach(transaction =>
        {
+           var transactionAmount = transaction.TransactionAmount;
            Console.WriteLine($"Remittance: {transaction.RemittanceInformationUnstructured}");
-           Console.WriteLine($"Booking date:{transaction.ValueDate}, Amount: {transaction.TransactionAmount.AmountParsed} {transaction.TransactionAmount.Currency}");
+           Console.WriteLine($"Booking date:{transaction.ValueDate}");
+           Console.WriteLine($"Amount: {transactionAmount.AmountParsed} {transactionAmount.Currency}");
        });
    ```
 
