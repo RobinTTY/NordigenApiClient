@@ -103,8 +103,26 @@ internal class AccountsEndpointTests
     public async Task GetTransactionRange()
     {
         var startDate = new DateOnly(2022, 08, 04);
-        var balancesResponse = await _apiClient.AccountsEndpoint.GetTransactions(_accountId, startDate, DateOnly.FromDateTime(DateTime.Now));
+        var balancesResponse = await _apiClient.AccountsEndpoint.GetTransactions(_accountId, startDate, DateOnly.FromDateTime(DateTime.Now.Subtract(TimeSpan.FromMinutes(1))));
         TestExtensions.AssertNordigenApiResponseIsSuccessful(balancesResponse, HttpStatusCode.OK);
         Assert.That(balancesResponse.Result!.BookedTransactions, Has.Count.AtLeast(10));
+    }
+
+    /// <summary>
+    /// Tests the retrieval of transactions within a specific time frame in the future. This should return an error.
+    /// Route: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/accounts/accounts_transactions_retrieve"/>
+    /// </summary>
+    /// <returns></returns>
+    [Test]
+    public async Task GetTransactionRangeInFuture()
+    {
+        var dateInFuture = DateTime.Now.AddDays(1);
+        var balancesResponse = await _apiClient.AccountsEndpoint.GetTransactions(_accountId, DateOnly.FromDateTime(dateInFuture), DateOnly.FromDateTime(dateInFuture.AddDays(1)));
+        TestExtensions.AssertNordigenApiResponseIsUnsuccessful(balancesResponse, HttpStatusCode.BadRequest);
+        Assert.Multiple(() =>
+        {
+            Assert.That(balancesResponse.Error!.StartDateError, Is.Not.Null);
+            Assert.That(balancesResponse.Error!.EndDateError, Is.Not.Null);
+        });
     }
 }

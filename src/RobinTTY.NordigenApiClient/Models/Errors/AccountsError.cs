@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using RobinTTY.NordigenApiClient.Endpoints;
 
 namespace RobinTTY.NordigenApiClient.Models.Errors;
 
@@ -12,6 +13,19 @@ public class AccountsError : BasicError
     /// </summary>
     [JsonPropertyName("type")]
     public string Type { get; }
+    /// <summary>
+    /// An error that was returned related to the <see cref="AccountsEndpoint.GetTransactions(Guid, DateOnly?, DateOnly?, CancellationToken)"/> or
+    /// <see cref="AccountsEndpoint.GetTransactions(string, DateOnly?, DateOnly?, CancellationToken)"/> method because the start date value was not accepted.
+    /// </summary>
+    [JsonPropertyName("date_from")]
+    public BasicError StartDateError { get; }
+    /// <summary>
+    /// An error that was returned related to the <see cref="AccountsEndpoint.GetTransactions(Guid, DateOnly?, DateOnly?, CancellationToken)"/> or
+    /// <see cref="AccountsEndpoint.GetTransactions(string, DateOnly?, DateOnly?, CancellationToken)"/> method because the end date value was not accepted.
+    /// </summary>
+    [JsonPropertyName("date_to")]
+    public BasicError EndDateError { get; }
+
 
     /// <summary>
     /// Creates a new instance of <see cref="AccountsError"/>.
@@ -19,8 +33,15 @@ public class AccountsError : BasicError
     /// <param name="summary">The summary of the API error.</param>
     /// <param name="detail">The detailed description of the API error.</param>
     /// <param name="type">The type of the error.</param>
-    public AccountsError(string summary, string detail, string type) : base(summary, detail)
+    /// <param name="startDateError">An error that was returned related to the <see cref="AccountsEndpoint.GetTransactions(Guid, DateOnly?, DateOnly?, CancellationToken)"/> or
+    /// <see cref="AccountsEndpoint.GetTransactions(string, DateOnly?, DateOnly?, CancellationToken)"/> method because the start date value was not accepted.</param>
+    /// <param name="endDateError">An error that was returned related to the <see cref="AccountsEndpoint.GetTransactions(Guid, DateOnly?, DateOnly?, CancellationToken)"/> or
+    /// <see cref="AccountsEndpoint.GetTransactions(string, DateOnly?, DateOnly?, CancellationToken)"/> method because the end date value was not accepted.</param>
+    [JsonConstructor]
+    public AccountsError(string summary, string detail, string type, BasicError startDateError, BasicError endDateError) : base(summary, detail)
     {
         Type = type;
+        StartDateError = startDateError;
+        EndDateError = endDateError;
     }
 }
