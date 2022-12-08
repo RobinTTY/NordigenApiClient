@@ -1,0 +1,2 @@
+﻿Added missing fields to Transaction/Balance data models.
+Introduces a breaking change to the property "balanceType" of the Balance class, which is now of type BalanceType instead of string.
