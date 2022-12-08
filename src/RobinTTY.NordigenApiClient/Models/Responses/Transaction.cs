@@ -101,6 +101,11 @@ public class Transaction
     /// </summary>
     [JsonPropertyName("purposeCode")]
     public string? PurposeCode { get; }
+    /// <summary>
+    /// Internal transactionId created by Nordigen
+    /// </summary>
+    [JsonPropertyName("InternalTransactionId")]
+    public string InternalTransactionId { get; }
 
     /// <summary>
     /// Creates a new instance of <see cref="Transaction"/>.
@@ -134,8 +139,9 @@ public class Transaction
     /// <param name="proprietaryBankTransactionCode">Proprietary bank transaction code to identify the underlying transaction.</param>
     /// <param name="purposeCode">Underlying reason for the transaction, as published in an external purpose code list.
     /// <para>For reference see: <see href="https://www.iso20022.org/catalogue-messages/additional-content-messages/external-code-sets"/></para></param>
+    /// <param name="internalTransactionId">Internal transactionId created by Nordigen</param>
     [JsonConstructor]
-    public Transaction(string? transactionId, string? debtorName, MinimalBankAccount? debtorAccount, string? ultimateDebtor, string? creditorName, MinimalBankAccount? creditorAccount, AmountCurrencyPair transactionAmount, string? bankTransactionCode, DateTime? bookingDate, DateTime? valueDate, string? remittanceInformationUnstructured, IEnumerable<string>? remittanceInformationUnstructuredArray, string? endToEndId, string? mandateId, string? proprietaryBankTransactionCode, string? purposeCode)
+    public Transaction(string? transactionId, string? debtorName, MinimalBankAccount? debtorAccount, string? ultimateDebtor, string? creditorName, MinimalBankAccount? creditorAccount, AmountCurrencyPair transactionAmount, string? bankTransactionCode, DateTime? bookingDate, DateTime? valueDate, string? remittanceInformationUnstructured, IEnumerable<string>? remittanceInformationUnstructuredArray, string? endToEndId, string? mandateId, string? proprietaryBankTransactionCode, string? purposeCode, string internalTransactionId)
     {
         TransactionId = transactionId;
         DebtorName = debtorName;
@@ -153,6 +159,7 @@ public class Transaction
         MandateId = mandateId;
         ProprietaryBankTransactionCode = proprietaryBankTransactionCode;
         PurposeCode = purposeCode;
+        InternalTransactionId = internalTransactionId;
     }
 }
 
