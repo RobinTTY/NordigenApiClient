@@ -13,7 +13,7 @@ public class Transaction
     /// about this transaction.
     /// </summary>
     [JsonPropertyName("transactionId")]
-    public string? TransactionId { get; set; }
+    public string? TransactionId { get; }
     /// <summary>
     /// The name of the party which owes the money.
     /// </summary>
@@ -24,6 +24,11 @@ public class Transaction
     /// </summary>
     [JsonPropertyName("debtorAccount")]
     public MinimalBankAccount? DebtorAccount { get; }
+    /// <summary>
+    /// The BIC code allocated to the financial institution servicing an account for the debtor.
+    /// </summary>
+    [JsonPropertyName("debtorAgent")]
+    public string? DebtorAgent { get; }
     /// <summary>
     /// Ultimate party that owes an amount of money to the (ultimate) creditor.
     /// </summary>
@@ -39,6 +44,21 @@ public class Transaction
     /// </summary>
     [JsonPropertyName("creditorAccount")]
     public MinimalBankAccount? CreditorAccount { get; }
+    /// <summary>
+    /// The BIC code allocated to the financial institution servicing an account for the creditor.
+    /// </summary>
+    [JsonPropertyName("creditorAgent")]
+    public string? CreditorAgent { get; }
+    /// <summary>
+    /// Ultimate party that is owed an amount of money by the (ultimate) debtor.
+    /// </summary>
+    [JsonPropertyName("ultimateCreditor")]
+    public string? UltimateCreditor { get; }
+    /// <summary>
+    /// Identification of Creditors, e.g. a SEPA Creditor ID.
+    /// </summary>
+    [JsonPropertyName("creditorId")]
+    public string? CreditorId { get; }
     /// <summary>
     /// The transaction amount including details about the currency the amount is denominated in.
     /// </summary>
@@ -58,11 +78,22 @@ public class Transaction
     [JsonPropertyName("bookingDate")]
     public DateTime? BookingDate { get; }
     /// <summary>
+    /// The date and time when the transaction was posted to the account.
+    /// </summary>
+    [JsonPropertyName("bookingDateTime")]
+    public DateTime? BookingDateTime { get; }
+    /// <summary>
     /// Date at which assets become available to the account owner in case of a credit entry, or cease to be
     /// available to the account owner in case of a debit entry.
     /// </summary>
     [JsonPropertyName("valueDate")]
     public DateTime? ValueDate { get; }
+    /// <summary>
+    /// Date at which assets become available to the account owner in case of a credit entry, or cease to be
+    /// available to the account owner in case of a debit entry.
+    /// </summary>
+    [JsonPropertyName("valueDateTime")]
+    public DateTime? ValueDateTime { get; }
     /// <summary>
     /// Unstructured reference issued by the seller used to establish a link between the payment of an invoice
     /// and the invoice instance. The reference helps the seller to assign an incoming payment to the invoice by
@@ -79,6 +110,19 @@ public class Transaction
     /// </summary>
     [JsonPropertyName("remittanceInformationUnstructuredArray")]
     public IEnumerable<string>? RemittanceInformationUnstructuredArray { get; }
+    /// <summary>
+    /// Reference issued by the seller used to establish a link between the payment of an invoice and the invoice instance. The reference
+    /// helps the seller to assign an incoming payment to the invoice by using a reference such as the invoice number or a purchase order number.
+    /// </summary>
+    [JsonPropertyName("remittanceInformationStructured")]
+    public string? RemittanceInformationStructured { get; }
+    /// <summary>
+    /// Reference issued by the seller used to establish a link between the payment of an invoice and the invoice instance. The reference
+    /// helps the seller to assign an incoming payment to the invoice by using a reference such as the invoice number or a purchase order number.
+    /// </summary>
+    [JsonPropertyName("remittanceInformationStructuredArray")]
+    public IEnumerable<string>? RemittanceInformationStructuredArray { get; }
+
     /// <summary>
     /// Unique identification assigned by the initiating party to unambiguously identify the transaction. This 
     /// identification is passed on, unchanged, throughout the entire end-to-end chain.
@@ -101,6 +145,46 @@ public class Transaction
     /// </summary>
     [JsonPropertyName("purposeCode")]
     public string? PurposeCode { get; }
+    /// <summary>
+    /// Used by the financial institution to transport additional transaction related information.
+    /// </summary>
+    [JsonPropertyName("additionalInformation")]
+    public string? AdditionalInformation { get; }
+    /// <summary>
+    /// Used if and only if the bookingStatus entry equals "information".
+    /// </summary>
+    [JsonPropertyName("additionalInformationStructured")]
+    public string? AdditionalInformationStructured { get; }
+    /// <summary>
+    /// The balance of the account after this transaction.
+    /// </summary>
+    [JsonPropertyName("balanceAfterTransaction")]
+    public Balance? BalanceAfterTransaction { get; }
+    /// <summary>
+    /// Identification of a check.
+    /// </summary>
+    [JsonPropertyName("checkId")]
+    public string? CheckId { get; }
+    /// <summary>
+    /// Array of the report exchange rate.
+    /// </summary>
+    [JsonPropertyName("currencyExchange")]
+    public IEnumerable<string>? CurrencyExchange { get; }
+    /// <summary>
+    /// The identification of the transaction as used for reference by the financial institution.
+    /// </summary>
+    [JsonPropertyName("entryReference")]
+    public string? EntryReference { get; }
+    /// <summary>
+    /// Transaction identifier given by Nordigen.
+    /// </summary>
+    [JsonPropertyName("internalTransactionId")]
+    public string? InternalTransactionId { get; }
+    /// <summary>
+    /// Merchant category code as defined by the card issuer.
+    /// </summary>
+    [JsonPropertyName("merchantCategoryCode")]
+    public string? MerchantCategoryCode { get; }
 
     /// <summary>
     /// Creates a new instance of <see cref="Transaction"/>.
@@ -134,8 +218,23 @@ public class Transaction
     /// <param name="proprietaryBankTransactionCode">Proprietary bank transaction code to identify the underlying transaction.</param>
     /// <param name="purposeCode">Underlying reason for the transaction, as published in an external purpose code list.
     /// <para>For reference see: <see href="https://www.iso20022.org/catalogue-messages/additional-content-messages/external-code-sets"/></para></param>
+    /// <param name="debtorAgent">The BIC code allocated to the financial institution servicing an account for the debtor.</param>
+    /// <param name="creditorAgent">The BIC code allocated to the financial institution servicing an account for the creditor.</param>
+    /// <param name="ultimateCreditor">Ultimate party that is owed an amount of money by the (ultimate) debtor.</param>
+    /// <param name="creditorId">Identification of Creditors, e.g. a SEPA Creditor ID.</param>
+    /// <param name="valueDateTime">Date at which assets become available to the account owner in case of a credit entry, or cease to be available to the account owner in case of a debit entry.</param>
+    /// <param name="remittanceInformationStructured">Reference issued by the seller used to establish a link between the payment of an invoice and the invoice instance. The reference helps the seller to assign an incoming payment to the invoice by using a reference such as the invoice number or a purchase order number.</param>
+    /// <param name="remittanceInformationStructuredArray">Reference issued by the seller used to establish a link between the payment of an invoice and the invoice instance. The reference helps the seller to assign an incoming payment to the invoice by using a reference such as the invoice number or a purchase order number.</param>
+    /// <param name="additionalInformation">Used by the financial institution to transport additional transaction related information.</param>
+    /// <param name="additionalInformationStructured">Used if and only if the bookingStatus entry equals "information".</param>
+    /// <param name="balanceAfterTransaction">The balance of the account after this transaction.</param>
+    /// <param name="checkId">Identification of a check.</param>
+    /// <param name="currencyExchange">Array of the report exchange rate.</param>
+    /// <param name="entryReference">The identification of the transaction as used for reference by the financial institution.</param>
+    /// <param name="internalTransactionId">Transaction identifier given by Nordigen.</param>
+    /// <param name="merchantCategoryCode">Merchant category code as defined by the card issuer.</param>
     [JsonConstructor]
-    public Transaction(string? transactionId, string? debtorName, MinimalBankAccount? debtorAccount, string? ultimateDebtor, string? creditorName, MinimalBankAccount? creditorAccount, AmountCurrencyPair transactionAmount, string? bankTransactionCode, DateTime? bookingDate, DateTime? valueDate, string? remittanceInformationUnstructured, IEnumerable<string>? remittanceInformationUnstructuredArray, string? endToEndId, string? mandateId, string? proprietaryBankTransactionCode, string? purposeCode)
+    public Transaction(string? transactionId, string? debtorName, MinimalBankAccount? debtorAccount, string? ultimateDebtor, string? creditorName, MinimalBankAccount? creditorAccount, AmountCurrencyPair transactionAmount, string? bankTransactionCode, DateTime? bookingDate, DateTime? valueDate, string? remittanceInformationUnstructured, IEnumerable<string>? remittanceInformationUnstructuredArray, string? endToEndId, string? mandateId, string? proprietaryBankTransactionCode, string? purposeCode, string? debtorAgent, string? creditorAgent, string? ultimateCreditor, string? creditorId, DateTime? valueDateTime, string? remittanceInformationStructured, IEnumerable<string>? remittanceInformationStructuredArray, string? additionalInformation, string? additionalInformationStructured, Balance? balanceAfterTransaction, string? checkId, IEnumerable<string>? currencyExchange, string? entryReference, string? internalTransactionId, string? merchantCategoryCode)
     {
         TransactionId = transactionId;
         DebtorName = debtorName;
@@ -153,6 +252,21 @@ public class Transaction
         MandateId = mandateId;
         ProprietaryBankTransactionCode = proprietaryBankTransactionCode;
         PurposeCode = purposeCode;
+        DebtorAgent = debtorAgent;
+        CreditorAgent = creditorAgent;
+        UltimateCreditor = ultimateCreditor;
+        CreditorId = creditorId;
+        ValueDateTime = valueDateTime;
+        RemittanceInformationStructured = remittanceInformationStructured;
+        RemittanceInformationStructuredArray = remittanceInformationStructuredArray;
+        AdditionalInformation = additionalInformation;
+        AdditionalInformationStructured = additionalInformationStructured;
+        BalanceAfterTransaction = balanceAfterTransaction;
+        CheckId = checkId;
+        CurrencyExchange = currencyExchange;
+        EntryReference = entryReference;
+        InternalTransactionId = internalTransactionId;
+        MerchantCategoryCode = merchantCategoryCode;
     }
 }
 

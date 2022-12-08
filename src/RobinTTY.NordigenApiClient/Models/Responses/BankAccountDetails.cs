@@ -19,6 +19,16 @@ public class BankAccountDetails
     [JsonPropertyName("iban")]
     public string Iban { get; }
     /// <summary>
+    /// The BIC (Business Identifier Code) associated with the account.
+    /// </summary>
+    public string? Bic { get; }
+    /// <summary>
+    /// Basic Bank Account Number represents a country-specific bank account number.
+    /// This data element is used for payment accounts which have no IBAN.
+    /// </summary>
+    [JsonPropertyName("bban")]
+    public string? Bban { get; }
+    /// <summary>
     /// The currency the account is denominated in.
     /// </summary>
     [JsonPropertyName("currency")]
@@ -28,6 +38,11 @@ public class BankAccountDetails
     /// </summary>
     [JsonPropertyName("ownerName")]
     public string OwnerName { get; }
+    /// <summary>
+    /// Address of the legal account owner.
+    /// </summary>
+    [JsonPropertyName("ownerAddressUnstructured")]
+    public string? OwnerAddressUnstructured { get; }
     /// <summary>
     /// Name of the account, as assigned by the bank, in agreement with the account owner in
     /// order to provide an additional means of identification of the account.
@@ -44,28 +59,79 @@ public class BankAccountDetails
     /// </summary>
     [JsonPropertyName("cashAccountType")]
     public string CashAccountType { get; }
+    /// <summary>
+    /// Specifications that might be provided by the financial institution (e.g. characteristics of the account/relevant card).
+    /// </summary>
+    [JsonPropertyName("details")]
+    public string? Details { get; }
+    /// <summary>
+    /// A financial institution might name a cash account associated with pending card transactions.
+    /// </summary>
+    [JsonPropertyName("linkedAccounts")]
+    public string? LinkedAccounts { get; }
+    /// <summary>
+    /// An alias to a payment account via a registered mobile phone number.
+    /// </summary>
+    [JsonPropertyName("msisdn")]
+    public string? Msisdn { get; }
+    /// <summary>
+    /// The account status:
+    /// <list type="bullet">
+    /// <item><description>"enabled": account is available</description></item>
+    /// <item><description>"deleted": account is terminated</description></item>
+    /// <item><description>"blocked": account is blocked e.g. for legal reasons</description></item>
+    /// </list>
+    /// If this field is not used, then the account is available in the sense of this specification.
+    /// </summary>
+    [JsonPropertyName("status")]
+    public string? Status { get; }
+    /// <summary>
+    /// Specifies the usage of the account:
+    /// <list type="bullet">
+    /// <item><description>PRIV: private personal account</description></item>
+    /// <item><description>ORGA: professional account</description></item>
+    /// </list>
+    /// </summary>
+    [JsonPropertyName("usage")]
+    public string? Usage { get; }
 
     /// <summary>
     /// Creates a new instance of <see cref="BankAccountDetails"/>.
     /// </summary>
     /// <param name="resourceId">Resource id used by the PSD2 interface.</param>
     /// <param name="iban">The IBAN of the bank account.</param>
+    /// <param name="bban">Basic Bank Account Number represents a country-specific bank account number.</param>
     /// <param name="currency">The currency the account is denominated in.</param>
     /// <param name="ownerName">Name of the legal account owner. If there is more than one owner, then two names might be noted here.</param>
+    /// <param name="ownerAddressUnstructured">Address of the legal account owner.</param>
     /// <param name="name">Name of the account, as assigned by the bank, in agreement with the account owner in order to provide an additional
     /// means of identification of the account.</param>
     /// <param name="product">Product name of the bank for this account.</param>
     /// <param name="cashAccountType">External cash account type 1 code as defined by ISO 20022.</param>
+    /// <param name="bic">The BIC (Business Identifier Code) associated with the account.</param>
+    /// <param name="details">Specifications that might be provided by the financial institution (e.g. characteristics of the account/relevant card).</param>
+    /// <param name="linkedAccounts">A financial institution might name a cash account associated with pending card transactions.</param>
+    /// <param name="msisdn">An alias to a payment account via a registered mobile phone number.</param>
+    /// <param name="status">The account status.</param>
+    /// <param name="usage">Specifies whether the account is used by an institution or a private individual.</param>
     [JsonConstructor]
-    public BankAccountDetails(string resourceId, string iban, string currency, string ownerName, string name, string product, string cashAccountType)
+    public BankAccountDetails(string resourceId, string iban, string? bic, string? bban, string currency, string ownerName, string? ownerAddressUnstructured, string name, string product, string cashAccountType, string? details, string? linkedAccounts, string? msisdn, string? status, string? usage)
     {
         ResourceId = resourceId;
         Iban = iban;
+        Bic = bic;
+        Bban = bban;
         Currency = currency;
         OwnerName = ownerName;
+        OwnerAddressUnstructured = ownerAddressUnstructured;
         Name = name;
         Product = product;
         CashAccountType = cashAccountType;
+        Details = details;
+        LinkedAccounts = linkedAccounts;
+        Msisdn = msisdn;
+        Status = status;
+        Usage = usage;
     }
 }
 

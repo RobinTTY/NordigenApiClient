@@ -8,8 +8,6 @@ This project provides a C# client for the [Nordigen API](https://www.nordigen.co
 - Requisitions
 - Accounts
 
-Since the documentations provided by Nordigen is not complete as it comes to the returned data, I tried to be as comprehensive as possible in adding undocumented fields. If you notice any missing fields, please feel free to open an issue/PR.
-
 ## Getting started
 
 1. To get started install the package via the package manager:

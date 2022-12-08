@@ -43,7 +43,7 @@ internal class RequisitionsEndpointTests
 
         var existingIds = existingRequisitions.Result!.Results.Select(agreement => agreement.Id.ToString()).ToList();
         ids.AddRange(existingIds);
-        for (var i = 0; i < 3; i++)
+        for (var i = 3; i < 6; i++)
         {
             var requisitionRequest = new CreateRequisitionRequest(redirect, institutionId, $"internal_reference_{i}", "EN", agreementId);
             var createResponse = await _apiClient.RequisitionsEndpoint.CreateRequisition(requisitionRequest);
@@ -124,8 +124,8 @@ internal class RequisitionsEndpointTests
         var response = await _apiClient.RequisitionsEndpoint.CreateRequisition(requisitionRequest);
 
         TestExtensions.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.BadRequest);
-        Assert.That(response.Error!.Summary, Is.EqualTo("Agreement: 00000000-0000-0000-0000-000000000000 not found"));
-        Assert.That(response.Error!.Detail, Is.EqualTo("Please specify valid agreement from /agreements/enduser/?={enduser_id} or create a new one"));
+        Assert.That(response.Error!.Summary, Is.EqualTo("Invalid  ID"));
+        Assert.That(response.Error!.Detail, Is.EqualTo("00000000-0000-0000-0000-000000000000 is not a valid  UUID. "));
     }
 
     private void AssertThatRequisitionsPageContainsRequisition(NordigenApiResponse<ResponsePage<Requisition>, BasicError> pagedResponse, List<string> ids)

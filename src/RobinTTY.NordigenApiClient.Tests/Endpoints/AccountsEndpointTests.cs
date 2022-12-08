@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Net;
 using RobinTTY.NordigenApiClient.Models.Requests;
+using RobinTTY.NordigenApiClient.Models.Responses;
 
 namespace RobinTTY.NordigenApiClient.Tests.Endpoints;
 
@@ -48,6 +49,7 @@ internal class AccountsEndpointTests
         Assert.That(balances, Has.Count.EqualTo(2));
         Assert.That(balances.Any(balance => balance.BalanceAmount.AmountParsed == (decimal)1913.12), Is.True);
         Assert.That(balances.Any(balance => balance.BalanceAmount.Currency == "EUR"), Is.True);
+        Assert.That(balances.All(balance => balance.BalanceType != BalanceType.Undefined));
     }
 
     /// <summary>
@@ -88,7 +90,6 @@ internal class AccountsEndpointTests
             matchesAll &= t.TransactionAmount.Amount == "45.00";
             matchesAll &= t.TransactionAmount.AmountParsed == (decimal)45.00;
             matchesAll &= t.TransactionAmount.Currency == "EUR";
-            matchesAll &= t.TransactionId == "2022080701927904-1";
             return matchesAll;
         }));
         Assert.That(transactions.PendingTransactions, Has.Count.EqualTo(1));
