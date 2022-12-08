@@ -156,7 +156,7 @@ var response = await client.TokenEndpoint.GetTokenPair();
 if (response.IsSuccess)
 {
     Console.WriteLine($"Access token: {response.Result!.AccessToken.EncodedToken}");
-    Console.WriteLine($"Access token: {response.Result!.RefreshToken.EncodedToken}");
+    Console.WriteLine($"Refresh token: {response.Result!.RefreshToken.EncodedToken}");
 }
 
 // Set the token pair on the client
