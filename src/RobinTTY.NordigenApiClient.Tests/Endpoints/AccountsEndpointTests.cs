@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-using System.Net;
-using RobinTTY.NordigenApiClient.Models.Requests;
+﻿using System.Net;
 using RobinTTY.NordigenApiClient.Models.Responses;
 
 namespace RobinTTY.NordigenApiClient.Tests.Endpoints;

@@ -1,5 +1,4 @@
-﻿using System.Net.Http.Json;
-using System.Text.Json;
+﻿using System.Text.Json;
 using RobinTTY.NordigenApiClient.Endpoints;
 using RobinTTY.NordigenApiClient.JsonConverters;
 using RobinTTY.NordigenApiClient.Models;
