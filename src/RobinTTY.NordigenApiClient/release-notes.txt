@@ -1,1 +1,1 @@
-﻿Fixed that the JwtTokenPair property of the NordigenApiClient is correctly populated once an authenticated request is made.
+﻿Fixed BankAccountDetails ignoring BIC in json responses.
