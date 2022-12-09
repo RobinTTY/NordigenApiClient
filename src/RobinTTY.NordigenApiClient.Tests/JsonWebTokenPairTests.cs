@@ -4,6 +4,17 @@ namespace RobinTTY.NordigenApiClient.Tests;
 
 public class JsonWebTokenPairTests
 {
+    private NordigenClient _apiClient = null!;
+
+    [OneTimeSetUp]
+    public void Setup()
+    {
+        _apiClient = TestExtensions.GetConfiguredClient(false);
+    }
+
+    /// <summary>
+    /// Tests that <see cref="JsonWebTokenPair"/> can be instantiated with valid JWT tokens.
+    /// </summary>
     [Test]
     public void CreateValidJsonWebTokenPair()
     {
@@ -18,11 +29,26 @@ public class JsonWebTokenPairTests
         Assert.That(token.RefreshToken.GetPayloadValue<string>("type"), Is.EqualTo("refresh"));
     }
 
+    /// <summary>
+    /// Tests that <see cref="JsonWebTokenPair"/> can't be instantiated with invalid JWT tokens.
+    /// </summary>
     [Test]
-    
     public void CreateInvalidJsonWebTokenPair()
     {
         var exampleToken = "eyJhbGciOiJIUzI1NisInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzIiwic3ViIjoiMTIzNDU2Nzg5MCIsIm5iZiI6MTY1OTE5OTU5MiwiZXhwIjoxNjU5MjE5NTkyLCJuYWIjoiSm9obiBEb2UiLCJpYXQiOjE1MTYyMzkwMjJ9.WP7xByegwjRvWZMwHScxunAOkwkW77ocaLvGen2PAU";
         Assert.Throws<ArgumentException>(() => new JsonWebTokenPair(exampleToken, exampleToken));
+    }
+
+    /// <summary>
+    /// Tests that <see cref="NordigenClient.JwtTokenPair"/> is populated after the first authenticated request is made.
+    /// </summary>
+    [Test]
+    public async Task CheckValidTokensAfterRequest()
+    {
+        Assert.That(_apiClient.JwtTokenPair, Is.Null);
+        await _apiClient.RequisitionsEndpoint.GetRequisitions(5, 0, CancellationToken.None);
+        Assert.That(_apiClient.JwtTokenPair, Is.Not.Null);
+        Assert.That(_apiClient.JwtTokenPair!.AccessToken.EncodedToken.Length, Is.GreaterThan(0));
+        Assert.That(_apiClient.JwtTokenPair!.RefreshToken.EncodedToken.Length, Is.GreaterThan(0));
     }
 }

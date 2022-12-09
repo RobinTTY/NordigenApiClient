@@ -1,2 +1,1 @@
-﻿Added missing fields to Transaction/Balance data models.
-Introduces a breaking change to the property "balanceType" of the Balance class, which is now of type BalanceType instead of string.
+﻿Fixed that the JwtTokenPair property of the NordigenApiClient is correctly populated once an authenticated request is made.

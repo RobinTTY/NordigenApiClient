@@ -110,6 +110,7 @@ public class NordigenClient
         if (JwtTokenPair == null || JwtTokenPair.RefreshToken.IsExpired(TimeSpan.FromMinutes(1)))
         {
             var response = await TokenEndpoint.GetTokenPair(cancellationToken);
+            JwtTokenPair = new JsonWebTokenPair(response.Result!.AccessToken.EncodedToken, response.Result!.AccessToken.EncodedToken);
             return response.IsSuccess ? response.Result : null;
         }
 
