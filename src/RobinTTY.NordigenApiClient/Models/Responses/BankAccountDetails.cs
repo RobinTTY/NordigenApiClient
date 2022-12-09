@@ -21,6 +21,7 @@ public class BankAccountDetails
     /// <summary>
     /// The BIC (Business Identifier Code) associated with the account.
     /// </summary>
+    [JsonPropertyName("bic")]
     public string? Bic { get; }
     /// <summary>
     /// Basic Bank Account Number represents a country-specific bank account number.
