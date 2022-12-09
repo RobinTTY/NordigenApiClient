@@ -80,8 +80,8 @@ public class NordigenClient
         ) where TResponse : class where TError : class
     {
         var requestUri = query != null ? UriQueryBuilder.BuildUriWithQueryString(uri, query) : uri;
-        var authToken = useAuthentication ? await TryGetValidTokenPair(cancellationToken) : null;
-        var client = useAuthentication ? _httpClient.UseNordigenAuthenticationHeader(authToken) : _httpClient;
+        JwtTokenPair = useAuthentication ? await TryGetValidTokenPair(cancellationToken) : null;
+        var client = useAuthentication ? _httpClient.UseNordigenAuthenticationHeader(JwtTokenPair) : _httpClient;
 
         HttpResponseMessage ? response;
         if (method == HttpMethod.Get)
@@ -110,7 +110,6 @@ public class NordigenClient
         if (JwtTokenPair == null || JwtTokenPair.RefreshToken.IsExpired(TimeSpan.FromMinutes(1)))
         {
             var response = await TokenEndpoint.GetTokenPair(cancellationToken);
-            JwtTokenPair = new JsonWebTokenPair(response.Result!.AccessToken.EncodedToken, response.Result!.AccessToken.EncodedToken);
             return response.IsSuccess ? response.Result : null;
         }
 
@@ -118,12 +117,10 @@ public class NordigenClient
         if (JwtTokenPair.AccessToken.IsExpired(TimeSpan.FromMinutes(1)))
         {
             var response = await TokenEndpoint.RefreshAccessToken(JwtTokenPair.RefreshToken, cancellationToken);
-            if (!response.IsSuccess) return null;
-
-            // Update the token pair with the response
-            JwtTokenPair.AccessToken = response.Result!.AccessToken;
-            JwtTokenPair.AccessExpires = response.Result!.AccessExpires;
-            return JwtTokenPair;
+            return response.IsSuccess ?
+                // Return a new token pair consisting of the new access token and existing refresh token
+                new JsonWebTokenPair(response.Result!.AccessToken, JwtTokenPair.RefreshToken, response.Result!.AccessExpires, JwtTokenPair.RefreshExpires)
+                : null;
         }
 
         // Token pair is still valid and can be returned

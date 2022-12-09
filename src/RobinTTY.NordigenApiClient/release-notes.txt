@@ -1,1 +1,1 @@
-﻿Fixed BankAccountDetails ignoring BIC in json responses.
+﻿Fixes JWT handling/updating. Prior implementation could cause a NullReferenceException if JWT refresh fails due to API not being reachable.
