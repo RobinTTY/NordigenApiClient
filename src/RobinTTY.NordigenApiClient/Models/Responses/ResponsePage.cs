@@ -10,7 +10,7 @@ namespace RobinTTY.NordigenApiClient.Models.Responses;
 public class ResponsePage<T>
 {
     /// <summary>
-    /// The total number of items that can be accessed via the paged responses.
+    /// The total number of items that can be accessed via the paged responses (not necessarily through the current page).
     /// </summary>
     [JsonPropertyName("count")]
     public uint Count { get; set; }

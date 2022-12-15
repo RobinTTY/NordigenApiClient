@@ -4,6 +4,7 @@ namespace RobinTTY.NordigenApiClient.Models.Responses;
 
 /// <summary>
 /// Detailed information on a <see cref="BankAccount"/>.
+/// <para>Reference: <see href="https://nordigen.com/en/docs/account-information/output/accounts/"/></para>
 /// </summary>
 public class BankAccountDetails
 {
