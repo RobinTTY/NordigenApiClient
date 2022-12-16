@@ -2,7 +2,7 @@
 
 namespace RobinTTY.NordigenApiClient.Tests;
 
-public class JsonWebTokenPairTests
+internal class JsonWebTokenPairTests
 {
     private NordigenClient _apiClient = null!;
 

@@ -22,7 +22,7 @@ public class Requisition : CreateRequisitionRequest
     /// The status of the requisition.
     /// </summary>
     [JsonPropertyName("status")]
-    public string Status { get; }
+    public RequisitionStatus Status { get; }
     /// <summary>
     /// The accounts linked to this requisition.
     /// </summary>
@@ -56,7 +56,7 @@ public class Requisition : CreateRequisitionRequest
     /// before you're able to query the transactions.
     /// <para>For details see: <see href="https://ob.helpscoutdocs.com/article/145-immediate-end-user-redirect-from-bank-after-consent"/>.</para></param>
     [JsonConstructor]
-    public Requisition(Uri redirect, string institutionId, Guid? agreementId, string reference, string userLanguage, string? socialSecurityNumber, bool accountSelection, bool redirectImmediate, Guid id, DateTime created, string status, List<Guid> accounts, Uri authenticationLink) : base(redirect, institutionId, reference, userLanguage, agreementId, socialSecurityNumber, accountSelection, redirectImmediate)
+    public Requisition(Uri redirect, string institutionId, Guid? agreementId, string reference, string userLanguage, string? socialSecurityNumber, bool accountSelection, bool redirectImmediate, Guid id, DateTime created, RequisitionStatus status, List<Guid> accounts, Uri authenticationLink) : base(redirect, institutionId, reference, userLanguage, agreementId, socialSecurityNumber, accountSelection, redirectImmediate)
     {
         Id = id;
         Created = created;

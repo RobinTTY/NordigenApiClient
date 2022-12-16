@@ -137,6 +137,7 @@ internal class RequisitionsEndpointTests
         {
             Assert.That(page2Requisitions, Has.Count.EqualTo(1));
             Assert.That(ids, Does.Contain(page2Requisitions.First().Id.ToString()));
+            Assert.That(page2Requisitions.ToList().All(req => req.Status != RequisitionStatus.Undefined));
         });
     }
 }
