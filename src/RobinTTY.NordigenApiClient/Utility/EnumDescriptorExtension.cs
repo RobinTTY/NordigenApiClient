@@ -4,7 +4,7 @@ namespace RobinTTY.NordigenApiClient.Utility;
 
 internal static class EnumDescriptorExtension
 {
-    public static string? GetDescription<T>(this T enumerationValue) where T : struct
+    internal static string? GetDescription<T>(this T enumerationValue) where T : struct
     {
         var type = enumerationValue.GetType();
         if (!type.IsEnum)
@@ -21,7 +21,7 @@ internal static class EnumDescriptorExtension
         return enumerationValue.ToString();
     }
 
-    public static T StringToEnumValue<T>(string? description) where T : struct
+    internal static T StringToEnumValue<T>(string? description) where T : struct
     {
         var fieldInfos = typeof(T).GetFields();
 

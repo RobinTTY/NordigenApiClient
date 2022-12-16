@@ -1,1 +1,8 @@
-﻿Fixes JWT handling/updating. Prior implementation could cause a NullReferenceException if JWT refresh fails due to API not being reachable.
+﻿Added enums describing the following statuses:
+
+- RequisitionStatus
+- BankAccountStatus
+
+These new enum types replace their corresponding string counterparts.
+This change removes some hassle from interpreting API responses.
+This is a breaking change.

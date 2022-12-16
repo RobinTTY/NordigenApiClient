@@ -31,6 +31,7 @@ internal class AccountsEndpointTests
         var account = accountResponse.Result!;
         Assert.That(account.InstitutionId, Is.EqualTo("SANDBOXFINANCE_SFIN0000"));
         Assert.That(account.Iban, Is.EqualTo("GL3343697694912188"));
+        Assert.That(account.Status, Is.EqualTo(BankAccountStatus.Ready));
     }
 
     /// <summary>

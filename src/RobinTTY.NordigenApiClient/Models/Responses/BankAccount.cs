@@ -32,7 +32,7 @@ public class BankAccount : MinimalBankAccount
     /// The status of the account (e.g. user has successfully authenticated and account is discovered).
     /// </summary>
     [JsonPropertyName("status")]
-    public string Status { get; }
+    public BankAccountStatus Status { get; }
 
     /// <summary>
     /// Creates a new instance of <see cref="BankAccount"/>.
@@ -44,7 +44,7 @@ public class BankAccount : MinimalBankAccount
     /// <param name="institutionId">The institution id this account belongs to.</param>
     /// <param name="status">The status of the account (e.g. user has successfully authenticated and account is discovered).</param>
     [JsonConstructor]
-    public BankAccount(Guid id, DateTime created, DateTime lastAccessed, string iban, string institutionId, string status) : base(iban)
+    public BankAccount(Guid id, DateTime created, DateTime lastAccessed, string iban, string institutionId, BankAccountStatus status) : base(iban)
     {
         Id = id;
         Created = created;
