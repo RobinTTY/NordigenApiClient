@@ -20,7 +20,7 @@ public class NordigenClient
     /// <summary>
     /// Occurs whenever the <see cref="JsonWebTokenPair"/> is updated.
     /// </summary>
-    public event EventHandler<TokenPairUpdatedEventArgs> TokenPairUpdated;
+    public event EventHandler<TokenPairUpdatedEventArgs>? TokenPairUpdated;
 
     /// <summary>
     /// A pair consisting of access/refresh token used to authenticate with the Nordigen API.
@@ -115,7 +115,7 @@ public class NordigenClient
         if (JsonWebTokenPair == null || JsonWebTokenPair.RefreshToken.IsExpired(TimeSpan.FromMinutes(1)))
         {
             var response = await TokenEndpoint.GetTokenPair(cancellationToken);
-            TokenPairUpdated.Invoke(this, new TokenPairUpdatedEventArgs(response.Result));
+            TokenPairUpdated?.Invoke(this, new TokenPairUpdatedEventArgs(response.Result));
             return response.Result;
         }
 
@@ -128,7 +128,7 @@ public class NordigenClient
                 ? new JsonWebTokenPair(response.Result!.AccessToken, JsonWebTokenPair.RefreshToken,
                     response.Result!.AccessExpires, JsonWebTokenPair.RefreshExpires)
                 : null;
-            TokenPairUpdated.Invoke(this, new TokenPairUpdatedEventArgs(token));
+            TokenPairUpdated?.Invoke(this, new TokenPairUpdatedEventArgs(token));
             return token;
         }
 
