@@ -18,9 +18,14 @@ public class NordigenClient
     internal readonly NordigenClientCredentials Credentials;
 
     /// <summary>
+    /// Occurs whenever the <see cref="JsonWebTokenPair"/> is updated.
+    /// </summary>
+    public event EventHandler<TokenPairUpdatedEventArgs> TokenPairUpdated;
+
+    /// <summary>
     /// A pair consisting of access/refresh token used to authenticate with the Nordigen API.
     /// </summary>
-    public JsonWebTokenPair? JwtTokenPair { get; set; }
+    public JsonWebTokenPair? JsonWebTokenPair { get; set; }
     /// <summary>
     /// Provides support for the API operations of the tokens endpoint.
     /// <para>Reference: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/token"/></para>
@@ -52,8 +57,8 @@ public class NordigenClient
     /// </summary>
     /// <param name="httpClient">The <see cref="HttpClient"/> to use.</param>
     /// <param name="credentials">The Nordigen credentials for API access.</param>
-    /// <param name="jwtTokenPair">An optional JSON web token pair consisting of access and refresh token to use.</param>
-    public NordigenClient(HttpClient httpClient, NordigenClientCredentials credentials, JsonWebTokenPair? jwtTokenPair = null)
+    /// <param name="jsonWebTokenPair">An optional JSON web token pair consisting of access and refresh token to use.</param>
+    public NordigenClient(HttpClient httpClient, NordigenClientCredentials credentials, JsonWebTokenPair? jsonWebTokenPair = null)
     {
         _httpClient = httpClient;
         _serializerOptions = new JsonSerializerOptions
@@ -62,7 +67,7 @@ public class NordigenClient
         };
 
         Credentials = credentials;
-        JwtTokenPair = jwtTokenPair;
+        JsonWebTokenPair = jsonWebTokenPair;
         TokenEndpoint = new TokenEndpoint(this);
         InstitutionsEndpoint = new InstitutionsEndpoint(this);
         AgreementsEndpoint = new AgreementsEndpoint(this);
@@ -80,8 +85,8 @@ public class NordigenClient
         ) where TResponse : class where TError : class
     {
         var requestUri = query != null ? UriQueryBuilder.BuildUriWithQueryString(uri, query) : uri;
-        JwtTokenPair = useAuthentication ? await TryGetValidTokenPair(cancellationToken) : null;
-        var client = useAuthentication ? _httpClient.UseNordigenAuthenticationHeader(JwtTokenPair) : _httpClient;
+        JsonWebTokenPair = useAuthentication ? await TryGetValidTokenPair(cancellationToken) : null;
+        var client = useAuthentication ? _httpClient.UseNordigenAuthenticationHeader(JsonWebTokenPair) : _httpClient;
 
         HttpResponseMessage ? response;
         if (method == HttpMethod.Get)
@@ -99,31 +104,55 @@ public class NordigenClient
     }
 
     /// <summary>
-    /// Tries to retrieve a valid <see cref="JsonWebTokenPair"/>.
+    /// Tries to retrieve a valid <see cref="Models.Jwt.JsonWebTokenPair"/>.
     /// </summary>
     /// <param name="cancellationToken">An optional token to signal cancellation of the operation.</param>
-    /// <returns>A valid <see cref="JsonWebTokenPair"/> if the operation was successful.
+    /// <returns>A valid <see cref="Models.Jwt.JsonWebTokenPair"/> if the operation was successful.
     /// Otherwise returns null.</returns>
     private async Task<JsonWebTokenPair?> TryGetValidTokenPair(CancellationToken cancellationToken = default)
     {
         // Request a new token if it is null or if the refresh token has expired
-        if (JwtTokenPair == null || JwtTokenPair.RefreshToken.IsExpired(TimeSpan.FromMinutes(1)))
+        if (JsonWebTokenPair == null || JsonWebTokenPair.RefreshToken.IsExpired(TimeSpan.FromMinutes(1)))
         {
             var response = await TokenEndpoint.GetTokenPair(cancellationToken);
-            return response.IsSuccess ? response.Result : null;
+            TokenPairUpdated.Invoke(this, new TokenPairUpdatedEventArgs(response.Result));
+            return response.Result;
         }
 
         // Refresh the current access token if it's expired (or valid for less than a minute)
-        if (JwtTokenPair.AccessToken.IsExpired(TimeSpan.FromMinutes(1)))
+        if (JsonWebTokenPair.AccessToken.IsExpired(TimeSpan.FromMinutes(1)))
         {
-            var response = await TokenEndpoint.RefreshAccessToken(JwtTokenPair.RefreshToken, cancellationToken);
-            return response.IsSuccess ?
-                // Return a new token pair consisting of the new access token and existing refresh token
-                new JsonWebTokenPair(response.Result!.AccessToken, JwtTokenPair.RefreshToken, response.Result!.AccessExpires, JwtTokenPair.RefreshExpires)
+            var response = await TokenEndpoint.RefreshAccessToken(JsonWebTokenPair.RefreshToken, cancellationToken);
+            // Create a new token pair consisting of the new access token and existing refresh token
+            var token = response.IsSuccess
+                ? new JsonWebTokenPair(response.Result!.AccessToken, JsonWebTokenPair.RefreshToken,
+                    response.Result!.AccessExpires, JsonWebTokenPair.RefreshExpires)
                 : null;
+            TokenPairUpdated.Invoke(this, new TokenPairUpdatedEventArgs(token));
+            return token;
         }
 
         // Token pair is still valid and can be returned
-        return JwtTokenPair;
+        return JsonWebTokenPair;
+    }
+}
+
+/// <summary>
+/// Provides data for the <see cref="NordigenClient.TokenPairUpdated"/> event.
+/// </summary>
+public class TokenPairUpdatedEventArgs : EventArgs
+{
+    /// <summary>
+    /// The updated <see cref="Models.Jwt.JsonWebTokenPair"/>.
+    /// </summary>
+    public JsonWebTokenPair? JsonWebTokenPair { get; set; }
+
+    /// <summary>
+    /// Creates a new instance of <see cref="TokenPairUpdatedEventArgs"/>.
+    /// </summary>
+    /// <param name="jsonWebTokenPair">The updated <see cref="Models.Jwt.JsonWebTokenPair"/>.</param>
+    public TokenPairUpdatedEventArgs(JsonWebTokenPair? jsonWebTokenPair)
+    {
+        JsonWebTokenPair = jsonWebTokenPair;
     }
 }

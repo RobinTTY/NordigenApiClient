@@ -131,11 +131,11 @@ Here is how you would go about retrieving the balances and transactions for a ba
 
 ### Acess/Refresh Token reuse
 
-If you wan't to persist the access/refresh token used by the client you can do so by accessing the `JwtTokenPair` property of the client. After the first request that requires authentication this property will be populated with the access/refresh token that was automatically aquired.
+If you wan't to persist the access/refresh token used by the client you can do so by accessing the `JsonWebTokenPair` property of the client. After the first request that requires authentication this property will be populated with the access/refresh token that was automatically aquired.
 
 ```cs
-Console.WriteLine(client.JwtTokenPair.AccessToken.EncodedToken);
-Console.WriteLine(client.JwtTokenPair.RefreshToken.EncodedToken);
+Console.WriteLine(client.JsonWebTokenPair.AccessToken.EncodedToken);
+Console.WriteLine(client.JsonWebTokenPair.RefreshToken.EncodedToken);
 ```
 
 The next time you instantiate the client you can pass the access/refresh token to the client constructor:
@@ -160,5 +160,19 @@ if (response.IsSuccess)
 }
 
 // Set the token pair on the client
-client.JwtTokenPair = response.Result;
+client.JsonWebTokenPair = response.Result;
+```
+
+To get notified whenever the token pair is updated you can subscribe to the ```TokenPairUpdated``` event:
+
+```cs
+client.TokenPairUpdated += OnTokenPairUpdated;
+
+void OnTokenPairUpdated(object? sender, TokenPairUpdatedEventArgs e)
+{
+    // The event args contain the updated token
+    Console.WriteLine("Updated token pair:");
+    Console.WriteLine($"Access Token: {e.JsonWebTokenPair!.AccessToken.EncodedToken}");
+    Console.WriteLine($"Refresh Token: {e.JsonWebTokenPair!.RefreshToken.EncodedToken}");
+}
 ```

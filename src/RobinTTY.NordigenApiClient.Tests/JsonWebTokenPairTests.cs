@@ -40,15 +40,15 @@ internal class JsonWebTokenPairTests
     }
 
     /// <summary>
-    /// Tests that <see cref="NordigenClient.JwtTokenPair"/> is populated after the first authenticated request is made.
+    /// Tests that <see cref="NordigenClient.JsonWebTokenPair"/> is populated after the first authenticated request is made.
     /// </summary>
     [Test]
     public async Task CheckValidTokensAfterRequest()
     {
-        Assert.That(_apiClient.JwtTokenPair, Is.Null);
+        Assert.That(_apiClient.JsonWebTokenPair, Is.Null);
         await _apiClient.RequisitionsEndpoint.GetRequisitions(5, 0, CancellationToken.None);
-        Assert.That(_apiClient.JwtTokenPair, Is.Not.Null);
-        Assert.That(_apiClient.JwtTokenPair!.AccessToken.EncodedToken.Length, Is.GreaterThan(0));
-        Assert.That(_apiClient.JwtTokenPair!.RefreshToken.EncodedToken.Length, Is.GreaterThan(0));
+        Assert.That(_apiClient.JsonWebTokenPair, Is.Not.Null);
+        Assert.That(_apiClient.JsonWebTokenPair!.AccessToken.EncodedToken.Length, Is.GreaterThan(0));
+        Assert.That(_apiClient.JsonWebTokenPair!.RefreshToken.EncodedToken.Length, Is.GreaterThan(0));
     }
 }

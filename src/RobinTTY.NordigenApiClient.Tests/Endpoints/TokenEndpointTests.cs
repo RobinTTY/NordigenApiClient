@@ -19,7 +19,7 @@ internal class TokenEndpointTests
     /// </summary>
     /// <returns></returns>
     [Test]
-    public async Task GetJwtTokenPairAndRefresh()
+    public async Task GetJsonWebTokenPairAndRefresh()
     {
         var response = await _apiClient.TokenEndpoint.GetTokenPair();
         TestExtensions.AssertNordigenApiResponseIsSuccessful(response, HttpStatusCode.OK);

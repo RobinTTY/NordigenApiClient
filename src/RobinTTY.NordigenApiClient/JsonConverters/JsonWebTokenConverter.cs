@@ -6,11 +6,11 @@ namespace RobinTTY.NordigenApiClient.JsonConverters;
 
 internal class JsonWebTokenConverter : JsonConverter<JsonWebToken>
 {
-    private static readonly JsonWebTokenHandler JwtTokenHandler = new();
+    private static readonly JsonWebTokenHandler JsonWebTokenHandler = new();
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
     public override JsonWebToken? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        return JwtTokenHandler.ReadJsonWebToken(reader.GetString());
+        return JsonWebTokenHandler.ReadJsonWebToken(reader.GetString());
     }
 
     public override void Write(Utf8JsonWriter writer, JsonWebToken value, JsonSerializerOptions options)

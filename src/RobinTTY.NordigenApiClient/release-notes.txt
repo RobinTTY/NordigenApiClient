@@ -1,8 +1,2 @@
-﻿Added enums describing the following statuses:
-
-- RequisitionStatus
-- BankAccountStatus
-
-These new enum types replace their corresponding string counterparts.
-This change removes some hassle from interpreting API responses.
-This is a breaking change.
+﻿Added TokenPairUpdated event, which can be used to get notified whenever the JWT token pair (used to access the API) is updated.
+Renamed the "JwtTokenPair" property of the "NordigenClient" class to "JsonWebTokenPair" to remove the word redundancy (this is a breaking change).
