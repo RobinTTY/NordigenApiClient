@@ -85,8 +85,16 @@ public class NordigenClient
         ) where TResponse : class where TError : class
     {
         var requestUri = query != null ? UriQueryBuilder.BuildUriWithQueryString(uri, query) : uri;
-        JsonWebTokenPair = useAuthentication ? await TryGetValidTokenPair(cancellationToken) : null;
-        var client = useAuthentication ? _httpClient.UseNordigenAuthenticationHeader(JsonWebTokenPair) : _httpClient;
+        HttpClient client;
+        if (useAuthentication)
+        {
+            JsonWebTokenPair = await TryGetValidTokenPair(cancellationToken);
+            client = _httpClient.UseNordigenAuthenticationHeader(JsonWebTokenPair);
+        }
+        else
+        {
+            client = _httpClient;
+        }
 
         HttpResponseMessage ? response;
         if (method == HttpMethod.Get)

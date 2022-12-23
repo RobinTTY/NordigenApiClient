@@ -36,7 +36,7 @@ internal static class TestExtensions
         var httpClient = new HttpClient();
         var secrets = File.ReadAllLines("secrets.txt");
         var credentials = new NordigenClientCredentials(secrets[0], secrets[1]);
-        var tokenPair = new JsonWebTokenPair(secrets[2], secrets[3]);
+        var tokenPair = new JsonWebTokenPair(secrets[3], secrets[4]);
         return useExistingJwt ? new NordigenClient(httpClient, credentials, tokenPair) : new NordigenClient(httpClient, credentials);
     }
 }

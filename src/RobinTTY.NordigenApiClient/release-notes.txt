@@ -1,1 +1,1 @@
-﻿Fixes possible null reference exception on event invocation.
+﻿Fixes possible null reference exception on expired access token use.
