@@ -1,6 +1,6 @@
 # NordigenApiClient
 
-This project provides a C# client for the [Nordigen API](https://www.nordigen.com/). The project targets .Net 6 and supports the following endpoints of the API:
+This project provides a C# client for the [Nordigen API](https://www.nordigen.com/). The project targets .NET 6 & .NET Standard 2.0 and supports the following endpoints of the API:
 
 - Token
 - Institutions
@@ -175,4 +175,16 @@ void OnTokenPairUpdated(object? sender, TokenPairUpdatedEventArgs e)
     Console.WriteLine($"Access Token: {e.JsonWebTokenPair!.AccessToken.EncodedToken}");
     Console.WriteLine($"Refresh Token: {e.JsonWebTokenPair!.RefreshToken.EncodedToken}");
 }
+```
+
+## Usage with Frameworks older than .NET 6.0
+
+If you use this library with .NET versions older than 6.0 you will receive warnings informing you that various dependencies of this packet don't necessarily support your chosen .NET version. The .NET Standard version of this package is tested against .NET Framework 4.8 and other versions (including .NET Core) should work fine as well. You can surpress those warnings by adding the following option to your csproj file:
+
+```xml
+<PropertyGroup>
+   ...
+   <SuppressTfmSupportBuildWarnings>true</SuppressTfmSupportBuildWarnings>
+   ...
+</PropertyGroup>
 ```
