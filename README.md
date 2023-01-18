@@ -1,6 +1,6 @@
 # NordigenApiClient
 
-This project provides a C# client for the [Nordigen API](https://www.nordigen.com/). The project targets .NET 6 & .NET Standard 2.0 and supports the following endpoints of the API:
+This project provides a C# client for the [Nordigen API](https://www.nordigen.com/). The project targets .NET 6/7 & .NET Standard 2.0 and supports the following endpoints of the API:
 
 - Token
 - Institutions
