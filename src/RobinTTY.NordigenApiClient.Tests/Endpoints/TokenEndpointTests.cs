@@ -55,7 +55,11 @@ internal class TokenEndpointTests
     [Test]
     public async Task ReuseExpiredToken()
     {
+#if NET6_0_OR_GREATER
         var secrets = await File.ReadAllLinesAsync("secrets.txt");
+#else
+        var secrets = File.ReadAllLines("secrets.txt");
+#endif
         var httpClient = new HttpClient();
         var credentials = new NordigenClientCredentials(secrets[0], secrets[1]);
         var tokenPair = new JsonWebTokenPair(secrets[6], secrets[7]);

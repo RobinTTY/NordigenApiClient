@@ -106,8 +106,13 @@ public class AccountsEndpoint
     /// <param name="endDate">Optional date to limit the transactions which are returned to those before the specified date.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
     /// <returns>A <see cref="NordigenApiResponse{TResponse, TError}"/> which contains transaction data of the specified account.</returns>
+#if NET6_0_OR_GREATER
     public async Task<NordigenApiResponse<AccountTransactions, AccountsError>> GetTransactions(Guid id, DateOnly? startDate = null, DateOnly? endDate = null, CancellationToken cancellationToken = default)
         => await GetTransactionsInternal(id.ToString(), startDate, endDate, cancellationToken);
+#else
+    public async Task<NordigenApiResponse<AccountTransactions, AccountsError>> GetTransactions(Guid id, DateTime? startDate = null, DateTime? endDate = null, CancellationToken cancellationToken = default)
+        => await GetTransactionsInternal(id.ToString(), startDate, endDate, cancellationToken);
+#endif
 
     /// <summary>
     /// Gets the transactions of the specified bank account.
@@ -118,10 +123,19 @@ public class AccountsEndpoint
     /// <param name="endDate">Optional date to limit the transactions which are returned to those before the specified date.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
     /// <returns>A <see cref="NordigenApiResponse{TResponse, TError}"/> which contains transaction data of the specified account.</returns>
+#if NET6_0_OR_GREATER
     public async Task<NordigenApiResponse<AccountTransactions, AccountsError>> GetTransactions(string id, DateOnly? startDate = null, DateOnly? endDate = null, CancellationToken cancellationToken = default)
         => await GetTransactionsInternal(id, startDate, endDate, cancellationToken);
+#else
+    public async Task<NordigenApiResponse<AccountTransactions, AccountsError>> GetTransactions(string id, DateTime? startDate = null, DateTime? endDate = null, CancellationToken cancellationToken = default)
+        => await GetTransactionsInternal(id, startDate, endDate, cancellationToken);
+#endif
 
+#if NET6_0_OR_GREATER
     private async Task<NordigenApiResponse<AccountTransactions, AccountsError>> GetTransactionsInternal(string id, DateOnly? startDate, DateOnly? endDate, CancellationToken cancellationToken)
+#else
+    private async Task<NordigenApiResponse<AccountTransactions, AccountsError>> GetTransactionsInternal(string id, DateTime? startDate, DateTime? endDate, CancellationToken cancellationToken)
+#endif
     {
         var query = new List<KeyValuePair<string, string>>();
         if (startDate != null)
@@ -133,5 +147,9 @@ public class AccountsEndpoint
         return new NordigenApiResponse<AccountTransactions, AccountsError>(response.StatusCode, response.IsSuccess, response.Result?.Transactions, response.Error);
     }
 
+#if NET6_0_OR_GREATER
     private string DateToIso8601(DateOnly date) => date.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+#else
+    private string DateToIso8601(DateTime date) => date.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+#endif
 }

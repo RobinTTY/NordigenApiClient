@@ -1,1 +1,1 @@
-﻿Fixes possible null reference exception on expired access token use.
+﻿Added compatability with .NET Standard 2.0.

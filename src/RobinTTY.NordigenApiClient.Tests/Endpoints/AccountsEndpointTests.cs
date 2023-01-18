@@ -102,8 +102,14 @@ internal class AccountsEndpointTests
     [Test]
     public async Task GetTransactionRange()
     {
+#if NET6_0_OR_GREATER
         var startDate = new DateOnly(2022, 08, 04);
         var balancesResponse = await _apiClient.AccountsEndpoint.GetTransactions(_accountId, startDate, DateOnly.FromDateTime(DateTime.Now.Subtract(TimeSpan.FromMinutes(1))));
+#else
+        var startDate = new DateTime(2022, 08, 04);
+        var balancesResponse = await _apiClient.AccountsEndpoint.GetTransactions(_accountId, startDate, DateTime.Now.Subtract(TimeSpan.FromMinutes(1)));
+#endif
+
         TestExtensions.AssertNordigenApiResponseIsSuccessful(balancesResponse, HttpStatusCode.OK);
         Assert.That(balancesResponse.Result!.BookedTransactions, Has.Count.AtLeast(10));
     }
@@ -117,7 +123,11 @@ internal class AccountsEndpointTests
     public async Task GetTransactionRangeInFuture()
     {
         var dateInFuture = DateTime.Now.AddDays(1);
+#if NET6_0_OR_GREATER
         var balancesResponse = await _apiClient.AccountsEndpoint.GetTransactions(_accountId, DateOnly.FromDateTime(dateInFuture), DateOnly.FromDateTime(dateInFuture.AddDays(1)));
+#else
+        var balancesResponse = await _apiClient.AccountsEndpoint.GetTransactions(_accountId, dateInFuture, dateInFuture.AddDays(1));
+#endif
         TestExtensions.AssertNordigenApiResponseIsUnsuccessful(balancesResponse, HttpStatusCode.BadRequest);
         Assert.Multiple(() =>
         {

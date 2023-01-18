@@ -36,6 +36,7 @@ internal class JsonWebTokenPairTests
     public void CreateInvalidJsonWebTokenPair()
     {
         var exampleToken = "eyJhbGciOiJIUzI1NisInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzIiwic3ViIjoiMTIzNDU2Nzg5MCIsIm5iZiI6MTY1OTE5OTU5MiwiZXhwIjoxNjU5MjE5NTkyLCJuYWIjoiSm9obiBEb2UiLCJpYXQiOjE1MTYyMzkwMjJ9.WP7xByegwjRvWZMwHScxunAOkwkW77ocaLvGen2PAU";
+        // ReSharper disable once ObjectCreationAsStatement
         Assert.Throws<ArgumentException>(() => new JsonWebTokenPair(exampleToken, exampleToken));
     }
 
