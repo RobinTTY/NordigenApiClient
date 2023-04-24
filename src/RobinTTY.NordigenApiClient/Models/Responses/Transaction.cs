@@ -170,7 +170,7 @@ public class Transaction
     /// Array of the report exchange rate.
     /// </summary>
     [JsonPropertyName("currencyExchange")]
-    public IEnumerable<string>? CurrencyExchange { get; }
+    public CurrencyExchange? CurrencyExchange { get; }
     /// <summary>
     /// The identification of the transaction as used for reference by the financial institution.
     /// </summary>
@@ -236,7 +236,7 @@ public class Transaction
     /// <param name="merchantCategoryCode">Merchant category code as defined by the card issuer.</param>
     /// <param name="bookingDateTime">The date and time when the transaction was posted to the account.</param>
     [JsonConstructor]
-    public Transaction(string? transactionId, string? debtorName, MinimalBankAccount? debtorAccount, string? ultimateDebtor, string? creditorName, MinimalBankAccount? creditorAccount, AmountCurrencyPair transactionAmount, string? bankTransactionCode, DateTime? bookingDate, DateTime? valueDate, string? remittanceInformationUnstructured, IEnumerable<string>? remittanceInformationUnstructuredArray, string? endToEndId, string? mandateId, string? proprietaryBankTransactionCode, string? purposeCode, string? debtorAgent, string? creditorAgent, string? ultimateCreditor, string? creditorId, DateTime? valueDateTime, string? remittanceInformationStructured, IEnumerable<string>? remittanceInformationStructuredArray, string? additionalInformation, string? additionalInformationStructured, Balance? balanceAfterTransaction, string? checkId, IEnumerable<string>? currencyExchange, string? entryReference, string? internalTransactionId, string? merchantCategoryCode, DateTime? bookingDateTime)
+    public Transaction(string? transactionId, string? debtorName, MinimalBankAccount? debtorAccount, string? ultimateDebtor, string? creditorName, MinimalBankAccount? creditorAccount, AmountCurrencyPair transactionAmount, string? bankTransactionCode, DateTime? bookingDate, DateTime? valueDate, string? remittanceInformationUnstructured, IEnumerable<string>? remittanceInformationUnstructuredArray, string? endToEndId, string? mandateId, string? proprietaryBankTransactionCode, string? purposeCode, string? debtorAgent, string? creditorAgent, string? ultimateCreditor, string? creditorId, DateTime? valueDateTime, string? remittanceInformationStructured, IEnumerable<string>? remittanceInformationStructuredArray, string? additionalInformation, string? additionalInformationStructured, Balance? balanceAfterTransaction, string? checkId, CurrencyExchange? currencyExchange, string? entryReference, string? internalTransactionId, string? merchantCategoryCode, DateTime? bookingDateTime)
     {
         TransactionId = transactionId;
         DebtorName = debtorName;

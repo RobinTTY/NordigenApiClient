@@ -104,7 +104,7 @@ internal class AccountsEndpointTests
     {
 #if NET6_0_OR_GREATER
         var startDate = new DateOnly(2022, 08, 04);
-        var balancesResponse = await _apiClient.AccountsEndpoint.GetTransactions(_accountId, startDate, DateOnly.FromDateTime(DateTime.Now.Subtract(TimeSpan.FromMinutes(1))));
+        var balancesResponse = await _apiClient.AccountsEndpoint.GetTransactions(_accountId, startDate, DateOnly.FromDateTime(DateTime.Now.Subtract(TimeSpan.FromHours(24))));
 #else
         var startDate = new DateTime(2022, 08, 04);
         var balancesResponse = await _apiClient.AccountsEndpoint.GetTransactions(_accountId, startDate, DateTime.Now.Subtract(TimeSpan.FromMinutes(1)));
