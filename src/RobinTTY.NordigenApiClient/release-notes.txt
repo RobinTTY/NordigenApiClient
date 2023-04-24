@@ -1,1 +1,1 @@
-﻿Added compatability with .NET Standard 2.0.
+﻿Added CurrencyExchange data model to transaction.
