@@ -108,7 +108,7 @@ public class NordigenClient
         else
             throw new NotImplementedException();
 
-        return await NordigenApiResponse<TResponse, TError>.FromHttpResponse(response, cancellationToken, _serializerOptions);
+        return await NordigenApiResponse<TResponse, TError>.FromHttpResponse(response, _serializerOptions, cancellationToken);
     }
 
     /// <summary>

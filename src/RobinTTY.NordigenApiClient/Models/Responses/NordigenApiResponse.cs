@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
+using System.Runtime.Serialization;
 using System.Text.Json;
 
 namespace RobinTTY.NordigenApiClient.Models.Responses;
@@ -50,17 +51,34 @@ public class NordigenApiResponse<TResult, TError> where TResult : class where TE
     /// <param name="cancellationToken">A cancellation token to be used to notify in case of cancellation.</param>
     /// <param name="options"><see cref="JsonSerializerOptions"/> to apply to the deserialization process.</param>
     /// <returns>The parsed <see cref="NordigenApiResponse{TResult, TError}"/>.</returns>
-    internal static async Task<NordigenApiResponse<TResult, TError>> FromHttpResponse(HttpResponseMessage response, CancellationToken cancellationToken = default, JsonSerializerOptions? options = null)
+    internal static async Task<NordigenApiResponse<TResult, TError>> FromHttpResponse(HttpResponseMessage response, JsonSerializerOptions? options = null, CancellationToken cancellationToken = default)
     {
-        if (response.IsSuccessStatusCode)
+#if NET6_0_OR_GREATER
+        var responseJson = await response.Content.ReadAsStringAsync(cancellationToken);
+#else
+        var responseJson = await response.Content.ReadAsStringAsync();
+#endif
+
+        try
         {
-            var result = await response.Content.ReadFromJsonAsync<TResult>(options, cancellationToken);
-            return new NordigenApiResponse<TResult, TError>(response.StatusCode, response.IsSuccessStatusCode, result, null);
+            if (response.IsSuccessStatusCode)
+            {
+                var result = await response.Content.ReadFromJsonAsync<TResult>(options, cancellationToken);
+                return new NordigenApiResponse<TResult, TError>(response.StatusCode, response.IsSuccessStatusCode,
+                    result, null);
+            }
+            else
+            {
+                var result = await response.Content.ReadFromJsonAsync<TError>(options, cancellationToken);
+                return new NordigenApiResponse<TResult, TError>(response.StatusCode, response.IsSuccessStatusCode,
+                    null, result);
+            }
         }
-        else
+        catch (JsonException ex)
         {
-            var result = await response.Content.ReadFromJsonAsync<TError>(options, cancellationToken);
-            return new NordigenApiResponse<TResult, TError>(response.StatusCode, response.IsSuccessStatusCode, null, result);
+            throw new SerializationException(
+                $"Deserialization failed, please report this issue to the library author: https://github.com/RobinTTY/NordigenApiClient/issues\n" +
+                $"The following JSON content caused the problem: {responseJson}", ex);
         }
     }
 }

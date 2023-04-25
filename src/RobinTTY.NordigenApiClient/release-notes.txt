@@ -1,1 +1,1 @@
-﻿Added CurrencyExchange data model to transaction.
+﻿Improved exception handling for deserialization errors. These exceptions will now include the raw JSON response from the API to make reporting issues easier.
