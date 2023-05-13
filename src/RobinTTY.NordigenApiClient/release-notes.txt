@@ -1,1 +1,2 @@
-﻿Improved exception handling for deserialization errors. These exceptions will now include the raw JSON response from the API to make reporting issues easier.
+﻿Improved the static code analysis for the NordigenApiResponse class.
+The compiler can now analyze whether the "Result" and "Error" properties may be null or ar not-null depending on the "IsSuccess" property.

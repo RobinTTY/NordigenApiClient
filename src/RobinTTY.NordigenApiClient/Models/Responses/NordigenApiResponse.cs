@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Net;
 using System.Net.Http.Json;
 using System.Runtime.Serialization;
 using System.Text.Json;
@@ -19,6 +20,8 @@ public class NordigenApiResponse<TResult, TError> where TResult : class where TE
     /// <summary>
     /// Indicates whether the HTTP response was successful.
     /// </summary>
+    [MemberNotNullWhen(true, nameof(Result))]
+    [MemberNotNullWhen(false, nameof(Error))]
     public bool IsSuccess { get; }
     /// <summary>
     /// The result returned by the API. Null if the the HTTP response was not successful.
