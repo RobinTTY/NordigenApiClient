@@ -124,8 +124,11 @@ internal class RequisitionsEndpointTests
         var response = await _apiClient.RequisitionsEndpoint.CreateRequisition(requisitionRequest);
 
         TestExtensions.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.BadRequest);
-        Assert.That(response.Error!.Summary, Is.EqualTo("Invalid  ID"));
-        Assert.That(response.Error!.Detail, Is.EqualTo("00000000-0000-0000-0000-000000000000 is not a valid  UUID. "));
+        Assert.Multiple(() =>
+        {
+            Assert.That(response.Error!.Summary, Is.EqualTo("Invalid  ID"));
+            Assert.That(response.Error!.Detail, Is.EqualTo("00000000-0000-0000-0000-000000000000 is not a valid  UUID. "));
+        });
     }
 
     private void AssertThatRequisitionsPageContainsRequisition(NordigenApiResponse<ResponsePage<Requisition>, BasicError> pagedResponse, List<string> ids)

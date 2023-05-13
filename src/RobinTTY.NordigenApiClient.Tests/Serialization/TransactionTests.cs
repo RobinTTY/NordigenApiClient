@@ -19,12 +19,12 @@ internal class TransactionTests
         Assert.Multiple(() =>
         {
             Assert.That(transaction!.CurrencyExchange, Is.Not.Null);
-            Assert.That(transaction!.CurrencyExchange!.ExchangeRate, Is.EqualTo("1.20961887"));
-            Assert.That(transaction!.CurrencyExchange!.ExchangeRateParsed, Is.EqualTo(1.20961887));
-            Assert.That(transaction!.CurrencyExchange!.SourceCurrency, Is.EqualTo("USD"));
-            Assert.That(transaction!.CurrencyExchange!.TargetCurrency, Is.EqualTo("GBP"));
-            Assert.That(transaction!.CurrencyExchange!.UnitCurrency, Is.EqualTo("GBP"));
-            Assert.That(transaction!.CurrencyExchange!.QuotationDate, Is.Null);
+            Assert.That(transaction.CurrencyExchange!.ExchangeRate, Is.EqualTo("1.20961887"));
+            Assert.That(transaction.CurrencyExchange!.ExchangeRateParsed, Is.EqualTo(1.20961887));
+            Assert.That(transaction.CurrencyExchange!.SourceCurrency, Is.EqualTo("USD"));
+            Assert.That(transaction.CurrencyExchange!.TargetCurrency, Is.EqualTo("GBP"));
+            Assert.That(transaction.CurrencyExchange!.UnitCurrency, Is.EqualTo("GBP"));
+            Assert.That(transaction.CurrencyExchange!.QuotationDate, Is.Null);
         });
     }
 

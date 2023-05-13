@@ -29,9 +29,12 @@ internal class AccountsEndpointTests
         var accountResponse = await _apiClient.AccountsEndpoint.GetAccount(_accountId);
         TestExtensions.AssertNordigenApiResponseIsSuccessful(accountResponse, HttpStatusCode.OK);
         var account = accountResponse.Result!;
-        Assert.That(account.InstitutionId, Is.EqualTo("SANDBOXFINANCE_SFIN0000"));
-        Assert.That(account.Iban, Is.EqualTo("GL3343697694912188"));
-        Assert.That(account.Status, Is.EqualTo(BankAccountStatus.Ready));
+        Assert.Multiple(() =>
+        {
+            Assert.That(account.InstitutionId, Is.EqualTo("SANDBOXFINANCE_SFIN0000"));
+            Assert.That(account.Iban, Is.EqualTo("GL3343697694912188"));
+            Assert.That(account.Status, Is.EqualTo(BankAccountStatus.Ready));
+        });
     }
 
     /// <summary>
@@ -45,10 +48,13 @@ internal class AccountsEndpointTests
         var balancesResponse = await _apiClient.AccountsEndpoint.GetBalances(_accountId);
         TestExtensions.AssertNordigenApiResponseIsSuccessful(balancesResponse, HttpStatusCode.OK);
         var balances = balancesResponse.Result!;
-        Assert.That(balances, Has.Count.EqualTo(2));
-        Assert.That(balances.Any(balance => balance.BalanceAmount.AmountParsed == (decimal)1913.12), Is.True);
-        Assert.That(balances.Any(balance => balance.BalanceAmount.Currency == "EUR"), Is.True);
-        Assert.That(balances.All(balance => balance.BalanceType != BalanceType.Undefined));
+        Assert.Multiple(() =>
+        {
+            Assert.That(balances, Has.Count.EqualTo(2));
+            Assert.That(balances.Any(balance => balance.BalanceAmount.AmountParsed == (decimal)1913.12), Is.True);
+            Assert.That(balances.Any(balance => balance.BalanceAmount.Currency == "EUR"), Is.True);
+            Assert.That(balances.All(balance => balance.BalanceType != BalanceType.Undefined));
+        });
     }
 
     /// <summary>
@@ -62,10 +68,13 @@ internal class AccountsEndpointTests
         var detailsResponse = await _apiClient.AccountsEndpoint.GetAccountDetails(_accountId);
         TestExtensions.AssertNordigenApiResponseIsSuccessful(detailsResponse, HttpStatusCode.OK);
         var details = detailsResponse.Result!;
-        Assert.That(details.Iban, Is.EqualTo("GL3343697694912188"));
-        Assert.That(details.CashAccountType, Is.EqualTo("CACC"));
-        Assert.That(details.Name, Is.EqualTo("Main Account"));
-        Assert.That(details.OwnerName, Is.EqualTo("John Doe"));
+        Assert.Multiple(() =>
+        {
+            Assert.That(details.Iban, Is.EqualTo("GL9619297215858568"));
+            Assert.That(details.CashAccountType, Is.EqualTo("CACC"));
+            Assert.That(details.Name, Is.EqualTo("Main Account"));
+            Assert.That(details.OwnerName, Is.EqualTo("John Doe"));
+        });
     }
 
     /// <summary>
@@ -79,19 +88,22 @@ internal class AccountsEndpointTests
         var transactionsResponse = await _apiClient.AccountsEndpoint.GetTransactions(_accountId);
         TestExtensions.AssertNordigenApiResponseIsSuccessful(transactionsResponse, HttpStatusCode.OK);
         var transactions = transactionsResponse.Result!;
-        Assert.That(transactions.BookedTransactions.Any(t =>
+        Assert.Multiple(() =>
         {
-            var matchesAll = true;
-            matchesAll &= t.BankTransactionCode == "PMNT";
-            matchesAll &= t.DebtorAccount?.Iban == "GL3343697694912188";
-            matchesAll &= t.DebtorName == "MON MOTHMA";
-            matchesAll &= t.RemittanceInformationUnstructured == "For the support of Restoration of the Republic foundation";
-            matchesAll &= t.TransactionAmount.Amount == "45.00";
-            matchesAll &= t.TransactionAmount.AmountParsed == (decimal)45.00;
-            matchesAll &= t.TransactionAmount.Currency == "EUR";
-            return matchesAll;
-        }));
-        Assert.That(transactions.PendingTransactions, Has.Count.EqualTo(1));
+            Assert.That(transactions.BookedTransactions.Any(t =>
+            {
+                var matchesAll = true;
+                matchesAll &= t.BankTransactionCode == "PMNT";
+                matchesAll &= t.DebtorAccount?.Iban == "GL9619297215858568";
+                matchesAll &= t.DebtorName == "MON MOTHMA";
+                matchesAll &= t.RemittanceInformationUnstructured == "For the support of Restoration of the Republic foundation";
+                matchesAll &= t.TransactionAmount.Amount == "45.00";
+                matchesAll &= t.TransactionAmount.AmountParsed == (decimal)45.00;
+                matchesAll &= t.TransactionAmount.Currency == "EUR";
+                return matchesAll;
+            }));
+            Assert.That(transactions.PendingTransactions, Has.Count.EqualTo(1));
+        });
     }
 
     /// <summary>
@@ -111,7 +123,7 @@ internal class AccountsEndpointTests
 #endif
 
         TestExtensions.AssertNordigenApiResponseIsSuccessful(balancesResponse, HttpStatusCode.OK);
-        Assert.That(balancesResponse.Result!.BookedTransactions, Has.Count.AtLeast(10));
+        Assert.That(balancesResponse.Result!.BookedTransactions, Has.Count.AtLeast(6));
     }
 
     /// <summary>

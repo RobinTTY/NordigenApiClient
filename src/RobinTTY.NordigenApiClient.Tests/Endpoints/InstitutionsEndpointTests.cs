@@ -28,9 +28,12 @@ internal class InstitutionsEndpointTests
         var result = response.Result!.ToList();
         var result2 = response2.Result!.ToList();
 
-        Assert.That(result.Count, Is.GreaterThan(0));
-        Assert.That(result2.Count, Is.GreaterThan(0));
-        Assert.That(result.Count, Is.GreaterThan(result2.Count));
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.Count, Is.GreaterThan(0));
+            Assert.That(result2.Count, Is.GreaterThan(0));
+            Assert.That(result.Count, Is.GreaterThan(result2.Count));
+        });
     }
 
     /// <summary>
@@ -45,8 +48,11 @@ internal class InstitutionsEndpointTests
         TestExtensions.AssertNordigenApiResponseIsSuccessful(response, HttpStatusCode.OK);
 
         var result = response.Result!;
-        Assert.That(result.Bic, Is.EqualTo("SFIN0000"));
-        Assert.That(result.Id, Is.EqualTo("SANDBOXFINANCE_SFIN0000"));
-        Assert.That(result.Name, Is.EqualTo("Sandbox Finance"));
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.Bic, Is.EqualTo("SFIN0000"));
+            Assert.That(result.Id, Is.EqualTo("SANDBOXFINANCE_SFIN0000"));
+            Assert.That(result.Name, Is.EqualTo("Sandbox Finance"));
+        });
     }
 }

@@ -41,10 +41,13 @@ internal class TokenEndpointTests
         var apiClient = new NordigenClient(httpClient, credentials);
         var response = await apiClient.TokenEndpoint.GetTokenPair();
 
-        Assert.That(response.IsSuccess, Is.False);
-        Assert.That(response.Result, Is.Null);
-        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
-        Assert.That(response.Error, Is.Not.Null);
+        Assert.Multiple(() =>
+        {
+            Assert.That(response.IsSuccess, Is.False);
+            Assert.That(response.Result, Is.Null);
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
+            Assert.That(response.Error, Is.Not.Null);
+        });
     }
 
     /// <summary>
