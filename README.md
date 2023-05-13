@@ -35,19 +35,19 @@ This project provides a C# client for the [Nordigen API](https://www.nordigen.co
    The responses that are returned always have the same structure:
 
    ```cs
-   // If the request was successful response.Result will contain the returned data (the Error will be null)
+   // If the request was successful "Result" will contain the returned data (Error will be null)
    if(response.IsSuccess){
       var institutions = response.Result;
       institutions.ForEach(institution => Console.WriteLine(institution.Name));
    }
-   // If the request was not successful response.Error will contain the reason it failed (the Result will be null)
+   // If the request was not successful "Error" will contain the reason it failed (Result will be null)
    else
       Console.WriteLine(response.Error.Summary);
    ```
 
 ## Getting balances and transactions for a bank account
 
-Here is how you would go about retrieving the balances and transactions for a bank account:
+Here is how you would go about retrieving the balances and transactions for a bank account (you can find this full example [here](src/RobinTTY.NordigenApiClient.ExampleApplication)):
 
 1. Get a list of institutions in your country (e.g. Great Britain):
 
