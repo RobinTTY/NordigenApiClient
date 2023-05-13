@@ -1,2 +1,2 @@
 ﻿Improved the static code analysis for the NordigenApiResponse class.
-The compiler can now analyze whether the "Result" and "Error" properties may be null or ar not-null depending on the "IsSuccess" property.
+The compiler can now analyze whether the "Result" and "Error" properties may be null or are not-null depending on the "IsSuccess" property.
