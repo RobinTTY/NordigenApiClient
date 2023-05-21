@@ -1,4 +1,6 @@
-﻿using RobinTTY.NordigenApiClient.Models.Jwt;
+﻿using Microsoft.IdentityModel.JsonWebTokens;
+using RobinTTY.NordigenApiClient.Models.Jwt;
+using RobinTTY.NordigenApiClient.Utility;
 
 namespace RobinTTY.NordigenApiClient.Tests;
 
@@ -22,11 +24,14 @@ internal class JsonWebTokenPairTests
         const string exampleToken2 = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoicmVmcmVzaCIsInN1YiI6IjEyMzQ1Njc4OTAiLCJuYmYiOjE2NTkxOTk1OTIsImV4cCI6MTY1OTI5OTU5MiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.uB2pb0g5uf3glMZTi9ycNjNTbcpeLaQnyT9H-z15lqg";
         var token = new JsonWebTokenPair(exampleToken1, exampleToken2);
 
-        Assert.That(token, Is.Not.Null);
-        Assert.That(token.AccessToken.Alg, Is.EqualTo("HS256"));
-        Assert.That(token.AccessToken.Subject, Is.EqualTo("1234567890"));
-        Assert.That(token.AccessToken.GetPayloadValue<string>("name"), Is.EqualTo("John Doe"));
-        Assert.That(token.RefreshToken.GetPayloadValue<string>("type"), Is.EqualTo("refresh"));
+        Assert.Multiple(() =>
+        {
+            Assert.That(token, Is.Not.Null);
+            Assert.That(token.AccessToken.Alg, Is.EqualTo("HS256"));
+            Assert.That(token.AccessToken.Subject, Is.EqualTo("1234567890"));
+            Assert.That(token.AccessToken.GetPayloadValue<string>("name"), Is.EqualTo("John Doe"));
+            Assert.That(token.RefreshToken.GetPayloadValue<string>("type"), Is.EqualTo("refresh"));
+        });
     }
 
     /// <summary>
@@ -35,7 +40,7 @@ internal class JsonWebTokenPairTests
     [Test]
     public void CreateInvalidJsonWebTokenPair()
     {
-        var exampleToken = "eyJhbGciOiJIUzI1NisInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzIiwic3ViIjoiMTIzNDU2Nzg5MCIsIm5iZiI6MTY1OTE5OTU5MiwiZXhwIjoxNjU5MjE5NTkyLCJuYWIjoiSm9obiBEb2UiLCJpYXQiOjE1MTYyMzkwMjJ9.WP7xByegwjRvWZMwHScxunAOkwkW77ocaLvGen2PAU";
+        const string exampleToken = "eyJhbGciOiJIUzI1NisInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzIiwic3ViIjoiMTIzNDU2Nzg5MCIsIm5iZiI6MTY1OTE5OTU5MiwiZXhwIjoxNjU5MjE5NTkyLCJuYWIjoiSm9obiBEb2UiLCJpYXQiOjE1MTYyMzkwMjJ9.WP7xByegwjRvWZMwHScxunAOkwkW77ocaLvGen2PAU";
         // ReSharper disable once ObjectCreationAsStatement
         Assert.Throws<ArgumentException>(() => new JsonWebTokenPair(exampleToken, exampleToken));
     }
@@ -48,8 +53,33 @@ internal class JsonWebTokenPairTests
     {
         Assert.That(_apiClient.JsonWebTokenPair, Is.Null);
         await _apiClient.RequisitionsEndpoint.GetRequisitions(5, 0, CancellationToken.None);
-        Assert.That(_apiClient.JsonWebTokenPair, Is.Not.Null);
-        Assert.That(_apiClient.JsonWebTokenPair!.AccessToken.EncodedToken.Length, Is.GreaterThan(0));
-        Assert.That(_apiClient.JsonWebTokenPair!.RefreshToken.EncodedToken.Length, Is.GreaterThan(0));
+        Assert.Multiple(() =>
+        {
+            Assert.That(_apiClient.JsonWebTokenPair, Is.Not.Null);
+            Assert.That(_apiClient.JsonWebTokenPair!.AccessToken.EncodedToken.Length, Is.GreaterThan(0));
+            Assert.That(_apiClient.JsonWebTokenPair!.RefreshToken.EncodedToken.Length, Is.GreaterThan(0));
+        });
+    }
+
+    /// <summary>
+    /// Tests the token expiry extension method for correct behavior respecting time zones.
+    /// </summary>
+    [Test]
+    public void CheckForTokenExpiry()
+    {
+        const string exampleToken =
+            "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg0Nzc3ODQ5LCJqdGkiOiIwIiwiaWQiOjEwMDAsInNlY3JldF9pZCI6IiIsImFsbG93ZWRfY2lkcnMiOlsiMC4wLjAuMC8wIiwiOjovMCJdfQ.AVVdSl2IdjeWaTQdzZy8zKjZDh4B5nqqUa-RMKqKFLQ";
+        var token = new JsonWebToken(exampleToken);
+
+        var stillValid = new DateTime(2023, 05, 22, 17, 50, 48);
+        var noLongerValid = new DateTime(2023, 05, 22, 17, 50, 50);
+        var diffValid = stillValid - DateTime.UtcNow;
+        var diffInvalid = noLongerValid - DateTime.UtcNow;
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(token.IsExpired(diffValid), Is.False);
+            Assert.That(token.IsExpired(diffInvalid), Is.True);
+        });
     }
 }

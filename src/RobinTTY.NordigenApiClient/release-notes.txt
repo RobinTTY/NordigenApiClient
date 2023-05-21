@@ -1,2 +1,1 @@
-﻿Improved the static code analysis for the NordigenApiResponse class.
-The compiler can now analyze whether the "Result" and "Error" properties may be null or are not-null depending on the "IsSuccess" property.
+﻿Fixed the expiry check for the API access/refresh token. Until now timezones were not correctly accounted for.

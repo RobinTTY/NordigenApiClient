@@ -55,7 +55,7 @@ public class JsonWebTokenPair
         var handler = new JsonWebTokenHandler();
         AccessToken = handler.ReadJsonWebToken(accessToken);
         RefreshToken = handler.ReadJsonWebToken(refreshToken);
-        AccessExpires = (int)(AccessToken.ValidTo - DateTime.Now).TotalSeconds;
-        RefreshExpires = (int)(RefreshToken.ValidTo - DateTime.Now).TotalSeconds;
+        AccessExpires = (int)(AccessToken.ValidTo.ToUniversalTime() - DateTime.UtcNow).TotalSeconds;
+        RefreshExpires = (int)(RefreshToken.ValidTo.ToUniversalTime() - DateTime.UtcNow).TotalSeconds;
     }
 }
