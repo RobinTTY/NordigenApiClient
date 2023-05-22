@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace RobinTTY.NordigenApiClient.Models.Responses;
 
@@ -28,19 +27,8 @@ public class CurrencyExchange
     /// Factor used to convert an amount from one currency into another. This reflects the price at which one currency was bought with another currency.
     /// </summary>
     [JsonPropertyName("exchangeRate")]
-    public string ExchangeRate { get; }
+    public decimal ExchangeRate { get; }
 
-    /// <summary>
-    /// The <see cref="ExchangeRate"/> parsed as a decimal number. Null if amount can't be parsed.
-    /// </summary>
-    public decimal? ExchangeRateParsed
-    {
-        get
-        {
-            var success = decimal.TryParse(ExchangeRate, NumberStyles.Number, CultureInfo.GetCultureInfo("en-US"), out var amount);
-            return success ? amount : null;
-        }
-    }
     /// <summary>
     /// Date at which an exchange rate is quoted.
     /// </summary>
@@ -62,7 +50,7 @@ public class CurrencyExchange
     /// <param name="exchangeRate">Factor used to convert an amount from one currency into another. This reflects the price at which one currency was bought with another currency.</param>
     /// <param name="quotationDate">Date at which an exchange rate is quoted.</param>
     /// <param name="contractIdentification">Unique identification to unambiguously identify the foreign exchange contract.</param>
-    public CurrencyExchange(string sourceCurrency, string targetCurrency, string unitCurrency, string exchangeRate, DateTime? quotationDate, string? contractIdentification)
+    public CurrencyExchange(string sourceCurrency, string targetCurrency, string unitCurrency, decimal exchangeRate, DateTime? quotationDate, string? contractIdentification)
     {
         SourceCurrency = sourceCurrency;
         TargetCurrency = targetCurrency;

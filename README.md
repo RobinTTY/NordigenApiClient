@@ -113,7 +113,7 @@ Here is how you would go about retrieving the balances and transactions for a ba
         {
             var balanceAmount = balance.BalanceAmount;
             Console.WriteLine($"Type: {balance.BalanceType}");
-            Console.WriteLine($"Balance: {balanceAmount.AmountParsed} {balanceAmount.Currency}");
+            Console.WriteLine($"Balance: {balanceAmount.Amount} {balanceAmount.Currency}");
         });
 
     var transactionsResponse = await client.AccountsEndpoint.GetTransactions(accountId);
@@ -123,7 +123,7 @@ Here is how you would go about retrieving the balances and transactions for a ba
             var transactionAmount = transaction.TransactionAmount;
             Console.WriteLine($"Remittance: {transaction.RemittanceInformationUnstructured}");
             Console.WriteLine($"Booking date:{transaction.ValueDate}");
-            Console.WriteLine($"Amount: {transactionAmount.AmountParsed} {transactionAmount.Currency}");
+            Console.WriteLine($"Amount: {transactionAmount.Amount} {transactionAmount.Currency}");
         });
     ```
 

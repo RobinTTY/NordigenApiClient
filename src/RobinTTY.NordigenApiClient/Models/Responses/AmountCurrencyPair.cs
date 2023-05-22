@@ -1,29 +1,17 @@
-﻿using System.Globalization;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace RobinTTY.NordigenApiClient.Models.Responses;
 
 /// <summary>
-/// Pair representing an amount and currency the amount is denominated in.
+/// Pair representing an amount and the currency the amount is denominated in.
 /// </summary>
 public class AmountCurrencyPair
 {
     /// <summary>
-    /// The amount as returned by the Nordigen API.
+    /// The amount.
     /// </summary>
     [JsonPropertyName("amount")]
-    public string Amount { get; }
-    /// <summary>
-    /// The parsed amount. Null if amount can't be parsed.
-    /// </summary>
-    public decimal? AmountParsed
-    {
-        get
-        {
-            var success = decimal.TryParse(Amount, NumberStyles.Number, CultureInfo.GetCultureInfo("en-US"), out var amount);
-            return success ? amount : null;
-        }
-    }
+    public decimal Amount { get; }
 
     /// <summary>
     /// The currency the amount is denominated in.
@@ -37,7 +25,7 @@ public class AmountCurrencyPair
     /// <param name="amount">The balance amount.</param>
     /// <param name="currency">The currency the amount is denominated in.</param>
     [JsonConstructor]
-    public AmountCurrencyPair(string amount, string currency)
+    public AmountCurrencyPair(decimal amount, string currency)
     {
         Amount = amount;
         Currency = currency;

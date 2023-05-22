@@ -63,7 +63,7 @@ public class NordigenClient
         _httpClient = httpClient;
         _serializerOptions = new JsonSerializerOptions
         {
-            Converters = { new JsonWebTokenConverter(), new GuidConverter() }
+            Converters = { new JsonWebTokenConverter(), new GuidConverter(), new CultureSpecificDecimalConverter() }
         };
 
         Credentials = credentials;

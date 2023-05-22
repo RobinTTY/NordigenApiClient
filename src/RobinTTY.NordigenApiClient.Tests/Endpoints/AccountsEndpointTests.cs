@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Net;
+﻿using System.Net;
 using RobinTTY.NordigenApiClient.Models.Responses;
 
 namespace RobinTTY.NordigenApiClient.Tests.Endpoints;
@@ -52,7 +51,7 @@ internal class AccountsEndpointTests
         Assert.Multiple(() =>
         {
             Assert.That(balances, Has.Count.EqualTo(2));
-            Assert.That(balances.Any(balance => balance.BalanceAmount.AmountParsed == (decimal)1913.12), Is.True);
+            Assert.That(balances.Any(balance => balance.BalanceAmount.Amount == (decimal)1913.12), Is.True);
             Assert.That(balances.Any(balance => balance.BalanceAmount.Currency == "EUR"), Is.True);
             Assert.That(balances.All(balance => balance.BalanceType != BalanceType.Undefined));
         });
@@ -98,8 +97,7 @@ internal class AccountsEndpointTests
                 matchesAll &= t.DebtorAccount?.Iban == "GL9619297215858568";
                 matchesAll &= t.DebtorName == "MON MOTHMA";
                 matchesAll &= t.RemittanceInformationUnstructured == "For the support of Restoration of the Republic foundation";
-                matchesAll &= t.TransactionAmount.Amount == "45.00";
-                matchesAll &= t.TransactionAmount.AmountParsed == (decimal)45.00;
+                matchesAll &= t.TransactionAmount.Amount == (decimal)45.00;
                 matchesAll &= t.TransactionAmount.Currency == "EUR";
                 return matchesAll;
             }));
