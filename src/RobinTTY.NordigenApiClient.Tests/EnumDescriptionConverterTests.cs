@@ -52,6 +52,7 @@ internal class EnumDescriptionConverterTests
     [TestCase("CISH", CashAccountType.CashIncome)]
     [TestCase("CPAC", CashAccountType.ClearingParticipantSettlement)]
     [TestCase("MGLD", CashAccountType.MarginalLending)]
+    [TestCase("nonExistent", CashAccountType.Undefined)]
     public void DeserializeEnum<T>(string descriptor, T expectedDeserializedValue)
     {
         var enumValue = JsonSerializer.Deserialize<T>($"\"{descriptor}\"");

@@ -77,25 +77,15 @@ public class BankAccountDetails
     [JsonPropertyName("msisdn")]
     public string? Msisdn { get; }
     /// <summary>
-    /// The account status:
-    /// <list type="bullet">
-    /// <item><description>"enabled": account is available</description></item>
-    /// <item><description>"deleted": account is terminated</description></item>
-    /// <item><description>"blocked": account is blocked e.g. for legal reasons</description></item>
-    /// </list>
-    /// If this field is not used, then the account is available in the sense of this specification.
+    /// The status of the account.
     /// </summary>
     [JsonPropertyName("status")]
-    public string? Status { get; }
+    public IsoBankAccountStatus? Status { get; }
     /// <summary>
-    /// Specifies the usage of the account:
-    /// <list type="bullet">
-    /// <item><description>PRIV: private personal account</description></item>
-    /// <item><description>ORGA: professional account</description></item>
-    /// </list>
+    /// Specifies the usage of the account.
     /// </summary>
     [JsonPropertyName("usage")]
-    public string? Usage { get; }
+    public BankAccountUsage? Usage { get; }
 
     /// <summary>
     /// Creates a new instance of <see cref="BankAccountDetails"/>.
@@ -117,7 +107,7 @@ public class BankAccountDetails
     /// <param name="status">The account status.</param>
     /// <param name="usage">Specifies whether the account is used by an institution or a private individual.</param>
     [JsonConstructor]
-    public BankAccountDetails(string resourceId, string iban, string? bic, string? bban, string currency, string ownerName, string? ownerAddressUnstructured, string name, string product, CashAccountType cashAccountType, string? details, string? linkedAccounts, string? msisdn, string? status, string? usage)
+    public BankAccountDetails(string resourceId, string iban, string? bic, string? bban, string currency, string ownerName, string? ownerAddressUnstructured, string name, string product, CashAccountType? cashAccountType, string? details, string? linkedAccounts, string? msisdn, IsoBankAccountStatus? status, BankAccountUsage? usage)
     {
         ResourceId = resourceId;
         Iban = iban;

@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 namespace RobinTTY.NordigenApiClient.Models.Responses;
 
 /// <summary>
-/// Identifies the status of the bank account.
+/// Identifies the status of the bank account in reference to the Nordigen platform.
 /// <para>Reference: <see href="https://nordigen.com/en/account_information_documenation/integration/statuses/#:~:text=is%20starting%20status.-,Accounts%20endpoint,-Status%20long"/></para>
 /// </summary>
 [JsonConverter(typeof(EnumDescriptionConverter<BankAccountStatus>))]
