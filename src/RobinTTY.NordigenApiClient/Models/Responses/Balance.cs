@@ -14,7 +14,7 @@ public class Balance
     [JsonPropertyName("balanceAmount")]
     public AmountCurrencyPair BalanceAmount { get; }
     /// <summary>
-    /// Type of the balance (e.g. closingBooked).
+    /// Type of the balance (e.g. <see cref="BalanceType.ClosingBooked"/>).
     /// </summary>
     [JsonPropertyName("balanceType")]
     public BalanceType BalanceType { get; }

@@ -13,12 +13,12 @@ public class BankAccountDetails
     /// <para>For reference see: <see href="https://www.berlin-group.org/_files/ugd/c2914b_fec1852ec9c640568f5c0b420acf67d2.pdf"/></para>
     /// </summary>
     [JsonPropertyName("resourceId")]
-    public string ResourceId { get; }
+    public string? ResourceId { get; }
     /// <summary>
     /// The IBAN of the bank account.
     /// </summary>
     [JsonPropertyName("iban")]
-    public string Iban { get; }
+    public string? Iban { get; }
     /// <summary>
     /// The BIC (Business Identifier Code) associated with the account.
     /// </summary>
@@ -39,7 +39,7 @@ public class BankAccountDetails
     /// Name of the legal account owner. If there is more than one owner, then two names might be noted here.
     /// </summary>
     [JsonPropertyName("ownerName")]
-    public string OwnerName { get; }
+    public string? OwnerName { get; }
     /// <summary>
     /// Address of the legal account owner.
     /// </summary>
@@ -50,17 +50,17 @@ public class BankAccountDetails
     /// order to provide an additional means of identification of the account.
     /// </summary>
     [JsonPropertyName("name")]
-    public string Name { get; }
+    public string? Name { get; }
     /// <summary>
     /// Product name of the bank for this account.
     /// </summary>
     [JsonPropertyName("product")]
-    public string Product { get; }
+    public string? Product { get; }
     /// <summary>
-    /// External cash account type 1 code as defined by ISO 20022.
+    /// Specifies the nature, or use, of the cash account as defined by ISO 20022.
     /// </summary>
     [JsonPropertyName("cashAccountType")]
-    public string CashAccountType { get; }
+    public CashAccountType? CashAccountType { get; }
     /// <summary>
     /// Specifications that might be provided by the financial institution (e.g. characteristics of the account/relevant card).
     /// </summary>
@@ -109,7 +109,7 @@ public class BankAccountDetails
     /// <param name="name">Name of the account, as assigned by the bank, in agreement with the account owner in order to provide an additional
     /// means of identification of the account.</param>
     /// <param name="product">Product name of the bank for this account.</param>
-    /// <param name="cashAccountType">External cash account type 1 code as defined by ISO 20022.</param>
+    /// <param name="cashAccountType">External cash account type as defined by ISO 20022.</param>
     /// <param name="bic">The BIC (Business Identifier Code) associated with the account.</param>
     /// <param name="details">Specifications that might be provided by the financial institution (e.g. characteristics of the account/relevant card).</param>
     /// <param name="linkedAccounts">A financial institution might name a cash account associated with pending card transactions.</param>
@@ -117,7 +117,7 @@ public class BankAccountDetails
     /// <param name="status">The account status.</param>
     /// <param name="usage">Specifies whether the account is used by an institution or a private individual.</param>
     [JsonConstructor]
-    public BankAccountDetails(string resourceId, string iban, string? bic, string? bban, string currency, string ownerName, string? ownerAddressUnstructured, string name, string product, string cashAccountType, string? details, string? linkedAccounts, string? msisdn, string? status, string? usage)
+    public BankAccountDetails(string resourceId, string iban, string? bic, string? bban, string currency, string ownerName, string? ownerAddressUnstructured, string name, string product, CashAccountType cashAccountType, string? details, string? linkedAccounts, string? msisdn, string? status, string? usage)
     {
         ResourceId = resourceId;
         Iban = iban;

@@ -20,6 +20,11 @@ internal class EnumDescriptionConverterTests
     [TestCase(BalanceType.Expected, "expected")]
     [TestCase(BalanceType.Undefined, "Undefined")]
     [TestCase(BankAccountStatus.Suspended, "SUSPENDED")]
+    [TestCase(CashAccountType.Current, "CACC")]
+    [TestCase(CashAccountType.CashPayment, "CASH")]
+    [TestCase(CashAccountType.CashIncome, "CISH")]
+    [TestCase(CashAccountType.ClearingParticipantSettlement, "CPAC")]
+    [TestCase(CashAccountType.MarginalLending, "MGLD")]
     public void SerializeEnum<T>(T enumValue, string expectedSerializedValue)
     {
         var json = JsonSerializer.Serialize(enumValue);
@@ -42,6 +47,11 @@ internal class EnumDescriptionConverterTests
     [TestCase("expected", BalanceType.Expected)]
     [TestCase("unknownType", BalanceType.Undefined)]
     [TestCase("SUSPENDED", BankAccountStatus.Suspended)]
+    [TestCase("CACC", CashAccountType.Current)]
+    [TestCase("CASH", CashAccountType.CashPayment)]
+    [TestCase("CISH", CashAccountType.CashIncome)]
+    [TestCase("CPAC", CashAccountType.ClearingParticipantSettlement)]
+    [TestCase("MGLD", CashAccountType.MarginalLending)]
     public void DeserializeEnum<T>(string descriptor, T expectedDeserializedValue)
     {
         var enumValue = JsonSerializer.Deserialize<T>($"\"{descriptor}\"");

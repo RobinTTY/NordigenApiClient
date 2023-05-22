@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Diagnostics;
+using System.Net;
 using RobinTTY.NordigenApiClient.Models.Responses;
 
 namespace RobinTTY.NordigenApiClient.Tests.Endpoints;
@@ -71,9 +72,9 @@ internal class AccountsEndpointTests
         Assert.Multiple(() =>
         {
             Assert.That(details.Iban, Is.EqualTo("GL9619297215858568"));
-            Assert.That(details.CashAccountType, Is.EqualTo("CACC"));
             Assert.That(details.Name, Is.EqualTo("Main Account"));
             Assert.That(details.OwnerName, Is.EqualTo("John Doe"));
+            Assert.That(details.CashAccountType, Is.EqualTo(CashAccountType.Current));
         });
     }
 
