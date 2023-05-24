@@ -1,14 +1,1 @@
-﻿THIS UPDATE CONTAINS BREAKING CHANGES TO THE API SURFACE! PLEASE READ THE CHANGE NOTES BEFORE UPGRADING!
-
-This update provides strongly typed responses where in the past only strings were returned, to improve ease of use.
-The new strongly typed properties are part of the `BankAccountDetails` class and are as follows:
-
-- `CashAccountType` enum for the `CashAccountType` property
-- `BankAccountUsage` enum for the `Usage` property
-- `IsoBankAccountStatus` enum for the `Status` property
-
-Additionally the `AmountParsed` property has been remove from the `AmountCurrencyPair` class. Instead the `Amount` property is now of type decimal.
-The same change has been made in the `CurrencyExchange` class (`ExchangeRateParsed` property removed, `ExchangeRate` now of type decimal).
-These changes have been made to provide a more consistent API surface without any "unparsed" information. Where possible the returned information is now always converted into a concrete type.
-
-The nullability of some properties has also been corrected.
+﻿Fixed the signature of the GetInstitutions method to reflect the updated Nordigen API. Now supports all current parameters.
