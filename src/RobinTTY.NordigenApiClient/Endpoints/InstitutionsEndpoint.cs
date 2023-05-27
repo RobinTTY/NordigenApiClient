@@ -21,7 +21,7 @@ public class InstitutionsEndpoint
     }
 
     /// <summary>
-    /// Gets a list of institutions supported by the Nordigen API.
+    /// Gets a list of institutions supported by the Nordigen API (optionally filtered by country and supported features).
     /// <para>Route: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/institutions/retrieve%20all%20supported%20Institutions%20in%20a%20given%20country"></see></para>
     /// </summary>
     /// <param name="country">The two-letter country code (<see href="https://wikipedia.org/wiki/ISO_3166-1">ISO 3166</see>) in which the institutions operate. Parameter won't be sent in the query if <see langword="null"/>.</param>
@@ -32,14 +32,14 @@ public class InstitutionsEndpoint
     /// <param name="corporateAccountsSupported">Whether or not corporate accounts are supported by this institution. Parameter won't be sent in the query if <see langword="null"/>.</param>
     /// <param name="privateAccountsSupported">Whether or not private accounts are supported by this institution. Parameter won't be sent in the query if <see langword="null"/>.</param>
     /// <param name="readRefundAccountSupported">Whether or not read refund account is supported by this institution. Parameter won't be sent in the query if <see langword="null"/>.</param>
-    /// <param name="paymentsSupported">Whether or not payments are supported by this institution. Parameter won't be sent in the query if <see langword="null"/>.</param>
+    /// <param name="paymentsEnabled">Whether or not payments are enabled by this institution. Parameter won't be sent in the query if <see langword="null"/>.</param>
     /// <param name="paymentSubmissionSupported">Whether or not payment submission is supported by this institution. Parameter won't be sent in the query if <see langword="null"/>.</param>
     /// <param name="pendingTransactionsSupported">Whether or not pending transactions are supported by this institution. Parameter won't be sent in the query if <see langword="null"/>.</param>
     /// <param name="ssnVerificationSupported">Whether or not SSN verification is supported by this institution. Parameter won't be sent in the query if <see langword="null"/>.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
     /// <returns>A <see cref="NordigenApiResponse{TResponse, TError}"/> containing a list of supported institutions if the request was successful.</returns>
     public async Task<NordigenApiResponse<List<Institution>, InstitutionsError>> GetInstitutions(string? country = null, bool? accessScopesSupported = null, bool? accountSelectionSupported = null, bool? businessAccountsSupported = null,
-        bool? cardAccountsSupported = null, bool? corporateAccountsSupported = null, bool? privateAccountsSupported = null, bool? readRefundAccountSupported = null, bool? paymentsSupported = null, bool? paymentSubmissionSupported = null, 
+        bool? cardAccountsSupported = null, bool? corporateAccountsSupported = null, bool? privateAccountsSupported = null, bool? readRefundAccountSupported = null, bool? paymentsEnabled = null, bool? paymentSubmissionSupported = null, 
         bool? pendingTransactionsSupported = null, bool? ssnVerificationSupported = null, CancellationToken cancellationToken = default)
     {
         var query = new List<KeyValuePair<string, string>>();
@@ -51,7 +51,7 @@ public class InstitutionsEndpoint
         if (corporateAccountsSupported.HasValue) query.Add(GetSupportFlagQuery("corporate_accounts_supported", corporateAccountsSupported.Value));
         if (privateAccountsSupported.HasValue) query.Add(GetSupportFlagQuery("private_accounts_supported", privateAccountsSupported.Value));
         if (readRefundAccountSupported.HasValue) query.Add(GetSupportFlagQuery("read_refund_account_supported", readRefundAccountSupported.Value));
-        if (paymentsSupported.HasValue) query.Add(GetSupportFlagQuery("payments_supported", paymentsSupported.Value));
+        if (paymentsEnabled.HasValue) query.Add(GetSupportFlagQuery("payments_enabled", paymentsEnabled.Value));
         if (paymentSubmissionSupported.HasValue) query.Add(GetSupportFlagQuery("payment_submission_supported", paymentSubmissionSupported.Value));
         if (pendingTransactionsSupported.HasValue) query.Add(GetSupportFlagQuery("pending_transactions_supported", pendingTransactionsSupported.Value));
         if (ssnVerificationSupported.HasValue) query.Add(GetSupportFlagQuery("ssn_verification_supported", ssnVerificationSupported.Value));

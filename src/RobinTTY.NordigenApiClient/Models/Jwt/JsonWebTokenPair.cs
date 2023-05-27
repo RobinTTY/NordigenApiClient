@@ -12,22 +12,22 @@ public class JsonWebTokenPair
     /// The JWT access token returned by the Nordigen API.
     /// </summary>
     [JsonPropertyName("access")]
-    public JsonWebToken AccessToken { get; set; }
+    public JsonWebToken AccessToken { get; init; }
     /// <summary>
     /// The JWT refresh token returned by the Nordigen API.
     /// </summary>
     [JsonPropertyName("refresh")]
-    public JsonWebToken RefreshToken { get; set; }
+    public JsonWebToken RefreshToken { get; init; }
     /// <summary>
     /// Indicates the time in seconds after which the access token expires.
     /// </summary>
     [JsonPropertyName("access_expires")]
-    public int AccessExpires { get; set; }
+    public int AccessExpires { get; init; }
     /// <summary>
     /// Indicates the time in seconds after which the access token expires.
     /// </summary>
     [JsonPropertyName("refresh_expires")]
-    public int RefreshExpires { get; set; }
+    public int RefreshExpires { get; init; }
 
     /// <summary>
     /// Creates a new instance of <see cref="JsonWebTokenPair"/>.

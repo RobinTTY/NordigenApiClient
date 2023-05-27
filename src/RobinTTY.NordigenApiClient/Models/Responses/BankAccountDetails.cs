@@ -136,7 +136,7 @@ internal class BankAccountDetailsWrapper
     /// Detailed information about a bank account.
     /// </summary>
     [JsonPropertyName("account")]
-    public BankAccountDetails Account { get; set; }
+    public BankAccountDetails Account { get; }
 
     /// <summary>
     /// Creates a new instance of <see cref="BankAccountDetailsWrapper"/>.

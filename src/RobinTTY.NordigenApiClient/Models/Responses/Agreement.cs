@@ -12,18 +12,18 @@ public class Agreement : CreateAgreementRequest
     /// The id of the agreement assigned by the Nordigen API.
     /// </summary>
     [JsonPropertyName("id")]
-    public Guid Id { get; set; }
+    public Guid Id { get; }
     /// <summary>
     /// Time when the agreement was created.
     /// </summary>
     [JsonPropertyName("created")]
-    public DateTime Created { get; set; }
+    public DateTime Created { get; }
 
     /// <summary>
     /// Time when the agreement was accepted.
     /// </summary>
     [JsonPropertyName("accepted")]
-    public DateTime? Accepted { get; set; }
+    public DateTime? Accepted { get; }
 
 
     /// <summary>

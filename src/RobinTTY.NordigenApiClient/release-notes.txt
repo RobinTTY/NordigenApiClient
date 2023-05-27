@@ -1,1 +1,1 @@
-﻿Fixed the signature of the GetInstitutions method to reflect the updated Nordigen API. Now supports all current parameters.
+﻿Updated GetInstitutions query params due to updates to the Nordigen API. Aligned some access modifiers.

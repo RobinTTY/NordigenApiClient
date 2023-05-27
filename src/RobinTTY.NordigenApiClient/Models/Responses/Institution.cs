@@ -11,32 +11,32 @@ public class Institution
     /// The unique id of the institution.
     /// </summary>
     [JsonPropertyName("id")]
-    public string Id { get; set; }
+    public string Id { get; }
     /// <summary>
     /// The name of the institution.
     /// </summary>
     [JsonPropertyName("name")]
-    public string Name { get; set; }
+    public string Name { get; }
     /// <summary>
     /// The Business Identifier Code (BIC) of the institution.
     /// </summary>
     [JsonPropertyName("bic")]
-    public string Bic { get; set; }
+    public string Bic { get; }
     /// <summary>
     /// The days for which the transaction history is available.
     /// </summary>
     [JsonPropertyName("transaction_total_days")]
-    public string TransactionTotalDays { get; set; }
+    public string TransactionTotalDays { get; }
     /// <summary>
     /// The countries the institution operates in.
     /// </summary>
     [JsonPropertyName("countries")]
-    public List<string> Countries { get; set; }
+    public List<string> Countries { get; }
     /// <summary>
     /// A <see cref="Uri"/> for the logo of the institution.
     /// </summary>
     [JsonPropertyName("logo")]
-    public Uri Logo { get; set; }
+    public Uri Logo { get; }
 
     /// <summary>
     /// Creates a new instance of <see cref="Institution"/>.

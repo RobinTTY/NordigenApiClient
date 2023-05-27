@@ -13,22 +13,22 @@ public class ResponsePage<T>
     /// The total number of items that can be accessed via the paged responses (not necessarily through the current page).
     /// </summary>
     [JsonPropertyName("count")]
-    public uint Count { get; set; }
+    public uint Count { get; }
     /// <summary>
     /// The URI of the next response page.
     /// </summary>
     [JsonPropertyName("next")]
-    public Uri? Next { get; set; }
+    public Uri? Next { get; }
     /// <summary>
     /// The URI of the last response page.
     /// </summary>
     [JsonPropertyName("previous")]
-    public Uri? Previous { get; set; }
+    public Uri? Previous { get; }
     /// <summary>
     /// The results that were fetched with this page.
     /// </summary>
     [JsonPropertyName("results")]
-    public IEnumerable<T> Results { get; set; }
+    public IEnumerable<T> Results { get; }
 
     /// <summary>
     /// Creates a new instance of <see cref="ResponsePage{T}"/>.
