@@ -70,7 +70,7 @@ internal class AccountsEndpointTests
         var details = detailsResponse.Result!;
         Assert.Multiple(() =>
         {
-            Assert.That(details.Iban, Is.EqualTo("GL9619297215858568"));
+            Assert.That(details.Iban, Is.EqualTo("GL6298500000098503"));
             Assert.That(details.Name, Is.EqualTo("Main Account"));
             Assert.That(details.OwnerName, Is.EqualTo("John Doe"));
             Assert.That(details.CashAccountType, Is.EqualTo(CashAccountType.Current));
@@ -94,7 +94,7 @@ internal class AccountsEndpointTests
             {
                 var matchesAll = true;
                 matchesAll &= t.BankTransactionCode == "PMNT";
-                matchesAll &= t.DebtorAccount?.Iban == "GL9619297215858568";
+                matchesAll &= t.DebtorAccount?.Iban == "GL6298500000098503";
                 matchesAll &= t.DebtorName == "MON MOTHMA";
                 matchesAll &= t.RemittanceInformationUnstructured == "For the support of Restoration of the Republic foundation";
                 matchesAll &= t.TransactionAmount.Amount == (decimal)45.00;
