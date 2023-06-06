@@ -8,6 +8,8 @@ This project provides a C# client for the [Nordigen API](https://www.nordigen.co
 - Requisitions
 - Accounts
 
+**Update March 6th 2023:** The Nordigen company merged with https://gocardless.com/. Some documentation links may be outdated due to URL changes in the documentation. The new documentation can be found at: https://developer.gocardless.com/bank-account-data/endpoints.
+
 ## Getting started
 
 1. To get started install the package via the package manager:
