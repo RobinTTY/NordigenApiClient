@@ -28,27 +28,27 @@ public class NordigenClient
     public JsonWebTokenPair? JsonWebTokenPair { get; set; }
     /// <summary>
     /// Provides support for the API operations of the tokens endpoint.
-    /// <para>Reference: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/token"/></para>
+    /// <para>Reference: <see href="https://developer.gocardless.com/bank-account-data/endpoints"/></para>
     /// </summary>
     public TokenEndpoint TokenEndpoint { get; }
     /// <summary>
     /// Provides support for the API operations of the institutions endpoint.
-    /// <para>Reference: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/institutions"/></para>
+    /// <para>Reference: <see href="https://developer.gocardless.com/bank-account-data/endpoints"/></para>
     /// </summary>
     public InstitutionsEndpoint InstitutionsEndpoint { get; }
     /// <summary>
     /// Provides support for the API operations of the agreements endpoint.
-    /// <para>Reference: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/agreements"/></para>
+    /// <para>Reference: <see href="https://developer.gocardless.com/bank-account-data/endpoints"/></para>
     /// </summary>
     public AgreementsEndpoint AgreementsEndpoint { get; }
     /// <summary>
     /// Provides support for the API operations of the requisitions endpoint.
-    /// <para>Reference: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/requisitions"/></para>
+    /// <para>Reference: <see href="https://developer.gocardless.com/bank-account-data/endpoints"/></para>
     /// </summary>
     public RequisitionsEndpoint RequisitionsEndpoint { get; }
     /// <summary>
     /// Provides support for the API operations of the accounts endpoint.
-    /// <para>Reference: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/accounts"/></para>
+    /// <para>Reference: <see href="https://developer.gocardless.com/bank-account-data/endpoints"/></para>
     /// </summary>
     public AccountsEndpoint AccountsEndpoint { get; }
 

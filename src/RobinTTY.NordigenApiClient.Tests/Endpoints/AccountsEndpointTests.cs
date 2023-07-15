@@ -3,10 +3,6 @@ using RobinTTY.NordigenApiClient.Models.Responses;
 
 namespace RobinTTY.NordigenApiClient.Tests.Endpoints;
 
-/// <summary>
-/// Provides support for the API operations of the accounts endpoint.
-/// <para>Reference: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/accounts"/></para>
-/// </summary>
 internal class AccountsEndpointTests
 {
     private NordigenClient _apiClient = null!;
@@ -20,7 +16,6 @@ internal class AccountsEndpointTests
 
     /// <summary>
     /// Tests the retrieval of an account.
-    /// Route: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/accounts/retrieve%20account%20metadata"/>
     /// </summary>
     /// <returns></returns>
     [Test]
@@ -39,7 +34,6 @@ internal class AccountsEndpointTests
 
     /// <summary>
     /// Tests the retrieval of account balances.
-    /// Route: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/accounts/accounts_balances_retrieve"/>
     /// </summary>
     /// <returns></returns>
     [Test]
@@ -59,7 +53,6 @@ internal class AccountsEndpointTests
 
     /// <summary>
     /// Tests the retrieval of account details.
-    /// Route: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/accounts/accounts_details_retrieve"/>
     /// </summary>
     /// <returns></returns>
     [Test]
@@ -79,7 +72,6 @@ internal class AccountsEndpointTests
 
     /// <summary>
     /// Tests the retrieval of transactions.
-    /// Route: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/accounts/accounts_transactions_retrieve"/>
     /// </summary>
     /// <returns></returns>
     [Test]
@@ -107,7 +99,6 @@ internal class AccountsEndpointTests
 
     /// <summary>
     /// Tests the retrieval of transactions within a specific time frame.
-    /// Route: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/accounts/accounts_transactions_retrieve"/>
     /// </summary>
     /// <returns></returns>
     [Test]
@@ -127,7 +118,6 @@ internal class AccountsEndpointTests
 
     /// <summary>
     /// Tests the retrieval of transactions within a specific time frame in the future. This should return an error.
-    /// Route: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/accounts/accounts_transactions_retrieve"/>
     /// </summary>
     /// <returns></returns>
     [Test]

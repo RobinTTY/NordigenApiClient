@@ -6,7 +6,7 @@ namespace RobinTTY.NordigenApiClient.Models.Responses;
 
 /// <summary>
 /// Identifies the type of a balance.
-/// <para>Reference: <see href="https://nordigen.com/en/docs/account-information/output/balance/#:~:text=of%20the%20balance-,Balance%20Type,-TYPE"/></para>
+/// <para>Reference: <see href="https://developer.gocardless.com/bank-account-data/balance#balance_type"/></para>
 /// </summary>
 [JsonConverter(typeof(EnumDescriptionConverter<BalanceType>))]
 public enum BalanceType

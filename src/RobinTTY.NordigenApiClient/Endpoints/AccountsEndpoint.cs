@@ -5,7 +5,7 @@ namespace RobinTTY.NordigenApiClient.Endpoints;
 
 /// <summary>
 /// Provides support for the API operations of the accounts endpoint.
-/// <para>Reference: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/accounts"/></para>
+/// <para>Reference: <see href="https://developer.gocardless.com/bank-account-data/endpoints"/></para>
 /// </summary>
 public class AccountsEndpoint
 {
@@ -22,7 +22,6 @@ public class AccountsEndpoint
 
     /// <summary>
     /// Gets the bank account with the given id.
-    /// <para>Route: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/accounts/retrieve%20account%20metadata"/></para>
     /// </summary>
     /// <param name="id">The id of the account to get.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
@@ -32,7 +31,6 @@ public class AccountsEndpoint
 
     /// <summary>
     /// Gets the bank account with the given id.
-    /// <para>Route: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/accounts/retrieve%20account%20metadata"/></para>
     /// </summary>
     /// <param name="id">The id of the account to get.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
@@ -47,7 +45,6 @@ public class AccountsEndpoint
 
     /// <summary>
     /// Gets the balances of the specified account.
-    /// <para>Route: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/accounts/accounts_balances_retrieve"/></para>
     /// </summary>
     /// <param name="accountId">The id of the account for which to get the balances.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
@@ -57,7 +54,6 @@ public class AccountsEndpoint
 
     /// <summary>
     /// Gets the balances of the specified account.
-    /// <para>Route: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/accounts/accounts_balances_retrieve"/></para>
     /// </summary>
     /// <param name="accountId">The id of the account for which to get the balances.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
@@ -73,7 +69,6 @@ public class AccountsEndpoint
 
     /// <summary>
     /// Gets detailed information about the specified bank account.
-    /// <para>Route: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/accounts/accounts_details_retrieve"/></para>
     /// </summary>
     /// <param name="id">The id of the account for which to retrieve the detailed information.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
@@ -83,7 +78,6 @@ public class AccountsEndpoint
 
     /// <summary>
     /// Gets detailed information about the specified bank account.
-    /// <para>Route: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/accounts/accounts_details_retrieve"/></para>
     /// </summary>
     /// <param name="id">The id of the account for which to retrieve the detailed information.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
@@ -99,7 +93,6 @@ public class AccountsEndpoint
 
     /// <summary>
     /// Gets the transactions of the specified bank account.
-    /// <para>Route: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/accounts/accounts_transactions_retrieve"/></para>
     /// </summary>
     /// <param name="id">The id of the account for which to retrieve the transactions.</param>
     /// <param name="startDate">Optional date to limit the transactions which are returned to those after the specified date.</param>
@@ -116,7 +109,6 @@ public class AccountsEndpoint
 
     /// <summary>
     /// Gets the transactions of the specified bank account.
-    /// <para>Route: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/accounts/accounts_transactions_retrieve"/></para>
     /// </summary>
     /// <param name="id">The id of the account for which to retrieve the transactions.</param>
     /// <param name="startDate">Optional date to limit the transactions which are returned to those after the specified date.</param>

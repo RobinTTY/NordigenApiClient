@@ -7,7 +7,7 @@ namespace RobinTTY.NordigenApiClient.Endpoints;
 
 /// <summary>
 /// Provides support for the API operations of the requisitions endpoint.
-/// <para>Reference: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/requisitions"/></para>
+/// <para>Reference: <see href="https://developer.gocardless.com/bank-account-data/endpoints"/></para>
 /// </summary>
 public class RequisitionsEndpoint
 {
@@ -24,7 +24,6 @@ public class RequisitionsEndpoint
 
     /// <summary>
     /// Gets all requisitions belonging to your account.
-    /// <para>Route: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/requisitions/retrieve%20all%20requisitions"/></para>
     /// </summary>
     /// <param name="limit">Number of results to return per page.</param>
     /// <param name="offset">The initial index from which to return the results.</param>
@@ -38,7 +37,6 @@ public class RequisitionsEndpoint
 
     /// <summary>
     /// Gets the requisition with the given id.
-    /// <para>Route: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/requisitions/requisition%20by%20id"/></para>
     /// </summary>
     /// <param name="id">The id of the requisition to retrieve.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
@@ -47,7 +45,6 @@ public class RequisitionsEndpoint
 
     /// <summary>
     /// Gets the requisition with the given id.
-    /// <para>Route: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/requisitions/requisition%20by%20id"/></para>
     /// </summary>
     /// <param name="id">The id of the requisition to retrieve.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
@@ -61,7 +58,6 @@ public class RequisitionsEndpoint
 
     /// <summary>
     /// Creates a new requisition which is a collection of inputs for creating links and retrieving accounts.
-    /// <para>Route: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/requisitions/requisition%20created"/></para>
     /// </summary>
     /// <param name="requisition">The requisition to create.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
@@ -74,7 +70,6 @@ public class RequisitionsEndpoint
 
     /// <summary>
     /// Deletes the requisition with the given id.
-    /// <para>Route: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/requisitions/delete%20requisition%20by%20id%20v2"/></para>
     /// </summary>
     /// <param name="id">The id of the requisition to delete.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
@@ -84,7 +79,6 @@ public class RequisitionsEndpoint
 
     /// <summary>
     /// Deletes the requisition with the given id.
-    /// <para>Route: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/requisitions/delete%20requisition%20by%20id%20v2"/></para>
     /// </summary>
     /// <param name="id">The id of the requisition to delete.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>

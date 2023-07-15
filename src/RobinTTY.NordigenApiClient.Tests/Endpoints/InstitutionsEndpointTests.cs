@@ -14,7 +14,6 @@ internal class InstitutionsEndpointTests
 
     /// <summary>
     /// Tests the retrieving of institution for all countries and a specific country (Great Britain).
-    /// Route: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/institutions/retrieve%20all%20supported%20Institutions%20in%20a%20given%20country"></see>
     /// </summary>
     /// <returns></returns>
     [Test]
@@ -38,7 +37,6 @@ internal class InstitutionsEndpointTests
 
     /// <summary>
     /// Tests the retrieving of institution with various query parameters set.
-    /// Route: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/institutions/retrieve%20all%20supported%20Institutions%20in%20a%20given%20country"></see>
     /// </summary>
     /// <returns></returns>
     [Test]
@@ -72,7 +70,6 @@ internal class InstitutionsEndpointTests
 
     /// <summary>
     /// Tests the retrieving of a specific institution.
-    /// Route: https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/institutions/retrieve%20institution
     /// </summary>
     /// <returns></returns>
     [Test]

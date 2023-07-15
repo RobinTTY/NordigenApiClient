@@ -1,6 +1,6 @@
 # NordigenApiClient
 
-This project provides a C# client for the [Nordigen API](https://www.nordigen.com/). The project targets .NET 6/7 & .NET Standard 2.0 and supports the following endpoints of the API:
+This project provides a C# client for the [GoCardless Bank Account Data API](https://gocardless.com/bank-account-data/) (formerly Nordigen API). The project targets .NET 6/7 & .NET Standard 2.0 and supports the following endpoints of the API:
 
 - Token
 - Institutions
@@ -8,7 +8,7 @@ This project provides a C# client for the [Nordigen API](https://www.nordigen.co
 - Requisitions
 - Accounts
 
-**Update June 6th 2023:** The Nordigen company merged with https://gocardless.com/. Some documentation links may be outdated due to URL changes in the documentation. The new documentation can be found at: https://developer.gocardless.com/bank-account-data/endpoints.
+**Update June 6th 2023:** The Nordigen company merged with https://gocardless.com/. The new documentation can be found at: https://developer.gocardless.com/bank-account-data/endpoints.
 
 ## Getting started
 

@@ -10,7 +10,7 @@
     <PackageProjectUrl>https://github.com/RobinTTY/NordigenApiClient</PackageProjectUrl>
     <RepositoryUrl>https://github.com/RobinTTY/NordigenApiClient</RepositoryUrl>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <Description>A C# client for the API of https://nordigen.com/</Description>
+    <Description>A C# client for the API of https://gocardless.com/bank-account-data (formerly https://nordigen.com/)</Description>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>Nordigen; API; client</PackageTags>
     <PackageReleaseNotes>$([System.IO.File]::ReadAllText("$(MSBuildProjectDirectory)/release-notes.txt"))</PackageReleaseNotes>

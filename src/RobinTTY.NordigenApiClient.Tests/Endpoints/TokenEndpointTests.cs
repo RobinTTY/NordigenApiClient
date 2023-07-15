@@ -16,7 +16,6 @@ internal class TokenEndpointTests
 
     /// <summary>
     /// Tests the retrieving and refreshing of the JWT access tokens.
-    /// Route: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/token"></see>
     /// </summary>
     /// <returns></returns>
     [Test]
@@ -30,7 +29,6 @@ internal class TokenEndpointTests
 
     /// <summary>
     /// Tests retrieving a token with invalid credentials.
-    /// Route: https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/token/JWT%20Obtain
     /// </summary>
     /// <returns></returns>
     [Test]

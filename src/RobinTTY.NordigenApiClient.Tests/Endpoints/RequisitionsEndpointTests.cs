@@ -18,8 +18,6 @@ internal class RequisitionsEndpointTests
     /// <summary>
     /// Tests all methods of the requisitions endpoint.
     /// Creates 3 requisitions, retrieves them using 3 <see cref="ResponsePage{T}"/>s and deletes the requisitions after.
-    /// <para>Route: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/requisitions/retrieve%20all%20requisitions"/></para>
-    /// <para>Route: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/requisitions/delete%20requisition%20by%20id%20v2"/></para>
     /// </summary>
     /// <returns></returns>
     [Test]
@@ -98,7 +96,6 @@ internal class RequisitionsEndpointTests
 
     /// <summary>
     /// Tests the retrieval of a requisition with an invalid guid.
-    /// Route: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/requisitions/requisition%20by%20id"/>
     /// </summary>
     /// <returns></returns>
     [Test]
@@ -112,7 +109,6 @@ internal class RequisitionsEndpointTests
 
     /// <summary>
     /// Tests the creation of an end user agreement with invalid id.
-    /// Route: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/requisitions/requisition%20created"/>
     /// </summary>
     /// <returns></returns>
     [Test]

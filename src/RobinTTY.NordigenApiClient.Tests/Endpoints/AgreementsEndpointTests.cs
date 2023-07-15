@@ -18,7 +18,6 @@ internal class AgreementsEndpointTests
     /// <summary>
     /// Tests the paging mechanism of retrieving end user agreements.
     /// Creates 3 agreements, retrieves them using 3 <see cref="ResponsePage{T}"/>s and deletes the agreements after.
-    /// Route: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/agreements/retrieve%20all%20EUAs%20for%20an%20end%20user%20v2"></see>
     /// </summary>
     /// <returns></returns>
     [Test]
@@ -78,7 +77,6 @@ internal class AgreementsEndpointTests
 
     /// <summary>
     /// Tests the retrieval of one agreement via <see cref="Guid"/> and string id.
-    /// Route: https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/agreements/retrieve%20EUA%20by%20id%20v2
     /// </summary>
     /// <returns></returns>
     [Test]
@@ -104,7 +102,6 @@ internal class AgreementsEndpointTests
 
     /// <summary>
     /// Tests the retrieval of an agreement with an invalid guid.
-    /// Route: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/agreements/create%20EUA%20v2"/>
     /// </summary>
     /// <returns></returns>
     [Test]
@@ -118,7 +115,6 @@ internal class AgreementsEndpointTests
 
     /// <summary>
     /// Tests the creation and deletion of an end user agreement.
-    /// Route: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/agreements/create%20EUA%20v2"/>
     /// </summary>
     /// <returns></returns>
     [Test]
@@ -154,7 +150,6 @@ internal class AgreementsEndpointTests
 
     /// <summary>
     /// Tests the creation of an end user agreement with an invalid institution id.
-    /// Route: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/agreements/create%20EUA%20v2"/>
     /// </summary>
     /// <returns></returns>
     [Test]
@@ -170,7 +165,6 @@ internal class AgreementsEndpointTests
 
     /// <summary>
     /// Tests the creation of an end user agreement with invalid parameters.
-    /// <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/agreements/create%20EUA%20v2"/>
     /// </summary>
     /// <returns></returns>
     [Test]

@@ -6,7 +6,6 @@ namespace RobinTTY.NordigenApiClient.Models.Responses;
 
 /// <summary>
 /// Identifies the status of the bank account as defined by the ISO 20022 standard.
-/// <para>Reference: <see href="https://nordigen.com/en/docs/account-information/output/accounts/"/></para>
 /// </summary>
 [JsonConverter(typeof(EnumDescriptionConverter<IsoBankAccountStatus>))]
 public enum IsoBankAccountStatus

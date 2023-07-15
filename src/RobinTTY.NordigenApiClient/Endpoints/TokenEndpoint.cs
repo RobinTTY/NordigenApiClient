@@ -8,7 +8,7 @@ namespace RobinTTY.NordigenApiClient.Endpoints;
 
 /// <summary>
 /// Provides support for the API operations of the tokens endpoint.
-/// <para>Reference: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/token"/></para>
+/// <para>Reference: <see href="https://developer.gocardless.com/bank-account-data/endpoints"/></para>
 /// </summary>
 public class TokenEndpoint
 {
@@ -25,7 +25,6 @@ public class TokenEndpoint
 
     /// <summary>
     /// Obtains a new JWT token pair from the Nordigen API.
-    /// <para>Route: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/token/JWT%20Obtain"></see></para>
     /// </summary>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
     /// <returns>A <see cref="NordigenApiResponse{TResponse, TError}"/> containing the obtained <see cref="JsonWebTokenPair"/> if the request was successful.</returns>
@@ -37,7 +36,6 @@ public class TokenEndpoint
 
     /// <summary>
     /// Refreshes the JWT access token.
-    /// <para>Route: <see href="https://nordigen.com/en/docs/account-information/integration/parameters-and-responses/#/token/JWT%20Refresh"></see></para>
     /// </summary>
     /// <param name="refreshToken">The refresh token previously obtained through the <see cref="GetTokenPair"/> method.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
