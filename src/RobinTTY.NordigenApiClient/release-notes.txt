@@ -1,1 +1,1 @@
-﻿Updated GetInstitutions query params due to updates to the Nordigen API. Aligned some access modifiers.
+﻿Updated links and endpoint URLs to reference new GoCardless URLs.
