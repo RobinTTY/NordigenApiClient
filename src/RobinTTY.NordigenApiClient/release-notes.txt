@@ -1,1 +1,1 @@
-﻿Updated links and endpoint URLs to reference new GoCardless URLs.
+﻿Fixed deserialization issue which could be encountered by requesting all institutions of a country which isn't covered by the API.
