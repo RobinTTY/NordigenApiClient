@@ -178,7 +178,7 @@ internal class AgreementsEndpointTests
         Assert.Multiple(() =>
         {
             Assert.That(result.AccessScopeError.Detail, Is.EqualTo("Choose one or several from ['balances', 'details', 'transactions']"));
-            Assert.That(result.AccessValidForDaysError.Detail, Is.EqualTo("access_valid_for_days must be > 0 and <= 90"));
+            Assert.That(result.AccessValidForDaysError.Detail, Is.EqualTo("access_valid_for_days must be > 0 and <= 180"));
             Assert.That(result.MaxHistoricalDaysError.Detail, Is.EqualTo("max_historical_days must be > 0 and <= SANDBOXFINANCE_SFIN0000 transaction_total_days (90)"));
         });
     }

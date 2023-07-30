@@ -22,7 +22,7 @@ public class BankAccount : MinimalBankAccount
     /// The time this account was last accessed via the API.
     /// </summary>
     [JsonPropertyName("last_accessed")]
-    public DateTime LastAccessed { get; }
+    public DateTime? LastAccessed { get; }
     /// <summary>
     /// The institution id this account belongs to.
     /// </summary>
@@ -44,7 +44,7 @@ public class BankAccount : MinimalBankAccount
     /// <param name="institutionId">The institution id this account belongs to.</param>
     /// <param name="status">The status of the account (e.g. user has successfully authenticated and account is discovered).</param>
     [JsonConstructor]
-    public BankAccount(Guid id, DateTime created, DateTime lastAccessed, string iban, string institutionId, BankAccountStatus status) : base(iban)
+    public BankAccount(Guid id, DateTime created, DateTime? lastAccessed, string iban, string institutionId, BankAccountStatus status) : base(iban)
     {
         Id = id;
         Created = created;

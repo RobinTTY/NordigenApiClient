@@ -11,7 +11,7 @@ internal class TokenEndpointTests
     [OneTimeSetUp]
     public void Setup()
     {
-        _apiClient = TestExtensions.GetConfiguredClient(false);
+        _apiClient = TestExtensions.GetConfiguredClient();
     }
 
     /// <summary>

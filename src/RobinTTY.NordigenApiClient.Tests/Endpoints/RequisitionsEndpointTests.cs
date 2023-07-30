@@ -43,7 +43,7 @@ internal class RequisitionsEndpointTests
         ids.AddRange(existingIds);
         for (var i = 3; i < 6; i++)
         {
-            var requisitionRequest = new CreateRequisitionRequest(redirect, institutionId, $"internal_reference_{i}", "EN", agreementId);
+            var requisitionRequest = new CreateRequisitionRequest(redirect, institutionId, $"reference_{i}", "EN", agreementId);
             var createResponse = await _apiClient.RequisitionsEndpoint.CreateRequisition(requisitionRequest);
             TestExtensions.AssertNordigenApiResponseIsSuccessful(createResponse, HttpStatusCode.Created);
             ids.Add(createResponse.Result!.Id.ToString());

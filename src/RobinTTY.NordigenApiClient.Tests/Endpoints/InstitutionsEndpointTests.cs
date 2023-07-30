@@ -13,7 +13,7 @@ internal class InstitutionsEndpointTests
     }
 
     /// <summary>
-    /// Tests the retrieving of institution for all countries and a specific country (Great Britain).
+    /// Tests the retrieving of institutions for all countries and a specific country (Great Britain).
     /// </summary>
     /// <returns></returns>
     [Test]
@@ -36,7 +36,7 @@ internal class InstitutionsEndpointTests
     }
 
     /// <summary>
-    /// Tests the retrieving of institution with various query parameters set.
+    /// Tests the retrieving of institutions with various query parameters set.
     /// </summary>
     /// <returns></returns>
     [Test]
@@ -65,6 +65,23 @@ internal class InstitutionsEndpointTests
             Assert.That(withAccountSelectionResult, Has.Count.GreaterThan(withoutAccountSelectionResult.Count));
             Assert.That(allInstitutionResult, Has.Count.GreaterThan(withAccountSelectionResult.Count));
             Assert.That(withAccountSelectionResult.Count + withoutAccountSelectionResult.Count, Is.EqualTo(allInstitutionResult.Count));
+        });
+    }
+
+    /// <summary>
+    /// Tests the retrieving of institutions for a country which is not covered by the API.
+    /// </summary>
+    /// <returns></returns>
+    [Test]
+    public async Task GetInstitutionsForNotCoveredCountry()
+    {
+        var response = await _apiClient.InstitutionsEndpoint.GetInstitutions("US");
+        TestExtensions.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.BadRequest);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(response.Error!.Country.Detail, Is.EqualTo("US is not a valid choice."));
+            Assert.That(response.Error!.Country.Summary, Is.EqualTo("Invalid country choice."));
         });
     }
 

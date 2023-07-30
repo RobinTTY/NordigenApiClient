@@ -6,11 +6,13 @@ namespace RobinTTY.NordigenApiClient.Tests.Endpoints;
 internal class AccountsEndpointTests
 {
     private NordigenClient _apiClient = null!;
-    private readonly Guid _accountId = Guid.Parse("7e944232-bda9-40bc-b784-660c7ab5fe78");
+    private readonly string[] _secrets = File.ReadAllLines("secrets.txt");
+    private Guid _accountId;
 
     [OneTimeSetUp]
     public void Setup()
     {
+        _accountId = Guid.Parse(_secrets[9]);
         _apiClient = TestExtensions.GetConfiguredClient();
     }
 
@@ -27,7 +29,7 @@ internal class AccountsEndpointTests
         Assert.Multiple(() =>
         {
             Assert.That(account.InstitutionId, Is.EqualTo("SANDBOXFINANCE_SFIN0000"));
-            Assert.That(account.Iban, Is.EqualTo("GL3343697694912188"));
+            Assert.That(account.Iban, Is.EqualTo("GL2010440000010445"));
             Assert.That(account.Status, Is.EqualTo(BankAccountStatus.Ready));
         });
     }
@@ -63,9 +65,9 @@ internal class AccountsEndpointTests
         var details = detailsResponse.Result!;
         Assert.Multiple(() =>
         {
-            Assert.That(details.Iban, Is.EqualTo("GL6298500000098503"));
+            Assert.That(details.Iban, Is.EqualTo("GL2010440000010445"));
             Assert.That(details.Name, Is.EqualTo("Main Account"));
-            Assert.That(details.OwnerName, Is.EqualTo("John Doe"));
+            Assert.That(details.OwnerName, Is.EqualTo("Jane Doe"));
             Assert.That(details.CashAccountType, Is.EqualTo(CashAccountType.Current));
         });
     }
@@ -86,7 +88,7 @@ internal class AccountsEndpointTests
             {
                 var matchesAll = true;
                 matchesAll &= t.BankTransactionCode == "PMNT";
-                matchesAll &= t.DebtorAccount?.Iban == "GL6298500000098503";
+                matchesAll &= t.DebtorAccount?.Iban == "GL2010440000010445";
                 matchesAll &= t.DebtorName == "MON MOTHMA";
                 matchesAll &= t.RemittanceInformationUnstructured == "For the support of Restoration of the Republic foundation";
                 matchesAll &= t.TransactionAmount.Amount == (decimal)45.00;
