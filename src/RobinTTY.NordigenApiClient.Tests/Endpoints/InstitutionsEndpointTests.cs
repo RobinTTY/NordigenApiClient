@@ -80,8 +80,8 @@ internal class InstitutionsEndpointTests
 
         Assert.Multiple(() =>
         {
-            Assert.That(response.Error!.Country.Detail, Is.EqualTo("US is not a valid choice."));
-            Assert.That(response.Error!.Country.Summary, Is.EqualTo("Invalid country choice."));
+            Assert.That(response.Error!.Detail, Is.EqualTo("US is not a valid choice."));
+            Assert.That(response.Error!.Summary, Is.EqualTo("Invalid country choice."));
         });
     }
 

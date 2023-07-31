@@ -63,7 +63,11 @@ public class NordigenClient
         _httpClient = httpClient;
         _serializerOptions = new JsonSerializerOptions
         {
-            Converters = { new JsonWebTokenConverter(), new GuidConverter(), new CultureSpecificDecimalConverter() }
+            Converters = 
+            {
+                new JsonWebTokenConverter(), new GuidConverter(),
+                new CultureSpecificDecimalConverter(), new InstitutionsErrorConverter()
+            }
         };
 
         Credentials = credentials;
@@ -96,14 +100,14 @@ public class NordigenClient
             client = _httpClient;
         }
 
-        HttpResponseMessage ? response;
+        HttpResponseMessage? response;
         if (method == HttpMethod.Get)
             response = await client.GetAsync(requestUri, cancellationToken);
         else if (method == HttpMethod.Post)
             response = await client.PostAsync(requestUri, body, cancellationToken);
         else if (method == HttpMethod.Delete)
             response = await client.DeleteAsync(requestUri, cancellationToken);
-        else if(method == HttpMethod.Put)
+        else if (method == HttpMethod.Put)
             response = await client.PutAsync(requestUri, body, cancellationToken);
         else
             throw new NotImplementedException();
