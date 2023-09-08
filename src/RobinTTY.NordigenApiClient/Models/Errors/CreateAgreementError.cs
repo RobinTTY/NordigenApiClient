@@ -12,27 +12,27 @@ public class CreateAgreementError : BasicError
     /// An error that was returned related to the <see cref="CreateAgreementRequest.InstitutionId"/> property sent during the request.
     /// </summary>
     [JsonPropertyName("institution_id")]
-    public BasicError InstitutionIdError { get; }
+    public BasicError? InstitutionIdError { get; }
     /// <summary>
     /// An error that was returned related to the <see cref="CreateAgreementRequest.AccessScope"/> property sent during the request.
     /// </summary>
     [JsonPropertyName("access_scope")]
-    public BasicError AccessScopeError { get; }
+    public BasicError? AccessScopeError { get; }
     /// <summary>
     /// An error that was returned related to the <see cref="CreateAgreementRequest.MaxHistoricalDays"/> property sent during the request.
     /// </summary>
     [JsonPropertyName("max_historical_days")]
-    public BasicError MaxHistoricalDaysError { get; }
+    public BasicError? MaxHistoricalDaysError { get; }
     /// <summary>
     /// An error that was returned related to the <see cref="CreateAgreementRequest.AccessValidForDays"/> property sent during the request.
     /// </summary>
     [JsonPropertyName("access_valid_for_days")]
-    public BasicError AccessValidForDaysError { get; }
+    public BasicError? AccessValidForDaysError { get; }
     /// <summary>
     /// An error that was returned related to the <see cref="CreateAgreementRequest.InstitutionId"/> property sent during the request.
     /// </summary>
     [JsonPropertyName("agreement")]
-    public BasicError AgreementError { get; }
+    public BasicError? AgreementError { get; }
 
     /// <summary>
     /// Creates a new instance of <see cref="CreateAgreementError"/>.
@@ -48,11 +48,11 @@ public class CreateAgreementError : BasicError
     public CreateAgreementError(
         string summary,
         string detail,
-        BasicError institutionIdError,
-        BasicError accessScopeError,
-        BasicError maxHistoricalDaysError,
-        BasicError accessValidForDaysError,
-        BasicError agreementError
+        BasicError? institutionIdError,
+        BasicError? accessScopeError,
+        BasicError? maxHistoricalDaysError,
+        BasicError? accessValidForDaysError,
+        BasicError? agreementError
         ) : base(summary, detail)
     {
         InstitutionIdError = institutionIdError;

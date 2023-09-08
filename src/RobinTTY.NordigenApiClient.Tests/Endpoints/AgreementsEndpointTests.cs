@@ -160,7 +160,8 @@ internal class AgreementsEndpointTests
         TestExtensions.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.BadRequest);
 
         var result = response.Error!;
-        Assert.That(result.InstitutionIdError.Detail, Is.EqualTo("Get Institution IDs from /institutions/?country={$COUNTRY_CODE}"));
+        Assert.That(result.InstitutionIdError, Is.Not.Null);
+        Assert.That(result.InstitutionIdError!.Detail, Is.EqualTo("Get Institution IDs from /institutions/?country={$COUNTRY_CODE}"));
     }
 
     /// <summary>
@@ -177,9 +178,10 @@ internal class AgreementsEndpointTests
         var result = response.Error!;
         Assert.Multiple(() =>
         {
-            Assert.That(result.AccessScopeError.Detail, Is.EqualTo("Choose one or several from ['balances', 'details', 'transactions']"));
-            Assert.That(result.AccessValidForDaysError.Detail, Is.EqualTo("access_valid_for_days must be > 0 and <= 180"));
-            Assert.That(result.MaxHistoricalDaysError.Detail, Is.EqualTo("max_historical_days must be > 0 and <= SANDBOXFINANCE_SFIN0000 transaction_total_days (90)"));
+            Assert.That(new[]{ result.InstitutionIdError, result.AccessValidForDaysError, result.MaxHistoricalDaysError }, Has.All.Null);
+            Assert.That(result.AccessScopeError!.Detail, Is.EqualTo("Choose one or several from ['balances', 'details', 'transactions']"));
+            Assert.That(result.AccessValidForDaysError!.Detail, Is.EqualTo("access_valid_for_days must be > 0 and <= 180"));
+            Assert.That(result.MaxHistoricalDaysError!.Detail, Is.EqualTo("max_historical_days must be > 0 and <= SANDBOXFINANCE_SFIN0000 transaction_total_days (90)"));
         });
     }
 

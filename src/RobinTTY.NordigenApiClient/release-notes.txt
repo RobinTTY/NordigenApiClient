@@ -1,1 +1,1 @@
-﻿Fixed deserialization issue which could be encountered by requesting all institutions of a country which isn't covered by the API.
+﻿Fixed an issue where the InstitutionsError type wasn't getting correctly deserialized when invalid credentials were being used.

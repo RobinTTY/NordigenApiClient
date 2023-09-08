@@ -12,7 +12,7 @@ public class AccountsError : BasicError
     /// The type of the error.
     /// </summary>
     [JsonPropertyName("type")]
-    public string Type { get; }
+    public string? Type { get; }
 #if NET6_0_OR_GREATER
     /// <summary>
     /// An error that was returned related to the <see cref="AccountsEndpoint.GetTransactions(Guid, DateOnly?, DateOnly?, CancellationToken)"/> or
@@ -25,7 +25,7 @@ public class AccountsError : BasicError
     /// </summary>
 #endif
     [JsonPropertyName("date_from")]
-    public BasicError StartDateError { get; }
+    public BasicError? StartDateError { get; }
 #if NET6_0_OR_GREATER
     /// <summary>
     /// An error that was returned related to the <see cref="AccountsEndpoint.GetTransactions(Guid, DateOnly?, DateOnly?, CancellationToken)"/> or
@@ -38,7 +38,7 @@ public class AccountsError : BasicError
     /// </summary>
 #endif
     [JsonPropertyName("date_to")]
-    public BasicError EndDateError { get; }
+    public BasicError? EndDateError { get; }
 
 #if NET6_0_OR_GREATER
     /// <summary>
@@ -64,7 +64,7 @@ public class AccountsError : BasicError
     /// <see cref="AccountsEndpoint.GetTransactions(string, DateTime?, DateTime?, CancellationToken)"/> method because the end date value was not accepted.</param>
 #endif
     [JsonConstructor]
-    public AccountsError(string summary, string detail, string type, BasicError startDateError, BasicError endDateError) : base(summary, detail)
+    public AccountsError(string summary, string detail, string? type, BasicError? startDateError, BasicError? endDateError) : base(summary, detail)
     {
         Type = type;
         StartDateError = startDateError;

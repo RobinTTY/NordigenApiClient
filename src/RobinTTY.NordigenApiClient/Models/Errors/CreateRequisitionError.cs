@@ -12,37 +12,37 @@ public class CreateRequisitionError : BasicError
     /// An error that was returned related to the <see cref="CreateRequisitionRequest.Reference"/> property sent during the request.
     /// </summary>
     [JsonPropertyName("reference")]
-    public BasicError ReferenceError { get; }
+    public BasicError? ReferenceError { get; }
     /// <summary>
     /// An error that was returned related to the <see cref="CreateRequisitionRequest.UserLanguage"/> property sent during the request.
     /// </summary>
     [JsonPropertyName("user_language")]
-    public BasicError UserLanguageError { get; }
+    public BasicError? UserLanguageError { get; }
     /// <summary>
     /// An error that was returned related to the <see cref="CreateRequisitionRequest.AgreementId"/> property sent during the request.
     /// </summary>
     [JsonPropertyName("agreement")]
-    public BasicError AgreementError { get; }
+    public BasicError? AgreementError { get; }
     /// <summary>
     /// An error that was returned related to the <see cref="CreateRequisitionRequest.Redirect"/> property sent during the request.
     /// </summary>
     [JsonPropertyName("redirect")]
-    public BasicError RedirectError { get; }
+    public BasicError? RedirectError { get; }
     /// <summary>
     /// An error that was returned related to the <see cref="CreateRequisitionRequest.SocialSecurityNumber"/> property sent during the request.
     /// </summary>
     [JsonPropertyName("ssn")]
-    public BasicError SocialSecurityNumberError { get; }
+    public BasicError? SocialSecurityNumberError { get; }
     /// <summary>
     /// An error that was returned related to the <see cref="CreateRequisitionRequest.AccountSelection"/> property sent during the request.
     /// </summary>
     [JsonPropertyName("account_selection")]
-    public BasicError AccountSelectionError { get; }
+    public BasicError? AccountSelectionError { get; }
     /// <summary>
     /// An error that was returned related to the <see cref="CreateRequisitionRequest.InstitutionId"/> property sent during the request.
     /// </summary>
     [JsonPropertyName("institution_id")]
-    public BasicError InstitutionIdError { get; }
+    public BasicError? InstitutionIdError { get; }
 
     /// <summary>
     /// Creates a new instance of <see cref="CreateRequisitionError"/>.
@@ -57,7 +57,8 @@ public class CreateRequisitionError : BasicError
     /// <param name="accountSelectionError">An error that was returned related to the <see cref="CreateRequisitionRequest.AccountSelection"/> property sent during the request.</param>
     /// <param name="institutionIdError">An error that was returned related to the <see cref="CreateRequisitionRequest.InstitutionId"/> property sent during the request.</param>
     [JsonConstructor]
-    public CreateRequisitionError(string summary, string detail, BasicError referenceError, BasicError userLanguageError, BasicError agreementError, BasicError redirectError, BasicError socialSecurityNumberError, BasicError accountSelectionError, BasicError institutionIdError) : base(summary, detail)
+    public CreateRequisitionError(string summary, string detail, BasicError? referenceError, BasicError? userLanguageError, BasicError? agreementError,
+        BasicError? redirectError, BasicError? socialSecurityNumberError, BasicError? accountSelectionError, BasicError? institutionIdError) : base(summary, detail)
     {
         ReferenceError = referenceError;
         UserLanguageError = userLanguageError;
