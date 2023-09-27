@@ -11,12 +11,12 @@ public class BasicResponse
     /// The summary text of the response
     /// </summary>
     [JsonPropertyName("summary")]
-    public string Summary { get; }
+    public string? Summary { get; }
     /// <summary>
     /// The detailed description of the response.
     /// </summary>
     [JsonPropertyName("details")]
-    public string Details { get; }
+    public string? Details { get; }
 
     /// <summary>
     /// Creates a new instance of <see cref="BasicResponse"/>.
@@ -24,7 +24,7 @@ public class BasicResponse
     /// <param name="summary">The summary text of the response.</param>
     /// <param name="details">The detailed description of the response.</param>
     [JsonConstructor]
-    public BasicResponse(string summary, string details)
+    public BasicResponse(string? summary, string? details)
     {
         Summary = summary;
         Details = details;

@@ -185,7 +185,7 @@ internal class AgreementsEndpointTests
         });
     }
 
-    private void AssertThatAgreementPageContainsAgreement(NordigenApiResponse<ResponsePage<Agreement>, BasicError> pagedResponse, List<string> ids)
+    private static void AssertThatAgreementPageContainsAgreement(NordigenApiResponse<ResponsePage<Agreement>, BasicError> pagedResponse, List<string> ids)
     {
         TestExtensions.AssertNordigenApiResponseIsSuccessful(pagedResponse, HttpStatusCode.OK);
         var page2Result = pagedResponse.Result!;

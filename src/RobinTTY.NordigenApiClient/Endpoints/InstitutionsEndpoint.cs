@@ -57,7 +57,7 @@ public class InstitutionsEndpoint
         return await _nordigenClient.MakeRequest<List<Institution>, InstitutionsError>(NordigenEndpointUrls.InstitutionsEndpoint, HttpMethod.Get, cancellationToken, query);
     }
 
-    private KeyValuePair<string, string> GetSupportFlagQuery(string flag, bool value) => new(flag, value.ToString().ToLower());
+    private static KeyValuePair<string, string> GetSupportFlagQuery(string flag, bool value) => new(flag, value.ToString().ToLower());
 
     /// <summary>
     /// Gets a specific institution by id.

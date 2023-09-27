@@ -62,7 +62,7 @@ internal class CredentialTests
         });
     }
 
-    private bool ErrorMatchesExpectation(BasicError error)
+    private static bool ErrorMatchesExpectation(BasicError error)
     {
         return error is {Detail: "Authentication credentials were not provided.", Summary: "Authentication failed"};
     }

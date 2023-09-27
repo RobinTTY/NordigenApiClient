@@ -1,1 +1,1 @@
-﻿Fixed an issue where the InstitutionsError type wasn't getting correctly deserialized when invalid credentials were being used.
+﻿Fixed access/refresh tokens being fetched multiple times if concurrent requests are made and no token was aquired yet.

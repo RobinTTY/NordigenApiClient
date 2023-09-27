@@ -140,7 +140,7 @@ public class AccountsEndpoint
     }
 
 #if NET6_0_OR_GREATER
-    private string DateToIso8601(DateOnly date) => date.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+    private static string DateToIso8601(DateOnly date) => date.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
 #else
     private string DateToIso8601(DateTime date) => date.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
 #endif

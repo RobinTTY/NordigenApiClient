@@ -16,7 +16,8 @@ public class NordigenClient
     private readonly HttpClient _httpClient;
     private readonly JsonSerializerOptions _serializerOptions;
     internal readonly NordigenClientCredentials Credentials;
-
+    private static readonly SemaphoreSlim TokenSemaphore = new(1, 1);
+    
     /// <summary>
     /// Occurs whenever the <see cref="JsonWebTokenPair"/> is updated.
     /// </summary>
@@ -92,7 +93,15 @@ public class NordigenClient
         HttpClient client;
         if (useAuthentication)
         {
-            JsonWebTokenPair = await TryGetValidTokenPair(cancellationToken);
+            await TokenSemaphore.WaitAsync(cancellationToken);
+            try
+            {
+                JsonWebTokenPair = await TryGetValidTokenPair(cancellationToken);
+            }
+            finally
+            {
+                TokenSemaphore.Release();
+            }
             client = _httpClient.UseNordigenAuthenticationHeader(JsonWebTokenPair);
         }
         else

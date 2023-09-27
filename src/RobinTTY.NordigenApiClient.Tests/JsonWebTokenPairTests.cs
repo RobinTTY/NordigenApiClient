@@ -56,8 +56,8 @@ internal class JsonWebTokenPairTests
         Assert.Multiple(() =>
         {
             Assert.That(_apiClient.JsonWebTokenPair, Is.Not.Null);
-            Assert.That(_apiClient.JsonWebTokenPair!.AccessToken.EncodedToken.Length, Is.GreaterThan(0));
-            Assert.That(_apiClient.JsonWebTokenPair!.RefreshToken.EncodedToken.Length, Is.GreaterThan(0));
+            Assert.That(_apiClient.JsonWebTokenPair!.AccessToken.EncodedToken, Has.Length.GreaterThan(0));
+            Assert.That(_apiClient.JsonWebTokenPair!.RefreshToken.EncodedToken, Has.Length.GreaterThan(0));
         });
     }
 
