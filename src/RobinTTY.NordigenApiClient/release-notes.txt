@@ -1,1 +1,1 @@
-﻿Fixed access/refresh tokens being fetched multiple times if concurrent requests are made and no token was aquired yet.
+﻿Added newly documented response fields on BalanceType and BankAccountDetails.
