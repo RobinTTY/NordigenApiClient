@@ -17,7 +17,7 @@ internal class AgreementsEndpointTests
 
     /// <summary>
     /// Tests the paging mechanism of retrieving end user agreements.
-    /// Creates 3 agreements, retrieves them using 3 <see cref="ResponsePage{T}"/>s and deletes the agreements after.
+    /// Creates 3 agreements, retrieves them using 3 <see cref="ResponsePage{T}" />s and deletes the agreements after.
     /// </summary>
     /// <returns></returns>
     [Test]
@@ -28,7 +28,8 @@ internal class AgreementsEndpointTests
         TestExtensions.AssertNordigenApiResponseIsSuccessful(existingAgreements, HttpStatusCode.OK);
 
         // Create 3 example agreements
-        var agreementRequest = new CreateAgreementRequest(90, 90, new List<string> { "balances", "details", "transactions" }, "SANDBOXFINANCE_SFIN0000");
+        var agreementRequest = new CreateAgreementRequest(90, 90,
+            new List<string> {"balances", "details", "transactions"}, "SANDBOXFINANCE_SFIN0000");
         var ids = new List<string>();
 
         var existingIds = existingAgreements.Result!.Results.Select(agreement => agreement.Id.ToString()).ToList();
@@ -76,14 +77,15 @@ internal class AgreementsEndpointTests
     }
 
     /// <summary>
-    /// Tests the retrieval of one agreement via <see cref="Guid"/> and string id.
+    /// Tests the retrieval of one agreement via <see cref="Guid" /> and string id.
     /// </summary>
     /// <returns></returns>
     [Test]
     public async Task GetAgreement()
     {
         // Create agreement
-        var agreementRequest = new CreateAgreementRequest(90, 90, new List<string> { "balances", "details", "transactions" }, "SANDBOXFINANCE_SFIN0000");
+        var agreementRequest = new CreateAgreementRequest(90, 90,
+            new List<string> {"balances", "details", "transactions"}, "SANDBOXFINANCE_SFIN0000");
         var createResponse = await _apiClient.AgreementsEndpoint.CreateAgreement(agreementRequest);
         TestExtensions.AssertNordigenApiResponseIsSuccessful(createResponse, HttpStatusCode.Created);
         var id = createResponse.Result!.Id;
@@ -94,7 +96,7 @@ internal class AgreementsEndpointTests
         TestExtensions.AssertNordigenApiResponseIsSuccessful(agreementResponseGuid, HttpStatusCode.OK);
         TestExtensions.AssertNordigenApiResponseIsSuccessful(agreementResponseString, HttpStatusCode.OK);
         Assert.That(agreementResponseGuid.Result!.Id, Is.EqualTo(agreementResponseString.Result!.Id));
-        
+
         // Delete agreement
         var deleteResponse = await _apiClient.AgreementsEndpoint.DeleteAgreement(id);
         TestExtensions.AssertNordigenApiResponseIsSuccessful(deleteResponse, HttpStatusCode.OK);
@@ -121,7 +123,8 @@ internal class AgreementsEndpointTests
     public async Task CreateAcceptAndDeleteAgreement()
     {
         // Create the agreement
-        var agreement = new CreateAgreementRequest(90, 90, new List<string> { "balances", "details", "transactions" }, "SANDBOXFINANCE_SFIN0000");
+        var agreement = new CreateAgreementRequest(90, 90, new List<string> {"balances", "details", "transactions"},
+            "SANDBOXFINANCE_SFIN0000");
         var response = await _apiClient.AgreementsEndpoint.CreateAgreement(agreement);
         TestExtensions.AssertNordigenApiResponseIsSuccessful(response, HttpStatusCode.Created);
 
@@ -131,7 +134,7 @@ internal class AgreementsEndpointTests
             Assert.That(result.Id, Is.Not.EqualTo(Guid.Empty));
             Assert.That(result.Created - DateTime.UtcNow, Is.AtMost(TimeSpan.FromSeconds(5)));
             Assert.That(result.Accepted, Is.Null);
-            Assert.That(result.AccessScope.Except(new[] { "balances", "details", "transactions" }), Is.Empty);
+            Assert.That(result.AccessScope.Except(new[] {"balances", "details", "transactions"}), Is.Empty);
             Assert.That(result.MaxHistoricalDays, Is.EqualTo(90));
             Assert.That(result.AccessValidForDays, Is.EqualTo(90));
         });
@@ -140,7 +143,9 @@ internal class AgreementsEndpointTests
         var acceptMetadata = new AcceptAgreementRequest("example_user_agent", "192.168.178.1");
         var acceptResponse = await _apiClient.AgreementsEndpoint.AcceptAgreement(response.Result!.Id, acceptMetadata);
         TestExtensions.AssertNordigenApiResponseIsUnsuccessful(acceptResponse, HttpStatusCode.Forbidden);
-        Assert.That(acceptResponse.Error!.Detail, Is.EqualTo("Your company doesn't have permission to accept EUA. You'll have to use our default form for this action."));
+        Assert.That(acceptResponse.Error!.Detail,
+            Is.EqualTo(
+                "Your company doesn't have permission to accept EUA. You'll have to use our default form for this action."));
 
         // Delete the agreement
         var deletionResponse = await _apiClient.AgreementsEndpoint.DeleteAgreement(result.Id);
@@ -155,13 +160,15 @@ internal class AgreementsEndpointTests
     [Test]
     public async Task CreateAgreementWithInvalidInstitutionId()
     {
-        var agreement = new CreateAgreementRequest(90, 90, new List<string> { "balances", "details", "transactions" }, "SANDBOXFINANCE_SFIN000");
+        var agreement = new CreateAgreementRequest(90, 90, new List<string> {"balances", "details", "transactions"},
+            "SANDBOXFINANCE_SFIN000");
         var response = await _apiClient.AgreementsEndpoint.CreateAgreement(agreement);
         TestExtensions.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.BadRequest);
 
         var result = response.Error!;
         Assert.That(result.InstitutionIdError, Is.Not.Null);
-        Assert.That(result.InstitutionIdError!.Detail, Is.EqualTo("Get Institution IDs from /institutions/?country={$COUNTRY_CODE}"));
+        Assert.That(result.InstitutionIdError!.Detail,
+            Is.EqualTo("Get Institution IDs from /institutions/?country={$COUNTRY_CODE}"));
     }
 
     /// <summary>
@@ -171,21 +178,29 @@ internal class AgreementsEndpointTests
     [Test]
     public async Task CreateAgreementWithInvalidParams()
     {
-        var agreement = new CreateAgreementRequest(200, 200, new List<string> { "balances", "details", "transactions", "invalid", "invalid2" }, "SANDBOXFINANCE_SFIN0000");
+        var agreement = new CreateAgreementRequest(200, 200,
+            new List<string> {"balances", "details", "transactions", "invalid", "invalid2"}, "SANDBOXFINANCE_SFIN0000");
         var response = await _apiClient.AgreementsEndpoint.CreateAgreement(agreement);
         TestExtensions.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.BadRequest);
 
         var result = response.Error!;
         Assert.Multiple(() =>
         {
-            Assert.That(new[]{ result.InstitutionIdError, result.AccessValidForDaysError, result.MaxHistoricalDaysError }, Has.All.Null);
-            Assert.That(result.AccessScopeError!.Detail, Is.EqualTo("Choose one or several from ['balances', 'details', 'transactions']"));
-            Assert.That(result.AccessValidForDaysError!.Detail, Is.EqualTo("access_valid_for_days must be > 0 and <= 180"));
-            Assert.That(result.MaxHistoricalDaysError!.Detail, Is.EqualTo("max_historical_days must be > 0 and <= SANDBOXFINANCE_SFIN0000 transaction_total_days (90)"));
+            Assert.That(
+                new[] {result.InstitutionIdError, result.AccessValidForDaysError, result.MaxHistoricalDaysError},
+                Has.All.Null);
+            Assert.That(result.AccessScopeError!.Detail,
+                Is.EqualTo("Choose one or several from ['balances', 'details', 'transactions']"));
+            Assert.That(result.AccessValidForDaysError!.Detail,
+                Is.EqualTo("access_valid_for_days must be > 0 and <= 180"));
+            Assert.That(result.MaxHistoricalDaysError!.Detail,
+                Is.EqualTo(
+                    "max_historical_days must be > 0 and <= SANDBOXFINANCE_SFIN0000 transaction_total_days (90)"));
         });
     }
 
-    private static void AssertThatAgreementPageContainsAgreement(NordigenApiResponse<ResponsePage<Agreement>, BasicError> pagedResponse, List<string> ids)
+    private static void AssertThatAgreementPageContainsAgreement(
+        NordigenApiResponse<ResponsePage<Agreement>, BasicError> pagedResponse, List<string> ids)
     {
         TestExtensions.AssertNordigenApiResponseIsSuccessful(pagedResponse, HttpStatusCode.OK);
         var page2Result = pagedResponse.Result!;

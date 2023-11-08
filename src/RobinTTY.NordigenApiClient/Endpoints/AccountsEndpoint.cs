@@ -5,15 +5,15 @@ using RobinTTY.NordigenApiClient.Models.Responses;
 namespace RobinTTY.NordigenApiClient.Endpoints;
 
 /// <summary>
-///     Provides support for the API operations of the accounts endpoint.
-///     <para>Reference: <see href="https://developer.gocardless.com/bank-account-data/endpoints" /></para>
+/// Provides support for the API operations of the accounts endpoint.
+/// <para>Reference: <see href="https://developer.gocardless.com/bank-account-data/endpoints" /></para>
 /// </summary>
 public class AccountsEndpoint
 {
     private readonly NordigenClient _nordigenClient;
 
     /// <summary>
-    ///     Creates a new instance of <see cref="AccountsEndpoint" />.
+    /// Creates a new instance of <see cref="AccountsEndpoint" />.
     /// </summary>
     /// <param name="client">The <see cref="NordigenClient" /> to use for token handling and request processing.</param>
     internal AccountsEndpoint(NordigenClient client)
@@ -22,7 +22,7 @@ public class AccountsEndpoint
     }
 
     /// <summary>
-    ///     Gets the bank account with the given id.
+    /// Gets the bank account with the given id.
     /// </summary>
     /// <param name="id">The id of the account to get.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
@@ -34,7 +34,7 @@ public class AccountsEndpoint
     }
 
     /// <summary>
-    ///     Gets the bank account with the given id.
+    /// Gets the bank account with the given id.
     /// </summary>
     /// <param name="id">The id of the account to get.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
@@ -53,7 +53,7 @@ public class AccountsEndpoint
     }
 
     /// <summary>
-    ///     Gets the balances of the specified account.
+    /// Gets the balances of the specified account.
     /// </summary>
     /// <param name="accountId">The id of the account for which to get the balances.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
@@ -65,7 +65,7 @@ public class AccountsEndpoint
     }
 
     /// <summary>
-    ///     Gets the balances of the specified account.
+    /// Gets the balances of the specified account.
     /// </summary>
     /// <param name="accountId">The id of the account for which to get the balances.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
@@ -86,13 +86,13 @@ public class AccountsEndpoint
     }
 
     /// <summary>
-    ///     Gets detailed information about the specified bank account.
+    /// Gets detailed information about the specified bank account.
     /// </summary>
     /// <param name="id">The id of the account for which to retrieve the detailed information.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
     /// <returns>
-    ///     A <see cref="NordigenApiResponse{TResponse, TError}" /> which contains detailed information about the
-    ///     specified account.
+    /// A <see cref="NordigenApiResponse{TResponse, TError}" /> which contains detailed information about the
+    /// specified account.
     /// </returns>
     public async Task<NordigenApiResponse<BankAccountDetails, AccountsError>> GetAccountDetails(Guid id,
         CancellationToken cancellationToken = default)
@@ -101,13 +101,13 @@ public class AccountsEndpoint
     }
 
     /// <summary>
-    ///     Gets detailed information about the specified bank account.
+    /// Gets detailed information about the specified bank account.
     /// </summary>
     /// <param name="id">The id of the account for which to retrieve the detailed information.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
     /// <returns>
-    ///     A <see cref="NordigenApiResponse{TResponse, TError}" /> which contains detailed information about the
-    ///     specified account.
+    /// A <see cref="NordigenApiResponse{TResponse, TError}" /> which contains detailed information about the
+    /// specified account.
     /// </returns>
     public async Task<NordigenApiResponse<BankAccountDetails, AccountsError>> GetAccountDetails(string id,
         CancellationToken cancellationToken = default)
@@ -125,44 +125,50 @@ public class AccountsEndpoint
     }
 
     /// <summary>
-    ///     Gets the transactions of the specified bank account.
+    /// Gets the transactions of the specified bank account.
     /// </summary>
     /// <param name="id">The id of the account for which to retrieve the transactions.</param>
     /// <param name="startDate">Optional date to limit the transactions which are returned to those after the specified date.</param>
     /// <param name="endDate">Optional date to limit the transactions which are returned to those before the specified date.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
     /// <returns>
-    ///     A <see cref="NordigenApiResponse{TResponse, TError}" /> which contains transaction data of the specified
-    ///     account.
+    /// A <see cref="NordigenApiResponse{TResponse, TError}" /> which contains transaction data of the specified
+    /// account.
     /// </returns>
 #if NET6_0_OR_GREATER
     public async Task<NordigenApiResponse<AccountTransactions, AccountsError>> GetTransactions(Guid id,
         DateOnly? startDate = null, DateOnly? endDate = null, CancellationToken cancellationToken = default)
         => await GetTransactionsInternal(id.ToString(), startDate, endDate, cancellationToken);
 #else
-    public async Task<NordigenApiResponse<AccountTransactions, AccountsError>> GetTransactions(Guid id, DateTime? startDate
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     = null, DateTime? endDate = null, CancellationToken cancellationToken = default)
+    public async Task<NordigenApiResponse<AccountTransactions, AccountsError>> GetTransactions(Guid id,
+        DateTime? startDate
+            =
+            null, DateTime? endDate
+            = null, CancellationToken cancellationToken = default)
         => await GetTransactionsInternal(id.ToString(), startDate, endDate, cancellationToken);
 #endif
 
     /// <summary>
-    ///     Gets the transactions of the specified bank account.
+    /// Gets the transactions of the specified bank account.
     /// </summary>
     /// <param name="id">The id of the account for which to retrieve the transactions.</param>
     /// <param name="startDate">Optional date to limit the transactions which are returned to those after the specified date.</param>
     /// <param name="endDate">Optional date to limit the transactions which are returned to those before the specified date.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
     /// <returns>
-    ///     A <see cref="NordigenApiResponse{TResponse, TError}" /> which contains transaction data of the specified
-    ///     account.
+    /// A <see cref="NordigenApiResponse{TResponse, TError}" /> which contains transaction data of the specified
+    /// account.
     /// </returns>
 #if NET6_0_OR_GREATER
     public async Task<NordigenApiResponse<AccountTransactions, AccountsError>> GetTransactions(string id,
         DateOnly? startDate = null, DateOnly? endDate = null, CancellationToken cancellationToken = default)
         => await GetTransactionsInternal(id, startDate, endDate, cancellationToken);
 #else
-    public async Task<NordigenApiResponse<AccountTransactions, AccountsError>> GetTransactions(string id, DateTime? startDate
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            = null, DateTime? endDate = null, CancellationToken cancellationToken = default)
+    public async Task<NordigenApiResponse<AccountTransactions, AccountsError>> GetTransactions(string id,
+        DateTime? startDate
+            =
+            null, DateTime? endDate
+            = null, CancellationToken cancellationToken = default)
         => await GetTransactionsInternal(id, startDate, endDate, cancellationToken);
 #endif
 
@@ -170,7 +176,8 @@ public class AccountsEndpoint
     private async Task<NordigenApiResponse<AccountTransactions, AccountsError>> GetTransactionsInternal(string id,
         DateOnly? startDate, DateOnly? endDate, CancellationToken cancellationToken)
 #else
-    private async Task<NordigenApiResponse<AccountTransactions, AccountsError>> GetTransactionsInternal(string id, DateTime? startDate, DateTime? endDate, CancellationToken cancellationToken)
+    private async Task<NordigenApiResponse<AccountTransactions, AccountsError>> GetTransactionsInternal(string id,
+        DateTime? startDate, DateTime? endDate, CancellationToken cancellationToken)
 #endif
     {
         var query = new List<KeyValuePair<string, string>>();
@@ -191,6 +198,9 @@ public class AccountsEndpoint
         return date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
     }
 #else
-    private string DateToIso8601(DateTime date) => date.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+    private string DateToIso8601(DateTime date)
+    {
+        return date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+    }
 #endif
 }

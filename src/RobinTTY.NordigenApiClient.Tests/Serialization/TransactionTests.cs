@@ -15,11 +15,12 @@ internal class TransactionTests
     [Test]
     public void DeserializeTransaction()
     {
-        const string json = "{ \"transactionId\": \"AB123456789\", \"entryReference\": \"123456789\", \"bookingDate\": \"2023-03-20\", \"bookingDateTime\": \"2023-03-20T00:00:00+00:00\", \"transactionAmount\": { \"amount\": \"-33.06\", \"currency\": \"GBP\" }, \"currencyExchange\": { \"sourceCurrency\": \"USD\", \"exchangeRate\": \"1.20961887\", \"unitCurrency\": \"GBP\", \"targetCurrency\": \"GBP\" }, \"remittanceInformationUnstructured\": \"my reference here\", \"additionalInformation\": \"123456789\", \"proprietaryBankTransactionCode\": \"OTHER_PURCHASE\", \"merchantCategoryCode\": \"5045\", \"internalTransactionId\": \"abcdef\" }";
+        const string json =
+            "{ \"transactionId\": \"AB123456789\", \"entryReference\": \"123456789\", \"bookingDate\": \"2023-03-20\", \"bookingDateTime\": \"2023-03-20T00:00:00+00:00\", \"transactionAmount\": { \"amount\": \"-33.06\", \"currency\": \"GBP\" }, \"currencyExchange\": { \"sourceCurrency\": \"USD\", \"exchangeRate\": \"1.20961887\", \"unitCurrency\": \"GBP\", \"targetCurrency\": \"GBP\" }, \"remittanceInformationUnstructured\": \"my reference here\", \"additionalInformation\": \"123456789\", \"proprietaryBankTransactionCode\": \"OTHER_PURCHASE\", \"merchantCategoryCode\": \"5045\", \"internalTransactionId\": \"abcdef\" }";
         // We need the culture specific decimal converter here, since it it accepting strings
         var options = new JsonSerializerOptions
         {
-            Converters = { new JsonWebTokenConverter(), new GuidConverter(), new CultureSpecificDecimalConverter() }
+            Converters = {new JsonWebTokenConverter(), new GuidConverter(), new CultureSpecificDecimalConverter()}
         };
         var transaction = JsonSerializer.Deserialize<Transaction>(json, options);
         Assert.Multiple(() =>
@@ -40,22 +41,26 @@ internal class TransactionTests
     [Test]
     public async Task DeserializeWithException()
     {
-        const string malformedJson = "{ \"transactionId\": \"AB123456789\", \"entryReference\": \"123456789\", \"bookingDate\": \"2023-03-20\", \"bookingDateTime\": \"2023-03-20T00:00:00+00:00\", \"transactionAmount\": { \"amount\": \"-33.06\", \"currency\": \"GBP\" }, \"currencyExchange\": [{ \"sourceCurrency\": \"USD\", \"exchangeRate\": \"1.20961887\", \"unitCurrency\": \"GBP\", \"targetCurrency\": \"GBP\" }], \"remittanceInformationUnstructured\": \"my reference here\", \"additionalInformation\": \"123456789\", \"proprietaryBankTransactionCode\": \"OTHER_PURCHASE\", \"merchantCategoryCode\": \"5045\", \"internalTransactionId\": \"abcdef\" }";
+        const string malformedJson =
+            "{ \"transactionId\": \"AB123456789\", \"entryReference\": \"123456789\", \"bookingDate\": \"2023-03-20\", \"bookingDateTime\": \"2023-03-20T00:00:00+00:00\", \"transactionAmount\": { \"amount\": \"-33.06\", \"currency\": \"GBP\" }, \"currencyExchange\": [{ \"sourceCurrency\": \"USD\", \"exchangeRate\": \"1.20961887\", \"unitCurrency\": \"GBP\", \"targetCurrency\": \"GBP\" }], \"remittanceInformationUnstructured\": \"my reference here\", \"additionalInformation\": \"123456789\", \"proprietaryBankTransactionCode\": \"OTHER_PURCHASE\", \"merchantCategoryCode\": \"5045\", \"internalTransactionId\": \"abcdef\" }";
         var httpResponse = new HttpResponseMessage(HttpStatusCode.OK)
         {
-            Content = new StringContent(malformedJson),
+            Content = new StringContent(malformedJson)
         };
 
         try
         {
             await NordigenApiResponse<Transaction, AccountsError>.FromHttpResponse(httpResponse);
         }
-        catch(SerializationException exception)
+        catch (SerializationException exception)
         {
             Assert.That(exception, Is.Not.Null);
             Assert.That(exception, Has.InnerException);
-            Assert.That(exception.Message, Contains.Substring("Deserialization failed, please report this issue to the library author:"));
-            Assert.That(exception.Message, Contains.Substring("The following JSON content caused the problem: { \"transactionId\": \"AB123456789\", \"entryReference\": \"123456789\", \"bookingDate\": \"2023-03-20\", \"bookingDateTime\":"));
+            Assert.That(exception.Message,
+                Contains.Substring("Deserialization failed, please report this issue to the library author:"));
+            Assert.That(exception.Message,
+                Contains.Substring(
+                    "The following JSON content caused the problem: { \"transactionId\": \"AB123456789\", \"entryReference\": \"123456789\", \"bookingDate\": \"2023-03-20\", \"bookingDateTime\":"));
         }
     }
 }

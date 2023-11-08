@@ -3,12 +3,12 @@
 namespace RobinTTY.NordigenApiClient.Utility;
 
 /// <summary>
-///     Provides methods for adding query parameters to URIs.
+/// Provides methods for adding query parameters to URIs.
 /// </summary>
 internal static class UriQueryBuilder
 {
     /// <summary>
-    ///     Adds query parameters to the given URI string.
+    /// Adds query parameters to the given URI string.
     /// </summary>
     /// <param name="uri">The URI string to add the query parameters to.</param>
     /// <param name="queryKeyValuePairs">The query parameters to add.</param>

@@ -6,15 +6,15 @@ using RobinTTY.NordigenApiClient.Models.Responses;
 namespace RobinTTY.NordigenApiClient.Endpoints;
 
 /// <summary>
-///     Provides support for the API operations of the agreements endpoint.
-///     <para>Reference: <see href="https://developer.gocardless.com/bank-account-data/endpoints" /></para>
+/// Provides support for the API operations of the agreements endpoint.
+/// <para>Reference: <see href="https://developer.gocardless.com/bank-account-data/endpoints" /></para>
 /// </summary>
 public class AgreementsEndpoint
 {
     private readonly NordigenClient _nordigenClient;
 
     /// <summary>
-    ///     Creates a new instance of <see cref="AgreementsEndpoint" />.
+    /// Creates a new instance of <see cref="AgreementsEndpoint" />.
     /// </summary>
     /// <param name="client">The <see cref="NordigenClient" /> to use for token handling and request processing.</param>
     internal AgreementsEndpoint(NordigenClient client)
@@ -23,14 +23,14 @@ public class AgreementsEndpoint
     }
 
     /// <summary>
-    ///     Gets a <see cref="ResponsePage{T}" /> containing a given number of end user agreements.
+    /// Gets a <see cref="ResponsePage{T}" /> containing a given number of end user agreements.
     /// </summary>
     /// <param name="limit">Number of results to return per page.</param>
     /// <param name="offset">The initial index from which to return the results.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
     /// <returns>
-    ///     A <see cref="NordigenApiResponse{TResponse, TError}" /> containing a <see cref="ResponsePage{T}" /> which
-    ///     contains a list of end user agreements.
+    /// A <see cref="NordigenApiResponse{TResponse, TError}" /> containing a <see cref="ResponsePage{T}" /> which
+    /// contains a list of end user agreements.
     /// </returns>
     public async Task<NordigenApiResponse<ResponsePage<Agreement>, BasicError>> GetAgreements(int limit, int offset,
         CancellationToken cancellationToken = default)
@@ -42,7 +42,7 @@ public class AgreementsEndpoint
     }
 
     /// <summary>
-    ///     Gets the end user agreement with the given id.
+    /// Gets the end user agreement with the given id.
     /// </summary>
     /// <param name="id">The id of the agreement to retrieve.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
@@ -54,7 +54,7 @@ public class AgreementsEndpoint
     }
 
     /// <summary>
-    ///     Gets the end user agreement with the given id.
+    /// Gets the end user agreement with the given id.
     /// </summary>
     /// <param name="id">The id of the agreement to retrieve.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
@@ -73,7 +73,7 @@ public class AgreementsEndpoint
     }
 
     /// <summary>
-    ///     Creates a new end user agreement which determines the scope and length of access to data provided by institutions.
+    /// Creates a new end user agreement which determines the scope and length of access to data provided by institutions.
     /// </summary>
     /// <param name="agreement">The agreement to create.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
@@ -87,7 +87,7 @@ public class AgreementsEndpoint
     }
 
     /// <summary>
-    ///     Deletes the end user agreement with the given id.
+    /// Deletes the end user agreement with the given id.
     /// </summary>
     /// <param name="id">The id of the agreement to delete.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
@@ -99,7 +99,7 @@ public class AgreementsEndpoint
     }
 
     /// <summary>
-    ///     Deletes the end user agreement with the given id.
+    /// Deletes the end user agreement with the given id.
     /// </summary>
     /// <param name="id">The id of the agreement to delete.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
@@ -118,7 +118,7 @@ public class AgreementsEndpoint
     }
 
     /// <summary>
-    ///     Accepts an end user agreement. Only available to customers with an enterprise contract at Nordigen.
+    /// Accepts an end user agreement. Only available to customers with an enterprise contract at Nordigen.
     /// </summary>
     /// <param name="id">The id of the end user agreement to accept.</param>
     /// <param name="metadata">The metadata required to accept the end user agreement.</param>
@@ -131,7 +131,7 @@ public class AgreementsEndpoint
     }
 
     /// <summary>
-    ///     Accepts an end user agreement. Only available to customers with an enterprise contract at Nordigen.
+    /// Accepts an end user agreement. Only available to customers with an enterprise contract at Nordigen.
     /// </summary>
     /// <param name="id">The id of the end user agreement to accept.</param>
     /// <param name="metadata">The metadata required to accept the end user agreement.</param>

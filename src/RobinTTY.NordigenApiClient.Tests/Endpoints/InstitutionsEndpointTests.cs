@@ -42,13 +42,17 @@ internal class InstitutionsEndpointTests
     [Test]
     public async Task GetInstitutionsWithFlags()
     {
-        var allFlagsSetTrue = await _apiClient.InstitutionsEndpoint.GetInstitutions("GB", true, true, true, true, true, true, true, true, true, true, true);
+        var allFlagsSetTrue = await _apiClient.InstitutionsEndpoint.GetInstitutions("GB", true, true, true, true, true,
+            true, true, true, true, true, true);
         TestExtensions.AssertNordigenApiResponseIsSuccessful(allFlagsSetTrue, HttpStatusCode.OK);
-        var allFlagsSetFalse = await _apiClient.InstitutionsEndpoint.GetInstitutions("GB", false, false, false, false, false, false, false, false, false, false, false);
+        var allFlagsSetFalse = await _apiClient.InstitutionsEndpoint.GetInstitutions("GB", false, false, false, false,
+            false, false, false, false, false, false, false);
         TestExtensions.AssertNordigenApiResponseIsSuccessful(allFlagsSetFalse, HttpStatusCode.OK);
-        var institutionsWithAccountSelection = await _apiClient.InstitutionsEndpoint.GetInstitutions(accountSelectionSupported: true);
+        var institutionsWithAccountSelection =
+            await _apiClient.InstitutionsEndpoint.GetInstitutions(accountSelectionSupported: true);
         TestExtensions.AssertNordigenApiResponseIsSuccessful(institutionsWithAccountSelection, HttpStatusCode.OK);
-        var institutionsWithoutAccountSelection = await _apiClient.InstitutionsEndpoint.GetInstitutions(accountSelectionSupported: false);
+        var institutionsWithoutAccountSelection =
+            await _apiClient.InstitutionsEndpoint.GetInstitutions(accountSelectionSupported: false);
         TestExtensions.AssertNordigenApiResponseIsSuccessful(institutionsWithoutAccountSelection, HttpStatusCode.OK);
         var allInstitutions = await _apiClient.InstitutionsEndpoint.GetInstitutions();
         TestExtensions.AssertNordigenApiResponseIsSuccessful(allInstitutions, HttpStatusCode.OK);
@@ -64,7 +68,8 @@ internal class InstitutionsEndpointTests
             Assert.That(withoutAccountSelectionResult, Has.Count.GreaterThan(0));
             Assert.That(withAccountSelectionResult, Has.Count.GreaterThan(withoutAccountSelectionResult.Count));
             Assert.That(allInstitutionResult, Has.Count.GreaterThan(withAccountSelectionResult.Count));
-            Assert.That(withAccountSelectionResult.Count + withoutAccountSelectionResult.Count, Is.EqualTo(allInstitutionResult.Count));
+            Assert.That(withAccountSelectionResult.Count + withoutAccountSelectionResult.Count,
+                Is.EqualTo(allInstitutionResult.Count));
         });
     }
 

@@ -5,14 +5,14 @@ using RobinTTY.NordigenApiClient.Models.Requests;
 namespace RobinTTY.NordigenApiClient.Tests;
 
 /// <summary>
-/// Tests the instantiation of the <see cref="NordigenClient"/>.
+/// Tests the instantiation of the <see cref="NordigenClient" />.
 /// </summary>
 internal class CredentialTests
 {
     private readonly string[] _secrets = File.ReadAllLines("secrets.txt");
 
     /// <summary>
-    /// Tests the creation of the <see cref="NordigenClient"/> with invalid credentials.
+    /// Tests the creation of the <see cref="NordigenClient" /> with invalid credentials.
     /// The credentials have the correct structure but were not issued for use.
     /// </summary>
     /// <returns></returns>
@@ -37,28 +37,44 @@ internal class CredentialTests
         Assert.Multiple(() =>
         {
             Assert.That(ErrorMatchesExpectation(balancesResponse.Error!), Is.True);
-            Assert.That(new object?[] { balancesResponse.Error!.EndDateError, balancesResponse.Error.StartDateError, balancesResponse.Error.Type }, Has.All.Null);
+            Assert.That(
+                new object?[]
+                {
+                    balancesResponse.Error!.EndDateError, balancesResponse.Error.StartDateError,
+                    balancesResponse.Error.Type
+                }, Has.All.Null);
         });
 
         // Returns CreateAgreementError
-        var agreementRequest = new CreateAgreementRequest(90, 90, new List<string> { "balances", "details", "transactions" }, "SANDBOXFINANCE_SFIN0000");
+        var agreementRequest = new CreateAgreementRequest(90, 90,
+            new List<string> {"balances", "details", "transactions"}, "SANDBOXFINANCE_SFIN0000");
         var createAgreementResponse = await apiClient.AgreementsEndpoint.CreateAgreement(agreementRequest);
         Assert.Multiple(() =>
         {
             Assert.That(ErrorMatchesExpectation(createAgreementResponse.Error!), Is.True);
-            Assert.That(new object?[] { createAgreementResponse.Error!.AccessScopeError, createAgreementResponse.Error.AccessValidForDaysError, createAgreementResponse.Error.AgreementError,
-                createAgreementResponse.Error.InstitutionIdError, createAgreementResponse.Error.MaxHistoricalDaysError }, Has.All.Null);
+            Assert.That(new object?[]
+            {
+                createAgreementResponse.Error!.AccessScopeError, createAgreementResponse.Error.AccessValidForDaysError,
+                createAgreementResponse.Error.AgreementError,
+                createAgreementResponse.Error.InstitutionIdError, createAgreementResponse.Error.MaxHistoricalDaysError
+            }, Has.All.Null);
         });
 
         // Returns CreateRequisitionError
         const string institutionId = "SANDBOXFINANCE_SFIN0000";
-        var requisitionRequest = new CreateRequisitionRequest(new Uri("https://robintty.com"), institutionId, "some_reference", "EN");
+        var requisitionRequest =
+            new CreateRequisitionRequest(new Uri("https://robintty.com"), institutionId, "some_reference", "EN");
         var requisitionResponse = await apiClient.RequisitionsEndpoint.CreateRequisition(requisitionRequest);
         Assert.Multiple(() =>
         {
             Assert.That(ErrorMatchesExpectation(requisitionResponse.Error!), Is.True);
-            Assert.That(new object?[] { requisitionResponse.Error!.AgreementError, requisitionResponse.Error.InstitutionIdError, requisitionResponse.Error.AccountSelectionError,
-                requisitionResponse.Error.RedirectError, requisitionResponse.Error.ReferenceError, requisitionResponse.Error.SocialSecurityNumberError, requisitionResponse.Error.UserLanguageError }, Has.All.Null);
+            Assert.That(new object?[]
+            {
+                requisitionResponse.Error!.AgreementError, requisitionResponse.Error.InstitutionIdError,
+                requisitionResponse.Error.AccountSelectionError,
+                requisitionResponse.Error.RedirectError, requisitionResponse.Error.ReferenceError,
+                requisitionResponse.Error.SocialSecurityNumberError, requisitionResponse.Error.UserLanguageError
+            }, Has.All.Null);
         });
     }
 

@@ -3,13 +3,13 @@
 namespace RobinTTY.NordigenApiClient.Models.Responses;
 
 /// <summary>
-///     An account at a banking institution.
-///     <para>Reference: <see href="https://developer.gocardless.com/bank-account-data/account-details" /></para>
+/// An account at a banking institution.
+/// <para>Reference: <see href="https://developer.gocardless.com/bank-account-data/account-details" /></para>
 /// </summary>
 public class BankAccount : MinimalBankAccount
 {
     /// <summary>
-    ///     Creates a new instance of <see cref="BankAccount" />.
+    /// Creates a new instance of <see cref="BankAccount" />.
     /// </summary>
     /// <param name="id">The unique id of the account assigned by the Nordigen API.</param>
     /// <param name="created">The time this account was created.</param>
@@ -29,31 +29,31 @@ public class BankAccount : MinimalBankAccount
     }
 
     /// <summary>
-    ///     The unique id of the account assigned by the Nordigen API.
+    /// The unique id of the account assigned by the Nordigen API.
     /// </summary>
     [JsonPropertyName("id")]
     public Guid Id { get; }
 
     /// <summary>
-    ///     The time this account was created.
+    /// The time this account was created.
     /// </summary>
     [JsonPropertyName("created")]
     public DateTime Created { get; }
 
     /// <summary>
-    ///     The time this account was last accessed via the API.
+    /// The time this account was last accessed via the API.
     /// </summary>
     [JsonPropertyName("last_accessed")]
     public DateTime? LastAccessed { get; }
 
     /// <summary>
-    ///     The institution id this account belongs to.
+    /// The institution id this account belongs to.
     /// </summary>
     [JsonPropertyName("institution_id")]
     public string InstitutionId { get; }
 
     /// <summary>
-    ///     The status of the account (e.g. user has successfully authenticated and account is discovered).
+    /// The status of the account (e.g. user has successfully authenticated and account is discovered).
     /// </summary>
     [JsonPropertyName("status")]
     public BankAccountStatus Status { get; }

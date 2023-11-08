@@ -6,15 +6,15 @@ using RobinTTY.NordigenApiClient.Models.Responses;
 namespace RobinTTY.NordigenApiClient.Endpoints;
 
 /// <summary>
-///     Provides support for the API operations of the requisitions endpoint.
-///     <para>Reference: <see href="https://developer.gocardless.com/bank-account-data/endpoints" /></para>
+/// Provides support for the API operations of the requisitions endpoint.
+/// <para>Reference: <see href="https://developer.gocardless.com/bank-account-data/endpoints" /></para>
 /// </summary>
 public class RequisitionsEndpoint
 {
     private readonly NordigenClient _nordigenClient;
 
     /// <summary>
-    ///     Creates a new instance of <see cref="RequisitionsEndpoint" />.
+    /// Creates a new instance of <see cref="RequisitionsEndpoint" />.
     /// </summary>
     /// <param name="client">The <see cref="NordigenClient" /> to use for token handling and request processing.</param>
     internal RequisitionsEndpoint(NordigenClient client)
@@ -23,14 +23,14 @@ public class RequisitionsEndpoint
     }
 
     /// <summary>
-    ///     Gets all requisitions belonging to your account.
+    /// Gets all requisitions belonging to your account.
     /// </summary>
     /// <param name="limit">Number of results to return per page.</param>
     /// <param name="offset">The initial index from which to return the results.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
     /// <returns>
-    ///     A <see cref="NordigenApiResponse{TResponse, TError}" /> containing a <see cref="ResponsePage{T}" /> which
-    ///     contains a list of requisitions.
+    /// A <see cref="NordigenApiResponse{TResponse, TError}" /> containing a <see cref="ResponsePage{T}" /> which
+    /// contains a list of requisitions.
     /// </returns>
     public async Task<NordigenApiResponse<ResponsePage<Requisition>, BasicError>> GetRequisitions(int limit, int offset,
         CancellationToken cancellationToken = default)
@@ -42,7 +42,7 @@ public class RequisitionsEndpoint
     }
 
     /// <summary>
-    ///     Gets the requisition with the given id.
+    /// Gets the requisition with the given id.
     /// </summary>
     /// <param name="id">The id of the requisition to retrieve.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
@@ -54,7 +54,7 @@ public class RequisitionsEndpoint
     }
 
     /// <summary>
-    ///     Gets the requisition with the given id.
+    /// Gets the requisition with the given id.
     /// </summary>
     /// <param name="id">The id of the requisition to retrieve.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
@@ -73,7 +73,7 @@ public class RequisitionsEndpoint
     }
 
     /// <summary>
-    ///     Creates a new requisition which is a collection of inputs for creating links and retrieving accounts.
+    /// Creates a new requisition which is a collection of inputs for creating links and retrieving accounts.
     /// </summary>
     /// <param name="requisition">The requisition to create.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
@@ -87,7 +87,7 @@ public class RequisitionsEndpoint
     }
 
     /// <summary>
-    ///     Deletes the requisition with the given id.
+    /// Deletes the requisition with the given id.
     /// </summary>
     /// <param name="id">The id of the requisition to delete.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
@@ -99,7 +99,7 @@ public class RequisitionsEndpoint
     }
 
     /// <summary>
-    ///     Deletes the requisition with the given id.
+    /// Deletes the requisition with the given id.
     /// </summary>
     /// <param name="id">The id of the requisition to delete.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>

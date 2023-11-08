@@ -3,12 +3,12 @@
 namespace RobinTTY.NordigenApiClient.Models.Errors;
 
 /// <summary>
-///     An error description as returned by the institutions endpoint of the Nordigen API.
+/// An error description as returned by the institutions endpoint of the Nordigen API.
 /// </summary>
 public class InstitutionsError : BasicError
 {
     /// <summary>
-    ///     Creates a new instance of <see cref="InstitutionsError" />.
+    /// Creates a new instance of <see cref="InstitutionsError" />.
     /// </summary>
     /// <param name="country">The error related to the requested institutions.</param>
     [JsonConstructor]
@@ -18,9 +18,9 @@ public class InstitutionsError : BasicError
 }
 
 /// <summary>
-///     Representation of the institutions error as returned by the Nordigen API.
-///     Since this representation doesn't add any useful information (only extra encapsulation)
-///     it is transformed to align this error with other errors returned by the API.
+/// Representation of the institutions error as returned by the Nordigen API.
+/// Since this representation doesn't add any useful information (only extra encapsulation)
+/// it is transformed to align this error with other errors returned by the API.
 /// </summary>
 internal class InstitutionsErrorInternal
 {

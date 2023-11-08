@@ -3,12 +3,12 @@
 namespace RobinTTY.NordigenApiClient.Models.Responses;
 
 /// <summary>
-///     Represents a banking institution as returned by the Nordigen API.
+/// Represents a banking institution as returned by the Nordigen API.
 /// </summary>
 public class Institution
 {
     /// <summary>
-    ///     Creates a new instance of <see cref="Institution" />.
+    /// Creates a new instance of <see cref="Institution" />.
     /// </summary>
     /// <param name="id">The unique id of the institution.</param>
     /// <param name="name">The name of the institution.</param>
@@ -29,37 +29,37 @@ public class Institution
     }
 
     /// <summary>
-    ///     The unique id of the institution.
+    /// The unique id of the institution.
     /// </summary>
     [JsonPropertyName("id")]
     public string Id { get; }
 
     /// <summary>
-    ///     The name of the institution.
+    /// The name of the institution.
     /// </summary>
     [JsonPropertyName("name")]
     public string Name { get; }
 
     /// <summary>
-    ///     The Business Identifier Code (BIC) of the institution.
+    /// The Business Identifier Code (BIC) of the institution.
     /// </summary>
     [JsonPropertyName("bic")]
     public string Bic { get; }
 
     /// <summary>
-    ///     The days for which the transaction history is available.
+    /// The days for which the transaction history is available.
     /// </summary>
     [JsonPropertyName("transaction_total_days")]
     public string TransactionTotalDays { get; }
 
     /// <summary>
-    ///     The countries the institution operates in.
+    /// The countries the institution operates in.
     /// </summary>
     [JsonPropertyName("countries")]
     public List<string> Countries { get; }
 
     /// <summary>
-    ///     A <see cref="Uri" /> for the logo of the institution.
+    /// A <see cref="Uri" /> for the logo of the institution.
     /// </summary>
     [JsonPropertyName("logo")]
     public Uri Logo { get; }

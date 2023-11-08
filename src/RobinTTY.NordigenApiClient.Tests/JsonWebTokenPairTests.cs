@@ -15,13 +15,15 @@ internal class JsonWebTokenPairTests
     }
 
     /// <summary>
-    /// Tests that <see cref="JsonWebTokenPair"/> can be instantiated with valid JWT tokens.
+    /// Tests that <see cref="JsonWebTokenPair" /> can be instantiated with valid JWT tokens.
     /// </summary>
     [Test]
     public void CreateValidJsonWebTokenPair()
     {
-        const string exampleToken1 = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzIiwic3ViIjoiMTIzNDU2Nzg5MCIsIm5iZiI6MTY1OTE5OTU5MiwiZXhwIjoxNjU5MjE5NTkyLCJuYW1lIjoiSm9obiBEb2UiLCJpYXQiOjE1MTYyMzkwMjJ9.WP7xByegwjRvWZMwHScxunAOkwkW77ocaLvGenI2PAU";
-        const string exampleToken2 = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoicmVmcmVzaCIsInN1YiI6IjEyMzQ1Njc4OTAiLCJuYmYiOjE2NTkxOTk1OTIsImV4cCI6MTY1OTI5OTU5MiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.uB2pb0g5uf3glMZTi9ycNjNTbcpeLaQnyT9H-z15lqg";
+        const string exampleToken1 =
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzIiwic3ViIjoiMTIzNDU2Nzg5MCIsIm5iZiI6MTY1OTE5OTU5MiwiZXhwIjoxNjU5MjE5NTkyLCJuYW1lIjoiSm9obiBEb2UiLCJpYXQiOjE1MTYyMzkwMjJ9.WP7xByegwjRvWZMwHScxunAOkwkW77ocaLvGenI2PAU";
+        const string exampleToken2 =
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoicmVmcmVzaCIsInN1YiI6IjEyMzQ1Njc4OTAiLCJuYmYiOjE2NTkxOTk1OTIsImV4cCI6MTY1OTI5OTU5MiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.uB2pb0g5uf3glMZTi9ycNjNTbcpeLaQnyT9H-z15lqg";
         var token = new JsonWebTokenPair(exampleToken1, exampleToken2);
 
         Assert.Multiple(() =>
@@ -35,18 +37,19 @@ internal class JsonWebTokenPairTests
     }
 
     /// <summary>
-    /// Tests that <see cref="JsonWebTokenPair"/> can't be instantiated with invalid JWT tokens.
+    /// Tests that <see cref="JsonWebTokenPair" /> can't be instantiated with invalid JWT tokens.
     /// </summary>
     [Test]
     public void CreateInvalidJsonWebTokenPair()
     {
-        const string exampleToken = "eyJhbGciOiJIUzI1NisInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzIiwic3ViIjoiMTIzNDU2Nzg5MCIsIm5iZiI6MTY1OTE5OTU5MiwiZXhwIjoxNjU5MjE5NTkyLCJuYWIjoiSm9obiBEb2UiLCJpYXQiOjE1MTYyMzkwMjJ9.WP7xByegwjRvWZMwHScxunAOkwkW77ocaLvGen2PAU";
+        const string exampleToken =
+            "eyJhbGciOiJIUzI1NisInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzIiwic3ViIjoiMTIzNDU2Nzg5MCIsIm5iZiI6MTY1OTE5OTU5MiwiZXhwIjoxNjU5MjE5NTkyLCJuYWIjoiSm9obiBEb2UiLCJpYXQiOjE1MTYyMzkwMjJ9.WP7xByegwjRvWZMwHScxunAOkwkW77ocaLvGen2PAU";
         // ReSharper disable once ObjectCreationAsStatement
         Assert.Throws<ArgumentException>(() => new JsonWebTokenPair(exampleToken, exampleToken));
     }
 
     /// <summary>
-    /// Tests that <see cref="NordigenClient.JsonWebTokenPair"/> is populated after the first authenticated request is made.
+    /// Tests that <see cref="NordigenClient.JsonWebTokenPair" /> is populated after the first authenticated request is made.
     /// </summary>
     [Test]
     public async Task CheckValidTokensAfterRequest()

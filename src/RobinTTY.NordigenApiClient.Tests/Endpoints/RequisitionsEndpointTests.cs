@@ -17,7 +17,7 @@ internal class RequisitionsEndpointTests
 
     /// <summary>
     /// Tests all methods of the requisitions endpoint.
-    /// Creates 3 requisitions, retrieves them using 3 <see cref="ResponsePage{T}"/>s and deletes the requisitions after.
+    /// Creates 3 requisitions, retrieves them using 3 <see cref="ResponsePage{T}" />s and deletes the requisitions after.
     /// </summary>
     /// <returns></returns>
     [Test]
@@ -26,7 +26,8 @@ internal class RequisitionsEndpointTests
         const string institutionId = "SANDBOXFINANCE_SFIN0000";
 
         // Create required agreement first
-        var agreementRequest = new CreateAgreementRequest(90, 90, new List<string> { "balances", "details", "transactions" }, institutionId);
+        var agreementRequest = new CreateAgreementRequest(90, 90,
+            new List<string> {"balances", "details", "transactions"}, institutionId);
         var agreementResponse = await _apiClient.AgreementsEndpoint.CreateAgreement(agreementRequest);
         TestExtensions.AssertNordigenApiResponseIsSuccessful(agreementResponse, HttpStatusCode.Created);
         var agreementId = agreementResponse.Result!.Id;
@@ -43,12 +44,13 @@ internal class RequisitionsEndpointTests
         ids.AddRange(existingIds);
         for (var i = 3; i < 6; i++)
         {
-            var requisitionRequest = new CreateRequisitionRequest(redirect, institutionId, $"reference_{i}", "EN", agreementId);
+            var requisitionRequest =
+                new CreateRequisitionRequest(redirect, institutionId, $"reference_{i}", "EN", agreementId);
             var createResponse = await _apiClient.RequisitionsEndpoint.CreateRequisition(requisitionRequest);
             TestExtensions.AssertNordigenApiResponseIsSuccessful(createResponse, HttpStatusCode.Created);
             ids.Add(createResponse.Result!.Id.ToString());
         }
-        
+
         // Get a response page for each requisition
         var page1Response = await _apiClient.RequisitionsEndpoint.GetRequisitions(1, 0);
         AssertThatRequisitionsPageContainsRequisition(page1Response, ids);
@@ -79,7 +81,8 @@ internal class RequisitionsEndpointTests
         // Retrieve a single requisition via guid/string id
         var requisitionResponseGuid = await _apiClient.RequisitionsEndpoint.GetRequisition(page2RequisitionId);
         TestExtensions.AssertNordigenApiResponseIsSuccessful(requisitionResponseGuid, HttpStatusCode.OK);
-        var requisitionResponseString = await _apiClient.RequisitionsEndpoint.GetRequisition(page2RequisitionId.ToString());
+        var requisitionResponseString =
+            await _apiClient.RequisitionsEndpoint.GetRequisition(page2RequisitionId.ToString());
         TestExtensions.AssertNordigenApiResponseIsSuccessful(requisitionResponseString, HttpStatusCode.OK);
         Assert.That(requisitionResponseString.Result!.Id, Is.EqualTo(requisitionResponseGuid.Result!.Id));
 
@@ -116,18 +119,21 @@ internal class RequisitionsEndpointTests
     {
         var redirect = new Uri("ftp://ftp.test.com");
         var agreementId = Guid.Empty;
-        var requisitionRequest = new CreateRequisitionRequest(redirect, "123", "internal_reference", "EN", agreementId , null, true, true);
+        var requisitionRequest =
+            new CreateRequisitionRequest(redirect, "123", "internal_reference", "EN", agreementId, null, true, true);
         var response = await _apiClient.RequisitionsEndpoint.CreateRequisition(requisitionRequest);
 
         TestExtensions.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.BadRequest);
         Assert.Multiple(() =>
         {
             Assert.That(response.Error!.Summary, Is.EqualTo("Invalid  ID"));
-            Assert.That(response.Error!.Detail, Is.EqualTo("00000000-0000-0000-0000-000000000000 is not a valid  UUID. "));
+            Assert.That(response.Error!.Detail,
+                Is.EqualTo("00000000-0000-0000-0000-000000000000 is not a valid  UUID. "));
         });
     }
 
-    private static void AssertThatRequisitionsPageContainsRequisition(NordigenApiResponse<ResponsePage<Requisition>, BasicError> pagedResponse, List<string> ids)
+    private static void AssertThatRequisitionsPageContainsRequisition(
+        NordigenApiResponse<ResponsePage<Requisition>, BasicError> pagedResponse, List<string> ids)
     {
         TestExtensions.AssertNordigenApiResponseIsSuccessful(pagedResponse, HttpStatusCode.OK);
         var page2Result = pagedResponse.Result!;

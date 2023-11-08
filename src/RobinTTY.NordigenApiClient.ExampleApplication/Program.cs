@@ -9,7 +9,7 @@ var client = new NordigenClient(httpClient, credentials);
 
 ////* Getting balances and transactions for a bank account */////
 // 1. Get a list of institutions in your country (e.g. Great Britain):
-var institutionsResponse = await client.InstitutionsEndpoint.GetInstitutions(country: "GB");
+var institutionsResponse = await client.InstitutionsEndpoint.GetInstitutions("GB");
 if (institutionsResponse.IsSuccess)
     institutionsResponse.Result.ForEach(institution =>
     {
@@ -34,7 +34,9 @@ if (requisitionResponse.IsSuccess)
 }
 
 else
+{
     Console.WriteLine($"Requisition couldn't be created: {requisitionResponse.Error.Summary}");
+}
 
 // 3. You will now need to accept the end user agreement by following the authentication link.
 // After that you will be able to retrieve the accounts linked to your bank account:
@@ -42,10 +44,7 @@ else
 var requisitionId = "your-requisition-id";
 var accountsResponse = await client.RequisitionsEndpoint.GetRequisition(requisitionId);
 if (accountsResponse.IsSuccess)
-    accountsResponse.Result.Accounts.ForEach(accountId =>
-    {
-        Console.WriteLine($"Account id: {accountId}");
-    });
+    accountsResponse.Result.Accounts.ForEach(accountId => { Console.WriteLine($"Account id: {accountId}"); });
 else
     Console.WriteLine($"Accounts couldn't be retrieved: {accountsResponse.Error.Summary}");
 

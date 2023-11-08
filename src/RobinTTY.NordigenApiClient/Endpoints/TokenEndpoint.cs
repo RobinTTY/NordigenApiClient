@@ -7,15 +7,15 @@ using RobinTTY.NordigenApiClient.Models.Responses;
 namespace RobinTTY.NordigenApiClient.Endpoints;
 
 /// <summary>
-///     Provides support for the API operations of the tokens endpoint.
-///     <para>Reference: <see href="https://developer.gocardless.com/bank-account-data/endpoints" /></para>
+/// Provides support for the API operations of the tokens endpoint.
+/// <para>Reference: <see href="https://developer.gocardless.com/bank-account-data/endpoints" /></para>
 /// </summary>
 public class TokenEndpoint
 {
     private readonly NordigenClient _nordigenClient;
 
     /// <summary>
-    ///     Creates a new instance of <see cref="TokenEndpoint" />.
+    /// Creates a new instance of <see cref="TokenEndpoint" />.
     /// </summary>
     /// <param name="client">The <see cref="NordigenClient" /> to use for token handling and request processing.</param>
     internal TokenEndpoint(NordigenClient client)
@@ -24,12 +24,12 @@ public class TokenEndpoint
     }
 
     /// <summary>
-    ///     Obtains a new JWT token pair from the Nordigen API.
+    /// Obtains a new JWT token pair from the Nordigen API.
     /// </summary>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
     /// <returns>
-    ///     A <see cref="NordigenApiResponse{TResponse, TError}" /> containing the obtained
-    ///     <see cref="JsonWebTokenPair" /> if the request was successful.
+    /// A <see cref="NordigenApiResponse{TResponse, TError}" /> containing the obtained
+    /// <see cref="JsonWebTokenPair" /> if the request was successful.
     /// </returns>
     public async Task<NordigenApiResponse<JsonWebTokenPair, BasicError>> GetTokenPair(
         CancellationToken cancellationToken = default)
@@ -41,13 +41,13 @@ public class TokenEndpoint
     }
 
     /// <summary>
-    ///     Refreshes the JWT access token.
+    /// Refreshes the JWT access token.
     /// </summary>
     /// <param name="refreshToken">The refresh token previously obtained through the <see cref="GetTokenPair" /> method.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
     /// <returns>
-    ///     A <see cref="NordigenApiResponse{TResponse, TError}" /> containing the refreshed
-    ///     <see cref="JsonWebAccessToken" /> if the request was successful.
+    /// A <see cref="NordigenApiResponse{TResponse, TError}" /> containing the refreshed
+    /// <see cref="JsonWebAccessToken" /> if the request was successful.
     /// </returns>
     public async Task<NordigenApiResponse<JsonWebAccessToken, BasicError>> RefreshAccessToken(JsonWebToken refreshToken,
         CancellationToken cancellationToken = default)
