@@ -1,33 +1,15 @@
-﻿using RobinTTY.NordigenApiClient.Models.Requests;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
+using RobinTTY.NordigenApiClient.Models.Requests;
 
 namespace RobinTTY.NordigenApiClient.Models.Responses;
 
 /// <summary>
-/// An end user agreement which determines the scope and length of access to data provided by institutions.
+///     An end user agreement which determines the scope and length of access to data provided by institutions.
 /// </summary>
 public class Agreement : CreateAgreementRequest
 {
     /// <summary>
-    /// The id of the agreement assigned by the Nordigen API.
-    /// </summary>
-    [JsonPropertyName("id")]
-    public Guid Id { get; }
-    /// <summary>
-    /// Time when the agreement was created.
-    /// </summary>
-    [JsonPropertyName("created")]
-    public DateTime Created { get; }
-
-    /// <summary>
-    /// Time when the agreement was accepted.
-    /// </summary>
-    [JsonPropertyName("accepted")]
-    public DateTime? Accepted { get; }
-
-
-    /// <summary>
-    /// Creates a new instance of <see cref="Agreement"/>.
+    ///     Creates a new instance of <see cref="Agreement" />.
     /// </summary>
     /// <param name="id">The id of the agreement assigned by the Nordigen API.</param>
     /// <param name="created">Time when the agreement was created.</param>
@@ -45,10 +27,28 @@ public class Agreement : CreateAgreementRequest
         Guid id,
         DateTime created,
         DateTime? accepted
-        ) : base(maxHistoricalDays, accessValidForDays, accessScope, institutionId)
+    ) : base(maxHistoricalDays, accessValidForDays, accessScope, institutionId)
     {
         Id = id;
         Created = created;
         Accepted = accepted;
     }
+
+    /// <summary>
+    ///     The id of the agreement assigned by the Nordigen API.
+    /// </summary>
+    [JsonPropertyName("id")]
+    public Guid Id { get; }
+
+    /// <summary>
+    ///     Time when the agreement was created.
+    /// </summary>
+    [JsonPropertyName("created")]
+    public DateTime Created { get; }
+
+    /// <summary>
+    ///     Time when the agreement was accepted.
+    /// </summary>
+    [JsonPropertyName("accepted")]
+    public DateTime? Accepted { get; }
 }

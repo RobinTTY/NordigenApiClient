@@ -11,11 +11,11 @@ internal static class EnumDescriptorExtension
             throw new ArgumentException("EnumerationValue must be of Enum type", nameof(enumerationValue));
 
         var memberInfo = type.GetMember(enumerationValue.ToString() ?? string.Empty);
-        if (memberInfo is { Length: > 0 })
+        if (memberInfo is {Length: > 0})
         {
             var attrs = memberInfo[0].GetCustomAttributes(typeof(DescriptionAttribute), false);
             if (attrs.Length > 0)
-                return ((DescriptionAttribute)attrs[0]).Description;
+                return ((DescriptionAttribute) attrs[0]).Description;
         }
 
         return enumerationValue.ToString();
@@ -27,10 +27,11 @@ internal static class EnumDescriptorExtension
 
         foreach (var fieldInfo in fieldInfos)
         {
-            var attributes = (DescriptionAttribute[])fieldInfo.GetCustomAttributes(typeof(DescriptionAttribute), false);
+            var attributes =
+                (DescriptionAttribute[]) fieldInfo.GetCustomAttributes(typeof(DescriptionAttribute), false);
 
             if (attributes.Length > 0 && attributes[0].Description == description)
-                return (T)Enum.Parse(typeof(T), fieldInfo.Name);
+                return (T) Enum.Parse(typeof(T), fieldInfo.Name);
         }
 
         return default!;

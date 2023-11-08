@@ -1,6 +1,8 @@
 # NordigenApiClient
 
-This project provides a C# client for the [GoCardless Bank Account Data API](https://gocardless.com/bank-account-data/) (formerly Nordigen API). The project targets .NET 6/7 & .NET Standard 2.0 and supports the following endpoints of the API:
+This project provides a C# client for
+the [GoCardless Bank Account Data API](https://gocardless.com/bank-account-data/) (formerly Nordigen API). The project
+targets .NET 6/7 & .NET Standard 2.0 and supports the following endpoints of the API:
 
 - Token
 - Institutions
@@ -8,7 +10,8 @@ This project provides a C# client for the [GoCardless Bank Account Data API](htt
 - Requisitions
 - Accounts
 
-**Update June 6th 2023:** The Nordigen company merged with https://gocardless.com/. The new documentation can be found at: https://developer.gocardless.com/bank-account-data/endpoints.
+**Update June 6th 2023:** The Nordigen company merged with https://gocardless.com/. The new documentation can be found
+at: https://developer.gocardless.com/bank-account-data/endpoints.
 
 ## Getting started
 
@@ -26,7 +29,8 @@ This project provides a C# client for the [GoCardless Bank Account Data API](htt
    var client = new NordigenClient(httpClient, credentials);
    ```
 
-   Note: The client will obtain the required JWT access/refresh token itself and manage it accordingly, for access/refresh token reuse see the advanced section.
+   Note: The client will obtain the required JWT access/refresh token itself and manage it accordingly, for
+   access/refresh token reuse see the advanced section.
 
 3. You can now use the different endpoints through the client:
 
@@ -49,7 +53,8 @@ This project provides a C# client for the [GoCardless Bank Account Data API](htt
 
 ## Getting balances and transactions for a bank account
 
-Here is how you would go about retrieving the balances and transactions for a bank account (you can find this full example [here](src/RobinTTY.NordigenApiClient.ExampleApplication)):
+Here is how you would go about retrieving the balances and transactions for a bank account (you can find this full
+example [here](src/RobinTTY.NordigenApiClient.ExampleApplication)):
 
 1. Get a list of institutions in your country (e.g. Great Britain):
 
@@ -84,7 +89,8 @@ Here is how you would go about retrieving the balances and transactions for a ba
         Console.WriteLine($"Requisition couldn't be created: {requisitionResponse.Error.Summary}");
     ```
 
-3. You will now need to accept the end user agreement by following the authentication link. After that you will be able to retrieve the accounts linked to your bank account:
+3. You will now need to accept the end user agreement by following the authentication link. After that you will be able
+   to retrieve the accounts linked to your bank account:
 
     ```cs
     var requisitionId = "your-requisition-id";
@@ -133,7 +139,9 @@ Here is how you would go about retrieving the balances and transactions for a ba
 
 ### Acess/Refresh Token reuse
 
-If you wan't to persist the access/refresh token used by the client you can do so by accessing the `JsonWebTokenPair` property of the client. After the first request that requires authentication this property will be populated with the access/refresh token that was automatically aquired.
+If you wan't to persist the access/refresh token used by the client you can do so by accessing the `JsonWebTokenPair`
+property of the client. After the first request that requires authentication this property will be populated with the
+access/refresh token that was automatically aquired.
 
 ```cs
 Console.WriteLine(client.JsonWebTokenPair.AccessToken.EncodedToken);
@@ -183,7 +191,10 @@ void OnTokenPairUpdated(object? sender, TokenPairUpdatedEventArgs e)
 
 ## Usage with Frameworks older than .NET 6.0
 
-If you use this library with .NET versions older than 6.0 you will receive warnings informing you that some dependencies of this packet don't necessarily support your chosen .NET version. The .NET Standard version of this package is tested against .NET Framework 4.8 and older versions (including .NET Core) should work fine as well. You can surpress these warnings by adding the following option to your csproj file:
+If you use this library with .NET versions older than 6.0 you will receive warnings informing you that some dependencies
+of this packet don't necessarily support your chosen .NET version. The .NET Standard version of this package is tested
+against .NET Framework 4.8 and older versions (including .NET Core) should work fine as well. You can surpress these
+warnings by adding the following option to your csproj file:
 
 ```xml
 <PropertyGroup>

@@ -9,62 +9,28 @@ using RobinTTY.NordigenApiClient.Utility;
 namespace RobinTTY.NordigenApiClient;
 
 /// <summary>
-/// Client used to access the Nordigen API endpoints.
+///     Client used to access the Nordigen API endpoints.
 /// </summary>
 public class NordigenClient
 {
+    private static readonly SemaphoreSlim TokenSemaphore = new(1, 1);
     private readonly HttpClient _httpClient;
     private readonly JsonSerializerOptions _serializerOptions;
     internal readonly NordigenClientCredentials Credentials;
-    private static readonly SemaphoreSlim TokenSemaphore = new(1, 1);
-    
-    /// <summary>
-    /// Occurs whenever the <see cref="JsonWebTokenPair"/> is updated.
-    /// </summary>
-    public event EventHandler<TokenPairUpdatedEventArgs>? TokenPairUpdated;
 
     /// <summary>
-    /// A pair consisting of access/refresh token used to authenticate with the Nordigen API.
+    ///     Creates a new instance of <see cref="NordigenClient" />.
     /// </summary>
-    public JsonWebTokenPair? JsonWebTokenPair { get; set; }
-    /// <summary>
-    /// Provides support for the API operations of the tokens endpoint.
-    /// <para>Reference: <see href="https://developer.gocardless.com/bank-account-data/endpoints"/></para>
-    /// </summary>
-    public TokenEndpoint TokenEndpoint { get; }
-    /// <summary>
-    /// Provides support for the API operations of the institutions endpoint.
-    /// <para>Reference: <see href="https://developer.gocardless.com/bank-account-data/endpoints"/></para>
-    /// </summary>
-    public InstitutionsEndpoint InstitutionsEndpoint { get; }
-    /// <summary>
-    /// Provides support for the API operations of the agreements endpoint.
-    /// <para>Reference: <see href="https://developer.gocardless.com/bank-account-data/endpoints"/></para>
-    /// </summary>
-    public AgreementsEndpoint AgreementsEndpoint { get; }
-    /// <summary>
-    /// Provides support for the API operations of the requisitions endpoint.
-    /// <para>Reference: <see href="https://developer.gocardless.com/bank-account-data/endpoints"/></para>
-    /// </summary>
-    public RequisitionsEndpoint RequisitionsEndpoint { get; }
-    /// <summary>
-    /// Provides support for the API operations of the accounts endpoint.
-    /// <para>Reference: <see href="https://developer.gocardless.com/bank-account-data/endpoints"/></para>
-    /// </summary>
-    public AccountsEndpoint AccountsEndpoint { get; }
-
-    /// <summary>
-    /// Creates a new instance of <see cref="NordigenClient"/>.
-    /// </summary>
-    /// <param name="httpClient">The <see cref="HttpClient"/> to use.</param>
+    /// <param name="httpClient">The <see cref="HttpClient" /> to use.</param>
     /// <param name="credentials">The Nordigen credentials for API access.</param>
     /// <param name="jsonWebTokenPair">An optional JSON web token pair consisting of access and refresh token to use.</param>
-    public NordigenClient(HttpClient httpClient, NordigenClientCredentials credentials, JsonWebTokenPair? jsonWebTokenPair = null)
+    public NordigenClient(HttpClient httpClient, NordigenClientCredentials credentials,
+        JsonWebTokenPair? jsonWebTokenPair = null)
     {
         _httpClient = httpClient;
         _serializerOptions = new JsonSerializerOptions
         {
-            Converters = 
+            Converters =
             {
                 new JsonWebTokenConverter(), new GuidConverter(),
                 new CultureSpecificDecimalConverter(), new InstitutionsErrorConverter()
@@ -80,6 +46,46 @@ public class NordigenClient
         AccountsEndpoint = new AccountsEndpoint(this);
     }
 
+    /// <summary>
+    ///     A pair consisting of access/refresh token used to authenticate with the Nordigen API.
+    /// </summary>
+    public JsonWebTokenPair? JsonWebTokenPair { get; set; }
+
+    /// <summary>
+    ///     Provides support for the API operations of the tokens endpoint.
+    ///     <para>Reference: <see href="https://developer.gocardless.com/bank-account-data/endpoints" /></para>
+    /// </summary>
+    public TokenEndpoint TokenEndpoint { get; }
+
+    /// <summary>
+    ///     Provides support for the API operations of the institutions endpoint.
+    ///     <para>Reference: <see href="https://developer.gocardless.com/bank-account-data/endpoints" /></para>
+    /// </summary>
+    public InstitutionsEndpoint InstitutionsEndpoint { get; }
+
+    /// <summary>
+    ///     Provides support for the API operations of the agreements endpoint.
+    ///     <para>Reference: <see href="https://developer.gocardless.com/bank-account-data/endpoints" /></para>
+    /// </summary>
+    public AgreementsEndpoint AgreementsEndpoint { get; }
+
+    /// <summary>
+    ///     Provides support for the API operations of the requisitions endpoint.
+    ///     <para>Reference: <see href="https://developer.gocardless.com/bank-account-data/endpoints" /></para>
+    /// </summary>
+    public RequisitionsEndpoint RequisitionsEndpoint { get; }
+
+    /// <summary>
+    ///     Provides support for the API operations of the accounts endpoint.
+    ///     <para>Reference: <see href="https://developer.gocardless.com/bank-account-data/endpoints" /></para>
+    /// </summary>
+    public AccountsEndpoint AccountsEndpoint { get; }
+
+    /// <summary>
+    ///     Occurs whenever the <see cref="JsonWebTokenPair" /> is updated.
+    /// </summary>
+    public event EventHandler<TokenPairUpdatedEventArgs>? TokenPairUpdated;
+
     internal async Task<NordigenApiResponse<TResponse, TError>> MakeRequest<TResponse, TError>(
         string uri,
         HttpMethod method,
@@ -87,7 +93,7 @@ public class NordigenClient
         IEnumerable<KeyValuePair<string, string>>? query = null,
         HttpContent? body = null,
         bool useAuthentication = true
-        ) where TResponse : class where TError : class
+    ) where TResponse : class where TError : class
     {
         var requestUri = query != null ? UriQueryBuilder.BuildUriWithQueryString(uri, query) : uri;
         HttpClient client;
@@ -102,6 +108,7 @@ public class NordigenClient
             {
                 TokenSemaphore.Release();
             }
+
             client = _httpClient.UseNordigenAuthenticationHeader(JsonWebTokenPair);
         }
         else
@@ -121,15 +128,18 @@ public class NordigenClient
         else
             throw new NotImplementedException();
 
-        return await NordigenApiResponse<TResponse, TError>.FromHttpResponse(response, _serializerOptions, cancellationToken);
+        return await NordigenApiResponse<TResponse, TError>.FromHttpResponse(response, _serializerOptions,
+            cancellationToken);
     }
 
     /// <summary>
-    /// Tries to retrieve a valid <see cref="Models.Jwt.JsonWebTokenPair"/>.
+    ///     Tries to retrieve a valid <see cref="Models.Jwt.JsonWebTokenPair" />.
     /// </summary>
     /// <param name="cancellationToken">An optional token to signal cancellation of the operation.</param>
-    /// <returns>A valid <see cref="Models.Jwt.JsonWebTokenPair"/> if the operation was successful.
-    /// Otherwise returns null.</returns>
+    /// <returns>
+    ///     A valid <see cref="Models.Jwt.JsonWebTokenPair" /> if the operation was successful.
+    ///     Otherwise returns null.
+    /// </returns>
     private async Task<JsonWebTokenPair?> TryGetValidTokenPair(CancellationToken cancellationToken = default)
     {
         // Request a new token if it is null or if the refresh token has expired
@@ -159,21 +169,21 @@ public class NordigenClient
 }
 
 /// <summary>
-/// Provides data for the <see cref="NordigenClient.TokenPairUpdated"/> event.
+///     Provides data for the <see cref="NordigenClient.TokenPairUpdated" /> event.
 /// </summary>
 public class TokenPairUpdatedEventArgs : EventArgs
 {
     /// <summary>
-    /// The updated <see cref="Models.Jwt.JsonWebTokenPair"/>.
+    ///     Creates a new instance of <see cref="TokenPairUpdatedEventArgs" />.
     /// </summary>
-    public JsonWebTokenPair? JsonWebTokenPair { get; set; }
-
-    /// <summary>
-    /// Creates a new instance of <see cref="TokenPairUpdatedEventArgs"/>.
-    /// </summary>
-    /// <param name="jsonWebTokenPair">The updated <see cref="Models.Jwt.JsonWebTokenPair"/>.</param>
+    /// <param name="jsonWebTokenPair">The updated <see cref="Models.Jwt.JsonWebTokenPair" />.</param>
     public TokenPairUpdatedEventArgs(JsonWebTokenPair? jsonWebTokenPair)
     {
         JsonWebTokenPair = jsonWebTokenPair;
     }
+
+    /// <summary>
+    ///     The updated <see cref="Models.Jwt.JsonWebTokenPair" />.
+    /// </summary>
+    public JsonWebTokenPair? JsonWebTokenPair { get; set; }
 }
