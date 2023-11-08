@@ -9,6 +9,24 @@ namespace RobinTTY.NordigenApiClient.Models.Responses;
 public class Agreement : CreateAgreementRequest
 {
     /// <summary>
+    /// The id of the agreement assigned by the Nordigen API.
+    /// </summary>
+    [JsonPropertyName("id")]
+    public Guid Id { get; }
+
+    /// <summary>
+    /// Time when the agreement was created.
+    /// </summary>
+    [JsonPropertyName("created")]
+    public DateTime Created { get; }
+
+    /// <summary>
+    /// Time when the agreement was accepted.
+    /// </summary>
+    [JsonPropertyName("accepted")]
+    public DateTime? Accepted { get; }
+
+    /// <summary>
     /// Creates a new instance of <see cref="Agreement" />.
     /// </summary>
     /// <param name="id">The id of the agreement assigned by the Nordigen API.</param>
@@ -33,22 +51,4 @@ public class Agreement : CreateAgreementRequest
         Created = created;
         Accepted = accepted;
     }
-
-    /// <summary>
-    /// The id of the agreement assigned by the Nordigen API.
-    /// </summary>
-    [JsonPropertyName("id")]
-    public Guid Id { get; }
-
-    /// <summary>
-    /// Time when the agreement was created.
-    /// </summary>
-    [JsonPropertyName("created")]
-    public DateTime Created { get; }
-
-    /// <summary>
-    /// Time when the agreement was accepted.
-    /// </summary>
-    [JsonPropertyName("accepted")]
-    public DateTime? Accepted { get; }
 }

@@ -8,18 +8,6 @@ namespace RobinTTY.NordigenApiClient.Models.Responses;
 public class AccountTransactions
 {
     /// <summary>
-    /// Creates a new instance of <see cref="AccountTransactions" />.
-    /// </summary>
-    /// <param name="bookedTransactions">Transactions which were already booked to the bank account.</param>
-    /// <param name="pendingTransactions">Transactions which are currently pending and have not been booked yet.</param>
-    [JsonConstructor]
-    public AccountTransactions(List<Transaction> bookedTransactions, List<Transaction> pendingTransactions)
-    {
-        BookedTransactions = bookedTransactions;
-        PendingTransactions = pendingTransactions;
-    }
-
-    /// <summary>
     /// Transactions which were already booked to the bank account.
     /// </summary>
     [JsonPropertyName("booked")]
@@ -30,6 +18,18 @@ public class AccountTransactions
     /// </summary>
     [JsonPropertyName("pending")]
     public List<Transaction> PendingTransactions { get; }
+
+    /// <summary>
+    /// Creates a new instance of <see cref="AccountTransactions" />.
+    /// </summary>
+    /// <param name="bookedTransactions">Transactions which were already booked to the bank account.</param>
+    /// <param name="pendingTransactions">Transactions which are currently pending and have not been booked yet.</param>
+    [JsonConstructor]
+    public AccountTransactions(List<Transaction> bookedTransactions, List<Transaction> pendingTransactions)
+    {
+        BookedTransactions = bookedTransactions;
+        PendingTransactions = pendingTransactions;
+    }
 }
 
 /// <summary>
@@ -37,6 +37,12 @@ public class AccountTransactions
 /// </summary>
 internal class AccountTransactionsWrapper
 {
+    /// <summary>
+    /// A list of transactions.
+    /// </summary>
+    [JsonPropertyName("transactions")]
+    public AccountTransactions Transactions { get; }
+
     /// <summary>
     /// Creates a new instance of <see cref="AccountTransactionsWrapper" />.
     /// </summary>
@@ -46,10 +52,4 @@ internal class AccountTransactionsWrapper
     {
         Transactions = transactions;
     }
-
-    /// <summary>
-    /// A list of transactions.
-    /// </summary>
-    [JsonPropertyName("transactions")]
-    public AccountTransactions Transactions { get; }
 }

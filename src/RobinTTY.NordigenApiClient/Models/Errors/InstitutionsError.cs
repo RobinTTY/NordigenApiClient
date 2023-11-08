@@ -24,6 +24,12 @@ public class InstitutionsError : BasicError
 /// </summary>
 internal class InstitutionsErrorInternal
 {
+    [JsonPropertyName("country")] public BasicError? Country { get; }
+
+    [JsonPropertyName("summary")] public string? Summary { get; }
+
+    [JsonPropertyName("detail")] public string? Detail { get; }
+
     [JsonConstructor]
     public InstitutionsErrorInternal(BasicError? country, string? summary, string? detail)
     {
@@ -31,10 +37,4 @@ internal class InstitutionsErrorInternal
         Summary = summary;
         Detail = detail;
     }
-
-    [JsonPropertyName("country")] public BasicError? Country { get; }
-
-    [JsonPropertyName("summary")] public string? Summary { get; }
-
-    [JsonPropertyName("detail")] public string? Detail { get; }
 }

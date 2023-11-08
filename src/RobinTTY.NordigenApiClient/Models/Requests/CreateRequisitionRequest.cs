@@ -8,55 +8,6 @@ namespace RobinTTY.NordigenApiClient.Models.Requests;
 public class CreateRequisitionRequest
 {
     /// <summary>
-    /// Creates a new instance of <see cref="CreateRequisitionRequest" />.
-    /// </summary>
-    /// <param name="redirect">URI where the end user will be redirected after finishing authentication.</param>
-    /// <param name="institutionId">The id of the institution this requisition is linked to.</param>
-    /// <param name="agreementId">The agreement this requisition is linked to.</param>
-    /// <param name="reference">A unique ID set by the user of the API for internal referencing.</param>
-    /// <param name="userLanguage">
-    /// Enforces a language for all end user steps hosted by Nordigen passed as a two-letter country
-    /// code <see href="https://wikipedia.org/wiki/ISO_639-1">(ISO 639-1)</see>.
-    /// </param>
-    /// <param name="socialSecurityNumber">
-    /// Some European banks allow sending an end-user's SSN to check whether the SSN is valid.
-    /// <para>
-    /// For bank availability check:
-    /// <see href="https://nordigen.zendesk.com/hc/en-gb/articles/6761166365085-SSN-verification-feature-for-specific-banks/" />
-    /// .
-    /// </para>
-    /// </param>
-    /// <param name="accountSelection">
-    /// Enables the end user to select which accounts they want to share (like joint accounts, accounts of children, etc.)
-    /// if set to true.
-    /// <para>For details see: <see href="https://ob.helpscoutdocs.com/article/142-account-selection-feature" />.</para>
-    /// </param>
-    /// <param name="redirectImmediate">
-    /// Enables you to redirect end users back to your app immediately after they have given their consent to access the
-    /// account information data from the bank,
-    /// instead of waiting for transaction data being processed. Accounts endpoint status will be PROCESSING and you have
-    /// to wait until account status is READY
-    /// before you're able to query the transactions.
-    /// <para>
-    /// For details see:
-    /// <see href="https://ob.helpscoutdocs.com/article/145-immediate-end-user-redirect-from-bank-after-consent" />.
-    /// </para>
-    /// </param>
-    public CreateRequisitionRequest(Uri redirect, string institutionId, string reference, string userLanguage,
-        Guid? agreementId = null, string? socialSecurityNumber = null, bool accountSelection = false,
-        bool redirectImmediate = false)
-    {
-        Redirect = redirect;
-        InstitutionId = institutionId;
-        AgreementId = agreementId;
-        Reference = reference;
-        UserLanguage = userLanguage;
-        SocialSecurityNumber = socialSecurityNumber;
-        AccountSelection = accountSelection;
-        RedirectImmediate = redirectImmediate;
-    }
-
-    /// <summary>
     /// URI where the end user will be redirected after finishing authentication.
     /// </summary>
     [JsonPropertyName("redirect")]
@@ -126,4 +77,53 @@ public class CreateRequisitionRequest
     /// </summary>
     [JsonPropertyName("redirect_immediate")]
     public bool RedirectImmediate { get; set; }
+
+    /// <summary>
+    /// Creates a new instance of <see cref="CreateRequisitionRequest" />.
+    /// </summary>
+    /// <param name="redirect">URI where the end user will be redirected after finishing authentication.</param>
+    /// <param name="institutionId">The id of the institution this requisition is linked to.</param>
+    /// <param name="agreementId">The agreement this requisition is linked to.</param>
+    /// <param name="reference">A unique ID set by the user of the API for internal referencing.</param>
+    /// <param name="userLanguage">
+    /// Enforces a language for all end user steps hosted by Nordigen passed as a two-letter country
+    /// code <see href="https://wikipedia.org/wiki/ISO_639-1">(ISO 639-1)</see>.
+    /// </param>
+    /// <param name="socialSecurityNumber">
+    /// Some European banks allow sending an end-user's SSN to check whether the SSN is valid.
+    /// <para>
+    /// For bank availability check:
+    /// <see href="https://nordigen.zendesk.com/hc/en-gb/articles/6761166365085-SSN-verification-feature-for-specific-banks/" />
+    /// .
+    /// </para>
+    /// </param>
+    /// <param name="accountSelection">
+    /// Enables the end user to select which accounts they want to share (like joint accounts, accounts of children, etc.)
+    /// if set to true.
+    /// <para>For details see: <see href="https://ob.helpscoutdocs.com/article/142-account-selection-feature" />.</para>
+    /// </param>
+    /// <param name="redirectImmediate">
+    /// Enables you to redirect end users back to your app immediately after they have given their consent to access the
+    /// account information data from the bank,
+    /// instead of waiting for transaction data being processed. Accounts endpoint status will be PROCESSING and you have
+    /// to wait until account status is READY
+    /// before you're able to query the transactions.
+    /// <para>
+    /// For details see:
+    /// <see href="https://ob.helpscoutdocs.com/article/145-immediate-end-user-redirect-from-bank-after-consent" />.
+    /// </para>
+    /// </param>
+    public CreateRequisitionRequest(Uri redirect, string institutionId, string reference, string userLanguage,
+        Guid? agreementId = null, string? socialSecurityNumber = null, bool accountSelection = false,
+        bool redirectImmediate = false)
+    {
+        Redirect = redirect;
+        InstitutionId = institutionId;
+        AgreementId = agreementId;
+        Reference = reference;
+        UserLanguage = userLanguage;
+        SocialSecurityNumber = socialSecurityNumber;
+        AccountSelection = accountSelection;
+        RedirectImmediate = redirectImmediate;
+    }
 }

@@ -14,21 +14,6 @@ namespace RobinTTY.NordigenApiClient.Models.Responses;
 public class NordigenApiResponse<TResult, TError> where TResult : class where TError : class
 {
     /// <summary>
-    /// Creates a new instance of <see cref="NordigenApiResponse{TResult, TError}" />.
-    /// </summary>
-    /// <param name="statusCode">The status code returned by the API.</param>
-    /// <param name="isSuccess">Indicates whether the HTTP response was successful.</param>
-    /// <param name="result">The result returned by the API. Null if the the HTTP response was not successful.</param>
-    /// <param name="apiError">The error returned by the API. Null if the HTTP response was successful.</param>
-    internal NordigenApiResponse(HttpStatusCode statusCode, bool isSuccess, TResult? result, TError? apiError)
-    {
-        StatusCode = statusCode;
-        IsSuccess = isSuccess;
-        Result = result;
-        Error = apiError;
-    }
-
-    /// <summary>
     /// The status code returned by the API.
     /// </summary>
     public HttpStatusCode StatusCode { get; }
@@ -49,6 +34,21 @@ public class NordigenApiResponse<TResult, TError> where TResult : class where TE
     /// The error returned by the API. Null if the HTTP response was successful.
     /// </summary>
     public TError? Error { get; }
+
+    /// <summary>
+    /// Creates a new instance of <see cref="NordigenApiResponse{TResult, TError}" />.
+    /// </summary>
+    /// <param name="statusCode">The status code returned by the API.</param>
+    /// <param name="isSuccess">Indicates whether the HTTP response was successful.</param>
+    /// <param name="result">The result returned by the API. Null if the the HTTP response was not successful.</param>
+    /// <param name="apiError">The error returned by the API. Null if the HTTP response was successful.</param>
+    internal NordigenApiResponse(HttpStatusCode statusCode, bool isSuccess, TResult? result, TError? apiError)
+    {
+        StatusCode = statusCode;
+        IsSuccess = isSuccess;
+        Result = result;
+        Error = apiError;
+    }
 
     /// <summary>
     /// Parses a <see cref="NordigenApiResponse{TResult, TError}" /> from a <see cref="HttpResponseMessage" />.

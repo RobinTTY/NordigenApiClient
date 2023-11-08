@@ -8,18 +8,6 @@ namespace RobinTTY.NordigenApiClient.Models.Errors;
 public class BasicError
 {
     /// <summary>
-    /// Creates a new instance of <see cref="BasicError" />.
-    /// </summary>
-    /// <param name="summary">The summary of the API error.</param>
-    /// <param name="detail">The detailed description of the API error.</param>
-    [JsonConstructor]
-    public BasicError(string summary, string detail)
-    {
-        Summary = summary;
-        Detail = detail;
-    }
-
-    /// <summary>
     /// The summary of the API error.
     /// </summary>
     [JsonPropertyName("summary")]
@@ -30,4 +18,16 @@ public class BasicError
     /// </summary>
     [JsonPropertyName("detail")]
     public string Detail { get; }
+
+    /// <summary>
+    /// Creates a new instance of <see cref="BasicError" />.
+    /// </summary>
+    /// <param name="summary">The summary of the API error.</param>
+    /// <param name="detail">The detailed description of the API error.</param>
+    [JsonConstructor]
+    public BasicError(string summary, string detail)
+    {
+        Summary = summary;
+        Detail = detail;
+    }
 }

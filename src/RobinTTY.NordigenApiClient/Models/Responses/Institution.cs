@@ -8,27 +8,6 @@ namespace RobinTTY.NordigenApiClient.Models.Responses;
 public class Institution
 {
     /// <summary>
-    /// Creates a new instance of <see cref="Institution" />.
-    /// </summary>
-    /// <param name="id">The unique id of the institution.</param>
-    /// <param name="name">The name of the institution.</param>
-    /// <param name="bic">The Business Identifier Code (BIC) of the institution.</param>
-    /// <param name="transactionTotalDays">The days for which the transaction history is available.</param>
-    /// <param name="countries">The countries the institution operates in.</param>
-    /// <param name="logo">A <see cref="Uri" /> for the logo of the institution.</param>
-    [JsonConstructor]
-    public Institution(string id, string name, string bic, string transactionTotalDays, List<string> countries,
-        Uri logo)
-    {
-        Id = id;
-        Name = name;
-        Bic = bic;
-        TransactionTotalDays = transactionTotalDays;
-        Countries = countries;
-        Logo = logo;
-    }
-
-    /// <summary>
     /// The unique id of the institution.
     /// </summary>
     [JsonPropertyName("id")]
@@ -63,4 +42,25 @@ public class Institution
     /// </summary>
     [JsonPropertyName("logo")]
     public Uri Logo { get; }
+
+    /// <summary>
+    /// Creates a new instance of <see cref="Institution" />.
+    /// </summary>
+    /// <param name="id">The unique id of the institution.</param>
+    /// <param name="name">The name of the institution.</param>
+    /// <param name="bic">The Business Identifier Code (BIC) of the institution.</param>
+    /// <param name="transactionTotalDays">The days for which the transaction history is available.</param>
+    /// <param name="countries">The countries the institution operates in.</param>
+    /// <param name="logo">A <see cref="Uri" /> for the logo of the institution.</param>
+    [JsonConstructor]
+    public Institution(string id, string name, string bic, string transactionTotalDays, List<string> countries,
+        Uri logo)
+    {
+        Id = id;
+        Name = name;
+        Bic = bic;
+        TransactionTotalDays = transactionTotalDays;
+        Countries = countries;
+        Logo = logo;
+    }
 }

@@ -19,34 +19,6 @@ public class NordigenClient
     internal readonly NordigenClientCredentials Credentials;
 
     /// <summary>
-    /// Creates a new instance of <see cref="NordigenClient" />.
-    /// </summary>
-    /// <param name="httpClient">The <see cref="HttpClient" /> to use.</param>
-    /// <param name="credentials">The Nordigen credentials for API access.</param>
-    /// <param name="jsonWebTokenPair">An optional JSON web token pair consisting of access and refresh token to use.</param>
-    public NordigenClient(HttpClient httpClient, NordigenClientCredentials credentials,
-        JsonWebTokenPair? jsonWebTokenPair = null)
-    {
-        _httpClient = httpClient;
-        _serializerOptions = new JsonSerializerOptions
-        {
-            Converters =
-            {
-                new JsonWebTokenConverter(), new GuidConverter(),
-                new CultureSpecificDecimalConverter(), new InstitutionsErrorConverter()
-            }
-        };
-
-        Credentials = credentials;
-        JsonWebTokenPair = jsonWebTokenPair;
-        TokenEndpoint = new TokenEndpoint(this);
-        InstitutionsEndpoint = new InstitutionsEndpoint(this);
-        AgreementsEndpoint = new AgreementsEndpoint(this);
-        RequisitionsEndpoint = new RequisitionsEndpoint(this);
-        AccountsEndpoint = new AccountsEndpoint(this);
-    }
-
-    /// <summary>
     /// A pair consisting of access/refresh token used to authenticate with the Nordigen API.
     /// </summary>
     public JsonWebTokenPair? JsonWebTokenPair { get; set; }
@@ -80,6 +52,34 @@ public class NordigenClient
     /// <para>Reference: <see href="https://developer.gocardless.com/bank-account-data/endpoints" /></para>
     /// </summary>
     public AccountsEndpoint AccountsEndpoint { get; }
+
+    /// <summary>
+    /// Creates a new instance of <see cref="NordigenClient" />.
+    /// </summary>
+    /// <param name="httpClient">The <see cref="HttpClient" /> to use.</param>
+    /// <param name="credentials">The Nordigen credentials for API access.</param>
+    /// <param name="jsonWebTokenPair">An optional JSON web token pair consisting of access and refresh token to use.</param>
+    public NordigenClient(HttpClient httpClient, NordigenClientCredentials credentials,
+        JsonWebTokenPair? jsonWebTokenPair = null)
+    {
+        _httpClient = httpClient;
+        _serializerOptions = new JsonSerializerOptions
+        {
+            Converters =
+            {
+                new JsonWebTokenConverter(), new GuidConverter(),
+                new CultureSpecificDecimalConverter(), new InstitutionsErrorConverter()
+            }
+        };
+
+        Credentials = credentials;
+        JsonWebTokenPair = jsonWebTokenPair;
+        TokenEndpoint = new TokenEndpoint(this);
+        InstitutionsEndpoint = new InstitutionsEndpoint(this);
+        AgreementsEndpoint = new AgreementsEndpoint(this);
+        RequisitionsEndpoint = new RequisitionsEndpoint(this);
+        AccountsEndpoint = new AccountsEndpoint(this);
+    }
 
     /// <summary>
     /// Occurs whenever the <see cref="JsonWebTokenPair" /> is updated.
@@ -174,6 +174,11 @@ public class NordigenClient
 public class TokenPairUpdatedEventArgs : EventArgs
 {
     /// <summary>
+    /// The updated <see cref="Models.Jwt.JsonWebTokenPair" />.
+    /// </summary>
+    public JsonWebTokenPair? JsonWebTokenPair { get; set; }
+
+    /// <summary>
     /// Creates a new instance of <see cref="TokenPairUpdatedEventArgs" />.
     /// </summary>
     /// <param name="jsonWebTokenPair">The updated <see cref="Models.Jwt.JsonWebTokenPair" />.</param>
@@ -181,9 +186,4 @@ public class TokenPairUpdatedEventArgs : EventArgs
     {
         JsonWebTokenPair = jsonWebTokenPair;
     }
-
-    /// <summary>
-    /// The updated <see cref="Models.Jwt.JsonWebTokenPair" />.
-    /// </summary>
-    public JsonWebTokenPair? JsonWebTokenPair { get; set; }
 }

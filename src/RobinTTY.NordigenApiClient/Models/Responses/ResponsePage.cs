@@ -10,21 +10,6 @@ namespace RobinTTY.NordigenApiClient.Models.Responses;
 public class ResponsePage<T>
 {
     /// <summary>
-    /// Creates a new instance of <see cref="ResponsePage{T}" />.
-    /// </summary>
-    /// <param name="count">The total number of items that can be accessed via the paged responses.</param>
-    /// <param name="next">The URI of the next response page.</param>
-    /// <param name="previous">The URI of the last response page.</param>
-    /// <param name="results">The results that were fetched with this page.</param>
-    public ResponsePage(uint count, Uri? next, Uri? previous, IEnumerable<T> results)
-    {
-        Count = count;
-        Next = next;
-        Previous = previous;
-        Results = results;
-    }
-
-    /// <summary>
     /// The total number of items that can be accessed via the paged responses (not necessarily through the current page).
     /// </summary>
     [JsonPropertyName("count")]
@@ -47,6 +32,21 @@ public class ResponsePage<T>
     /// </summary>
     [JsonPropertyName("results")]
     public IEnumerable<T> Results { get; }
+
+    /// <summary>
+    /// Creates a new instance of <see cref="ResponsePage{T}" />.
+    /// </summary>
+    /// <param name="count">The total number of items that can be accessed via the paged responses.</param>
+    /// <param name="next">The URI of the next response page.</param>
+    /// <param name="previous">The URI of the last response page.</param>
+    /// <param name="results">The results that were fetched with this page.</param>
+    public ResponsePage(uint count, Uri? next, Uri? previous, IEnumerable<T> results)
+    {
+        Count = count;
+        Next = next;
+        Previous = previous;
+        Results = results;
+    }
 
     /// <summary>
     /// Gets the next <see cref="ResponsePage{T}" />, linked to the current one.

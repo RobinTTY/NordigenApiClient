@@ -8,17 +8,6 @@ namespace RobinTTY.NordigenApiClient.Models;
 public class NordigenClientCredentials
 {
     /// <summary>
-    /// Creates a new instance of <see cref="NordigenClientCredentials" />.
-    /// </summary>
-    /// <param name="secretId">Secret Nordigen id.</param>
-    /// <param name="secretKey">Secret Nordigen key.</param>
-    public NordigenClientCredentials(string secretId, string secretKey)
-    {
-        SecretId = secretId;
-        SecretKey = secretKey;
-    }
-
-    /// <summary>
     /// Secret Nordigen id.
     /// </summary>
     [JsonPropertyName("secret_id")]
@@ -29,4 +18,15 @@ public class NordigenClientCredentials
     /// </summary>
     [JsonPropertyName("secret_key")]
     public string SecretKey { get; }
+
+    /// <summary>
+    /// Creates a new instance of <see cref="NordigenClientCredentials" />.
+    /// </summary>
+    /// <param name="secretId">Secret Nordigen id.</param>
+    /// <param name="secretKey">Secret Nordigen key.</param>
+    public NordigenClientCredentials(string secretId, string secretKey)
+    {
+        SecretId = secretId;
+        SecretKey = secretKey;
+    }
 }

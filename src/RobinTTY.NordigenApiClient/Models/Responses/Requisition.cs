@@ -9,6 +9,36 @@ namespace RobinTTY.NordigenApiClient.Models.Responses;
 public class Requisition : CreateRequisitionRequest
 {
     /// <summary>
+    /// The id of the requisition assigned by the Nordigen API.
+    /// </summary>
+    [JsonPropertyName("id")]
+    public Guid Id { get; }
+
+    /// <summary>
+    /// The time this requisition was created.
+    /// </summary>
+    [JsonPropertyName("created")]
+    public DateTime Created { get; }
+
+    /// <summary>
+    /// The status of the requisition.
+    /// </summary>
+    [JsonPropertyName("status")]
+    public RequisitionStatus Status { get; }
+
+    /// <summary>
+    /// The accounts linked to this requisition.
+    /// </summary>
+    [JsonPropertyName("accounts")]
+    public List<Guid> Accounts { get; }
+
+    /// <summary>
+    /// The Uri which starts the authentication process.
+    /// </summary>
+    [JsonPropertyName("link")]
+    public Uri AuthenticationLink { get; }
+
+    /// <summary>
     /// Creates a new instance of <see cref="Requisition" />.
     /// </summary>
     /// <param name="id">The id of the requisition assigned by the Nordigen API.</param>
@@ -65,34 +95,4 @@ public class Requisition : CreateRequisitionRequest
         Accounts = accounts;
         AuthenticationLink = authenticationLink;
     }
-
-    /// <summary>
-    /// The id of the requisition assigned by the Nordigen API.
-    /// </summary>
-    [JsonPropertyName("id")]
-    public Guid Id { get; }
-
-    /// <summary>
-    /// The time this requisition was created.
-    /// </summary>
-    [JsonPropertyName("created")]
-    public DateTime Created { get; }
-
-    /// <summary>
-    /// The status of the requisition.
-    /// </summary>
-    [JsonPropertyName("status")]
-    public RequisitionStatus Status { get; }
-
-    /// <summary>
-    /// The accounts linked to this requisition.
-    /// </summary>
-    [JsonPropertyName("accounts")]
-    public List<Guid> Accounts { get; }
-
-    /// <summary>
-    /// The Uri which starts the authentication process.
-    /// </summary>
-    [JsonPropertyName("link")]
-    public Uri AuthenticationLink { get; }
 }

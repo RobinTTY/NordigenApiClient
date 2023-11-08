@@ -8,18 +8,6 @@ namespace RobinTTY.NordigenApiClient.Models.Responses;
 public class BasicResponse
 {
     /// <summary>
-    /// Creates a new instance of <see cref="BasicResponse" />.
-    /// </summary>
-    /// <param name="summary">The summary text of the response.</param>
-    /// <param name="details">The detailed description of the response.</param>
-    [JsonConstructor]
-    public BasicResponse(string? summary, string? details)
-    {
-        Summary = summary;
-        Details = details;
-    }
-
-    /// <summary>
     /// The summary text of the response
     /// </summary>
     [JsonPropertyName("summary")]
@@ -30,4 +18,16 @@ public class BasicResponse
     /// </summary>
     [JsonPropertyName("details")]
     public string? Details { get; }
+
+    /// <summary>
+    /// Creates a new instance of <see cref="BasicResponse" />.
+    /// </summary>
+    /// <param name="summary">The summary text of the response.</param>
+    /// <param name="details">The detailed description of the response.</param>
+    [JsonConstructor]
+    public BasicResponse(string? summary, string? details)
+    {
+        Summary = summary;
+        Details = details;
+    }
 }

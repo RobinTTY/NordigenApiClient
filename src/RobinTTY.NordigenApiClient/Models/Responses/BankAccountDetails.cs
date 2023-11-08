@@ -12,59 +12,6 @@ namespace RobinTTY.NordigenApiClient.Models.Responses;
 public class BankAccountDetails
 {
     /// <summary>
-    /// Creates a new instance of <see cref="BankAccountDetails" />.
-    /// </summary>
-    /// <param name="resourceId">Resource id used by the PSD2 interface.</param>
-    /// <param name="iban">The IBAN of the bank account.</param>
-    /// <param name="bban">Basic Bank Account Number represents a country-specific bank account number.</param>
-    /// <param name="currency">The currency the account is denominated in.</param>
-    /// <param name="ownerName">
-    /// Name of the legal account owner. If there is more than one owner, then two names might be noted
-    /// here.
-    /// </param>
-    /// <param name="ownerAddressUnstructured">Address of the legal account owner.</param>
-    /// <param name="name">
-    /// Name of the account, as assigned by the bank, in agreement with the account owner in order to provide an additional
-    /// means of identification of the account.
-    /// </param>
-    /// <param name="product">Product name of the bank for this account.</param>
-    /// <param name="cashAccountType">External cash account type as defined by ISO 20022.</param>
-    /// <param name="bic">The BIC (Business Identifier Code) associated with the account.</param>
-    /// <param name="details">
-    /// Specifications that might be provided by the financial institution (e.g. characteristics of the
-    /// account/relevant card).
-    /// </param>
-    /// <param name="linkedAccounts">
-    /// A financial institution might name a cash account associated with pending card
-    /// transactions.
-    /// </param>
-    /// <param name="msisdn">An alias to a payment account via a registered mobile phone number.</param>
-    /// <param name="status">The account status.</param>
-    /// <param name="usage">Specifies whether the account is used by an institution or a private individual.</param>
-    [JsonConstructor]
-    public BankAccountDetails(string resourceId, string iban, string? bic, string? bban, string currency,
-        string ownerName, string? ownerAddressUnstructured, string name, string product,
-        CashAccountType? cashAccountType, string? details, string? linkedAccounts, string? msisdn,
-        IsoBankAccountStatus? status, BankAccountUsage? usage)
-    {
-        ResourceId = resourceId;
-        Iban = iban;
-        Bic = bic;
-        Bban = bban;
-        Currency = currency;
-        OwnerName = ownerName;
-        OwnerAddressUnstructured = ownerAddressUnstructured;
-        Name = name;
-        Product = product;
-        CashAccountType = cashAccountType;
-        Details = details;
-        LinkedAccounts = linkedAccounts;
-        Msisdn = msisdn;
-        Status = status;
-        Usage = usage;
-    }
-
-    /// <summary>
     /// Resource id used by the PSD2 interface.
     /// <para>
     /// For reference see:
@@ -138,6 +85,12 @@ public class BankAccountDetails
     public string? Details { get; }
 
     /// <summary>
+    /// Masked primary account number (unique identifier on credit cards, debit cards, and other types of payment cards).
+    /// </summary>
+    [JsonPropertyName("maskedPan")]
+    public string? MaskedPan { get; }
+
+    /// <summary>
     /// A financial institution might name a cash account associated with pending card transactions.
     /// </summary>
     [JsonPropertyName("linkedAccounts")]
@@ -160,6 +113,61 @@ public class BankAccountDetails
     /// </summary>
     [JsonPropertyName("usage")]
     public BankAccountUsage? Usage { get; }
+
+    /// <summary>
+    /// Creates a new instance of <see cref="BankAccountDetails" />.
+    /// </summary>
+    /// <param name="resourceId">Resource id used by the PSD2 interface.</param>
+    /// <param name="iban">The IBAN of the bank account.</param>
+    /// <param name="bban">Basic Bank Account Number represents a country-specific bank account number.</param>
+    /// <param name="currency">The currency the account is denominated in.</param>
+    /// <param name="ownerName">
+    /// Name of the legal account owner. If there is more than one owner, then two names might be noted
+    /// here.
+    /// </param>
+    /// <param name="ownerAddressUnstructured">Address of the legal account owner.</param>
+    /// <param name="name">
+    /// Name of the account, as assigned by the bank, in agreement with the account owner in order to provide an additional
+    /// means of identification of the account.
+    /// </param>
+    /// <param name="product">Product name of the bank for this account.</param>
+    /// <param name="cashAccountType">External cash account type as defined by ISO 20022.</param>
+    /// <param name="bic">The BIC (Business Identifier Code) associated with the account.</param>
+    /// <param name="details">
+    /// Specifications that might be provided by the financial institution (e.g. characteristics of the
+    /// account/relevant card).
+    /// </param>
+    /// <param name="linkedAccounts">
+    /// A financial institution might name a cash account associated with pending card
+    /// transactions.
+    /// </param>
+    /// <param name="msisdn">An alias to a payment account via a registered mobile phone number.</param>
+    /// <param name="status">The account status.</param>
+    /// <param name="usage">Specifies whether the account is used by an institution or a private individual.</param>
+    /// <param name="maskedPan">Masked primary account number (unique identifier on credit cards, debit cards, and other types of payment cards).</param>
+    [JsonConstructor]
+    public BankAccountDetails(string resourceId, string iban, string? bic, string? bban, string currency,
+        string ownerName, string? ownerAddressUnstructured, string name, string product,
+        CashAccountType? cashAccountType, string? details, string? linkedAccounts, string? msisdn,
+        IsoBankAccountStatus? status, BankAccountUsage? usage, string? maskedPan)
+    {
+        ResourceId = resourceId;
+        Iban = iban;
+        Bic = bic;
+        Bban = bban;
+        Currency = currency;
+        OwnerName = ownerName;
+        OwnerAddressUnstructured = ownerAddressUnstructured;
+        Name = name;
+        Product = product;
+        CashAccountType = cashAccountType;
+        Details = details;
+        LinkedAccounts = linkedAccounts;
+        Msisdn = msisdn;
+        Status = status;
+        Usage = usage;
+        MaskedPan = maskedPan;
+    }
 }
 
 /// <summary>
@@ -167,6 +175,12 @@ public class BankAccountDetails
 /// </summary>
 internal class BankAccountDetailsWrapper
 {
+    /// <summary>
+    /// Detailed information about a bank account.
+    /// </summary>
+    [JsonPropertyName("account")]
+    public BankAccountDetails Account { get; }
+
     /// <summary>
     /// Creates a new instance of <see cref="BankAccountDetailsWrapper" />.
     /// </summary>
@@ -176,10 +190,4 @@ internal class BankAccountDetailsWrapper
     {
         Account = account;
     }
-
-    /// <summary>
-    /// Detailed information about a bank account.
-    /// </summary>
-    [JsonPropertyName("account")]
-    public BankAccountDetails Account { get; }
 }

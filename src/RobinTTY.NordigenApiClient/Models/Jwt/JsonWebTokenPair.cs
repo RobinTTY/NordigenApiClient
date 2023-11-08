@@ -9,6 +9,30 @@ namespace RobinTTY.NordigenApiClient.Models.Jwt;
 public class JsonWebTokenPair
 {
     /// <summary>
+    /// The JWT access token returned by the Nordigen API.
+    /// </summary>
+    [JsonPropertyName("access")]
+    public JsonWebToken AccessToken { get; init; }
+
+    /// <summary>
+    /// The JWT refresh token returned by the Nordigen API.
+    /// </summary>
+    [JsonPropertyName("refresh")]
+    public JsonWebToken RefreshToken { get; init; }
+
+    /// <summary>
+    /// Indicates the time in seconds after which the access token expires.
+    /// </summary>
+    [JsonPropertyName("access_expires")]
+    public int AccessExpires { get; init; }
+
+    /// <summary>
+    /// Indicates the time in seconds after which the access token expires.
+    /// </summary>
+    [JsonPropertyName("refresh_expires")]
+    public int RefreshExpires { get; init; }
+
+    /// <summary>
     /// Creates a new instance of <see cref="JsonWebTokenPair" />.
     /// </summary>
     /// <param name="accessToken">The Nordigen access token to use.</param>
@@ -37,28 +61,4 @@ public class JsonWebTokenPair
         AccessExpires = (int) (AccessToken.ValidTo.ToUniversalTime() - DateTime.UtcNow).TotalSeconds;
         RefreshExpires = (int) (RefreshToken.ValidTo.ToUniversalTime() - DateTime.UtcNow).TotalSeconds;
     }
-
-    /// <summary>
-    /// The JWT access token returned by the Nordigen API.
-    /// </summary>
-    [JsonPropertyName("access")]
-    public JsonWebToken AccessToken { get; init; }
-
-    /// <summary>
-    /// The JWT refresh token returned by the Nordigen API.
-    /// </summary>
-    [JsonPropertyName("refresh")]
-    public JsonWebToken RefreshToken { get; init; }
-
-    /// <summary>
-    /// Indicates the time in seconds after which the access token expires.
-    /// </summary>
-    [JsonPropertyName("access_expires")]
-    public int AccessExpires { get; init; }
-
-    /// <summary>
-    /// Indicates the time in seconds after which the access token expires.
-    /// </summary>
-    [JsonPropertyName("refresh_expires")]
-    public int RefreshExpires { get; init; }
 }
