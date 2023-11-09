@@ -4,7 +4,9 @@ namespace RobinTTY.NordigenApiClient.Models.Responses;
 
 /// <summary>
 /// A balance of a <see cref="BankAccount" />.
-/// <para>Reference: <see href="https://developer.gocardless.com/bank-account-data/balance" /></para>
+/// <para>
+/// Reference: <a href="https://developer.gocardless.com/bank-account-data/balance">GoCardless Documentation</a>
+/// </para>
 /// </summary>
 public class Balance
 {

@@ -7,7 +7,9 @@ namespace RobinTTY.NordigenApiClient.Models.Responses;
 /// <summary>
 /// Indicates the status of a <see cref="Requisition" />.
 /// A requisition can assume one of nine statuses. The sequence of statuses is given in stages.
-/// <para>Reference: <see href="https://developer.gocardless.com/bank-account-data/statuses" /></para>
+/// <para>
+/// Reference: <a href="https://developer.gocardless.com/bank-account-data/statuses">GoCardless Documentation</a>
+/// </para>
 /// </summary>
 [JsonConverter(typeof(EnumDescriptionConverter<RequisitionStatus>))]
 public enum RequisitionStatus

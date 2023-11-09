@@ -7,7 +7,8 @@ internal static class HttpClientExtensions
 {
     /// <summary>
     /// Sets the authentication header needed for most of the Nordigen API requests.
-    /// Nordigen docs reference: <see href="https://ob.helpscoutdocs.com/article/132-token-handling-via-api"></see>
+    /// See:
+    /// <a href="https://nordigen.zendesk.com/hc/en-gb/articles/6760562263453-Token-handling-via-API">GoCardless Documentation</a>
     /// </summary>
     /// <param name="client">The <see cref="HttpClient" /> to apply the authentication header on.</param>
     /// <param name="tokenPair">

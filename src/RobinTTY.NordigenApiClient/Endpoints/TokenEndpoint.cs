@@ -8,7 +8,9 @@ namespace RobinTTY.NordigenApiClient.Endpoints;
 
 /// <summary>
 /// Provides support for the API operations of the tokens endpoint.
-/// <para>Reference: <see href="https://developer.gocardless.com/bank-account-data/endpoints" /></para>
+/// <para>
+/// Reference: <a href="https://developer.gocardless.com/bank-account-data/endpoints">GoCardless Documentation</a>
+/// </para>
 /// </summary>
 public class TokenEndpoint
 {

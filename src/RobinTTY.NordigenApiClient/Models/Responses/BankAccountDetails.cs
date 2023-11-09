@@ -15,7 +15,7 @@ public class BankAccountDetails
     /// Resource id used by the PSD2 interface.
     /// <para>
     /// For reference see:
-    /// <see href="https://www.berlin-group.org/_files/ugd/c2914b_fec1852ec9c640568f5c0b420acf67d2.pdf" />
+    /// <a href="https://www.berlin-group.org/_files/ugd/c2914b_fec1852ec9c640568f5c0b420acf67d2.pdf">Berlin Group PSD2</a>
     /// </para>
     /// </summary>
     [JsonPropertyName("resourceId")]
@@ -144,7 +144,10 @@ public class BankAccountDetails
     /// <param name="msisdn">An alias to a payment account via a registered mobile phone number.</param>
     /// <param name="status">The account status.</param>
     /// <param name="usage">Specifies whether the account is used by an institution or a private individual.</param>
-    /// <param name="maskedPan">Masked primary account number (unique identifier on credit cards, debit cards, and other types of payment cards).</param>
+    /// <param name="maskedPan">
+    /// Masked primary account number (unique identifier on credit cards, debit cards, and other types
+    /// of payment cards).
+    /// </param>
     [JsonConstructor]
     public BankAccountDetails(string resourceId, string iban, string? bic, string? bban, string currency,
         string ownerName, string? ownerAddressUnstructured, string name, string product,

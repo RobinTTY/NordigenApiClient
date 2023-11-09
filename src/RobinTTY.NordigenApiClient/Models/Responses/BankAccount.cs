@@ -4,7 +4,10 @@ namespace RobinTTY.NordigenApiClient.Models.Responses;
 
 /// <summary>
 /// An account at a banking institution.
-/// <para>Reference: <see href="https://developer.gocardless.com/bank-account-data/account-details" /></para>
+/// <para>
+/// Reference:
+/// <a href="https://developer.gocardless.com/bank-account-data/account-details">GoCardless Documentation</a>
+/// </para>
 /// </summary>
 public class BankAccount : MinimalBankAccount
 {

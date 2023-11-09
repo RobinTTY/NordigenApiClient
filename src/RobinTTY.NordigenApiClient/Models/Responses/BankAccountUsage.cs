@@ -7,7 +7,10 @@ namespace RobinTTY.NordigenApiClient.Models.Responses;
 /// Specifies the nature, or use, of a cash account as defined by ISO 20022.
 /// <para>
 /// Reference:
-/// <see href="https://www.iso20022.org/catalogue-messages/additional-content-messages/external-code-sets" />
+/// <a href="https://www.iso20022.org/catalogue-messages/additional-content-messages/external-code-sets">
+/// ISO20022 External
+/// Code Sets
+/// </a>
 /// </para>
 /// </summary>
 [JsonConverter(typeof(EnumDescriptionConverter<BankAccountUsage>))]

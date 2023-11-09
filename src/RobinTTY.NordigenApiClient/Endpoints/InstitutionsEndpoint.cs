@@ -5,7 +5,9 @@ namespace RobinTTY.NordigenApiClient.Endpoints;
 
 /// <summary>
 /// Provides support for the API operations of the institutions endpoint.
-/// <para>Reference: <see href="https://developer.gocardless.com/bank-account-data/endpoints" /></para>
+/// <para>
+/// Reference: <a href="https://developer.gocardless.com/bank-account-data/endpoints">GoCardless Documentation</a>
+/// </para>
 /// </summary>
 public class InstitutionsEndpoint
 {
@@ -24,7 +26,7 @@ public class InstitutionsEndpoint
     /// Gets a list of institutions supported by the Nordigen API (optionally filtered by country and supported features).
     /// </summary>
     /// <param name="country">
-    /// The two-letter country code (<see href="https://wikipedia.org/wiki/ISO_3166-1">ISO 3166</see>) in
+    /// The two-letter country code (<a href="https://wikipedia.org/wiki/ISO_3166-1">ISO 3166</a>) in
     /// which the institutions operate. Parameter won't be sent in the query if <see langword="null" />.
     /// </param>
     /// <param name="accessScopesSupported">

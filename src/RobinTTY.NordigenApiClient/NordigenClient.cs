@@ -25,31 +25,41 @@ public class NordigenClient
 
     /// <summary>
     /// Provides support for the API operations of the tokens endpoint.
-    /// <para>Reference: <see href="https://developer.gocardless.com/bank-account-data/endpoints" /></para>
+    /// <para>
+    /// Reference: <a href="https://developer.gocardless.com/bank-account-data/endpoints">GoCardless Documentation</a>
+    /// </para>
     /// </summary>
     public TokenEndpoint TokenEndpoint { get; }
 
     /// <summary>
     /// Provides support for the API operations of the institutions endpoint.
-    /// <para>Reference: <see href="https://developer.gocardless.com/bank-account-data/endpoints" /></para>
+    /// <para>
+    /// Reference: <a href="https://developer.gocardless.com/bank-account-data/endpoints">GoCardless Documentation</a>
+    /// </para>
     /// </summary>
     public InstitutionsEndpoint InstitutionsEndpoint { get; }
 
     /// <summary>
     /// Provides support for the API operations of the agreements endpoint.
-    /// <para>Reference: <see href="https://developer.gocardless.com/bank-account-data/endpoints" /></para>
+    /// <para>
+    /// Reference: <a href="https://developer.gocardless.com/bank-account-data/endpoints">GoCardless Documentation</a>
+    /// </para>
     /// </summary>
     public AgreementsEndpoint AgreementsEndpoint { get; }
 
     /// <summary>
     /// Provides support for the API operations of the requisitions endpoint.
-    /// <para>Reference: <see href="https://developer.gocardless.com/bank-account-data/endpoints" /></para>
+    /// <para>
+    /// Reference: <a href="https://developer.gocardless.com/bank-account-data/endpoints">GoCardless Documentation</a>
+    /// </para>
     /// </summary>
     public RequisitionsEndpoint RequisitionsEndpoint { get; }
 
     /// <summary>
     /// Provides support for the API operations of the accounts endpoint.
-    /// <para>Reference: <see href="https://developer.gocardless.com/bank-account-data/endpoints" /></para>
+    /// <para>
+    /// Reference: <a href="https://developer.gocardless.com/bank-account-data/endpoints">GoCardless Documentation</a>
+    /// </para>
     /// </summary>
     public AccountsEndpoint AccountsEndpoint { get; }
 

@@ -4,7 +4,9 @@ namespace RobinTTY.NordigenApiClient.Models.Responses;
 
 /// <summary>
 /// A financial transaction.
-/// <para>Reference: <see href="https://developer.gocardless.com/bank-account-data/transactions" /></para>
+/// <para>
+/// Reference: <a href="https://developer.gocardless.com/bank-account-data/transactions">GoCardless Documentation</a>
+/// </para>
 /// </summary>
 public class Transaction
 {
@@ -78,7 +80,7 @@ public class Transaction
 
     /// <summary>
     /// Code consisting of "DomainCode"-"FamilyCode"-"SubFamilyCode".
-    /// For reference see <see href="https://wikipedia.org/wiki/ISO_20022">ISO20022</see>.
+    /// For reference see <a href="https://wikipedia.org/wiki/ISO_20022">ISO20022</a>.
     /// <para>
     /// Example: PMNT-RCDT-ESCT defining a transaction assigned to the PayMeNT domain(PMNT), belonging
     /// to the family of ReceivedCreDitTransfer(RCDT) that facilitated the EuropeanSEPACreditTransfer(ESCT).
@@ -179,7 +181,10 @@ public class Transaction
     /// Underlying reason for the transaction, as published in an external purpose code list.
     /// <para>
     /// For reference see:
-    /// <see href="https://www.iso20022.org/catalogue-messages/additional-content-messages/external-code-sets" />
+    /// <a href="https://www.iso20022.org/catalogue-messages/additional-content-messages/external-code-sets">
+    /// ISO20022 External
+    /// Code Sets
+    /// </a>
     /// </para>
     /// </summary>
     [JsonPropertyName("purposeCode")]
@@ -252,7 +257,7 @@ public class Transaction
     /// </param>
     /// <param name="bankTransactionCode">
     /// Code consisting of "DomainCode"-"FamilyCode"-"SubFamilyCode".
-    /// For reference see <see href="https://wikipedia.org/wiki/ISO_20022">ISO20022</see>.
+    /// For reference see <a href="https://wikipedia.org/wiki/ISO_20022">ISO20022</a>.
     /// <para>
     /// Example: PMNT-RCDT-ESCT defining a transaction assigned to the PayMeNT domain(PMNT), belonging
     /// to the family of ReceivedCreDitTransfer(RCDT) that facilitated the EuropeanSEPACreditTransfer(ESCT).
@@ -292,7 +297,10 @@ public class Transaction
     /// Underlying reason for the transaction, as published in an external purpose code list.
     /// <para>
     /// For reference see:
-    /// <see href="https://www.iso20022.org/catalogue-messages/additional-content-messages/external-code-sets" />
+    /// <a href="https://www.iso20022.org/catalogue-messages/additional-content-messages/external-code-sets">
+    /// ISO20022 External
+    /// Code Sets
+    /// </a>
     /// </para>
     /// </param>
     /// <param name="debtorAgent">The BIC code allocated to the financial institution servicing an account for the debtor.</param>

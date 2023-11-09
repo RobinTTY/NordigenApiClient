@@ -34,7 +34,7 @@ public class CreateRequisitionRequest
 
     /// <summary>
     /// Enforces a language for all end user steps hosted by Nordigen passed as a two-letter country code
-    /// <see href="https://wikipedia.org/wiki/ISO_639-1">(ISO 639-1)</see>.
+    /// <a href="https://wikipedia.org/wiki/ISO_639-1">(ISO 639-1)</a>.
     /// </summary>
     [JsonPropertyName("user_language")]
     public string UserLanguage { get; set; }
@@ -43,7 +43,10 @@ public class CreateRequisitionRequest
     /// Some European banks allow sending an end-user's SSN to check whether the SSN is valid.
     /// <para>
     /// For bank availability check:
-    /// <see href="https://nordigen.zendesk.com/hc/en-gb/articles/6761166365085-SSN-verification-feature-for-specific-banks" />
+    /// <a href="https://nordigen.zendesk.com/hc/en-gb/articles/6761166365085-SSN-verification-feature-for-specific-banks">
+    /// GoCardless
+    /// Documentation
+    /// </a>
     /// .
     /// </para>
     /// </summary>
@@ -56,7 +59,11 @@ public class CreateRequisitionRequest
     /// if set to true.
     /// <para>
     /// For details see:
-    /// <see href="https://nordigen.zendesk.com/hc/en-gb/articles/6760703821725-Account-selection-feature" />.
+    /// <a href="https://nordigen.zendesk.com/hc/en-gb/articles/6760703821725-Account-selection-feature">
+    /// GoCardless
+    /// Documentation
+    /// </a>
+    /// .
     /// </para>
     /// </summary>
     [JsonPropertyName("account_selection")]
@@ -70,8 +77,11 @@ public class CreateRequisitionRequest
     /// before you're able to query the transactions.
     /// <para>
     /// For details see:
-    /// <see
-    ///     href="https://nordigen.zendesk.com/hc/en-gb/articles/6772857816477-Immediate-end-user-redirect-from-bank-after-consent" />
+    /// <a
+    ///     href="https://nordigen.zendesk.com/hc/en-gb/articles/6772857816477-Immediate-end-user-redirect-from-bank-after-consent">
+    /// GoCardless
+    /// Documentation
+    /// </a>
     /// .
     /// </para>
     /// </summary>
@@ -87,20 +97,30 @@ public class CreateRequisitionRequest
     /// <param name="reference">A unique ID set by the user of the API for internal referencing.</param>
     /// <param name="userLanguage">
     /// Enforces a language for all end user steps hosted by Nordigen passed as a two-letter country
-    /// code <see href="https://wikipedia.org/wiki/ISO_639-1">(ISO 639-1)</see>.
+    /// code <a href="https://wikipedia.org/wiki/ISO_639-1">(ISO 639-1)</a>.
     /// </param>
     /// <param name="socialSecurityNumber">
     /// Some European banks allow sending an end-user's SSN to check whether the SSN is valid.
     /// <para>
     /// For bank availability check:
-    /// <see href="https://nordigen.zendesk.com/hc/en-gb/articles/6761166365085-SSN-verification-feature-for-specific-banks/" />
+    /// <a href="https://nordigen.zendesk.com/hc/en-gb/articles/6761166365085-SSN-verification-feature-for-specific-banks/">
+    /// GoCardless
+    /// Documentation
+    /// </a>
     /// .
     /// </para>
     /// </param>
     /// <param name="accountSelection">
     /// Enables the end user to select which accounts they want to share (like joint accounts, accounts of children, etc.)
     /// if set to true.
-    /// <para>For details see: <see href="https://ob.helpscoutdocs.com/article/142-account-selection-feature" />.</para>
+    /// <para>
+    /// For details see:
+    /// <a href="https://nordigen.zendesk.com/hc/en-gb/articles/6760703821725-Account-selection-feature">
+    /// GoCardless
+    /// Documentation
+    /// </a>
+    /// .
+    /// </para>
     /// </param>
     /// <param name="redirectImmediate">
     /// Enables you to redirect end users back to your app immediately after they have given their consent to access the
@@ -110,7 +130,12 @@ public class CreateRequisitionRequest
     /// before you're able to query the transactions.
     /// <para>
     /// For details see:
-    /// <see href="https://ob.helpscoutdocs.com/article/145-immediate-end-user-redirect-from-bank-after-consent" />.
+    /// <a
+    ///     href="https://nordigen.zendesk.com/hc/en-gb/articles/6772857816477-Immediate-end-user-redirect-from-bank-after-consent">
+    /// GoCardless
+    /// Documentation
+    /// </a>
+    /// .
     /// </para>
     /// </param>
     public CreateRequisitionRequest(Uri redirect, string institutionId, string reference, string userLanguage,

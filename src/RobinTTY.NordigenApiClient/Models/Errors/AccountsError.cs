@@ -8,6 +8,45 @@ namespace RobinTTY.NordigenApiClient.Models.Errors;
 /// </summary>
 public class AccountsError : BasicError
 {
+    /// <summary>
+    /// The type of the error.
+    /// </summary>
+    [JsonPropertyName("type")]
+    public string? Type { get; }
+#if NET6_0_OR_GREATER
+    /// <summary>
+    /// An error that was returned related to the
+    /// <see cref="AccountsEndpoint.GetTransactions(Guid, DateOnly?, DateOnly?, CancellationToken)" /> or
+    /// <see cref="AccountsEndpoint.GetTransactions(string, DateOnly?, DateOnly?, CancellationToken)" /> method because the
+    /// start date value was not accepted.
+    /// </summary>
+#else
+    /// <summary>
+    /// An error that was returned related to the
+    /// <see cref="AccountsEndpoint.GetTransactions(Guid, DateTime?, DateTime?, CancellationToken)" /> or
+    /// <see cref="AccountsEndpoint.GetTransactions(string, DateTime?, DateTime?, CancellationToken)" /> method because the
+    /// start date value was not accepted.
+    /// </summary>
+#endif
+    [JsonPropertyName("date_from")]
+    public BasicError? StartDateError { get; }
+#if NET6_0_OR_GREATER
+    /// <summary>
+    /// An error that was returned related to the
+    /// <see cref="AccountsEndpoint.GetTransactions(Guid, DateOnly?, DateOnly?, CancellationToken)" /> or
+    /// <see cref="AccountsEndpoint.GetTransactions(string, DateOnly?, DateOnly?, CancellationToken)" /> method because the
+    /// end date value was not accepted.
+    /// </summary>
+#else
+    /// <summary>
+    /// An error that was returned related to the
+    /// <see cref="AccountsEndpoint.GetTransactions(Guid, DateTime?, DateTime?, CancellationToken)" /> or
+    /// <see cref="AccountsEndpoint.GetTransactions(string, DateTime?, DateTime?, CancellationToken)" /> method because the end
+    /// date value was not accepted.
+    /// </summary>
+#endif
+    [JsonPropertyName("date_to")]
+    public BasicError? EndDateError { get; }
 #if NET6_0_OR_GREATER
     /// <summary>
     /// Creates a new instance of <see cref="AccountsError" />.
@@ -55,44 +94,4 @@ public class AccountsError : BasicError
         StartDateError = startDateError;
         EndDateError = endDateError;
     }
-
-    /// <summary>
-    /// The type of the error.
-    /// </summary>
-    [JsonPropertyName("type")]
-    public string? Type { get; }
-#if NET6_0_OR_GREATER
-    /// <summary>
-    /// An error that was returned related to the
-    /// <see cref="AccountsEndpoint.GetTransactions(Guid, DateOnly?, DateOnly?, CancellationToken)" /> or
-    /// <see cref="AccountsEndpoint.GetTransactions(string, DateOnly?, DateOnly?, CancellationToken)" /> method because the
-    /// start date value was not accepted.
-    /// </summary>
-#else
-    /// <summary>
-    /// An error that was returned related to the
-    /// <see cref="AccountsEndpoint.GetTransactions(Guid, DateTime?, DateTime?, CancellationToken)" /> or
-    /// <see cref="AccountsEndpoint.GetTransactions(string, DateTime?, DateTime?, CancellationToken)" /> method because the
-    /// start date value was not accepted.
-    /// </summary>
-#endif
-    [JsonPropertyName("date_from")]
-    public BasicError? StartDateError { get; }
-#if NET6_0_OR_GREATER
-    /// <summary>
-    /// An error that was returned related to the
-    /// <see cref="AccountsEndpoint.GetTransactions(Guid, DateOnly?, DateOnly?, CancellationToken)" /> or
-    /// <see cref="AccountsEndpoint.GetTransactions(string, DateOnly?, DateOnly?, CancellationToken)" /> method because the
-    /// end date value was not accepted.
-    /// </summary>
-#else
-    /// <summary>
-    /// An error that was returned related to the
-    /// <see cref="AccountsEndpoint.GetTransactions(Guid, DateTime?, DateTime?, CancellationToken)" /> or
-    /// <see cref="AccountsEndpoint.GetTransactions(string, DateTime?, DateTime?, CancellationToken)" /> method because the end
-    /// date value was not accepted.
-    /// </summary>
-#endif
-    [JsonPropertyName("date_to")]
-    public BasicError? EndDateError { get; }
 }
