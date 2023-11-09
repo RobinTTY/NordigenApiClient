@@ -8,9 +8,6 @@ jobs:
   Build-Library:
     name: Build library
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        dotnet: [ '6.0', '7.0' ]
     
     steps:
       - uses: actions/checkout@v3
@@ -19,4 +16,4 @@ jobs:
         with:
           dotnet-version: ${{ matrix.dotnet }}
       - name: Build project
-        run: dotnet build --configuration Release src/ --framework net${{ matrix.dotnet }}
+        run: dotnet build --configuration Release src/
