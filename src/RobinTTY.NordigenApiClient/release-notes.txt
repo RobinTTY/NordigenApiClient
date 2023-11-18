@@ -1,1 +1,2 @@
 ﻿Improved package size and documentation.
+Fixed balance type enum conversion and test.

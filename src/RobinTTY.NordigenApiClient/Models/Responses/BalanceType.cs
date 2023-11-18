@@ -22,7 +22,7 @@ public enum BalanceType
     /// <summary>
     /// Closing balance of amount of money that is at the disposal of the account owner on the date specified.
     /// </summary>
-    [Description("closingBooked")] ClosingAvailable,
+    [Description("closingAvailable")] ClosingAvailable,
 
     /// <summary>
     /// Balance of the account at the end of the pre-agreed account reporting period. It is the sum of the opening booked

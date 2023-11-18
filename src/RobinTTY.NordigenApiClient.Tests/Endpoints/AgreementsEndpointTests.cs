@@ -187,7 +187,7 @@ internal class AgreementsEndpointTests
         Assert.Multiple(() =>
         {
             Assert.That(
-                new[] {result.InstitutionIdError, result.AccessValidForDaysError, result.MaxHistoricalDaysError},
+                new[] {result.InstitutionIdError, result.AgreementError},
                 Has.All.Null);
             Assert.That(result.AccessScopeError!.Detail,
                 Is.EqualTo("Choose one or several from ['balances', 'details', 'transactions']"));
