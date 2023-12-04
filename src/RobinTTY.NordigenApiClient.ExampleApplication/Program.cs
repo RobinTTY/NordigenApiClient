@@ -20,11 +20,11 @@ else
 
 // 2. Choose the institution your bank account is registered with and create a requisition for it:
 
-var institution = "BANK_OF_SCOTLAND_BOFSGBS1";
-var userLanguage = "EN";
-var reference = "your-internal-reference";
+const string myInstitution = "BANK_OF_SCOTLAND_BOFSGBS1";
+const string userLanguage = "EN";
+const string reference = "your-internal-reference";
 var redirect = new Uri("https://where-nordigen-will-redirect-after-authentication.com");
-var requisitionRequest = new CreateRequisitionRequest(redirect, institution, reference, userLanguage);
+var requisitionRequest = new CreateRequisitionRequest(redirect, myInstitution, reference, userLanguage);
 var requisitionResponse = await client.RequisitionsEndpoint.CreateRequisition(requisitionRequest);
 
 if (requisitionResponse.IsSuccess)
@@ -41,7 +41,7 @@ else
 // 3. You will now need to accept the end user agreement by following the authentication link.
 // After that you will be able to retrieve the accounts linked to your bank account:
 
-var requisitionId = "your-requisition-id";
+const string requisitionId = "your-requisition-id";
 var accountsResponse = await client.RequisitionsEndpoint.GetRequisition(requisitionId);
 if (accountsResponse.IsSuccess)
     accountsResponse.Result.Accounts.ForEach(accountId => { Console.WriteLine($"Account id: {accountId}"); });
@@ -50,15 +50,15 @@ else
 
 // 4. Now you can retrieve details about the bank account and the balances/transactions:
 
-var accountId = "your-account-id";
-var bankAccountDetailsResponse = await client.AccountsEndpoint.GetAccountDetails(accountId);
+const string myAccountId = "your-account-id";
+var bankAccountDetailsResponse = await client.AccountsEndpoint.GetAccountDetails(myAccountId);
 if (bankAccountDetailsResponse.IsSuccess)
 {
     Console.WriteLine($"IBAN: {bankAccountDetailsResponse.Result.Iban}");
     Console.WriteLine($"Account name: {bankAccountDetailsResponse.Result.Name}");
 }
 
-var balancesResponse = await client.AccountsEndpoint.GetBalances(accountId);
+var balancesResponse = await client.AccountsEndpoint.GetBalances(myAccountId);
 if (balancesResponse.IsSuccess)
     balancesResponse.Result.ForEach(balance =>
     {
@@ -67,7 +67,7 @@ if (balancesResponse.IsSuccess)
         Console.WriteLine($"Balance: {balanceAmount.Amount} {balanceAmount.Currency}");
     });
 
-var transactionsResponse = await client.AccountsEndpoint.GetTransactions(accountId);
+var transactionsResponse = await client.AccountsEndpoint.GetTransactions(myAccountId);
 if (transactionsResponse.IsSuccess)
     transactionsResponse.Result.BookedTransactions.ForEach(transaction =>
     {

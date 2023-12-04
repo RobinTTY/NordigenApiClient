@@ -15,7 +15,7 @@ public class NordigenClient
 {
     private static readonly SemaphoreSlim TokenSemaphore = new(1, 1);
     private readonly HttpClient _httpClient;
-    private readonly JsonSerializerOptions _serializerOptions;
+    private readonly JsonContext _jsonContext;
     internal readonly NordigenClientCredentials Credentials;
 
     /// <summary>
@@ -73,7 +73,7 @@ public class NordigenClient
         JsonWebTokenPair? jsonWebTokenPair = null)
     {
         _httpClient = httpClient;
-        _serializerOptions = new JsonSerializerOptions
+        var options = new JsonSerializerOptions
         {
             Converters =
             {
@@ -81,6 +81,7 @@ public class NordigenClient
                 new CultureSpecificDecimalConverter(), new InstitutionsErrorConverter()
             }
         };
+        _jsonContext = new JsonContext(options);
 
         Credentials = credentials;
         JsonWebTokenPair = jsonWebTokenPair;
@@ -138,8 +139,7 @@ public class NordigenClient
         else
             throw new NotImplementedException();
 
-        return await NordigenApiResponse<TResponse, TError>.FromHttpResponse(response, _serializerOptions,
-            cancellationToken);
+        return await NordigenApiResponse<TResponse, TError>.FromHttpResponse(response, _jsonContext, cancellationToken);
     }
 
     /// <summary>

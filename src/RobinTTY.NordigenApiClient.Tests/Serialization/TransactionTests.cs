@@ -4,6 +4,7 @@ using System.Text.Json;
 using RobinTTY.NordigenApiClient.JsonConverters;
 using RobinTTY.NordigenApiClient.Models.Errors;
 using RobinTTY.NordigenApiClient.Models.Responses;
+using RobinTTY.NordigenApiClient.Utility;
 
 namespace RobinTTY.NordigenApiClient.Tests.Serialization;
 
@@ -41,6 +42,18 @@ internal class TransactionTests
     [Test]
     public async Task DeserializeWithException()
     {
+        var jsonContext = new JsonContext
+        {
+            Options =
+            {
+                Converters =
+                {
+                    new JsonWebTokenConverter(), new GuidConverter(),
+                    new CultureSpecificDecimalConverter(), new InstitutionsErrorConverter()
+                },
+            }
+        };
+
         const string malformedJson =
             "{ \"transactionId\": \"AB123456789\", \"entryReference\": \"123456789\", \"bookingDate\": \"2023-03-20\", \"bookingDateTime\": \"2023-03-20T00:00:00+00:00\", \"transactionAmount\": { \"amount\": \"-33.06\", \"currency\": \"GBP\" }, \"currencyExchange\": [{ \"sourceCurrency\": \"USD\", \"exchangeRate\": \"1.20961887\", \"unitCurrency\": \"GBP\", \"targetCurrency\": \"GBP\" }], \"remittanceInformationUnstructured\": \"my reference here\", \"additionalInformation\": \"123456789\", \"proprietaryBankTransactionCode\": \"OTHER_PURCHASE\", \"merchantCategoryCode\": \"5045\", \"internalTransactionId\": \"abcdef\" }";
         var httpResponse = new HttpResponseMessage(HttpStatusCode.OK)
@@ -50,7 +63,7 @@ internal class TransactionTests
 
         try
         {
-            await NordigenApiResponse<Transaction, AccountsError>.FromHttpResponse(httpResponse);
+            await NordigenApiResponse<Transaction, AccountsError>.FromHttpResponse(httpResponse, jsonContext);
         }
         catch (SerializationException exception)
         {

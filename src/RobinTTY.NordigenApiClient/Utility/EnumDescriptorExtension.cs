@@ -1,4 +1,7 @@
 ﻿using System.ComponentModel;
+#if NET6_0_OR_GREATER
+using System.Diagnostics.CodeAnalysis;
+#endif
 
 namespace RobinTTY.NordigenApiClient.Utility;
 
@@ -21,7 +24,13 @@ internal static class EnumDescriptorExtension
         return enumerationValue.ToString();
     }
 
+#if NET6_0_OR_GREATER
+    internal static T
+        StringToEnumValue<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicFields)] T>(
+            string? description) where T : struct
+#else
     internal static T StringToEnumValue<T>(string? description) where T : struct
+#endif
     {
         var fieldInfos = typeof(T).GetFields();
 

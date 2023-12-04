@@ -2,6 +2,7 @@
 using RobinTTY.NordigenApiClient.Models.Errors;
 using RobinTTY.NordigenApiClient.Models.Requests;
 using RobinTTY.NordigenApiClient.Models.Responses;
+using RobinTTY.NordigenApiClient.Utility;
 
 namespace RobinTTY.NordigenApiClient.Endpoints;
 
@@ -83,7 +84,7 @@ public class RequisitionsEndpoint
     public async Task<NordigenApiResponse<Requisition, CreateRequisitionError>> CreateRequisition(
         CreateRequisitionRequest requisition, CancellationToken cancellationToken = default)
     {
-        var body = JsonContent.Create(requisition);
+        var body = JsonContent.Create(requisition, JsonContext.Default.CreateRequisitionRequest);
         return await _nordigenClient.MakeRequest<Requisition, CreateRequisitionError>(
             NordigenEndpointUrls.RequisitionsEndpoint, HttpMethod.Post, cancellationToken, body: body);
     }

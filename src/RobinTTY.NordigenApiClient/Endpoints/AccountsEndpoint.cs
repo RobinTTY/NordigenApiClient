@@ -200,7 +200,7 @@ public class AccountsEndpoint
         return date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
     }
 #else
-    private string DateToIso8601(DateTime date)
+    private static string DateToIso8601(DateTime date)
     {
         return date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
     }

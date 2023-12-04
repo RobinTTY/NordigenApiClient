@@ -3,6 +3,8 @@ using System.Net;
 using System.Net.Http.Json;
 using System.Runtime.Serialization;
 using System.Text.Json;
+using System.Text.Json.Serialization.Metadata;
+using RobinTTY.NordigenApiClient.Utility;
 
 namespace RobinTTY.NordigenApiClient.Models.Responses;
 
@@ -54,11 +56,11 @@ public class NordigenApiResponse<TResult, TError> where TResult : class where TE
     /// Parses a <see cref="NordigenApiResponse{TResult, TError}" /> from a <see cref="HttpResponseMessage" />.
     /// </summary>
     /// <param name="response">The <see cref="HttpResponseMessage" /> to parse.</param>
+    /// <param name="context">The <see cref="JsonContext"/> object to use for de/serialization.</param>
     /// <param name="cancellationToken">A cancellation token to be used to notify in case of cancellation.</param>
-    /// <param name="options"><see cref="JsonSerializerOptions" /> to apply to the deserialization process.</param>
     /// <returns>The parsed <see cref="NordigenApiResponse{TResult, TError}" />.</returns>
     internal static async Task<NordigenApiResponse<TResult, TError>> FromHttpResponse(HttpResponseMessage response,
-        JsonSerializerOptions? options = null, CancellationToken cancellationToken = default)
+        JsonContext context, CancellationToken cancellationToken = default)
     {
 #if NET6_0_OR_GREATER
         var responseJson = await response.Content.ReadAsStringAsync(cancellationToken);
@@ -70,13 +72,15 @@ public class NordigenApiResponse<TResult, TError> where TResult : class where TE
         {
             if (response.IsSuccessStatusCode)
             {
-                var result = await response.Content.ReadFromJsonAsync<TResult>(options, cancellationToken);
+                var typeInfo = (JsonTypeInfo<TResult>) context.GetTypeInfo(typeof(TResult))!;
+                var result = await response.Content.ReadFromJsonAsync(typeInfo, cancellationToken);
                 return new NordigenApiResponse<TResult, TError>(response.StatusCode, response.IsSuccessStatusCode,
                     result, null);
             }
             else
             {
-                var result = await response.Content.ReadFromJsonAsync<TError>(options, cancellationToken);
+                var typeInfo = (JsonTypeInfo<TError>) context.GetTypeInfo(typeof(TError))!;
+                var result = await response.Content.ReadFromJsonAsync(typeInfo, cancellationToken);
                 return new NordigenApiResponse<TResult, TError>(response.StatusCode, response.IsSuccessStatusCode,
                     null, result);
             }

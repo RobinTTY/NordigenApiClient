@@ -2,6 +2,7 @@
 using RobinTTY.NordigenApiClient.Models.Errors;
 using RobinTTY.NordigenApiClient.Models.Requests;
 using RobinTTY.NordigenApiClient.Models.Responses;
+using RobinTTY.NordigenApiClient.Utility;
 
 namespace RobinTTY.NordigenApiClient.Endpoints;
 
@@ -83,7 +84,7 @@ public class AgreementsEndpoint
     public async Task<NordigenApiResponse<Agreement, CreateAgreementError>> CreateAgreement(
         CreateAgreementRequest agreement, CancellationToken cancellationToken = default)
     {
-        var body = JsonContent.Create(agreement);
+        var body = JsonContent.Create(agreement, JsonContext.Default.CreateAgreementRequest);
         return await _nordigenClient.MakeRequest<Agreement, CreateAgreementError>(
             NordigenEndpointUrls.AgreementsEndpoint, HttpMethod.Post, cancellationToken, body: body);
     }
@@ -148,7 +149,7 @@ public class AgreementsEndpoint
     private async Task<NordigenApiResponse<Agreement, BasicError>> AcceptAgreementInternal(string id,
         AcceptAgreementRequest metadata, CancellationToken cancellationToken)
     {
-        var body = JsonContent.Create(metadata);
+        var body = JsonContent.Create(metadata, JsonContext.Default.AcceptAgreementRequest);
         return await _nordigenClient.MakeRequest<Agreement, BasicError>(
             $"{NordigenEndpointUrls.AgreementsEndpoint}{id}/accept/", HttpMethod.Put, cancellationToken, body: body);
     }
