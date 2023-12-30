@@ -9,6 +9,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\RobinTTY.NordigenApiClient\RobinTTY.NordigenApiClient.csproj"/>
+        <TrimmerRootAssembly Include="RobinTTY.NordigenApiClient"/>
     </ItemGroup>
 
 </Project>

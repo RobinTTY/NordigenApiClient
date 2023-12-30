@@ -15,7 +15,7 @@ public class NordigenClient
 {
     private static readonly SemaphoreSlim TokenSemaphore = new(1, 1);
     private readonly HttpClient _httpClient;
-    private readonly JsonContext _jsonContext;
+    internal readonly JsonContext JsonContext;
     internal readonly NordigenClientCredentials Credentials;
 
     /// <summary>
@@ -81,8 +81,8 @@ public class NordigenClient
                 new CultureSpecificDecimalConverter(), new InstitutionsErrorConverter()
             }
         };
-        _jsonContext = new JsonContext(options);
 
+        JsonContext = new JsonContext(options);
         Credentials = credentials;
         JsonWebTokenPair = jsonWebTokenPair;
         TokenEndpoint = new TokenEndpoint(this);
@@ -139,7 +139,7 @@ public class NordigenClient
         else
             throw new NotImplementedException();
 
-        return await NordigenApiResponse<TResponse, TError>.FromHttpResponse(response, _jsonContext, cancellationToken);
+        return await NordigenApiResponse<TResponse, TError>.FromHttpResponse(response, JsonContext, cancellationToken);
     }
 
     /// <summary>

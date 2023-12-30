@@ -3,7 +3,6 @@ using Microsoft.IdentityModel.JsonWebTokens;
 using RobinTTY.NordigenApiClient.Models.Errors;
 using RobinTTY.NordigenApiClient.Models.Jwt;
 using RobinTTY.NordigenApiClient.Models.Responses;
-using RobinTTY.NordigenApiClient.Utility;
 
 namespace RobinTTY.NordigenApiClient.Endpoints;
 
@@ -38,7 +37,7 @@ public class TokenEndpoint
         CancellationToken cancellationToken = default)
     {
         var requestBody =
-            JsonContent.Create(_nordigenClient.Credentials, JsonContext.Default.NordigenClientCredentials);
+            JsonContent.Create(_nordigenClient.Credentials, _nordigenClient.JsonContext.NordigenClientCredentials);
 
         return await _nordigenClient.MakeRequest<JsonWebTokenPair, BasicError>(
             $"{NordigenEndpointUrls.TokensEndpoint}new/", HttpMethod.Post, cancellationToken, body: requestBody,
@@ -58,7 +57,7 @@ public class TokenEndpoint
         CancellationToken cancellationToken = default)
     {
         var requestBody =
-            JsonContent.Create(new {refresh = refreshToken.EncodedToken}, JsonContext.Default.JsonWebToken);
+            JsonContent.Create(new {refresh = refreshToken.EncodedToken}, _nordigenClient.JsonContext.JsonWebToken);
         return await _nordigenClient.MakeRequest<JsonWebAccessToken, BasicError>(
             $"{NordigenEndpointUrls.TokensEndpoint}refresh/", HttpMethod.Post, cancellationToken, body: requestBody,
             useAuthentication: false);
