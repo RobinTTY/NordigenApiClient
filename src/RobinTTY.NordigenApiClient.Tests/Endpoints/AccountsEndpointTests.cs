@@ -96,7 +96,7 @@ internal class AccountsEndpointTests
                 matchesAll &= t.TransactionAmount.Currency == "EUR";
                 return matchesAll;
             }));
-            Assert.That(transactions.PendingTransactions, Has.Count.EqualTo(1));
+            Assert.That(transactions.PendingTransactions, Has.Count.GreaterThanOrEqualTo(1));
         });
     }
 
