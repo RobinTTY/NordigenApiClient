@@ -10,20 +10,48 @@ namespace RobinTTY.NordigenApiClient.Tests.Serialization;
 internal class TransactionTests
 {
     /// <summary>
-    /// Tests the correct deserialization of transactions.
+    /// Tests the correct deserialization of transactions with a single embedded currency exchange object.
     /// </summary>
     [Test]
-    public void DeserializeTransaction()
+    public void DeserializeTransactionWithSingleCurrencyExchange()
+    {
+        const string json =
+            "{ \"transactionId\": \"AB123456789\", \"entryReference\": \"123456789\", \"bookingDate\": \"2023-03-20\", \"bookingDateTime\": \"2023-03-20T00:00:00+00:00\", \"transactionAmount\": { \"amount\": \"-33.06\", \"currency\": \"GBP\" }, \"currencyExchange\": { \"sourceCurrency\": \"USD\", \"exchangeRate\": \"1.20961887\", \"unitCurrency\": \"USD\", \"targetCurrency\": \"GBP\", \"instructedAmount\": { \"amount\": \"-33.06\", \"currency\": \"GBP\" } }, \"remittanceInformationUnstructured\": \"my reference here\", \"additionalInformation\": \"123456789\", \"proprietaryBankTransactionCode\": \"OTHER_PURCHASE\", \"merchantCategoryCode\": \"5045\", \"internalTransactionId\": \"abcdef\" }";
+
+        var options = new JsonSerializerOptions
+        {
+            Converters = {new CultureSpecificDecimalConverter()}
+        };
+        var transaction = JsonSerializer.Deserialize<Transaction>(json, options);
+        
+        Assert.Multiple(() =>
+        {
+            Assert.That(transaction!.CurrencyExchange, Is.Not.Null);
+            Assert.That(transaction.CurrencyExchange!.First().ExchangeRate, Is.EqualTo(1.20961887));
+            Assert.That(transaction.CurrencyExchange!.First().InstructedAmount!.Amount, Is.EqualTo(-33.06));
+            Assert.That(transaction.CurrencyExchange!.First().InstructedAmount!.Currency, Is.EqualTo("GBP"));
+            Assert.That(transaction.CurrencyExchange!.First().SourceCurrency, Is.EqualTo("USD"));
+            Assert.That(transaction.CurrencyExchange!.First().TargetCurrency, Is.EqualTo("GBP"));
+            Assert.That(transaction.CurrencyExchange!.First().UnitCurrency, Is.EqualTo("USD"));
+            Assert.That(transaction.CurrencyExchange!.First().QuotationDate, Is.Null);
+        });
+    }
+
+    /// <summary>
+    /// Tests the correct deserialization of transactions with multiple embedded currency exchange objects.
+    /// </summary>
+    [Test]
+    public void DeserializeTransactionWithMultipleCurrencyExchange()
     {
         const string json =
             "{ \"transactionId\": \"AB123456789\", \"entryReference\": \"123456789\", \"bookingDate\": \"2023-03-20\", \"bookingDateTime\": \"2023-03-20T00:00:00+00:00\", \"transactionAmount\": { \"amount\": \"-33.06\", \"currency\": \"GBP\" }, \"currencyExchange\":[{\"sourceCurrency\":\"USD\",\"exchangeRate\":\"1.20961887\",\"unitCurrency\":\"USD\",\"targetCurrency\":\"GBP\"}], \"remittanceInformationUnstructured\": \"my reference here\", \"additionalInformation\": \"123456789\", \"proprietaryBankTransactionCode\": \"OTHER_PURCHASE\", \"merchantCategoryCode\": \"5045\", \"internalTransactionId\": \"abcdef\" }";
 
-        // We need the culture specific decimal converter here, since it it accepting strings
         var options = new JsonSerializerOptions
         {
-            Converters = {new JsonWebTokenConverter(), new GuidConverter(), new CultureSpecificDecimalConverter()}
+            Converters = { new CultureSpecificDecimalConverter() }
         };
         var transaction = JsonSerializer.Deserialize<Transaction>(json, options);
+        
         Assert.Multiple(() =>
         {
             Assert.That(transaction!.CurrencyExchange, Is.Not.Null);

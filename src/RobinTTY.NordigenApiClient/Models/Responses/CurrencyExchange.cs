@@ -5,7 +5,6 @@ namespace RobinTTY.NordigenApiClient.Models.Responses;
 /// <summary>
 /// Detailed information about a currency exchange.
 /// </summary>
-[JsonNumberHandling(JsonNumberHandling.AllowReadingFromString)]
 public class CurrencyExchange
 {
     /// <summary>
