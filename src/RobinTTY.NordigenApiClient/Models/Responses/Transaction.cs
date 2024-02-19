@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using RobinTTY.NordigenApiClient.JsonConverters;
+using System.Text.Json.Serialization;
 
 namespace RobinTTY.NordigenApiClient.Models.Responses;
 
@@ -218,7 +219,8 @@ public class Transaction
     /// Array of the report exchange rate.
     /// </summary>
     [JsonPropertyName("currencyExchange")]
-    public IEnumerable<CurrencyExchange>? CurrencyExchange { get; }
+    [JsonConverter(typeof(SingleOrArrayConverter<List<CurrencyExchange>, CurrencyExchange>))]
+    public List<CurrencyExchange>? CurrencyExchange { get; }
 
     /// <summary>
     /// The identification of the transaction as used for reference by the financial institution.
@@ -343,7 +345,7 @@ public class Transaction
         DateTime? valueDateTime, string? remittanceInformationStructured,
         IEnumerable<string>? remittanceInformationStructuredArray, string? additionalInformation,
         string? additionalInformationStructured, Balance? balanceAfterTransaction, string? checkId,
-        IEnumerable<CurrencyExchange>? currencyExchange, string? entryReference, string? internalTransactionId,
+        List<CurrencyExchange>? currencyExchange, string? entryReference, string? internalTransactionId,
         string? merchantCategoryCode, DateTime? bookingDateTime)
     {
         TransactionId = transactionId;

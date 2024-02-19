@@ -5,8 +5,15 @@ namespace RobinTTY.NordigenApiClient.Models.Responses;
 /// <summary>
 /// Detailed information about a currency exchange.
 /// </summary>
+[JsonNumberHandling(JsonNumberHandling.AllowReadingFromString)]
 public class CurrencyExchange
 {
+    /// <summary>
+    /// The instructed amount including details about the currency the amount is denominated in.
+    /// </summary>
+    [JsonPropertyName("instructedAmount")]
+    public AmountCurrencyPair? InstructedAmount { get; }
+    
     /// <summary>
     /// Currency from which an amount is to be converted in a currency conversion. ISO 4217 Alpha 3 currency code (e.g.
     /// "USD").
@@ -51,6 +58,9 @@ public class CurrencyExchange
     /// <summary>
     /// Creates a new instance of <see cref="CurrencyExchange" />.
     /// </summary>
+    /// <param name="instructedAmount">
+    /// The currency and amount as instructed by the debtor, if the actual settlement is of a different currency or amount
+    /// </param>
     /// <param name="sourceCurrency">
     /// Currency from which an amount is to be converted in a currency conversion. ISO 4217 Alpha
     /// 3 currency code (e.g. "USD").
@@ -70,9 +80,10 @@ public class CurrencyExchange
     /// </param>
     /// <param name="quotationDate">Date at which an exchange rate is quoted.</param>
     /// <param name="contractIdentification">Unique identification to unambiguously identify the foreign exchange contract.</param>
-    public CurrencyExchange(string sourceCurrency, string targetCurrency, string unitCurrency, decimal exchangeRate,
+    public CurrencyExchange(AmountCurrencyPair? instructedAmount, string sourceCurrency, string targetCurrency, string unitCurrency, decimal exchangeRate,
         DateTime? quotationDate, string? contractIdentification)
     {
+        InstructedAmount = instructedAmount;    
         SourceCurrency = sourceCurrency;
         TargetCurrency = targetCurrency;
         UnitCurrency = unitCurrency;

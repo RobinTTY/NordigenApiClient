@@ -5,6 +5,7 @@ namespace RobinTTY.NordigenApiClient.Models.Responses;
 /// <summary>
 /// Pair representing an amount and the currency the amount is denominated in.
 /// </summary>
+[JsonNumberHandling(JsonNumberHandling.AllowReadingFromString)]
 public class AmountCurrencyPair
 {
     /// <summary>
