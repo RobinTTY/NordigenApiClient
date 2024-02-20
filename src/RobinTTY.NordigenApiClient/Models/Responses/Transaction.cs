@@ -219,8 +219,8 @@ public class Transaction
     /// Array of the report exchange rate.
     /// </summary>
     [JsonPropertyName("currencyExchange")]
-    [JsonConverter(typeof(SingleOrArrayConverter<List<CurrencyExchange>, CurrencyExchange>))]
-    public List<CurrencyExchange>? CurrencyExchange { get; }
+    [JsonConverter(typeof(SingleOrArrayConverter<IEnumerable<CurrencyExchange>, CurrencyExchange>))]
+    public IEnumerable<CurrencyExchange>? CurrencyExchange { get; }
 
     /// <summary>
     /// The identification of the transaction as used for reference by the financial institution.
@@ -345,7 +345,7 @@ public class Transaction
         DateTime? valueDateTime, string? remittanceInformationStructured,
         IEnumerable<string>? remittanceInformationStructuredArray, string? additionalInformation,
         string? additionalInformationStructured, Balance? balanceAfterTransaction, string? checkId,
-        List<CurrencyExchange>? currencyExchange, string? entryReference, string? internalTransactionId,
+        IEnumerable<CurrencyExchange>? currencyExchange, string? entryReference, string? internalTransactionId,
         string? merchantCategoryCode, DateTime? bookingDateTime)
     {
         TransactionId = transactionId;
