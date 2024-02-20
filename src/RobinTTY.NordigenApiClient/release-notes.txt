@@ -1,1 +1,2 @@
-﻿Fixed CurrencyExchange deserialization.
+﻿- Fixed CurrencyExchange deserialization caused by inconsistent API behavior
+- Allow mocking of NordigenApiResponse

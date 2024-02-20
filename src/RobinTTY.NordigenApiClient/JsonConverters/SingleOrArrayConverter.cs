@@ -3,34 +3,38 @@ using System.Text.Json.Serialization;
 
 namespace RobinTTY.NordigenApiClient.JsonConverters;
 
-internal class SingleOrArrayConverter<TCollection, TItem> : JsonConverter<TCollection>
-    where TCollection : class, ICollection<TItem>, new()
+internal class SingleOrArrayConverter<TEnumerable, TItem> : JsonConverter<TEnumerable>
+    where TEnumerable : IEnumerable<TItem>
 {
-    public override TCollection? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    public override TEnumerable? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         switch (reader.TokenType)
         {
             case JsonTokenType.Null:
-                return null;
+                return (TEnumerable) Enumerable.Empty<TItem>();
             case JsonTokenType.StartArray:
-                var list = new TCollection();
+                var list = new List<TItem>();
                 while (reader.Read())
                 {
                     if (reader.TokenType == JsonTokenType.EndArray) break;
                     var listItem = JsonSerializer.Deserialize<TItem>(ref reader, options);
                     if (listItem != null) list.Add(listItem);
                 }
-                return list;
+                return (TEnumerable) (IEnumerable<TItem>) list;
             default:
                 var item = JsonSerializer.Deserialize<TItem>(ref reader, options);
-                return item != null ? new TCollection {item} : null;
+                return item != null
+                    ? (TEnumerable) (IEnumerable<TItem>) new List<TItem> {item}
+                    : (TEnumerable) Enumerable.Empty<TItem>();
         }
     }
 
-    public override void Write(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options)
+    public override void Write(Utf8JsonWriter writer, TEnumerable value, JsonSerializerOptions options)
     {
-        if (value.Count == 1)
+        if (value.Count() == 1)
+        {
             JsonSerializer.Serialize(writer, value.First(), options);
+        }
         else
         {
             writer.WriteStartArray();
