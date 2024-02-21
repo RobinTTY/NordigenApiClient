@@ -1,2 +1,1 @@
-﻿- Fixed CurrencyExchange deserialization caused by inconsistent API behavior
-- Allow mocking of NordigenApiResponse
+﻿- Add an interface for NordigenClient to allow easier DI and mocking

@@ -8,60 +8,34 @@ using RobinTTY.NordigenApiClient.Utility;
 
 namespace RobinTTY.NordigenApiClient;
 
-/// <summary>
-/// Client used to access the Nordigen API endpoints.
-/// </summary>
-public class NordigenClient
+/// <inheritdoc />
+public class NordigenClient : INordigenClient
 {
     private static readonly SemaphoreSlim TokenSemaphore = new(1, 1);
     private readonly HttpClient _httpClient;
     private readonly JsonSerializerOptions _serializerOptions;
     internal readonly NordigenClientCredentials Credentials;
 
-    /// <summary>
-    /// A pair consisting of access/refresh token used to authenticate with the Nordigen API.
-    /// </summary>
+    /// <inheritdoc />
     public JsonWebTokenPair? JsonWebTokenPair { get; set; }
 
-    /// <summary>
-    /// Provides support for the API operations of the tokens endpoint.
-    /// <para>
-    /// Reference: <a href="https://developer.gocardless.com/bank-account-data/endpoints">GoCardless Documentation</a>
-    /// </para>
-    /// </summary>
+    /// <inheritdoc />
     public TokenEndpoint TokenEndpoint { get; }
 
-    /// <summary>
-    /// Provides support for the API operations of the institutions endpoint.
-    /// <para>
-    /// Reference: <a href="https://developer.gocardless.com/bank-account-data/endpoints">GoCardless Documentation</a>
-    /// </para>
-    /// </summary>
+    /// <inheritdoc />
     public InstitutionsEndpoint InstitutionsEndpoint { get; }
 
-    /// <summary>
-    /// Provides support for the API operations of the agreements endpoint.
-    /// <para>
-    /// Reference: <a href="https://developer.gocardless.com/bank-account-data/endpoints">GoCardless Documentation</a>
-    /// </para>
-    /// </summary>
+    /// <inheritdoc />
     public AgreementsEndpoint AgreementsEndpoint { get; }
 
-    /// <summary>
-    /// Provides support for the API operations of the requisitions endpoint.
-    /// <para>
-    /// Reference: <a href="https://developer.gocardless.com/bank-account-data/endpoints">GoCardless Documentation</a>
-    /// </para>
-    /// </summary>
+    /// <inheritdoc />
     public RequisitionsEndpoint RequisitionsEndpoint { get; }
 
-    /// <summary>
-    /// Provides support for the API operations of the accounts endpoint.
-    /// <para>
-    /// Reference: <a href="https://developer.gocardless.com/bank-account-data/endpoints">GoCardless Documentation</a>
-    /// </para>
-    /// </summary>
+    /// <inheritdoc />
     public AccountsEndpoint AccountsEndpoint { get; }
+    
+    /// <inheritdoc />
+    public event EventHandler<TokenPairUpdatedEventArgs>? TokenPairUpdated;
 
     /// <summary>
     /// Creates a new instance of <see cref="NordigenClient" />.
@@ -90,11 +64,6 @@ public class NordigenClient
         RequisitionsEndpoint = new RequisitionsEndpoint(this);
         AccountsEndpoint = new AccountsEndpoint(this);
     }
-
-    /// <summary>
-    /// Occurs whenever the <see cref="JsonWebTokenPair" /> is updated.
-    /// </summary>
-    public event EventHandler<TokenPairUpdatedEventArgs>? TokenPairUpdated;
 
     internal async Task<NordigenApiResponse<TResponse, TError>> MakeRequest<TResponse, TError>(
         string uri,
