@@ -106,6 +106,7 @@ internal class InstitutionsEndpointTests
             Assert.That(result.Bic, Is.EqualTo("SFIN0000"));
             Assert.That(result.Id, Is.EqualTo("SANDBOXFINANCE_SFIN0000"));
             Assert.That(result.Name, Is.EqualTo("Sandbox Finance"));
+            Assert.That(result.TransactionTotalDays, Is.EqualTo(90));
         });
     }
 }
