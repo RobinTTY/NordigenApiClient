@@ -1,15 +1,11 @@
-﻿using RobinTTY.NordigenApiClient.Models.Errors;
+﻿using RobinTTY.NordigenApiClient.Contracts;
+using RobinTTY.NordigenApiClient.Models.Errors;
 using RobinTTY.NordigenApiClient.Models.Responses;
 
 namespace RobinTTY.NordigenApiClient.Endpoints;
 
-/// <summary>
-/// Provides support for the API operations of the institutions endpoint.
-/// <para>
-/// Reference: <a href="https://developer.gocardless.com/bank-account-data/endpoints">GoCardless Documentation</a>
-/// </para>
-/// </summary>
-public class InstitutionsEndpoint
+/// <inheritdoc />
+public class InstitutionsEndpoint : IInstitutionsEndpoint
 {
     private readonly NordigenClient _nordigenClient;
 
@@ -17,67 +13,9 @@ public class InstitutionsEndpoint
     /// Creates a new instance of <see cref="InstitutionsEndpoint" />.
     /// </summary>
     /// <param name="client">The <see cref="NordigenClient" /> to use for token handling and request processing.</param>
-    internal InstitutionsEndpoint(NordigenClient client)
-    {
-        _nordigenClient = client;
-    }
+    internal InstitutionsEndpoint(NordigenClient client) => _nordigenClient = client;
 
-    /// <summary>
-    /// Gets a list of institutions supported by the Nordigen API (optionally filtered by country and supported features).
-    /// </summary>
-    /// <param name="country">
-    /// The two-letter country code (<a href="https://wikipedia.org/wiki/ISO_3166-1">ISO 3166</a>) in
-    /// which the institutions operate. Parameter won't be sent in the query if <see langword="null" />.
-    /// </param>
-    /// <param name="accessScopesSupported">
-    /// Whether or not access scopes are supported by this institution. Parameter won't be
-    /// sent in the query if <see langword="null" />.
-    /// </param>
-    /// <param name="accountSelectionSupported">
-    /// Whether or not account selection is supported by this institution. Parameter
-    /// won't be sent in the query if <see langword="null" />.
-    /// </param>
-    /// <param name="businessAccountsSupported">
-    /// Whether or not business accounts are supported by this institution. Parameter
-    /// won't be sent in the query if <see langword="null" />.
-    /// </param>
-    /// <param name="cardAccountsSupported">
-    /// Whether or not card accounts are supported by this institution. Parameter won't be
-    /// sent in the query if <see langword="null" />.
-    /// </param>
-    /// <param name="corporateAccountsSupported">
-    /// Whether or not corporate accounts are supported by this institution. Parameter
-    /// won't be sent in the query if <see langword="null" />.
-    /// </param>
-    /// <param name="privateAccountsSupported">
-    /// Whether or not private accounts are supported by this institution. Parameter
-    /// won't be sent in the query if <see langword="null" />.
-    /// </param>
-    /// <param name="readRefundAccountSupported">
-    /// Whether or not read refund account is supported by this institution. Parameter
-    /// won't be sent in the query if <see langword="null" />.
-    /// </param>
-    /// <param name="paymentsEnabled">
-    /// Whether or not payments are enabled by this institution. Parameter won't be sent in the
-    /// query if <see langword="null" />.
-    /// </param>
-    /// <param name="paymentSubmissionSupported">
-    /// Whether or not payment submission is supported by this institution. Parameter
-    /// won't be sent in the query if <see langword="null" />.
-    /// </param>
-    /// <param name="pendingTransactionsSupported">
-    /// Whether or not pending transactions are supported by this institution.
-    /// Parameter won't be sent in the query if <see langword="null" />.
-    /// </param>
-    /// <param name="ssnVerificationSupported">
-    /// Whether or not SSN verification is supported by this institution. Parameter
-    /// won't be sent in the query if <see langword="null" />.
-    /// </param>
-    /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
-    /// <returns>
-    /// A <see cref="NordigenApiResponse{TResponse, TError}" /> containing a list of supported institutions if the
-    /// request was successful.
-    /// </returns>
+    /// <inheritdoc />
     public async Task<NordigenApiResponse<List<Institution>, InstitutionsError>> GetInstitutions(string? country = null,
         bool? accessScopesSupported = null, bool? accountSelectionSupported = null,
         bool? businessAccountsSupported = null,
@@ -115,23 +53,11 @@ public class InstitutionsEndpoint
     }
 
     private static KeyValuePair<string, string> GetSupportFlagQuery(string flag, bool value)
-    {
-        return new KeyValuePair<string, string>(flag, value.ToString().ToLower());
-    }
+        => new(flag, value.ToString().ToLower());
 
-    /// <summary>
-    /// Gets a specific institution by id.
-    /// </summary>
-    /// <param name="id">The id assigned to the institution by Nordigen (can be retrieved via <see cref="GetInstitutions" />).</param>
-    /// <param name="cancellationToken">>Optional token to signal cancellation of the operation.</param>
-    /// <returns>
-    /// A <see cref="NordigenApiResponse{TResponse, TError}" /> containing the institution matching the id if the
-    /// request was successful.
-    /// </returns>
+    /// <inheritdoc />
     public async Task<NordigenApiResponse<Institution, BasicError>> GetInstitution(string id,
-        CancellationToken cancellationToken = default)
-    {
-        return await _nordigenClient.MakeRequest<Institution, BasicError>(
+        CancellationToken cancellationToken = default) =>
+        await _nordigenClient.MakeRequest<Institution, BasicError>(
             $"{NordigenEndpointUrls.InstitutionsEndpoint}{id}/", HttpMethod.Get, cancellationToken);
-    }
 }

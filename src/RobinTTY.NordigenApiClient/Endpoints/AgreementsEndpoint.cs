@@ -1,17 +1,13 @@
 ﻿using System.Net.Http.Json;
+using RobinTTY.NordigenApiClient.Contracts;
 using RobinTTY.NordigenApiClient.Models.Errors;
 using RobinTTY.NordigenApiClient.Models.Requests;
 using RobinTTY.NordigenApiClient.Models.Responses;
 
 namespace RobinTTY.NordigenApiClient.Endpoints;
 
-/// <summary>
-/// Provides support for the API operations of the agreements endpoint.
-/// <para>
-/// Reference: <a href="https://developer.gocardless.com/bank-account-data/endpoints">GoCardless Documentation</a>
-/// </para>
-/// </summary>
-public class AgreementsEndpoint
+/// <inheritdoc />
+public class AgreementsEndpoint : IAgreementsEndpoint
 {
     private readonly NordigenClient _nordigenClient;
 
@@ -19,21 +15,9 @@ public class AgreementsEndpoint
     /// Creates a new instance of <see cref="AgreementsEndpoint" />.
     /// </summary>
     /// <param name="client">The <see cref="NordigenClient" /> to use for token handling and request processing.</param>
-    internal AgreementsEndpoint(NordigenClient client)
-    {
-        _nordigenClient = client;
-    }
+    internal AgreementsEndpoint(NordigenClient client) => _nordigenClient = client;
 
-    /// <summary>
-    /// Gets a <see cref="ResponsePage{T}" /> containing a given number of end user agreements.
-    /// </summary>
-    /// <param name="limit">Number of results to return per page.</param>
-    /// <param name="offset">The initial index from which to return the results.</param>
-    /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
-    /// <returns>
-    /// A <see cref="NordigenApiResponse{TResponse, TError}" /> containing a <see cref="ResponsePage{T}" /> which
-    /// contains a list of end user agreements.
-    /// </returns>
+    /// <inheritdoc />
     public async Task<NordigenApiResponse<ResponsePage<Agreement>, BasicError>> GetAgreements(int limit, int offset,
         CancellationToken cancellationToken = default)
     {
@@ -43,43 +27,22 @@ public class AgreementsEndpoint
             NordigenEndpointUrls.AgreementsEndpoint, HttpMethod.Get, cancellationToken, query);
     }
 
-    /// <summary>
-    /// Gets the end user agreement with the given id.
-    /// </summary>
-    /// <param name="id">The id of the agreement to retrieve.</param>
-    /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
-    /// <returns>A <see cref="NordigenApiResponse{TResponse, TError}" /> which contains the specified end user agreements.</returns>
+    /// <inheritdoc />
     public async Task<NordigenApiResponse<Agreement, BasicError>> GetAgreement(Guid id,
-        CancellationToken cancellationToken = default)
-    {
-        return await GetAgreementInternal(id.ToString(), cancellationToken);
-    }
+        CancellationToken cancellationToken = default) =>
+        await GetAgreementInternal(id.ToString(), cancellationToken);
 
-    /// <summary>
-    /// Gets the end user agreement with the given id.
-    /// </summary>
-    /// <param name="id">The id of the agreement to retrieve.</param>
-    /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
-    /// <returns>A <see cref="NordigenApiResponse{TResponse, TError}" /> which contains the specified end user agreements.</returns>
+    /// <inheritdoc />
     public async Task<NordigenApiResponse<Agreement, BasicError>> GetAgreement(string id,
-        CancellationToken cancellationToken = default)
-    {
-        return await GetAgreementInternal(id, cancellationToken);
-    }
+        CancellationToken cancellationToken = default) =>
+        await GetAgreementInternal(id, cancellationToken);
 
     private async Task<NordigenApiResponse<Agreement, BasicError>> GetAgreementInternal(string id,
-        CancellationToken cancellationToken)
-    {
-        return await _nordigenClient.MakeRequest<Agreement, BasicError>(
+        CancellationToken cancellationToken) =>
+        await _nordigenClient.MakeRequest<Agreement, BasicError>(
             $"{NordigenEndpointUrls.AgreementsEndpoint}{id}/", HttpMethod.Get, cancellationToken);
-    }
 
-    /// <summary>
-    /// Creates a new end user agreement which determines the scope and length of access to data provided by institutions.
-    /// </summary>
-    /// <param name="agreement">The agreement to create.</param>
-    /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
-    /// <returns>A <see cref="NordigenApiResponse{TResponse, TError}" /> containing the created <see cref="Agreement" />.</returns>
+    /// <inheritdoc />
     public async Task<NordigenApiResponse<Agreement, CreateAgreementError>> CreateAgreement(
         CreateAgreementRequest agreement, CancellationToken cancellationToken = default)
     {
@@ -88,29 +51,15 @@ public class AgreementsEndpoint
             NordigenEndpointUrls.AgreementsEndpoint, HttpMethod.Post, cancellationToken, body: body);
     }
 
-    /// <summary>
-    /// Deletes the end user agreement with the given id.
-    /// </summary>
-    /// <param name="id">The id of the agreement to delete.</param>
-    /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
-    /// <returns>A <see cref="NordigenApiResponse{TResponse, TError}" /> containing a confirmation of the deletion.</returns>
+    /// <inheritdoc />
     public async Task<NordigenApiResponse<BasicResponse, BasicError>> DeleteAgreement(Guid id,
-        CancellationToken cancellationToken = default)
-    {
-        return await DeleteAgreementInternal(id.ToString(), cancellationToken);
-    }
+        CancellationToken cancellationToken = default) =>
+        await DeleteAgreementInternal(id.ToString(), cancellationToken);
 
-    /// <summary>
-    /// Deletes the end user agreement with the given id.
-    /// </summary>
-    /// <param name="id">The id of the agreement to delete.</param>
-    /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
-    /// <returns>A <see cref="NordigenApiResponse{TResponse, TError}" /> containing a confirmation of the deletion.</returns>
+    /// <inheritdoc />
     public async Task<NordigenApiResponse<BasicResponse, BasicError>> DeleteAgreement(string id,
-        CancellationToken cancellationToken = default)
-    {
-        return await DeleteAgreementInternal(id, cancellationToken);
-    }
+        CancellationToken cancellationToken = default) =>
+        await DeleteAgreementInternal(id, cancellationToken);
 
     private async Task<NordigenApiResponse<BasicResponse, BasicError>> DeleteAgreementInternal(string id,
         CancellationToken cancellationToken)
@@ -119,31 +68,15 @@ public class AgreementsEndpoint
             $"{NordigenEndpointUrls.AgreementsEndpoint}{id}/", HttpMethod.Delete, cancellationToken);
     }
 
-    /// <summary>
-    /// Accepts an end user agreement. Only available to customers with an enterprise contract at Nordigen.
-    /// </summary>
-    /// <param name="id">The id of the end user agreement to accept.</param>
-    /// <param name="metadata">The metadata required to accept the end user agreement.</param>
-    /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
-    /// <returns></returns>
+    /// <inheritdoc />
     public async Task<NordigenApiResponse<Agreement, BasicError>> AcceptAgreement(Guid id,
-        AcceptAgreementRequest metadata, CancellationToken cancellationToken = default)
-    {
-        return await AcceptAgreementInternal(id.ToString(), metadata, cancellationToken);
-    }
+        AcceptAgreementRequest metadata, CancellationToken cancellationToken = default) =>
+        await AcceptAgreementInternal(id.ToString(), metadata, cancellationToken);
 
-    /// <summary>
-    /// Accepts an end user agreement. Only available to customers with an enterprise contract at Nordigen.
-    /// </summary>
-    /// <param name="id">The id of the end user agreement to accept.</param>
-    /// <param name="metadata">The metadata required to accept the end user agreement.</param>
-    /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
-    /// <returns></returns>
+    /// <inheritdoc />
     public async Task<NordigenApiResponse<Agreement, BasicError>> AcceptAgreement(string id,
-        AcceptAgreementRequest metadata, CancellationToken cancellationToken = default)
-    {
-        return await AcceptAgreementInternal(id, metadata, cancellationToken);
-    }
+        AcceptAgreementRequest metadata, CancellationToken cancellationToken = default) =>
+        await AcceptAgreementInternal(id, metadata, cancellationToken);
 
     private async Task<NordigenApiResponse<Agreement, BasicError>> AcceptAgreementInternal(string id,
         AcceptAgreementRequest metadata, CancellationToken cancellationToken)

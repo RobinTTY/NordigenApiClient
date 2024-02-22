@@ -1,7 +1,7 @@
 ﻿using RobinTTY.NordigenApiClient.Endpoints;
 using RobinTTY.NordigenApiClient.Models.Jwt;
 
-namespace RobinTTY.NordigenApiClient;
+namespace RobinTTY.NordigenApiClient.Contracts;
 
 /// <summary>
 /// Client used to access the Nordigen API endpoints.
@@ -19,7 +19,7 @@ public interface INordigenClient
     /// Reference: <a href="https://developer.gocardless.com/bank-account-data/endpoints">GoCardless Documentation</a>
     /// </para>
     /// </summary>
-    TokenEndpoint TokenEndpoint { get; }
+    ITokenEndpoint TokenEndpoint { get; }
 
     /// <summary>
     /// Provides support for the API operations of the institutions endpoint.
@@ -27,7 +27,7 @@ public interface INordigenClient
     /// Reference: <a href="https://developer.gocardless.com/bank-account-data/endpoints">GoCardless Documentation</a>
     /// </para>
     /// </summary>
-    InstitutionsEndpoint InstitutionsEndpoint { get; }
+    IInstitutionsEndpoint InstitutionsEndpoint { get; }
 
     /// <summary>
     /// Provides support for the API operations of the agreements endpoint.
@@ -35,7 +35,7 @@ public interface INordigenClient
     /// Reference: <a href="https://developer.gocardless.com/bank-account-data/endpoints">GoCardless Documentation</a>
     /// </para>
     /// </summary>
-    AgreementsEndpoint AgreementsEndpoint { get; }
+    IAgreementsEndpoint AgreementsEndpoint { get; }
 
     /// <summary>
     /// Provides support for the API operations of the requisitions endpoint.
@@ -43,7 +43,7 @@ public interface INordigenClient
     /// Reference: <a href="https://developer.gocardless.com/bank-account-data/endpoints">GoCardless Documentation</a>
     /// </para>
     /// </summary>
-    RequisitionsEndpoint RequisitionsEndpoint { get; }
+    IRequisitionsEndpoint RequisitionsEndpoint { get; }
 
     /// <summary>
     /// Provides support for the API operations of the accounts endpoint.
@@ -51,7 +51,7 @@ public interface INordigenClient
     /// Reference: <a href="https://developer.gocardless.com/bank-account-data/endpoints">GoCardless Documentation</a>
     /// </para>
     /// </summary>
-    AccountsEndpoint AccountsEndpoint { get; }
+    IAccountsEndpoint AccountsEndpoint { get; }
 
     /// <summary>
     /// Occurs whenever the <see cref="NordigenClient.JsonWebTokenPair" /> is updated.

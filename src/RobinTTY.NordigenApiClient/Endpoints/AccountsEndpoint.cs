@@ -1,16 +1,12 @@
 ﻿using System.Globalization;
+using RobinTTY.NordigenApiClient.Contracts;
 using RobinTTY.NordigenApiClient.Models.Errors;
 using RobinTTY.NordigenApiClient.Models.Responses;
 
 namespace RobinTTY.NordigenApiClient.Endpoints;
 
-/// <summary>
-/// Provides support for the API operations of the accounts endpoint.
-/// <para>
-/// Reference: <a href="https://developer.gocardless.com/bank-account-data/endpoints">GoCardless Documentation</a>
-/// </para>
-/// </summary>
-public class AccountsEndpoint
+/// <inheritdoc />
+public class AccountsEndpoint : IAccountsEndpoint
 {
     private readonly NordigenClient _nordigenClient;
 
@@ -18,34 +14,18 @@ public class AccountsEndpoint
     /// Creates a new instance of <see cref="AccountsEndpoint" />.
     /// </summary>
     /// <param name="client">The <see cref="NordigenClient" /> to use for token handling and request processing.</param>
-    internal AccountsEndpoint(NordigenClient client)
-    {
-        _nordigenClient = client;
-    }
+    internal AccountsEndpoint(NordigenClient client) => _nordigenClient = client;
 
-    /// <summary>
-    /// Gets the bank account with the given id.
-    /// </summary>
-    /// <param name="id">The id of the account to get.</param>
-    /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
-    /// <returns>A <see cref="NordigenApiResponse{TResponse, TError}" /> which contains the specified account.</returns>
+    /// <inheritdoc />
     public async Task<NordigenApiResponse<BankAccount, BasicError>> GetAccount(Guid id,
-        CancellationToken cancellationToken = default)
-    {
-        return await GetAccountInternal(id.ToString(), cancellationToken);
-    }
+        CancellationToken cancellationToken = default) =>
+        await GetAccountInternal(id.ToString(), cancellationToken);
 
-    /// <summary>
-    /// Gets the bank account with the given id.
-    /// </summary>
-    /// <param name="id">The id of the account to get.</param>
-    /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
-    /// <returns>A <see cref="NordigenApiResponse{TResponse, TError}" /> which contains the specified account.</returns>
+
+    /// <inheritdoc />
     public async Task<NordigenApiResponse<BankAccount, BasicError>> GetAccount(string id,
-        CancellationToken cancellationToken = default)
-    {
-        return await GetAccountInternal(id, cancellationToken);
-    }
+        CancellationToken cancellationToken = default) =>
+        await GetAccountInternal(id, cancellationToken);
 
     private async Task<NordigenApiResponse<BankAccount, BasicError>> GetAccountInternal(string id,
         CancellationToken cancellationToken)
@@ -54,29 +34,15 @@ public class AccountsEndpoint
             $"{NordigenEndpointUrls.AccountsEndpoint}{id}/", HttpMethod.Get, cancellationToken);
     }
 
-    /// <summary>
-    /// Gets the balances of the specified account.
-    /// </summary>
-    /// <param name="accountId">The id of the account for which to get the balances.</param>
-    /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
-    /// <returns>A <see cref="NordigenApiResponse{TResponse, TError}" /> which contains the balances for the specified account.</returns>
+    /// <inheritdoc />
     public async Task<NordigenApiResponse<List<Balance>, AccountsError>> GetBalances(Guid accountId,
-        CancellationToken cancellationToken = default)
-    {
-        return await GetBalancesInternal(accountId.ToString(), cancellationToken);
-    }
+        CancellationToken cancellationToken = default) =>
+        await GetBalancesInternal(accountId.ToString(), cancellationToken);
 
-    /// <summary>
-    /// Gets the balances of the specified account.
-    /// </summary>
-    /// <param name="accountId">The id of the account for which to get the balances.</param>
-    /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
-    /// <returns>A <see cref="NordigenApiResponse{TResponse, TError}" /> which contains the balances for the specified account.</returns>
+    /// <inheritdoc />
     public async Task<NordigenApiResponse<List<Balance>, AccountsError>> GetBalances(string accountId,
-        CancellationToken cancellationToken = default)
-    {
-        return await GetBalancesInternal(accountId, cancellationToken);
-    }
+        CancellationToken cancellationToken = default) =>
+        await GetBalancesInternal(accountId, cancellationToken);
 
     private async Task<NordigenApiResponse<List<Balance>, AccountsError>> GetBalancesInternal(string accountId,
         CancellationToken cancellationToken)
@@ -87,35 +53,15 @@ public class AccountsEndpoint
             response.Result?.Balances, response.Error);
     }
 
-    /// <summary>
-    /// Gets detailed information about the specified bank account.
-    /// </summary>
-    /// <param name="id">The id of the account for which to retrieve the detailed information.</param>
-    /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
-    /// <returns>
-    /// A <see cref="NordigenApiResponse{TResponse, TError}" /> which contains detailed information about the
-    /// specified account.
-    /// </returns>
+    /// <inheritdoc />
     public async Task<NordigenApiResponse<BankAccountDetails, AccountsError>> GetAccountDetails(Guid id,
-        CancellationToken cancellationToken = default)
-    {
-        return await GetAccountDetailsInternal(id.ToString(), cancellationToken);
-    }
+        CancellationToken cancellationToken = default) =>
+        await GetAccountDetailsInternal(id.ToString(), cancellationToken);
 
-    /// <summary>
-    /// Gets detailed information about the specified bank account.
-    /// </summary>
-    /// <param name="id">The id of the account for which to retrieve the detailed information.</param>
-    /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
-    /// <returns>
-    /// A <see cref="NordigenApiResponse{TResponse, TError}" /> which contains detailed information about the
-    /// specified account.
-    /// </returns>
+    /// <inheritdoc />
     public async Task<NordigenApiResponse<BankAccountDetails, AccountsError>> GetAccountDetails(string id,
-        CancellationToken cancellationToken = default)
-    {
-        return await GetAccountDetailsInternal(id, cancellationToken);
-    }
+        CancellationToken cancellationToken = default) =>
+        await GetAccountDetailsInternal(id, cancellationToken);
 
     private async Task<NordigenApiResponse<BankAccountDetails, AccountsError>> GetAccountDetailsInternal(string id,
         CancellationToken cancellationToken)
@@ -126,51 +72,25 @@ public class AccountsEndpoint
             response.Result?.Account, response.Error);
     }
 
-    /// <summary>
-    /// Gets the transactions of the specified bank account.
-    /// </summary>
-    /// <param name="id">The id of the account for which to retrieve the transactions.</param>
-    /// <param name="startDate">Optional date to limit the transactions which are returned to those after the specified date.</param>
-    /// <param name="endDate">Optional date to limit the transactions which are returned to those before the specified date.</param>
-    /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
-    /// <returns>
-    /// A <see cref="NordigenApiResponse{TResponse, TError}" /> which contains transaction data of the specified
-    /// account.
-    /// </returns>
+    /// <inheritdoc />
 #if NET6_0_OR_GREATER
     public async Task<NordigenApiResponse<AccountTransactions, AccountsError>> GetTransactions(Guid id,
         DateOnly? startDate = null, DateOnly? endDate = null, CancellationToken cancellationToken = default)
         => await GetTransactionsInternal(id.ToString(), startDate, endDate, cancellationToken);
 #else
     public async Task<NordigenApiResponse<AccountTransactions, AccountsError>> GetTransactions(Guid id,
-        DateTime? startDate
-            =
-            null, DateTime? endDate
-            = null, CancellationToken cancellationToken = default)
+        DateTime? startDate = null, DateTime? endDate = null, CancellationToken cancellationToken = default)
         => await GetTransactionsInternal(id.ToString(), startDate, endDate, cancellationToken);
 #endif
 
-    /// <summary>
-    /// Gets the transactions of the specified bank account.
-    /// </summary>
-    /// <param name="id">The id of the account for which to retrieve the transactions.</param>
-    /// <param name="startDate">Optional date to limit the transactions which are returned to those after the specified date.</param>
-    /// <param name="endDate">Optional date to limit the transactions which are returned to those before the specified date.</param>
-    /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
-    /// <returns>
-    /// A <see cref="NordigenApiResponse{TResponse, TError}" /> which contains transaction data of the specified
-    /// account.
-    /// </returns>
+    /// <inheritdoc />
 #if NET6_0_OR_GREATER
     public async Task<NordigenApiResponse<AccountTransactions, AccountsError>> GetTransactions(string id,
         DateOnly? startDate = null, DateOnly? endDate = null, CancellationToken cancellationToken = default)
         => await GetTransactionsInternal(id, startDate, endDate, cancellationToken);
 #else
     public async Task<NordigenApiResponse<AccountTransactions, AccountsError>> GetTransactions(string id,
-        DateTime? startDate
-            =
-            null, DateTime? endDate
-            = null, CancellationToken cancellationToken = default)
+        DateTime? startDate = null, DateTime? endDate = null, CancellationToken cancellationToken = default)
         => await GetTransactionsInternal(id, startDate, endDate, cancellationToken);
 #endif
 
@@ -195,14 +115,8 @@ public class AccountsEndpoint
     }
 
 #if NET6_0_OR_GREATER
-    private static string DateToIso8601(DateOnly date)
-    {
-        return date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
-    }
+    private static string DateToIso8601(DateOnly date) => date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
 #else
-    private string DateToIso8601(DateTime date)
-    {
-        return date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
-    }
+    private string DateToIso8601(DateTime date) => date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
 #endif
 }

@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using RobinTTY.NordigenApiClient.Contracts;
 using RobinTTY.NordigenApiClient.Endpoints;
 using RobinTTY.NordigenApiClient.JsonConverters;
 using RobinTTY.NordigenApiClient.Models;
@@ -20,19 +21,19 @@ public class NordigenClient : INordigenClient
     public JsonWebTokenPair? JsonWebTokenPair { get; set; }
 
     /// <inheritdoc />
-    public TokenEndpoint TokenEndpoint { get; }
+    public ITokenEndpoint TokenEndpoint { get; }
 
     /// <inheritdoc />
-    public InstitutionsEndpoint InstitutionsEndpoint { get; }
+    public IInstitutionsEndpoint InstitutionsEndpoint { get; }
 
     /// <inheritdoc />
-    public AgreementsEndpoint AgreementsEndpoint { get; }
+    public IAgreementsEndpoint AgreementsEndpoint { get; }
 
     /// <inheritdoc />
-    public RequisitionsEndpoint RequisitionsEndpoint { get; }
+    public IRequisitionsEndpoint RequisitionsEndpoint { get; }
 
     /// <inheritdoc />
-    public AccountsEndpoint AccountsEndpoint { get; }
+    public IAccountsEndpoint AccountsEndpoint { get; }
     
     /// <inheritdoc />
     public event EventHandler<TokenPairUpdatedEventArgs>? TokenPairUpdated;
