@@ -1,0 +1,11 @@
+---
+slug: v7.0
+title: v7.0
+authors:
+  robin
+---
+
+- BREAKING CHANGE: `TransactionTotalDays` property of the `Institution` class is now of the more appropriate type of `int` instead of `string`
+- Added interfaces for all endpoints to allow for mocking
+
+**Full Changelog**: [v6.2.0...v7.0.0](https://github.com/RobinTTY/NordigenApiClient/compare/v6.2.0...v7.0.0)
