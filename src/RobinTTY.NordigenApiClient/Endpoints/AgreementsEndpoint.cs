@@ -24,7 +24,7 @@ public class AgreementsEndpoint : IAgreementsEndpoint
         var query = new KeyValuePair<string, string>[]
             {new("limit", limit.ToString()), new("offset", offset.ToString())};
         return await _nordigenClient.MakeRequest<ResponsePage<Agreement>, BasicError>(
-            NordigenEndpointUrls.AgreementsEndpoint, HttpMethod.Get, cancellationToken, query);
+            NordigenEndpointUrls.AgreementsEndpoint(_nordigenClient.BaseUrl), HttpMethod.Get, cancellationToken, query);
     }
 
     /// <inheritdoc />
@@ -40,7 +40,7 @@ public class AgreementsEndpoint : IAgreementsEndpoint
     private async Task<NordigenApiResponse<Agreement, BasicError>> GetAgreementInternal(string id,
         CancellationToken cancellationToken) =>
         await _nordigenClient.MakeRequest<Agreement, BasicError>(
-            $"{NordigenEndpointUrls.AgreementsEndpoint}{id}/", HttpMethod.Get, cancellationToken);
+            $"{NordigenEndpointUrls.AgreementsEndpoint(_nordigenClient.BaseUrl)}{id}/", HttpMethod.Get, cancellationToken);
 
     /// <inheritdoc />
     public async Task<NordigenApiResponse<Agreement, CreateAgreementError>> CreateAgreement(
@@ -48,7 +48,7 @@ public class AgreementsEndpoint : IAgreementsEndpoint
     {
         var body = JsonContent.Create(agreement);
         return await _nordigenClient.MakeRequest<Agreement, CreateAgreementError>(
-            NordigenEndpointUrls.AgreementsEndpoint, HttpMethod.Post, cancellationToken, body: body);
+            NordigenEndpointUrls.AgreementsEndpoint(_nordigenClient.BaseUrl), HttpMethod.Post, cancellationToken, body: body);
     }
 
     /// <inheritdoc />
@@ -65,7 +65,7 @@ public class AgreementsEndpoint : IAgreementsEndpoint
         CancellationToken cancellationToken)
     {
         return await _nordigenClient.MakeRequest<BasicResponse, BasicError>(
-            $"{NordigenEndpointUrls.AgreementsEndpoint}{id}/", HttpMethod.Delete, cancellationToken);
+            $"{NordigenEndpointUrls.AgreementsEndpoint(_nordigenClient.BaseUrl)}{id}/", HttpMethod.Delete, cancellationToken);
     }
 
     /// <inheritdoc />
@@ -83,6 +83,6 @@ public class AgreementsEndpoint : IAgreementsEndpoint
     {
         var body = JsonContent.Create(metadata);
         return await _nordigenClient.MakeRequest<Agreement, BasicError>(
-            $"{NordigenEndpointUrls.AgreementsEndpoint}{id}/accept/", HttpMethod.Put, cancellationToken, body: body);
+            $"{NordigenEndpointUrls.AgreementsEndpoint(_nordigenClient.BaseUrl)}{id}/accept/", HttpMethod.Put, cancellationToken, body: body);
     }
 }

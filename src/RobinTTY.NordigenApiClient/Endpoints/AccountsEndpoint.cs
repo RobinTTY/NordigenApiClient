@@ -31,7 +31,7 @@ public class AccountsEndpoint : IAccountsEndpoint
         CancellationToken cancellationToken)
     {
         return await _nordigenClient.MakeRequest<BankAccount, BasicError>(
-            $"{NordigenEndpointUrls.AccountsEndpoint}{id}/", HttpMethod.Get, cancellationToken);
+            $"{NordigenEndpointUrls.AccountsEndpoint(_nordigenClient.BaseUrl)}{id}/", HttpMethod.Get, cancellationToken);
     }
 
     /// <inheritdoc />
@@ -48,7 +48,7 @@ public class AccountsEndpoint : IAccountsEndpoint
         CancellationToken cancellationToken)
     {
         var response = await _nordigenClient.MakeRequest<BalanceJsonWrapper, AccountsError>(
-            $"{NordigenEndpointUrls.AccountsEndpoint}{accountId}/balances/", HttpMethod.Get, cancellationToken);
+            $"{NordigenEndpointUrls.AccountsEndpoint(_nordigenClient.BaseUrl)}{accountId}/balances/", HttpMethod.Get, cancellationToken);
         return new NordigenApiResponse<List<Balance>, AccountsError>(response.StatusCode, response.IsSuccess,
             response.Result?.Balances, response.Error);
     }
@@ -67,7 +67,7 @@ public class AccountsEndpoint : IAccountsEndpoint
         CancellationToken cancellationToken)
     {
         var response = await _nordigenClient.MakeRequest<BankAccountDetailsWrapper, AccountsError>(
-            $"{NordigenEndpointUrls.AccountsEndpoint}{id}/details/", HttpMethod.Get, cancellationToken);
+            $"{NordigenEndpointUrls.AccountsEndpoint(_nordigenClient.BaseUrl)}{id}/details/", HttpMethod.Get, cancellationToken);
         return new NordigenApiResponse<BankAccountDetails, AccountsError>(response.StatusCode, response.IsSuccess,
             response.Result?.Account, response.Error);
     }
@@ -109,7 +109,7 @@ public class AccountsEndpoint : IAccountsEndpoint
             query.Add(new KeyValuePair<string, string>("date_to", DateToIso8601(endDate.Value)));
 
         var response = await _nordigenClient.MakeRequest<AccountTransactionsWrapper, AccountsError>(
-            $"{NordigenEndpointUrls.AccountsEndpoint}{id}/transactions/", HttpMethod.Get, cancellationToken, query);
+            $"{NordigenEndpointUrls.AccountsEndpoint(_nordigenClient.BaseUrl)}{id}/transactions/", HttpMethod.Get, cancellationToken, query);
         return new NordigenApiResponse<AccountTransactions, AccountsError>(response.StatusCode, response.IsSuccess,
             response.Result?.Transactions, response.Error);
     }

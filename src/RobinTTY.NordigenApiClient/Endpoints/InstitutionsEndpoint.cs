@@ -49,7 +49,7 @@ public class InstitutionsEndpoint : IInstitutionsEndpoint
         if (ssnVerificationSupported.HasValue)
             query.Add(GetSupportFlagQuery("ssn_verification_supported", ssnVerificationSupported.Value));
         return await _nordigenClient.MakeRequest<List<Institution>, InstitutionsError>(
-            NordigenEndpointUrls.InstitutionsEndpoint, HttpMethod.Get, cancellationToken, query);
+            NordigenEndpointUrls.InstitutionsEndpoint(_nordigenClient.BaseUrl), HttpMethod.Get, cancellationToken, query);
     }
 
     private static KeyValuePair<string, string> GetSupportFlagQuery(string flag, bool value)
@@ -59,5 +59,5 @@ public class InstitutionsEndpoint : IInstitutionsEndpoint
     public async Task<NordigenApiResponse<Institution, BasicError>> GetInstitution(string id,
         CancellationToken cancellationToken = default) =>
         await _nordigenClient.MakeRequest<Institution, BasicError>(
-            $"{NordigenEndpointUrls.InstitutionsEndpoint}{id}/", HttpMethod.Get, cancellationToken);
+            $"{NordigenEndpointUrls.InstitutionsEndpoint(_nordigenClient.BaseUrl)}{id}/", HttpMethod.Get, cancellationToken);
 }

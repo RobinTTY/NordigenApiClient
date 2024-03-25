@@ -24,7 +24,7 @@ public class TokenEndpoint : ITokenEndpoint
     {
         var requestBody = JsonContent.Create(_nordigenClient.Credentials);
         return await _nordigenClient.MakeRequest<JsonWebTokenPair, BasicError>(
-            $"{NordigenEndpointUrls.TokensEndpoint}new/", HttpMethod.Post, cancellationToken, body: requestBody,
+            $"{NordigenEndpointUrls.TokensEndpoint(_nordigenClient.BaseUrl)}new/", HttpMethod.Post, cancellationToken, body: requestBody,
             useAuthentication: false);
     }
 
@@ -34,7 +34,7 @@ public class TokenEndpoint : ITokenEndpoint
     {
         var requestBody = JsonContent.Create(new {refresh = refreshToken.EncodedToken});
         return await _nordigenClient.MakeRequest<JsonWebAccessToken, BasicError>(
-            $"{NordigenEndpointUrls.TokensEndpoint}refresh/", HttpMethod.Post, cancellationToken, body: requestBody,
+            $"{NordigenEndpointUrls.TokensEndpoint(_nordigenClient.BaseUrl)}refresh/", HttpMethod.Post, cancellationToken, body: requestBody,
             useAuthentication: false);
     }
 }

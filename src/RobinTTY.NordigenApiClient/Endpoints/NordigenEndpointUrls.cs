@@ -2,10 +2,30 @@
 
 internal static class NordigenEndpointUrls
 {
-    private const string Base = "https://bankaccountdata.gocardless.com/api/v2/";
-    internal const string TokensEndpoint = Base + "token/";
-    internal const string AccountsEndpoint = Base + "accounts/";
-    internal const string AgreementsEndpoint = Base + "agreements/enduser/";
-    internal const string InstitutionsEndpoint = Base + "institutions/";
-    internal const string RequisitionsEndpoint = Base + "requisitions/";
+    private const string DefaultBase = "https://bankaccountdata.gocardless.com/api/v2/";
+
+    internal static string TokensEndpoint(string? baseUrl = null)
+    {
+        return (baseUrl ?? DefaultBase) + "token/";
+    }
+
+    internal static string AccountsEndpoint(string? baseUrl = null)
+    {
+        return (baseUrl ?? DefaultBase) + "accounts/";
+    }
+
+    internal static string AgreementsEndpoint(string? baseUrl = null)
+    {
+        return (baseUrl ?? DefaultBase) + "agreements/enduser/";
+    }
+
+    internal static string InstitutionsEndpoint(string? baseUrl = null)
+    {
+        return (baseUrl ?? DefaultBase) + "institutions/";
+    }
+
+    internal static string RequisitionsEndpoint(string? baseUrl = null)
+    {
+        return (baseUrl ?? DefaultBase) + "requisitions/";
+    }
 }

@@ -16,6 +16,7 @@ public class NordigenClient : INordigenClient
     private readonly HttpClient _httpClient;
     private readonly JsonSerializerOptions _serializerOptions;
     internal readonly NordigenClientCredentials Credentials;
+    internal readonly string? BaseUrl;
 
     /// <inheritdoc />
     public JsonWebTokenPair? JsonWebTokenPair { get; set; }
@@ -45,7 +46,7 @@ public class NordigenClient : INordigenClient
     /// <param name="credentials">The Nordigen credentials for API access.</param>
     /// <param name="jsonWebTokenPair">An optional JSON web token pair consisting of access and refresh token to use.</param>
     public NordigenClient(HttpClient httpClient, NordigenClientCredentials credentials,
-        JsonWebTokenPair? jsonWebTokenPair = null)
+        JsonWebTokenPair? jsonWebTokenPair = null, string? baseUrl = null)
     {
         _httpClient = httpClient;
         _serializerOptions = new JsonSerializerOptions
@@ -64,6 +65,7 @@ public class NordigenClient : INordigenClient
         AgreementsEndpoint = new AgreementsEndpoint(this);
         RequisitionsEndpoint = new RequisitionsEndpoint(this);
         AccountsEndpoint = new AccountsEndpoint(this);
+        BaseUrl = baseUrl;
     }
 
     internal async Task<NordigenApiResponse<TResponse, TError>> MakeRequest<TResponse, TError>(

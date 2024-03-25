@@ -24,7 +24,7 @@ public class RequisitionsEndpoint : IRequisitionsEndpoint
         var query = new KeyValuePair<string, string>[]
             {new("limit", limit.ToString()), new("offset", offset.ToString())};
         return await _nordigenClient.MakeRequest<ResponsePage<Requisition>, BasicError>(
-            NordigenEndpointUrls.RequisitionsEndpoint, HttpMethod.Get, cancellationToken, query);
+            NordigenEndpointUrls.RequisitionsEndpoint(_nordigenClient.BaseUrl), HttpMethod.Get, cancellationToken, query);
     }
 
     /// <inheritdoc />
@@ -40,7 +40,7 @@ public class RequisitionsEndpoint : IRequisitionsEndpoint
     private async Task<NordigenApiResponse<Requisition, BasicError>> GetRequisitionInternal(string id,
         CancellationToken cancellationToken = default) =>
         await _nordigenClient.MakeRequest<Requisition, BasicError>(
-            $"{NordigenEndpointUrls.RequisitionsEndpoint}{id}/", HttpMethod.Get, cancellationToken);
+            $"{NordigenEndpointUrls.RequisitionsEndpoint(_nordigenClient.BaseUrl)}{id}/", HttpMethod.Get, cancellationToken);
 
     /// <inheritdoc />
     public async Task<NordigenApiResponse<Requisition, CreateRequisitionError>> CreateRequisition(
@@ -48,7 +48,7 @@ public class RequisitionsEndpoint : IRequisitionsEndpoint
     {
         var body = JsonContent.Create(requisition);
         return await _nordigenClient.MakeRequest<Requisition, CreateRequisitionError>(
-            NordigenEndpointUrls.RequisitionsEndpoint, HttpMethod.Post, cancellationToken, body: body);
+            NordigenEndpointUrls.RequisitionsEndpoint(_nordigenClient.BaseUrl), HttpMethod.Post, cancellationToken, body: body);
     }
 
     /// <inheritdoc />
@@ -64,5 +64,5 @@ public class RequisitionsEndpoint : IRequisitionsEndpoint
     private async Task<NordigenApiResponse<BasicResponse, BasicError>> DeleteRequisitionInternal(string id,
         CancellationToken cancellationToken) =>
         await _nordigenClient.MakeRequest<BasicResponse, BasicError>(
-            $"{NordigenEndpointUrls.RequisitionsEndpoint}{id}/", HttpMethod.Delete, cancellationToken);
+            $"{NordigenEndpointUrls.RequisitionsEndpoint(_nordigenClient.BaseUrl)}{id}/", HttpMethod.Delete, cancellationToken);
 }
