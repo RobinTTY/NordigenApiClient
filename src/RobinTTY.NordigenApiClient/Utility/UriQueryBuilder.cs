@@ -8,18 +8,14 @@ namespace RobinTTY.NordigenApiClient.Utility;
 internal static class UriQueryBuilder
 {
     /// <summary>
-    /// Adds query parameters to the given URI string.
+    /// Constructs a query string from the given query key-value pairs.
     /// </summary>
-    /// <param name="uri">The URI string to add the query parameters to.</param>
     /// <param name="queryKeyValuePairs">The query parameters to add.</param>
-    /// <returns>The complete URI string wit added query parameters.</returns>
-    internal static string BuildUriWithQueryString(string uri,
-        IEnumerable<KeyValuePair<string, string>> queryKeyValuePairs)
+    /// <returns>The query string.</returns>
+    internal static string GetQueryString(IEnumerable<KeyValuePair<string, string>> queryKeyValuePairs)
     {
-        var builder = new UriBuilder(uri);
-        var query = HttpUtility.ParseQueryString(builder.Query);
-        foreach (var kvp in queryKeyValuePairs) query[kvp.Key] = kvp.Value;
-        builder.Query = query.ToString();
-        return builder.ToString();
+        var query = HttpUtility.ParseQueryString(string.Empty);
+        foreach (var kvp in queryKeyValuePairs) query.Add(kvp.Key, kvp.Value);
+        return query.ToString();
     }
 }

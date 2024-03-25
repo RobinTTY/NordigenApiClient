@@ -16,6 +16,25 @@ internal class RequisitionsEndpointTests
     }
 
     /// <summary>
+    /// Tests the retrieval of all existing requisitions.
+    /// </summary>
+    [Test]
+    public async Task GetRequisitions()
+    {
+        var response = await _apiClient.RequisitionsEndpoint.GetRequisitions(100, 0);
+        TestExtensions.AssertNordigenApiResponseIsSuccessful(response, HttpStatusCode.OK);
+
+        var requisitions = response.Result?.Results.ToList();
+        Assert.That(requisitions, Is.Not.Null);
+        Assert.That(requisitions, Has.Count.GreaterThan(0));
+        Assert.Multiple(() =>
+        {
+            Assert.That(requisitions!.All(req => req.Status != RequisitionStatus.Undefined));
+            Assert.That(requisitions, Has.All.Matches<Requisition>(req => req.Id != Guid.Empty));
+        });
+    }
+
+    /// <summary>
     /// Tests all methods of the requisitions endpoint.
     /// Creates 3 requisitions, retrieves them using 3 <see cref="ResponsePage{T}" />s and deletes the requisitions after.
     /// </summary>

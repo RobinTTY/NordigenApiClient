@@ -1,2 +1,1 @@
-﻿- BREAKING CHANGE: TransactionTotalDays property of the Institution class is now of the more appropriate type of int instead of string
-- Added interfaces for endpoints to allow for mocking
+﻿- Added ability to configure the base API URL through the HttpClient

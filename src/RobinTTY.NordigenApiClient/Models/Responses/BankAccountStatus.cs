@@ -46,7 +46,7 @@ public enum BankAccountStatus
     [Description("READY")] Ready,
 
     /// <summary>
-    /// Indicates that the account has been suspended due to mre than 10 consecutive failed attempts to access the account.
+    /// Indicates that the account has been suspended due to more than 10 consecutive failed attempts to access the account.
     /// </summary>
     [Description("SUSPENDED")] Suspended
 }

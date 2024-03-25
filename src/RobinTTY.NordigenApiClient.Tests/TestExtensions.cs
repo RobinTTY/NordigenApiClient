@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using RobinTTY.NordigenApiClient.Endpoints;
 using RobinTTY.NordigenApiClient.Models;
 using RobinTTY.NordigenApiClient.Models.Responses;
 
@@ -32,9 +33,10 @@ internal static class TestExtensions
         });
     }
 
-    internal static NordigenClient GetConfiguredClient()
+    internal static NordigenClient GetConfiguredClient(string? baseAddress = null)
     {
-        var httpClient = new HttpClient();
+        var address = baseAddress ?? NordigenEndpointUrls.Base;
+        var httpClient = new HttpClient {BaseAddress = new Uri(address)};
         var secrets = File.ReadAllLines("secrets.txt");
         var credentials = new NordigenClientCredentials(secrets[0], secrets[1]);
         return new NordigenClient(httpClient, credentials);

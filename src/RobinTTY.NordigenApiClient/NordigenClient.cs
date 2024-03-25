@@ -57,6 +57,9 @@ public class NordigenClient : INordigenClient
             }
         };
 
+        if (_httpClient.BaseAddress == null)
+            _httpClient.BaseAddress = new Uri(NordigenEndpointUrls.Base);
+
         Credentials = credentials;
         JsonWebTokenPair = jsonWebTokenPair;
         TokenEndpoint = new TokenEndpoint(this);
@@ -75,7 +78,7 @@ public class NordigenClient : INordigenClient
         bool useAuthentication = true
     ) where TResponse : class where TError : class
     {
-        var requestUri = query != null ? UriQueryBuilder.BuildUriWithQueryString(uri, query) : uri;
+        var requestUri = query != null ? $"{uri}?{UriQueryBuilder.GetQueryString(query)}" : uri;
         HttpClient client;
         if (useAuthentication)
         {
