@@ -78,7 +78,7 @@ public class NordigenClient : INordigenClient
         bool useAuthentication = true
     ) where TResponse : class where TError : class
     {
-        var requestUri = query != null ? $"{uri}?{UriQueryBuilder.GetQueryString(query)}" : uri;
+        var requestUri = query != null ? uri + UriQueryBuilder.GetQueryString(query) : uri;
         HttpClient client;
         if (useAuthentication)
         {
