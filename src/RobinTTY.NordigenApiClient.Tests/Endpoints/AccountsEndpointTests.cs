@@ -114,7 +114,7 @@ internal class AccountsEndpointTests
 #else
         var startDate = new DateTime(2022, 08, 04);
         var balancesResponse = await _apiClient.AccountsEndpoint.GetTransactions(_accountId, startDate,
-            DateTime.Now.Subtract(TimeSpan.FromMinutes(1)));
+            DateTime.Now.Subtract(TimeSpan.FromDays(1)));
 #endif
 
         TestExtensions.AssertNordigenApiResponseIsSuccessful(balancesResponse, HttpStatusCode.OK);

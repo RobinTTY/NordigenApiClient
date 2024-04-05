@@ -28,9 +28,9 @@ public class Institution
     /// <summary>
     /// The days for which the transaction history is available.
     /// </summary>
-    [JsonPropertyName("transaction_total_days")]
     [JsonNumberHandling(JsonNumberHandling.AllowReadingFromString)]
-    public int TransactionTotalDays { get; }
+    [JsonPropertyName("transaction_total_days")]
+    public uint TransactionTotalDays { get; }
 
     /// <summary>
     /// The countries the institution operates in.
@@ -54,7 +54,7 @@ public class Institution
     /// <param name="countries">The countries the institution operates in.</param>
     /// <param name="logo">A <see cref="Uri" /> for the logo of the institution.</param>
     [JsonConstructor]
-    public Institution(string id, string name, string bic, int transactionTotalDays, List<string> countries,
+    public Institution(string id, string name, string bic, uint transactionTotalDays, List<string> countries,
         Uri logo)
     {
         Id = id;
