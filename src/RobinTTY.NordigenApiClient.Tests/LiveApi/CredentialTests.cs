@@ -2,7 +2,7 @@
 using RobinTTY.NordigenApiClient.Models.Errors;
 using RobinTTY.NordigenApiClient.Models.Requests;
 
-namespace RobinTTY.NordigenApiClient.Tests;
+namespace RobinTTY.NordigenApiClient.Tests.LiveApi;
 
 /// <summary>
 /// Tests the instantiation of the <see cref="NordigenClient" />.

@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace RobinTTY.NordigenApiClient.Tests.Endpoints;
+namespace RobinTTY.NordigenApiClient.Tests.LiveApi.Endpoints;
 
 internal class InstitutionsEndpointTests
 {

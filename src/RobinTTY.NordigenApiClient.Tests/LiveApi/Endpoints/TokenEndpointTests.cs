@@ -2,7 +2,7 @@
 using RobinTTY.NordigenApiClient.Models;
 using RobinTTY.NordigenApiClient.Models.Jwt;
 
-namespace RobinTTY.NordigenApiClient.Tests.Endpoints;
+namespace RobinTTY.NordigenApiClient.Tests.LiveApi.Endpoints;
 
 internal class TokenEndpointTests
 {

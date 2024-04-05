@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using RobinTTY.NordigenApiClient.Models.Responses;
 
-namespace RobinTTY.NordigenApiClient.Tests.Endpoints;
+namespace RobinTTY.NordigenApiClient.Tests.LiveApi.Endpoints;
 
 internal class AccountsEndpointTests
 {

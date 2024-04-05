@@ -3,7 +3,7 @@ using RobinTTY.NordigenApiClient.Models.Errors;
 using RobinTTY.NordigenApiClient.Models.Requests;
 using RobinTTY.NordigenApiClient.Models.Responses;
 
-namespace RobinTTY.NordigenApiClient.Tests.Endpoints;
+namespace RobinTTY.NordigenApiClient.Tests.LiveApi.Endpoints;
 
 internal class RequisitionsEndpointTests
 {

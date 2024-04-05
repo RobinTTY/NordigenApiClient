@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace RobinTTY.NordigenApiClient.Tests;
+namespace RobinTTY.NordigenApiClient.Tests.LiveApi;
 
 public class NordigenApiClientTests
 {
