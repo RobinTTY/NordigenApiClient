@@ -3,6 +3,7 @@ using System.Text.Json;
 using FakeItEasy;
 using RobinTTY.NordigenApiClient.JsonConverters;
 using RobinTTY.NordigenApiClient.Models.Responses;
+using RobinTTY.NordigenApiClient.Tests.Shared;
 
 namespace RobinTTY.NordigenApiClient.Tests.Mocks.Endpoints;
 
@@ -25,7 +26,7 @@ public class AccountsEndpointTests
     public async Task GetAccount()
     {
         var responsePayload =
-            JsonSerializer.Serialize(TestExtensions.GetMockData().AccountsEndpoint.GetAccount, _jsonOptions);
+            JsonSerializer.Serialize(TestExtensions.GetMockData().AccountsEndpointMockData.GetAccount, _jsonOptions);
         var response = new HttpResponseMessage
         {
             StatusCode = HttpStatusCode.OK,
@@ -52,7 +53,7 @@ public class AccountsEndpointTests
     public async Task GetBalances()
     {
         var responsePayload =
-            JsonSerializer.Serialize(TestExtensions.GetMockData().AccountsEndpoint.GetBalances, _jsonOptions);
+            JsonSerializer.Serialize(TestExtensions.GetMockData().AccountsEndpointMockData.GetBalances, _jsonOptions);
         var response = new HttpResponseMessage
         {
             StatusCode = HttpStatusCode.OK,
@@ -79,7 +80,7 @@ public class AccountsEndpointTests
     [Test]
     public async Task GetAccountDetails()
     {
-        var responsePayload = JsonSerializer.Serialize(TestExtensions.GetMockData().AccountsEndpoint.GetAccountDetails,
+        var responsePayload = JsonSerializer.Serialize(TestExtensions.GetMockData().AccountsEndpointMockData.GetAccountDetails,
             _jsonOptions);
         var response = new HttpResponseMessage
         {
@@ -112,7 +113,7 @@ public class AccountsEndpointTests
     public async Task GetTransactions()
     {
         var responsePayload =
-            JsonSerializer.Serialize(TestExtensions.GetMockData().AccountsEndpoint.GetTransactions, _jsonOptions);
+            JsonSerializer.Serialize(TestExtensions.GetMockData().AccountsEndpointMockData.GetTransactions, _jsonOptions);
         var response = new HttpResponseMessage
         {
             StatusCode = HttpStatusCode.OK,
@@ -150,7 +151,7 @@ public class AccountsEndpointTests
     public async Task GetTransactionRange()
     {
         var responsePayload =
-            JsonSerializer.Serialize(TestExtensions.GetMockData().AccountsEndpoint.GetTransactionRange, _jsonOptions);
+            JsonSerializer.Serialize(TestExtensions.GetMockData().AccountsEndpointMockData.GetTransactionRange, _jsonOptions);
         var response = new HttpResponseMessage
         {
             StatusCode = HttpStatusCode.OK,
@@ -181,7 +182,7 @@ public class AccountsEndpointTests
     public async Task GetTransactionRangeInFuture()
     {
         var responsePayload =
-            JsonSerializer.Serialize(TestExtensions.GetMockData().AccountsEndpoint.GetTransactionRangeInFuture, _jsonOptions);
+            JsonSerializer.Serialize(TestExtensions.GetMockData().AccountsEndpointMockData.GetTransactionRangeInFuture, _jsonOptions);
         var response = new HttpResponseMessage
         {
             StatusCode = HttpStatusCode.BadRequest,

@@ -1,5 +1,5 @@
 {
-  "AccountsEndpoint": {
+  "AccountsEndpointMockData": {
     "GetAccount": {
       "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
       "created": "2024-04-05T21:51:12.694Z",
@@ -135,6 +135,56 @@
         "detail": "Starting date '2024-04-15' is greater than end date '2024-04-05'. When specifying date range, starting date must precede the end date",
         "status_code": 400
       }
+    }
+  },
+  "AgreementsEndpointMockData": {
+    "GetAgreements": {
+      "count": 1,
+      "next": "https://bankaccountdata.gocardless.com/api/v2/agreements/enduser/?limit=100&offset=0",
+      "previous": "https://bankaccountdata.gocardless.com/api/v2/agreements/enduser/?limit=100&offset=0",
+      "results": [
+        {
+          "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+          "created": "2024-04-08T20:57:00.550Z",
+          "institution_id": "SANDBOXFINANCE_SFIN0000",
+          "max_historical_days": 90,
+          "access_valid_for_days": 90,
+          "access_scope": [
+            "balances",
+            "details",
+            "transactions"
+          ],
+          "accepted": "2024-04-08T20:57:00.550Z"
+        }
+      ]
+    },
+    "GetAgreement": {
+      "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "created": "2024-04-08T22:54:54.869Z",
+      "institution_id": "SANDBOXFINANCE_SFIN0000",
+      "max_historical_days": 90,
+      "access_valid_for_days": 90,
+      "access_scope": [
+        "balances",
+        "details",
+        "transactions"
+      ],
+      "accepted": "2024-04-08T22:54:54.869Z"
+    },
+    "CreateAgreement": {
+      "id": "3fa85f64-5717-4562-b3fc-2c963f66afa7",
+      "institution_id": "SANDBOXFINANCE_SFIN0000",
+      "max_historical_days": 145,
+      "access_valid_for_days": 145,
+      "access_scope": [
+        "balances",
+        "details",
+        "transactions"
+      ]
+    },
+    "DeleteAgreement": {
+      "summary": "End User Agreement deleted",
+      "detail": "End User Agreement bb37bc52-5b1d-44f9-b1cd-ec9594f25387 deleted"
     }
   }
 }

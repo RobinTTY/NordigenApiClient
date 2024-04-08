@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using RobinTTY.NordigenApiClient.Models.Responses;
+using RobinTTY.NordigenApiClient.Tests.Shared;
 
 namespace RobinTTY.NordigenApiClient.Tests.LiveApi.Endpoints;
 
@@ -19,7 +20,6 @@ internal class AccountsEndpointTests
     /// <summary>
     /// Tests the retrieval of an account.
     /// </summary>
-    /// <returns></returns>
     [Test]
     public async Task GetAccount()
     {
@@ -37,7 +37,6 @@ internal class AccountsEndpointTests
     /// <summary>
     /// Tests the retrieval of account balances.
     /// </summary>
-    /// <returns></returns>
     [Test]
     public async Task GetBalances()
     {
@@ -56,7 +55,6 @@ internal class AccountsEndpointTests
     /// <summary>
     /// Tests the retrieval of account details.
     /// </summary>
-    /// <returns></returns>
     [Test]
     public async Task GetAccountDetails()
     {
@@ -75,7 +73,6 @@ internal class AccountsEndpointTests
     /// <summary>
     /// Tests the retrieval of transactions.
     /// </summary>
-    /// <returns></returns>
     [Test]
     public async Task GetTransactions()
     {
@@ -103,7 +100,6 @@ internal class AccountsEndpointTests
     /// <summary>
     /// Tests the retrieval of transactions within a specific time frame.
     /// </summary>
-    /// <returns></returns>
     [Test]
     public async Task GetTransactionRange()
     {
@@ -125,7 +121,6 @@ internal class AccountsEndpointTests
     /// <summary>
     /// Tests the retrieval of transactions within a specific time frame in the future. This should return an error.
     /// </summary>
-    /// <returns></returns>
     [Test]
     public async Task GetTransactionRangeInFuture()
     {

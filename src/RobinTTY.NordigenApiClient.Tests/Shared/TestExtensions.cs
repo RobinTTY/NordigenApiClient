@@ -8,7 +8,7 @@ using RobinTTY.NordigenApiClient.Models.Responses;
 using RobinTTY.NordigenApiClient.Tests.Mocks;
 using RobinTTY.NordigenApiClient.Tests.Mocks.Responses;
 
-namespace RobinTTY.NordigenApiClient.Tests;
+namespace RobinTTY.NordigenApiClient.Tests.Shared;
 
 internal static class TestExtensions
 {

@@ -1,7 +1,7 @@
 ﻿using System.Net;
-using RobinTTY.NordigenApiClient.Models.Errors;
 using RobinTTY.NordigenApiClient.Models.Requests;
 using RobinTTY.NordigenApiClient.Models.Responses;
+using RobinTTY.NordigenApiClient.Tests.Shared;
 
 namespace RobinTTY.NordigenApiClient.Tests.LiveApi.Endpoints;
 
@@ -29,7 +29,7 @@ internal class AgreementsEndpointTests
 
         // Create 3 example agreements
         var agreementRequest = new CreateAgreementRequest(90, 90,
-            new List<string> {"balances", "details", "transactions"}, "SANDBOXFINANCE_SFIN0000");
+            ["balances", "details", "transactions"], "SANDBOXFINANCE_SFIN0000");
         var ids = new List<string>();
 
         var existingIds = existingAgreements.Result!.Results.Select(agreement => agreement.Id.ToString()).ToList();
@@ -43,15 +43,15 @@ internal class AgreementsEndpointTests
 
         // Get a response page for each agreement
         var page1Response = await _apiClient.AgreementsEndpoint.GetAgreements(1, 0);
-        AssertThatAgreementPageContainsAgreement(page1Response, ids);
+        AssertionHelper.AssertThatAgreementPageContainsAgreement(page1Response, ids);
 
         var page2Response = await page1Response.Result!.GetNextPage(_apiClient);
         Assert.That(page2Response, Is.Not.Null);
-        AssertThatAgreementPageContainsAgreement(page2Response!, ids);
+        AssertionHelper.AssertThatAgreementPageContainsAgreement(page2Response!, ids);
 
         var page3Response = await page2Response!.Result!.GetNextPage(_apiClient);
         Assert.That(page3Response, Is.Not.Null);
-        AssertThatAgreementPageContainsAgreement(page3Response!, ids);
+        AssertionHelper.AssertThatAgreementPageContainsAgreement(page3Response!, ids);
 
         // On the last page there should be a Url to the previous one
         Assert.That(page3Response!.Result!.Previous, Is.Not.Null);
@@ -60,7 +60,7 @@ internal class AgreementsEndpointTests
         var previousPageResponse = await page3Response.Result!.GetPreviousPage(_apiClient);
         Assert.That(previousPageResponse, Is.Not.Null);
 
-        AssertThatAgreementPageContainsAgreement(previousPageResponse!, ids);
+        AssertionHelper.AssertThatAgreementPageContainsAgreement(previousPageResponse!, ids);
 
         // The previous page agreement id should equal page 2 agreement id
         var prevAgreementId = previousPageResponse!.Result!.Results.First().Id;
@@ -85,7 +85,7 @@ internal class AgreementsEndpointTests
     {
         // Create agreement
         var agreementRequest = new CreateAgreementRequest(90, 90,
-            new List<string> {"balances", "details", "transactions"}, "SANDBOXFINANCE_SFIN0000");
+            ["balances", "details", "transactions"], "SANDBOXFINANCE_SFIN0000");
         var createResponse = await _apiClient.AgreementsEndpoint.CreateAgreement(agreementRequest);
         TestExtensions.AssertNordigenApiResponseIsSuccessful(createResponse, HttpStatusCode.Created);
         var id = createResponse.Result!.Id;
@@ -123,7 +123,7 @@ internal class AgreementsEndpointTests
     public async Task CreateAcceptAndDeleteAgreement()
     {
         // Create the agreement
-        var agreement = new CreateAgreementRequest(90, 90, new List<string> {"balances", "details", "transactions"},
+        var agreement = new CreateAgreementRequest(90, 90, ["balances", "details", "transactions"],
             "SANDBOXFINANCE_SFIN0000");
         var response = await _apiClient.AgreementsEndpoint.CreateAgreement(agreement);
         TestExtensions.AssertNordigenApiResponseIsSuccessful(response, HttpStatusCode.Created);
@@ -160,7 +160,7 @@ internal class AgreementsEndpointTests
     [Test]
     public async Task CreateAgreementWithInvalidInstitutionId()
     {
-        var agreement = new CreateAgreementRequest(90, 90, new List<string> {"balances", "details", "transactions"},
+        var agreement = new CreateAgreementRequest(90, 90, ["balances", "details", "transactions"],
             "SANDBOXFINANCE_SFIN000");
         var response = await _apiClient.AgreementsEndpoint.CreateAgreement(agreement);
         TestExtensions.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.BadRequest);
@@ -179,7 +179,7 @@ internal class AgreementsEndpointTests
     public async Task CreateAgreementWithInvalidParams()
     {
         var agreement = new CreateAgreementRequest(200, 200,
-            new List<string> {"balances", "details", "transactions", "invalid", "invalid2"}, "SANDBOXFINANCE_SFIN0000");
+            ["balances", "details", "transactions", "invalid", "invalid2"], "SANDBOXFINANCE_SFIN0000");
         var response = await _apiClient.AgreementsEndpoint.CreateAgreement(agreement);
         TestExtensions.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.BadRequest);
 
@@ -196,19 +196,6 @@ internal class AgreementsEndpointTests
             Assert.That(result.MaxHistoricalDaysError!.Detail,
                 Is.EqualTo(
                     "max_historical_days must be > 0 and <= SANDBOXFINANCE_SFIN0000 transaction_total_days (90)"));
-        });
-    }
-
-    private static void AssertThatAgreementPageContainsAgreement(
-        NordigenApiResponse<ResponsePage<Agreement>, BasicError> pagedResponse, List<string> ids)
-    {
-        TestExtensions.AssertNordigenApiResponseIsSuccessful(pagedResponse, HttpStatusCode.OK);
-        var page2Result = pagedResponse.Result!;
-        var page2Agreements = page2Result.Results.ToList();
-        Assert.Multiple(() =>
-        {
-            Assert.That(page2Agreements, Has.Count.EqualTo(1));
-            Assert.That(ids, Does.Contain(page2Agreements.First().Id.ToString()));
         });
     }
 }

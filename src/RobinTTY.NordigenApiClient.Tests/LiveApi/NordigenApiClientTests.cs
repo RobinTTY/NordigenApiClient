@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using RobinTTY.NordigenApiClient.Tests.Shared;
 
 namespace RobinTTY.NordigenApiClient.Tests.LiveApi;
 
