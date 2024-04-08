@@ -1,0 +1,140 @@
+{
+  "AccountsEndpoint": {
+    "GetAccount": {
+      "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "created": "2024-04-05T21:51:12.694Z",
+      "last_accessed": "2024-04-05T21:51:12.694Z",
+      "iban": "GL2010440000010445",
+      "institution_id": "SANDBOXFINANCE_SFIN0000",
+      "status": "READY",
+      "owner_name": "John Doe"
+    },
+    "GetBalances": {
+      "balances": [
+        {
+          "balanceAmount": {
+            "amount": "1913.12",
+            "currency": "EUR"
+          },
+          "balanceType": "closingAvailable",
+          "referenceDate": "2021-11-22"
+        },
+        {
+          "balanceAmount": {
+            "amount": "1913.12",
+            "currency": "EUR"
+          },
+          "balanceType": "forwardAvailable",
+          "referenceDate": "2021-11-19"
+        }
+      ]
+    },
+    "GetAccountDetails": {
+      "account": {
+        "resourceId": "abc",
+        "iban": "GL2010440000010445",
+        "currency": "EUR",
+        "ownerName": "Jane Doe",
+        "name": "Main Account",
+        "product": "Credit Card",
+        "cashAccountType": "CACC"
+      }
+    },
+    "GetTransactions": {
+      "transactions": {
+        "booked": [
+          {
+            "transactionId": "string",
+            "debtorName": "MON MOTHMA",
+            "debtorAccount": {
+              "iban": "GL2010440000010445"
+            },
+            "transactionAmount": {
+              "currency": "EUR",
+              "amount": "45.00"
+            },
+            "bankTransactionCode": "PMNT",
+            "bookingDate": "2021-11-19",
+            "valueDate": "2021-11-19",
+            "remittanceInformationUnstructured": "For the support of Restoration of the Republic foundation"
+          },
+          {
+            "transactionId": "string",
+            "transactionAmount": {
+              "currency": "string",
+              "amount": "947.26"
+            },
+            "bankTransactionCode": "string",
+            "bookingDate": "2021-11-19",
+            "valueDate": "2021-11-19",
+            "remittanceInformationUnstructured": "string"
+          }
+        ],
+        "pending": [
+          {
+            "transactionAmount": {
+              "currency": "string",
+              "amount": "99.20"
+            },
+            "valueDate": "2021-11-19",
+            "remittanceInformationUnstructured": "string"
+          }
+        ]
+      }
+    },
+    "GetTransactionRange": {
+      "transactions": {
+        "booked": [
+          {
+            "transactionId": "string",
+            "debtorName": "MON MOTHMA",
+            "debtorAccount": {
+              "iban": "GL2010440000010445"
+            },
+            "transactionAmount": {
+              "currency": "EUR",
+              "amount": "45.00"
+            },
+            "bankTransactionCode": "PMNT",
+            "bookingDate": "2021-11-19",
+            "valueDate": "2021-11-19",
+            "remittanceInformationUnstructured": "For the support of Restoration of the Republic foundation"
+          },
+          {
+            "transactionId": "string",
+            "transactionAmount": {
+              "currency": "string",
+              "amount": "947.26"
+            },
+            "bankTransactionCode": "string",
+            "bookingDate": "2021-11-19",
+            "valueDate": "2021-11-19",
+            "remittanceInformationUnstructured": "string"
+          }
+        ],
+        "pending": [
+          {
+            "transactionAmount": {
+              "currency": "string",
+              "amount": "99.20"
+            },
+            "valueDate": "2021-11-19",
+            "remittanceInformationUnstructured": "string"
+          }
+        ]
+      }
+    },
+    "GetTransactionRangeInFuture": {
+      "date_from": {
+        "summary": "Incorrect date range",
+        "detail": "Starting date '2024-04-15' is greater than end date '2024-04-05'. When specifying date range, starting date must precede the end date",
+        "status_code": 400
+      },
+      "date_to": {
+        "summary": "Incorrect date range",
+        "detail": "Starting date '2024-04-15' is greater than end date '2024-04-05'. When specifying date range, starting date must precede the end date",
+        "status_code": 400
+      }
+    }
+  }
+}

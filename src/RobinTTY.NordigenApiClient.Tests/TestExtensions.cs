@@ -1,12 +1,35 @@
 ﻿using System.Net;
+using System.Text.Json;
+using FakeItEasy;
 using RobinTTY.NordigenApiClient.Endpoints;
+using RobinTTY.NordigenApiClient.JsonConverters;
 using RobinTTY.NordigenApiClient.Models;
 using RobinTTY.NordigenApiClient.Models.Responses;
+using RobinTTY.NordigenApiClient.Tests.Mocks;
+using RobinTTY.NordigenApiClient.Tests.Mocks.Responses;
 
 namespace RobinTTY.NordigenApiClient.Tests;
 
 internal static class TestExtensions
 {
+    private static readonly string[] Secrets = File.ReadAllLines("secrets.txt");
+    private static MockResponsesModel MockData { get; }
+
+    static TestExtensions()
+    {
+        var json = File.ReadAllText("Mocks/Responses/responses.json");
+        var jsonOptions = new JsonSerializerOptions
+        {
+            Converters =
+            {
+                new JsonWebTokenConverter(), new GuidConverter(),
+                new CultureSpecificDecimalConverter(), new InstitutionsErrorConverter()
+            }
+        };
+        MockData = JsonSerializer.Deserialize<MockResponsesModel>(json, jsonOptions) ??
+               throw new InvalidOperationException("Could not deserialize mock Data");
+    }
+
     internal static void AssertNordigenApiResponseIsSuccessful<TResponse, TError>(
         NordigenApiResponse<TResponse, TError> response, HttpStatusCode statusCode)
         where TResponse : class where TError : class
@@ -36,9 +59,35 @@ internal static class TestExtensions
     internal static NordigenClient GetConfiguredClient(string? baseAddress = null)
     {
         var address = baseAddress ?? NordigenEndpointUrls.Base;
-        var httpClient = new HttpClient {BaseAddress = new Uri(address)};
-        var secrets = File.ReadAllLines("secrets.txt");
-        var credentials = new NordigenClientCredentials(secrets[0], secrets[1]);
+        var httpClient = new HttpClient();
+        httpClient.BaseAddress = new Uri(address);
+        var credentials = new NordigenClientCredentials(Secrets[0], Secrets[1]);
         return new NordigenClient(httpClient, credentials);
     }
+
+    internal static NordigenClient GetMockClient(List<HttpResponseMessage> responseMessages)
+    {
+        var fakeHttpMessageHandler = A.Fake<FakeHttpMessageHandler>();
+        var responses =
+            new List<HttpResponseMessage>
+            {
+                new(HttpStatusCode.OK)
+                {
+                    Content = new StringContent(
+                        $"{{\n  \"access\": \"{Secrets[4]}\",\n  \"access_expires\": 86400,\n" +
+                        $" \"refresh\": \"{Secrets[5]}\",\n  \"refresh_expires\": 2592000\n}}")
+                }
+            };
+
+        responses.AddRange(responseMessages);
+        A.CallTo(() =>
+                fakeHttpMessageHandler.FakeSendAsync(A<HttpRequestMessage>.Ignored, A<CancellationToken>.Ignored))
+            .ReturnsNextFromSequence(responses.ToArray());
+
+        var mockHttpClient = new HttpClient(fakeHttpMessageHandler);
+        var credentials = new NordigenClientCredentials(Secrets[0], Secrets[1]);
+        return new(mockHttpClient, credentials);
+    }
+
+    internal static MockResponsesModel GetMockData() => MockData;
 }
