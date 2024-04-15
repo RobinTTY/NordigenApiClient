@@ -186,5 +186,216 @@
       "summary": "End User Agreement deleted",
       "detail": "End User Agreement bb37bc52-5b1d-44f9-b1cd-ec9594f25387 deleted"
     }
+  },
+  "InstitutionsEndpointMockData": {
+    "GetInstitutions": [
+      {
+        "id": "N26_NTSBDEB1",
+        "name": "N26 Bank",
+        "bic": "NTSBDEB1",
+        "transaction_total_days": "90",
+        "countries": [
+          "GB",
+          "NO",
+          "SE",
+          "FI",
+          "DK",
+          "EE",
+          "LV",
+          "LT",
+          "NL",
+          "CZ",
+          "ES",
+          "PL",
+          "BE",
+          "DE",
+          "AT",
+          "BG",
+          "HR",
+          "CY",
+          "FR",
+          "GR",
+          "HU",
+          "IS",
+          "IE",
+          "IT",
+          "LI",
+          "LU",
+          "MT",
+          "PT",
+          "RO",
+          "SK",
+          "SI"
+        ],
+        "logo": "https://cdn-logos.gocardless.com/ais/N26_SANDBOX_NTSBDEB1.png",
+        "identification_codes": []
+      },
+      {
+        "id": "N26_NTSBDEB1",
+        "name": "N26 Bank",
+        "bic": "NTSBDEB1",
+        "transaction_total_days": "90",
+        "countries": [
+          "GB",
+          "NO",
+          "SE",
+          "FI",
+          "DK",
+          "EE",
+          "LV",
+          "LT",
+          "NL",
+          "CZ",
+          "ES",
+          "PL",
+          "BE",
+          "DE",
+          "AT",
+          "BG",
+          "HR",
+          "CY",
+          "FR",
+          "GR",
+          "HU",
+          "IS",
+          "IE",
+          "IT",
+          "LI",
+          "LU",
+          "MT",
+          "PT",
+          "RO",
+          "SK",
+          "SI"
+        ],
+        "logo": "https://cdn-logos.gocardless.com/ais/N26_SANDBOX_NTSBDEB1.png",
+        "identification_codes": []
+      }
+    ],
+    "GetInstitution": {
+      "id": "N26_NTSBDEB1",
+      "name": "N26 Bank",
+      "bic": "NTSBDEB1",
+      "transaction_total_days": "90",
+      "countries": [
+        "GB",
+        "NO",
+        "SE",
+        "FI",
+        "DK",
+        "EE",
+        "LV",
+        "LT",
+        "NL",
+        "CZ",
+        "ES",
+        "PL",
+        "BE",
+        "DE",
+        "AT",
+        "BG",
+        "HR",
+        "CY",
+        "FR",
+        "GR",
+        "HU",
+        "IS",
+        "IE",
+        "IT",
+        "LI",
+        "LU",
+        "MT",
+        "PT",
+        "RO",
+        "SK",
+        "SI"
+      ],
+      "logo": "https://cdn-logos.gocardless.com/ais/N26_SANDBOX_NTSBDEB1.png",
+      "supported_payments": {
+        "single-payment": [
+          "SCT",
+          "ISCT"
+        ]
+      },
+      "supported_features": [
+        "account_selection",
+        "business_accounts",
+        "card_accounts",
+        "payments",
+        "private_accounts"
+      ],
+      "identification_codes": []
+    }
+  },
+  "RequisitionsEndpointMockData": {
+    "GetRequisitions": {
+      "count": 1,
+      "next": "https://bankaccountdata.gocardless.com/api/v2/requisitions/?limit=100&offset=0",
+      "previous": "https://bankaccountdata.gocardless.com/api/v2/requisitions/?limit=100&offset=0",
+      "results": [
+        {
+          "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+          "created": "2024-04-12T23:50:34.962Z",
+          "redirect": "https://www.robintty.com",
+          "status": "CR",
+          "institution_id": "SANDBOXFINANCE_SFIN0000",
+          "agreement": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+          "reference": "example-reference",
+          "accounts": [
+            "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+            "3fa85f64-5717-4562-b3fc-2c963f66afa7"
+          ],
+          "user_language": "EN",
+          "link": "https://ob.nordigen.com/psd2/start/3fa85f64-5717-4562-b3fc-2c963f66afa6/SANDBOXFINANCE_SFIN0000",
+          "ssn": "555-50-1234",
+          "account_selection": false,
+          "redirect_immediate": true
+        }
+      ]
+    },
+    "GetRequisition": {
+      "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "created": "2024-04-12T23:50:34.962Z",
+      "redirect": "https://www.robintty.com",
+      "status": "CR",
+      "institution_id": "SANDBOXFINANCE_SFIN0000",
+      "agreement": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "reference": "example-reference",
+      "accounts": [
+        "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "3fa85f64-5717-4562-b3fc-2c963f66afa7"
+      ],
+      "user_language": "EN",
+      "link": "https://ob.nordigen.com/psd2/start/3fa85f64-5717-4562-b3fc-2c963f66afa6/SANDBOXFINANCE_SFIN0000",
+      "ssn": "555-50-1234",
+      "account_selection": false,
+      "redirect_immediate": true
+    },
+    "CreateRequisition": {
+      "redirect": "https://www.robintty.com",
+      "institution_id": "SANDBOXFINANCE_SFIN0000",
+      "agreement": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "reference": "example-reference",
+      "user_language": "EN",
+      "ssn": "555-50-1234",
+      "account_selection": false,
+      "redirect_immediate": true
+    },
+    "DeleteRequisition": {
+      "summary": "Requisition deleted",
+      "detail": "Requisition b5462cad-5a7f-42e1-881d-d0fa066f54bc deleted with all its End User Agreements"
+    }
+  },
+  "TokenEndpointMockData": {
+    "GetNewToken": {
+      "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwic3ViIjoiMTIzNDU2Nzg5MCIsIm5hbWUiOiJKb2huIERvZSIsImlhdCI6MTUxNjIzOTAyMiwiZXhwIjozMzI3MDExNzU5NH0.gEa5VdPSqZW2xk9IqCEqiw6bzBOer_uAR1yp2XK7FFo",
+      "access_expires": 86400,
+      "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsInN1YiI6IjEyMzQ1Njc4OTAiLCJuYW1lIjoiSm9obiBEb2UiLCJpYXQiOjE1MTYyMzkwMjIsImV4cCI6MzMyNzAxMTc1OTR9.xfOrczY3KvG-SiHLZkVLPas017ZX8DHkcCN78Xd9cac",
+      "refresh_expires": 2592000
+    },
+    "RefreshAccessToken": {
+      "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwic3ViIjoiMTIzNDU2Nzg5MCIsIm5hbWUiOiJKb2huIERvZSIsImlhdCI6MTUxNjIzOTAyMiwiZXhwIjozMzI3MDExNzU5NH0.gEa5VdPSqZW2xk9IqCEqiw6bzBOer_uAR1yp2XK7FFo",
+      "access_expires": 86400
+    }
   }
 }

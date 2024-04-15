@@ -1,14 +1,21 @@
 ﻿using RobinTTY.NordigenApiClient.Models.Errors;
+using RobinTTY.NordigenApiClient.Models.Jwt;
 using RobinTTY.NordigenApiClient.Models.Responses;
 
 namespace RobinTTY.NordigenApiClient.Tests.Mocks.Responses;
 
 internal class MockResponsesModel(
     AccountsEndpointMockData accountsEndpointMockData,
-    AgreementsEndpointMockData agreementsEndpointMockData)
+    AgreementsEndpointMockData agreementsEndpointMockData,
+    InstitutionsEndpointMockData institutionsEndpointMockData,
+    RequisitionsEndpointMockData requisitionsEndpointMockData,
+    TokenEndpointMockData tokenEndpointMockData)
 {
     public AccountsEndpointMockData AccountsEndpointMockData { get; set; } = accountsEndpointMockData;
     public AgreementsEndpointMockData AgreementsEndpointMockData { get; set; } = agreementsEndpointMockData;
+    public InstitutionsEndpointMockData InstitutionsEndpointMockData { get; set; } = institutionsEndpointMockData;
+    public RequisitionsEndpointMockData RequisitionsEndpointMockData { get; set; } = requisitionsEndpointMockData;
+    public TokenEndpointMockData TokenEndpointMockData { get; set; } = tokenEndpointMockData;
 }
 
 internal class AccountsEndpointMockData(
@@ -37,4 +44,28 @@ internal class AgreementsEndpointMockData(
     public Agreement CreateAgreement { get; set; } = createAgreement;
     public Agreement GetAgreement { get; set; } = getAgreement;
     public BasicResponse DeleteAgreement { get; set; } = deleteAgreement;
+}
+
+internal class InstitutionsEndpointMockData(List<Institution> getInstitutions, Institution getInstitution)
+{
+    public List<Institution> GetInstitutions { get; set; } = getInstitutions;
+    public Institution GetInstitution { get; set; } = getInstitution;
+}
+
+internal class RequisitionsEndpointMockData(
+    ResponsePage<Requisition> getRequisitions,
+    Requisition getRequisition,
+    Requisition createRequisition,
+    BasicResponse deleteRequisition)
+{
+    public ResponsePage<Requisition> GetRequisitions { get; set; } = getRequisitions;
+    public Requisition GetRequisition { get; set; } = getRequisition;
+    public Requisition CreateRequisition { get; set; } = createRequisition;
+    public BasicResponse DeleteRequisition { get; set; } = deleteRequisition;
+}
+
+internal class TokenEndpointMockData(JsonWebTokenPair getNewToken, JsonWebAccessToken refreshAccessToken)
+{
+    public JsonWebTokenPair GetNewToken { get; set; } = getNewToken;
+    public JsonWebAccessToken RefreshAccessToken { get; set; } = refreshAccessToken;
 }
