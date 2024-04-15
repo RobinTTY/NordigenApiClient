@@ -12,7 +12,7 @@ internal class JsonWebTokenPairTests
     [OneTimeSetUp]
     public void Setup()
     {
-        _apiClient = TestExtensions.GetConfiguredClient();
+        _apiClient = TestHelpers.GetConfiguredClient();
     }
 
     /// <summary>

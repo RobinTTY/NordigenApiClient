@@ -10,12 +10,12 @@ using RobinTTY.NordigenApiClient.Tests.Mocks.Responses;
 
 namespace RobinTTY.NordigenApiClient.Tests.Shared;
 
-internal static class TestExtensions
+internal static class TestHelpers
 {
     private static readonly string[] Secrets = File.ReadAllLines("secrets.txt");
     private static MockResponsesModel MockData { get; }
 
-    static TestExtensions()
+    static TestHelpers()
     {
         var json = File.ReadAllText("Mocks/Responses/responses.json");
         var jsonOptions = new JsonSerializerOptions
@@ -27,7 +27,7 @@ internal static class TestExtensions
             }
         };
         MockData = JsonSerializer.Deserialize<MockResponsesModel>(json, jsonOptions) ??
-               throw new InvalidOperationException("Could not deserialize mock Data");
+                   throw new InvalidOperationException("Could not deserialize mock Data");
     }
 
     internal static void AssertNordigenApiResponseIsSuccessful<TResponse, TError>(
@@ -65,21 +65,18 @@ internal static class TestExtensions
         return new NordigenClient(httpClient, credentials);
     }
 
-    internal static NordigenClient GetMockClient(List<HttpResponseMessage> responseMessages)
+    internal static NordigenClient GetMockClient(List<HttpResponseMessage> responseMessages, bool addDefaultAuthToken = true)
     {
         var fakeHttpMessageHandler = A.Fake<FakeHttpMessageHandler>();
-        var responses =
-            new List<HttpResponseMessage>
-            {
-                new(HttpStatusCode.OK)
-                {
-                    Content = new StringContent(
-                        $"{{\n  \"access\": \"{Secrets[4]}\",\n  \"access_expires\": 86400,\n" +
-                        $" \"refresh\": \"{Secrets[5]}\",\n  \"refresh_expires\": 2592000\n}}")
-                }
-            };
+        var token = new HttpResponseMessage(HttpStatusCode.OK)
+        {
+            Content = new StringContent(
+                $"{{\n  \"access\": \"{Secrets[4]}\",\n  \"access_expires\": 86400,\n" +
+                $" \"refresh\": \"{Secrets[5]}\",\n  \"refresh_expires\": 2592000\n}}")
+        };
+        var responses = new List<HttpResponseMessage>();
+        responses.AddRange(addDefaultAuthToken ? [token, ..responseMessages] : responseMessages);
 
-        responses.AddRange(responseMessages);
         A.CallTo(() =>
                 fakeHttpMessageHandler.FakeSendAsync(A<HttpRequestMessage>.Ignored, A<CancellationToken>.Ignored))
             .ReturnsNextFromSequence(responses.ToArray());
@@ -90,4 +87,13 @@ internal static class TestExtensions
     }
 
     internal static MockResponsesModel GetMockData() => MockData;
+
+    internal static JsonSerializerOptions GetSerializerOptions() => new()
+    {
+        Converters =
+        {
+            new JsonWebTokenConverter(), new GuidConverter(),
+            new CultureSpecificDecimalConverter(), new InstitutionsErrorConverter()
+        }
+    };
 }

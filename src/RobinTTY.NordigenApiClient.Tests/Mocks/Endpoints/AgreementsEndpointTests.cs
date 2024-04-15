@@ -1,23 +1,14 @@
 ﻿using System.Net;
 using System.Text.Json;
 using FakeItEasy;
-using RobinTTY.NordigenApiClient.JsonConverters;
 using RobinTTY.NordigenApiClient.Models.Requests;
-using RobinTTY.NordigenApiClient.Models.Responses;
 using RobinTTY.NordigenApiClient.Tests.Shared;
 
 namespace RobinTTY.NordigenApiClient.Tests.Mocks.Endpoints;
 
 public class AgreementsEndpointTests
 {
-    private readonly JsonSerializerOptions _jsonOptions = new()
-    {
-        Converters =
-        {
-            new JsonWebTokenConverter(), new GuidConverter(),
-            new CultureSpecificDecimalConverter(), new InstitutionsErrorConverter()
-        }
-    };
+    private readonly JsonSerializerOptions _jsonOptions = TestHelpers.GetSerializerOptions();
 
     /// <summary>
     /// Tests the retrieval of end user agreements.
@@ -26,17 +17,17 @@ public class AgreementsEndpointTests
     public async Task GetAgreements()
     {
         var responsePayload =
-            JsonSerializer.Serialize(TestExtensions.GetMockData().AgreementsEndpointMockData.GetAgreements,
+            JsonSerializer.Serialize(TestHelpers.GetMockData().AgreementsEndpointMockData.GetAgreements,
                 _jsonOptions);
         var response = new HttpResponseMessage
         {
             StatusCode = HttpStatusCode.OK,
             Content = new StringContent(responsePayload)
         };
-        var apiClient = TestExtensions.GetMockClient([response]);
+        var apiClient = TestHelpers.GetMockClient([response]);
 
         var agreements = await apiClient.AgreementsEndpoint.GetAgreements(100, 0);
-        TestExtensions.AssertNordigenApiResponseIsSuccessful(agreements, HttpStatusCode.OK);
+        TestHelpers.AssertNordigenApiResponseIsSuccessful(agreements, HttpStatusCode.OK);
 
         var responseAgreement = agreements.Result!.Results.First();
         Assert.Multiple(() =>
@@ -72,17 +63,17 @@ public class AgreementsEndpointTests
     public async Task GetAgreement()
     {
         var responsePayload =
-            JsonSerializer.Serialize(TestExtensions.GetMockData().AgreementsEndpointMockData.GetAgreement,
+            JsonSerializer.Serialize(TestHelpers.GetMockData().AgreementsEndpointMockData.GetAgreement,
                 _jsonOptions);
         var response = new HttpResponseMessage
         {
             StatusCode = HttpStatusCode.OK,
             Content = new StringContent(responsePayload)
         };
-        var apiClient = TestExtensions.GetMockClient([response]);
+        var apiClient = TestHelpers.GetMockClient([response]);
 
         var agreement = await apiClient.AgreementsEndpoint.GetAgreement(A.Dummy<Guid>());
-        TestExtensions.AssertNordigenApiResponseIsSuccessful(agreement, HttpStatusCode.OK);
+        TestHelpers.AssertNordigenApiResponseIsSuccessful(agreement, HttpStatusCode.OK);
 
         Assert.Multiple(() =>
         {
@@ -106,19 +97,19 @@ public class AgreementsEndpointTests
     public async Task CreateAgreement()
     {
         var responsePayload =
-            JsonSerializer.Serialize(TestExtensions.GetMockData().AgreementsEndpointMockData.CreateAgreement,
+            JsonSerializer.Serialize(TestHelpers.GetMockData().AgreementsEndpointMockData.CreateAgreement,
                 _jsonOptions);
         var response = new HttpResponseMessage
         {
             StatusCode = HttpStatusCode.Created,
             Content = new StringContent(responsePayload)
         };
-        var apiClient = TestExtensions.GetMockClient([response]);
+        var apiClient = TestHelpers.GetMockClient([response]);
 
         var agreementRequest = new CreateAgreementRequest(145, 145,
             ["balances", "details", "transactions"], "SANDBOXFINANCE_SFIN0000");
         var createResponse = await apiClient.AgreementsEndpoint.CreateAgreement(agreementRequest);
-        TestExtensions.AssertNordigenApiResponseIsSuccessful(createResponse, HttpStatusCode.Created);
+        TestHelpers.AssertNordigenApiResponseIsSuccessful(createResponse, HttpStatusCode.Created);
 
         Assert.Multiple(() =>
         {
@@ -139,16 +130,21 @@ public class AgreementsEndpointTests
     public async Task DeleteAgreement()
     {
         var responsePayload =
-            JsonSerializer.Serialize(TestExtensions.GetMockData().AgreementsEndpointMockData.DeleteAgreement,
+            JsonSerializer.Serialize(TestHelpers.GetMockData().AgreementsEndpointMockData.DeleteAgreement,
                 _jsonOptions);
         var response = new HttpResponseMessage
         {
             StatusCode = HttpStatusCode.OK,
             Content = new StringContent(responsePayload)
         };
-        var apiClient = TestExtensions.GetMockClient([response]);
+        var apiClient = TestHelpers.GetMockClient([response]);
         
         var result = await apiClient.AgreementsEndpoint.DeleteAgreement(A.Dummy<Guid>());
-        TestExtensions.AssertNordigenApiResponseIsSuccessful(result, HttpStatusCode.OK);
+        TestHelpers.AssertNordigenApiResponseIsSuccessful(result, HttpStatusCode.OK);
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.Result?.Summary, Is.EqualTo("End User Agreement deleted"));
+            Assert.That(result.Result?.Detail, Is.EqualTo("End User Agreement bb37bc52-5b1d-44f9-b1cd-ec9594f25387 deleted"));
+        });
     }
 }

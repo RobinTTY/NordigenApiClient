@@ -14,7 +14,7 @@ internal class AccountsEndpointTests
     public void Setup()
     {
         _accountId = Guid.Parse(_secrets[9]);
-        _apiClient = TestExtensions.GetConfiguredClient();
+        _apiClient = TestHelpers.GetConfiguredClient();
     }
 
     /// <summary>
@@ -24,7 +24,7 @@ internal class AccountsEndpointTests
     public async Task GetAccount()
     {
         var accountResponse = await _apiClient.AccountsEndpoint.GetAccount(_accountId);
-        TestExtensions.AssertNordigenApiResponseIsSuccessful(accountResponse, HttpStatusCode.OK);
+        TestHelpers.AssertNordigenApiResponseIsSuccessful(accountResponse, HttpStatusCode.OK);
         var account = accountResponse.Result!;
         Assert.Multiple(() =>
         {
@@ -41,7 +41,7 @@ internal class AccountsEndpointTests
     public async Task GetBalances()
     {
         var balancesResponse = await _apiClient.AccountsEndpoint.GetBalances(_accountId);
-        TestExtensions.AssertNordigenApiResponseIsSuccessful(balancesResponse, HttpStatusCode.OK);
+        TestHelpers.AssertNordigenApiResponseIsSuccessful(balancesResponse, HttpStatusCode.OK);
         var balances = balancesResponse.Result!;
         Assert.Multiple(() =>
         {
@@ -59,7 +59,7 @@ internal class AccountsEndpointTests
     public async Task GetAccountDetails()
     {
         var detailsResponse = await _apiClient.AccountsEndpoint.GetAccountDetails(_accountId);
-        TestExtensions.AssertNordigenApiResponseIsSuccessful(detailsResponse, HttpStatusCode.OK);
+        TestHelpers.AssertNordigenApiResponseIsSuccessful(detailsResponse, HttpStatusCode.OK);
         var details = detailsResponse.Result!;
         Assert.Multiple(() =>
         {
@@ -77,7 +77,7 @@ internal class AccountsEndpointTests
     public async Task GetTransactions()
     {
         var transactionsResponse = await _apiClient.AccountsEndpoint.GetTransactions(_accountId);
-        TestExtensions.AssertNordigenApiResponseIsSuccessful(transactionsResponse, HttpStatusCode.OK);
+        TestHelpers.AssertNordigenApiResponseIsSuccessful(transactionsResponse, HttpStatusCode.OK);
         var transactions = transactionsResponse.Result!;
         Assert.Multiple(() =>
         {
@@ -114,7 +114,7 @@ internal class AccountsEndpointTests
             DateTime.Now.Subtract(TimeSpan.FromDays(1)));
 #endif
 
-        TestExtensions.AssertNordigenApiResponseIsSuccessful(balancesResponse, HttpStatusCode.OK);
+        TestHelpers.AssertNordigenApiResponseIsSuccessful(balancesResponse, HttpStatusCode.OK);
         Assert.That(balancesResponse.Result!.BookedTransactions, Has.Count.AtLeast(6));
     }
 
@@ -133,7 +133,7 @@ internal class AccountsEndpointTests
         var balancesResponse =
             await _apiClient.AccountsEndpoint.GetTransactions(_accountId, dateInFuture, dateInFuture.AddDays(1));
 #endif
-        TestExtensions.AssertNordigenApiResponseIsUnsuccessful(balancesResponse, HttpStatusCode.BadRequest);
+        TestHelpers.AssertNordigenApiResponseIsUnsuccessful(balancesResponse, HttpStatusCode.BadRequest);
         Assert.Multiple(() =>
         {
             Assert.That(balancesResponse.Error!.StartDateError, Is.Not.Null);

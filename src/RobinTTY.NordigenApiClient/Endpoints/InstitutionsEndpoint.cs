@@ -48,6 +48,7 @@ public class InstitutionsEndpoint : IInstitutionsEndpoint
             query.Add(GetSupportFlagQuery("pending_transactions_supported", pendingTransactionsSupported.Value));
         if (ssnVerificationSupported.HasValue)
             query.Add(GetSupportFlagQuery("ssn_verification_supported", ssnVerificationSupported.Value));
+        
         return await _nordigenClient.MakeRequest<List<Institution>, InstitutionsError>(
             NordigenEndpointUrls.InstitutionsEndpoint, HttpMethod.Get, cancellationToken, query);
     }

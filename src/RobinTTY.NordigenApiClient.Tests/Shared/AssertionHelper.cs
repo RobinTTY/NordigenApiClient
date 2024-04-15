@@ -9,7 +9,7 @@ public class AssertionHelper
     internal static void AssertThatAgreementPageContainsAgreement(
         NordigenApiResponse<ResponsePage<Agreement>, BasicError> pagedResponse, List<string> ids)
     {
-        TestExtensions.AssertNordigenApiResponseIsSuccessful(pagedResponse, HttpStatusCode.OK);
+        TestHelpers.AssertNordigenApiResponseIsSuccessful(pagedResponse, HttpStatusCode.OK);
         var page2Result = pagedResponse.Result!;
         var page2Agreements = page2Result.Results.ToList();
         Assert.Multiple(() =>

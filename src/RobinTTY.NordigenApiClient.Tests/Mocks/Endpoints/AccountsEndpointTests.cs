@@ -1,7 +1,6 @@
 ﻿using System.Net;
 using System.Text.Json;
 using FakeItEasy;
-using RobinTTY.NordigenApiClient.JsonConverters;
 using RobinTTY.NordigenApiClient.Models.Responses;
 using RobinTTY.NordigenApiClient.Tests.Shared;
 
@@ -9,33 +8,25 @@ namespace RobinTTY.NordigenApiClient.Tests.Mocks.Endpoints;
 
 public class AccountsEndpointTests
 {
-    private readonly JsonSerializerOptions _jsonOptions = new()
-    {
-        Converters =
-        {
-            new JsonWebTokenConverter(), new GuidConverter(),
-            new CultureSpecificDecimalConverter(), new InstitutionsErrorConverter()
-        }
-    };
+    private readonly JsonSerializerOptions _jsonOptions = TestHelpers.GetSerializerOptions();
 
     /// <summary>
     /// Tests the retrieval of an account.
     /// </summary>
-    /// <returns></returns>
     [Test]
     public async Task GetAccount()
     {
         var responsePayload =
-            JsonSerializer.Serialize(TestExtensions.GetMockData().AccountsEndpointMockData.GetAccount, _jsonOptions);
+            JsonSerializer.Serialize(TestHelpers.GetMockData().AccountsEndpointMockData.GetAccount, _jsonOptions);
         var response = new HttpResponseMessage
         {
             StatusCode = HttpStatusCode.OK,
             Content = new StringContent(responsePayload)
         };
-        var apiClient = TestExtensions.GetMockClient([response]);
+        var apiClient = TestHelpers.GetMockClient([response]);
 
         var accountResponse = await apiClient.AccountsEndpoint.GetAccount(A.Dummy<Guid>());
-        TestExtensions.AssertNordigenApiResponseIsSuccessful(accountResponse, HttpStatusCode.OK);
+        TestHelpers.AssertNordigenApiResponseIsSuccessful(accountResponse, HttpStatusCode.OK);
         var account = accountResponse.Result!;
         Assert.Multiple(() =>
         {
@@ -48,21 +39,20 @@ public class AccountsEndpointTests
     /// <summary>
     /// Tests the retrieval of account balances.
     /// </summary>
-    /// <returns></returns>
     [Test]
     public async Task GetBalances()
     {
         var responsePayload =
-            JsonSerializer.Serialize(TestExtensions.GetMockData().AccountsEndpointMockData.GetBalances, _jsonOptions);
+            JsonSerializer.Serialize(TestHelpers.GetMockData().AccountsEndpointMockData.GetBalances, _jsonOptions);
         var response = new HttpResponseMessage
         {
             StatusCode = HttpStatusCode.OK,
             Content = new StringContent(responsePayload)
         };
-        var apiClient = TestExtensions.GetMockClient([response]);
+        var apiClient = TestHelpers.GetMockClient([response]);
 
         var balancesResponse = await apiClient.AccountsEndpoint.GetBalances(A.Dummy<Guid>());
-        TestExtensions.AssertNordigenApiResponseIsSuccessful(balancesResponse, HttpStatusCode.OK);
+        TestHelpers.AssertNordigenApiResponseIsSuccessful(balancesResponse, HttpStatusCode.OK);
         var balances = balancesResponse.Result!;
         Assert.Multiple(() =>
         {
@@ -76,21 +66,20 @@ public class AccountsEndpointTests
     /// <summary>
     /// Tests the retrieval of account details.
     /// </summary>
-    /// <returns></returns>
     [Test]
     public async Task GetAccountDetails()
     {
-        var responsePayload = JsonSerializer.Serialize(TestExtensions.GetMockData().AccountsEndpointMockData.GetAccountDetails,
+        var responsePayload = JsonSerializer.Serialize(TestHelpers.GetMockData().AccountsEndpointMockData.GetAccountDetails,
             _jsonOptions);
         var response = new HttpResponseMessage
         {
             StatusCode = HttpStatusCode.OK,
             Content = new StringContent(responsePayload)
         };
-        var apiClient = TestExtensions.GetMockClient([response]);
+        var apiClient = TestHelpers.GetMockClient([response]);
 
         var detailsResponse = await apiClient.AccountsEndpoint.GetAccountDetails(A.Dummy<Guid>());
-        TestExtensions.AssertNordigenApiResponseIsSuccessful(detailsResponse, HttpStatusCode.OK);
+        TestHelpers.AssertNordigenApiResponseIsSuccessful(detailsResponse, HttpStatusCode.OK);
         var details = detailsResponse.Result!;
 
         Assert.Multiple(() =>
@@ -108,21 +97,20 @@ public class AccountsEndpointTests
     /// <summary>
     /// Tests the retrieval of transactions.
     /// </summary>
-    /// <returns></returns>
     [Test]
     public async Task GetTransactions()
     {
         var responsePayload =
-            JsonSerializer.Serialize(TestExtensions.GetMockData().AccountsEndpointMockData.GetTransactions, _jsonOptions);
+            JsonSerializer.Serialize(TestHelpers.GetMockData().AccountsEndpointMockData.GetTransactions, _jsonOptions);
         var response = new HttpResponseMessage
         {
             StatusCode = HttpStatusCode.OK,
             Content = new StringContent(responsePayload)
         };
-        var apiClient = TestExtensions.GetMockClient([response]);
+        var apiClient = TestHelpers.GetMockClient([response]);
 
         var transactionsResponse = await apiClient.AccountsEndpoint.GetTransactions(A.Dummy<Guid>());
-        TestExtensions.AssertNordigenApiResponseIsSuccessful(transactionsResponse, HttpStatusCode.OK);
+        TestHelpers.AssertNordigenApiResponseIsSuccessful(transactionsResponse, HttpStatusCode.OK);
         var transactions = transactionsResponse.Result!;
 
         Assert.Multiple(() =>
@@ -146,18 +134,17 @@ public class AccountsEndpointTests
     /// <summary>
     /// Tests the retrieval of transactions within a specific time frame.
     /// </summary>
-    /// <returns></returns>
     [Test]
     public async Task GetTransactionRange()
     {
         var responsePayload =
-            JsonSerializer.Serialize(TestExtensions.GetMockData().AccountsEndpointMockData.GetTransactionRange, _jsonOptions);
+            JsonSerializer.Serialize(TestHelpers.GetMockData().AccountsEndpointMockData.GetTransactionRange, _jsonOptions);
         var response = new HttpResponseMessage
         {
             StatusCode = HttpStatusCode.OK,
             Content = new StringContent(responsePayload)
         };
-        var apiClient = TestExtensions.GetMockClient([response]);
+        var apiClient = TestHelpers.GetMockClient([response]);
 
 #if NET6_0_OR_GREATER
         var startDate = new DateOnly(2022, 08, 04);
@@ -170,25 +157,24 @@ public class AccountsEndpointTests
             DateTime.Now.Subtract(TimeSpan.FromDays(1)));
 #endif
 
-        TestExtensions.AssertNordigenApiResponseIsSuccessful(balancesResponse, HttpStatusCode.OK);
+        TestHelpers.AssertNordigenApiResponseIsSuccessful(balancesResponse, HttpStatusCode.OK);
         Assert.That(balancesResponse.Result!.BookedTransactions, Has.Count.EqualTo(2));
     }
     
     /// <summary>
     /// Tests the retrieval of transactions within a specific time frame in the future. This should return an error.
     /// </summary>
-    /// <returns></returns>
     [Test]
     public async Task GetTransactionRangeInFuture()
     {
         var responsePayload =
-            JsonSerializer.Serialize(TestExtensions.GetMockData().AccountsEndpointMockData.GetTransactionRangeInFuture, _jsonOptions);
+            JsonSerializer.Serialize(TestHelpers.GetMockData().AccountsEndpointMockData.GetTransactionRangeInFuture, _jsonOptions);
         var response = new HttpResponseMessage
         {
             StatusCode = HttpStatusCode.BadRequest,
             Content = new StringContent(responsePayload)
         };
-        var apiClient = TestExtensions.GetMockClient([response]);
+        var apiClient = TestHelpers.GetMockClient([response]);
         
         var dateInFuture = DateTime.Now.AddDays(1);
 #if NET6_0_OR_GREATER
@@ -200,7 +186,7 @@ public class AccountsEndpointTests
             await apiClient.AccountsEndpoint.GetTransactions(A.Dummy<Guid>(), dateInFuture, dateInFuture.AddDays(1));
 #endif
         
-        TestExtensions.AssertNordigenApiResponseIsUnsuccessful(balancesResponse, HttpStatusCode.BadRequest);
+        TestHelpers.AssertNordigenApiResponseIsUnsuccessful(balancesResponse, HttpStatusCode.BadRequest);
         Assert.Multiple(() =>
         {
             Assert.That(balancesResponse.Error!.StartDateError, Is.Not.Null);

@@ -12,7 +12,7 @@ internal class AgreementsEndpointTests
     [OneTimeSetUp]
     public void Setup()
     {
-        _apiClient = TestExtensions.GetConfiguredClient();
+        _apiClient = TestHelpers.GetConfiguredClient();
     }
 
     /// <summary>
@@ -25,7 +25,7 @@ internal class AgreementsEndpointTests
     {
         // Get existing agreements
         var existingAgreements = await _apiClient.AgreementsEndpoint.GetAgreements(100, 0);
-        TestExtensions.AssertNordigenApiResponseIsSuccessful(existingAgreements, HttpStatusCode.OK);
+        TestHelpers.AssertNordigenApiResponseIsSuccessful(existingAgreements, HttpStatusCode.OK);
 
         // Create 3 example agreements
         var agreementRequest = new CreateAgreementRequest(90, 90,
@@ -37,7 +37,7 @@ internal class AgreementsEndpointTests
         for (var i = 0; i < 3; i++)
         {
             var createResponse = await _apiClient.AgreementsEndpoint.CreateAgreement(agreementRequest);
-            TestExtensions.AssertNordigenApiResponseIsSuccessful(createResponse, HttpStatusCode.Created);
+            TestHelpers.AssertNordigenApiResponseIsSuccessful(createResponse, HttpStatusCode.Created);
             ids.Add(createResponse.Result!.Id.ToString());
         }
 
@@ -72,7 +72,7 @@ internal class AgreementsEndpointTests
         foreach (var id in ids)
         {
             var result = await _apiClient.AgreementsEndpoint.DeleteAgreement(id);
-            TestExtensions.AssertNordigenApiResponseIsSuccessful(result, HttpStatusCode.OK);
+            TestHelpers.AssertNordigenApiResponseIsSuccessful(result, HttpStatusCode.OK);
         }
     }
 
@@ -87,19 +87,19 @@ internal class AgreementsEndpointTests
         var agreementRequest = new CreateAgreementRequest(90, 90,
             ["balances", "details", "transactions"], "SANDBOXFINANCE_SFIN0000");
         var createResponse = await _apiClient.AgreementsEndpoint.CreateAgreement(agreementRequest);
-        TestExtensions.AssertNordigenApiResponseIsSuccessful(createResponse, HttpStatusCode.Created);
+        TestHelpers.AssertNordigenApiResponseIsSuccessful(createResponse, HttpStatusCode.Created);
         var id = createResponse.Result!.Id;
 
         // Get agreement via guid and string id, should retrieve the same agreement
         var agreementResponseGuid = await _apiClient.AgreementsEndpoint.GetAgreement(id);
         var agreementResponseString = await _apiClient.AgreementsEndpoint.GetAgreement(id.ToString());
-        TestExtensions.AssertNordigenApiResponseIsSuccessful(agreementResponseGuid, HttpStatusCode.OK);
-        TestExtensions.AssertNordigenApiResponseIsSuccessful(agreementResponseString, HttpStatusCode.OK);
+        TestHelpers.AssertNordigenApiResponseIsSuccessful(agreementResponseGuid, HttpStatusCode.OK);
+        TestHelpers.AssertNordigenApiResponseIsSuccessful(agreementResponseString, HttpStatusCode.OK);
         Assert.That(agreementResponseGuid.Result!.Id, Is.EqualTo(agreementResponseString.Result!.Id));
 
         // Delete agreement
         var deleteResponse = await _apiClient.AgreementsEndpoint.DeleteAgreement(id);
-        TestExtensions.AssertNordigenApiResponseIsSuccessful(deleteResponse, HttpStatusCode.OK);
+        TestHelpers.AssertNordigenApiResponseIsSuccessful(deleteResponse, HttpStatusCode.OK);
     }
 
     /// <summary>
@@ -111,7 +111,7 @@ internal class AgreementsEndpointTests
     {
         const string guid = "f84d7b8-dee4-4cd9-bc6d-842ef78f6028";
         var response = await _apiClient.AgreementsEndpoint.GetAgreement(guid);
-        TestExtensions.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.NotFound);
+        TestHelpers.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.NotFound);
         Assert.That(response.Error!.Detail, Is.EqualTo("Not found."));
     }
 
@@ -126,7 +126,7 @@ internal class AgreementsEndpointTests
         var agreement = new CreateAgreementRequest(90, 90, ["balances", "details", "transactions"],
             "SANDBOXFINANCE_SFIN0000");
         var response = await _apiClient.AgreementsEndpoint.CreateAgreement(agreement);
-        TestExtensions.AssertNordigenApiResponseIsSuccessful(response, HttpStatusCode.Created);
+        TestHelpers.AssertNordigenApiResponseIsSuccessful(response, HttpStatusCode.Created);
 
         var result = response.Result!;
         Assert.Multiple(() =>
@@ -142,14 +142,14 @@ internal class AgreementsEndpointTests
         // Accept the agreement (should fail)
         var acceptMetadata = new AcceptAgreementRequest("example_user_agent", "192.168.178.1");
         var acceptResponse = await _apiClient.AgreementsEndpoint.AcceptAgreement(response.Result!.Id, acceptMetadata);
-        TestExtensions.AssertNordigenApiResponseIsUnsuccessful(acceptResponse, HttpStatusCode.Forbidden);
+        TestHelpers.AssertNordigenApiResponseIsUnsuccessful(acceptResponse, HttpStatusCode.Forbidden);
         Assert.That(acceptResponse.Error!.Detail,
             Is.EqualTo(
                 "Your company doesn't have permission to accept EUA. You'll have to use our default form for this action."));
 
         // Delete the agreement
         var deletionResponse = await _apiClient.AgreementsEndpoint.DeleteAgreement(result.Id);
-        TestExtensions.AssertNordigenApiResponseIsSuccessful(deletionResponse, HttpStatusCode.OK);
+        TestHelpers.AssertNordigenApiResponseIsSuccessful(deletionResponse, HttpStatusCode.OK);
         Assert.That(deletionResponse.Result!.Summary, Is.EqualTo("End User Agreement deleted"));
     }
 
@@ -163,7 +163,7 @@ internal class AgreementsEndpointTests
         var agreement = new CreateAgreementRequest(90, 90, ["balances", "details", "transactions"],
             "SANDBOXFINANCE_SFIN000");
         var response = await _apiClient.AgreementsEndpoint.CreateAgreement(agreement);
-        TestExtensions.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.BadRequest);
+        TestHelpers.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.BadRequest);
 
         var result = response.Error!;
         Assert.That(result.InstitutionIdError, Is.Not.Null);
@@ -181,7 +181,7 @@ internal class AgreementsEndpointTests
         var agreement = new CreateAgreementRequest(200, 200,
             ["balances", "details", "transactions", "invalid", "invalid2"], "SANDBOXFINANCE_SFIN0000");
         var response = await _apiClient.AgreementsEndpoint.CreateAgreement(agreement);
-        TestExtensions.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.BadRequest);
+        TestHelpers.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.BadRequest);
 
         var result = response.Error!;
         Assert.Multiple(() =>
