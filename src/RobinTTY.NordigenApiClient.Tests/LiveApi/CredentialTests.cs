@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using RobinTTY.NordigenApiClient.Models;
-using RobinTTY.NordigenApiClient.Models.Errors;
 using RobinTTY.NordigenApiClient.Models.Requests;
+using RobinTTY.NordigenApiClient.Models.Responses;
 
 namespace RobinTTY.NordigenApiClient.Tests.LiveApi;
 
@@ -89,7 +89,7 @@ internal class CredentialTests
         });
     }
 
-    private static bool ErrorMatchesExpectation(BasicError error)
+    private static bool ErrorMatchesExpectation(BasicResponse error)
     {
         return error is {Detail: "Authentication credentials were not provided.", Summary: "Authentication failed"};
     }

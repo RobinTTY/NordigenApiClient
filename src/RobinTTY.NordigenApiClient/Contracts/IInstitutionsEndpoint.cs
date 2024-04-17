@@ -86,6 +86,6 @@ public interface IInstitutionsEndpoint
     /// A <see cref="NordigenApiResponse{TResponse, TError}" /> containing the institution matching the id if the
     /// request was successful.
     /// </returns>
-    Task<NordigenApiResponse<Institution, BasicError>> GetInstitution(string id,
+    Task<NordigenApiResponse<Institution, BasicResponse>> GetInstitution(string id,
         CancellationToken cancellationToken = default);
 }

@@ -57,11 +57,11 @@ public class ResponsePage<T>
     /// Either a <see cref="NordigenApiResponse{TResponse, TError}" /> containing the next
     /// <see cref="ResponsePage{T}" /> or null if there is no next page to retrieve.
     /// </returns>
-    public async Task<NordigenApiResponse<ResponsePage<T>, BasicError>?> GetNextPage(NordigenClient nordigenClient,
+    public async Task<NordigenApiResponse<ResponsePage<T>, BasicResponse>?> GetNextPage(NordigenClient nordigenClient,
         CancellationToken cancellationToken = default)
     {
         if (Next == null) return null;
-        return await nordigenClient.MakeRequest<ResponsePage<T>, BasicError>(Next.AbsoluteUri, HttpMethod.Get,
+        return await nordigenClient.MakeRequest<ResponsePage<T>, BasicResponse>(Next.AbsoluteUri, HttpMethod.Get,
             cancellationToken);
     }
 
@@ -74,11 +74,11 @@ public class ResponsePage<T>
     /// Either a <see cref="NordigenApiResponse{TResponse, TError}" /> containing the previous
     /// <see cref="ResponsePage{T}" /> or null if there is no previous page to retrieve.
     /// </returns>
-    public async Task<NordigenApiResponse<ResponsePage<T>, BasicError>?> GetPreviousPage(NordigenClient nordigenClient,
+    public async Task<NordigenApiResponse<ResponsePage<T>, BasicResponse>?> GetPreviousPage(NordigenClient nordigenClient,
         CancellationToken cancellationToken = default)
     {
         if (Previous == null) return null;
-        return await nordigenClient.MakeRequest<ResponsePage<T>, BasicError>(Previous.AbsoluteUri, HttpMethod.Get,
+        return await nordigenClient.MakeRequest<ResponsePage<T>, BasicResponse>(Previous.AbsoluteUri, HttpMethod.Get,
             cancellationToken);
     }
 }

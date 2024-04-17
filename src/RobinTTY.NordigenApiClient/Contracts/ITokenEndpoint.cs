@@ -22,7 +22,7 @@ public interface ITokenEndpoint
     /// A <see cref="NordigenApiResponse{TResponse, TError}" /> containing the obtained
     /// <see cref="JsonWebTokenPair" /> if the request was successful.
     /// </returns>
-    Task<NordigenApiResponse<JsonWebTokenPair, BasicError>> GetTokenPair(
+    Task<NordigenApiResponse<JsonWebTokenPair, BasicResponse>> GetTokenPair(
         CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -34,6 +34,6 @@ public interface ITokenEndpoint
     /// A <see cref="NordigenApiResponse{TResponse, TError}" /> containing the refreshed
     /// <see cref="JsonWebAccessToken" /> if the request was successful.
     /// </returns>
-    Task<NordigenApiResponse<JsonWebAccessToken, BasicError>> RefreshAccessToken(JsonWebToken refreshToken,
+    Task<NordigenApiResponse<JsonWebAccessToken, BasicResponse>> RefreshAccessToken(JsonWebToken refreshToken,
         CancellationToken cancellationToken = default);
 }

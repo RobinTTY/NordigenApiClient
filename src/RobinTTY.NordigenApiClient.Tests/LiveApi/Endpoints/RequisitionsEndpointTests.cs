@@ -153,7 +153,7 @@ internal class RequisitionsEndpointTests
     }
 
     private static void AssertThatRequisitionsPageContainsRequisition(
-        NordigenApiResponse<ResponsePage<Requisition>, BasicError> pagedResponse, List<string> ids)
+        NordigenApiResponse<ResponsePage<Requisition>, BasicResponse> pagedResponse, List<string> ids)
     {
         TestHelpers.AssertNordigenApiResponseIsSuccessful(pagedResponse, HttpStatusCode.OK);
         var page2Result = pagedResponse.Result!;

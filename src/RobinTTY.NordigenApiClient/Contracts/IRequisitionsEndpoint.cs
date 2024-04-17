@@ -22,7 +22,7 @@ public interface IRequisitionsEndpoint
     /// A <see cref="NordigenApiResponse{TResponse, TError}" /> containing a <see cref="ResponsePage{T}" /> which
     /// contains a list of requisitions.
     /// </returns>
-    Task<NordigenApiResponse<ResponsePage<Requisition>, BasicError>> GetRequisitions(int limit, int offset,
+    Task<NordigenApiResponse<ResponsePage<Requisition>, BasicResponse>> GetRequisitions(int limit, int offset,
         CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -31,7 +31,7 @@ public interface IRequisitionsEndpoint
     /// <param name="id">The id of the requisition to retrieve.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
     /// <returns>A <see cref="NordigenApiResponse{TResponse, TError}" /> which contains the specified requisition.</returns>
-    Task<NordigenApiResponse<Requisition, BasicError>> GetRequisition(Guid id,
+    Task<NordigenApiResponse<Requisition, BasicResponse>> GetRequisition(Guid id,
         CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -40,7 +40,7 @@ public interface IRequisitionsEndpoint
     /// <param name="id">The id of the requisition to retrieve.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
     /// <returns>A <see cref="NordigenApiResponse{TResponse, TError}" /> which contains the specified requisition.</returns>
-    Task<NordigenApiResponse<Requisition, BasicError>> GetRequisition(string id,
+    Task<NordigenApiResponse<Requisition, BasicResponse>> GetRequisition(string id,
         CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -58,7 +58,7 @@ public interface IRequisitionsEndpoint
     /// <param name="id">The id of the requisition to delete.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
     /// <returns>A <see cref="NordigenApiResponse{TResponse, TError}" /> containing a confirmation of the deletion.</returns>
-    Task<NordigenApiResponse<BasicResponse, BasicError>> DeleteRequisition(Guid id,
+    Task<NordigenApiResponse<BasicResponse, BasicResponse>> DeleteRequisition(Guid id,
         CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -67,6 +67,6 @@ public interface IRequisitionsEndpoint
     /// <param name="id">The id of the requisition to delete.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
     /// <returns>A <see cref="NordigenApiResponse{TResponse, TError}" /> containing a confirmation of the deletion.</returns>
-    Task<NordigenApiResponse<BasicResponse, BasicError>> DeleteRequisition(string id,
+    Task<NordigenApiResponse<BasicResponse, BasicResponse>> DeleteRequisition(string id,
         CancellationToken cancellationToken = default);
 }

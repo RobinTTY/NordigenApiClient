@@ -22,7 +22,7 @@ public interface IAgreementsEndpoint
     /// A <see cref="NordigenApiResponse{TResponse, TError}" /> containing a <see cref="ResponsePage{T}" /> which
     /// contains a list of end user agreements.
     /// </returns>
-    Task<NordigenApiResponse<ResponsePage<Agreement>, BasicError>> GetAgreements(int limit, int offset,
+    Task<NordigenApiResponse<ResponsePage<Agreement>, BasicResponse>> GetAgreements(int limit, int offset,
         CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -31,7 +31,7 @@ public interface IAgreementsEndpoint
     /// <param name="id">The id of the agreement to retrieve.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
     /// <returns>A <see cref="NordigenApiResponse{TResponse, TError}" /> which contains the specified end user agreements.</returns>
-    Task<NordigenApiResponse<Agreement, BasicError>> GetAgreement(Guid id,
+    Task<NordigenApiResponse<Agreement, BasicResponse>> GetAgreement(Guid id,
         CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -40,7 +40,7 @@ public interface IAgreementsEndpoint
     /// <param name="id">The id of the agreement to retrieve.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
     /// <returns>A <see cref="NordigenApiResponse{TResponse, TError}" /> which contains the specified end user agreements.</returns>
-    Task<NordigenApiResponse<Agreement, BasicError>> GetAgreement(string id,
+    Task<NordigenApiResponse<Agreement, BasicResponse>> GetAgreement(string id,
         CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -58,7 +58,7 @@ public interface IAgreementsEndpoint
     /// <param name="id">The id of the agreement to delete.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
     /// <returns>A <see cref="NordigenApiResponse{TResponse, TError}" /> containing a confirmation of the deletion.</returns>
-    Task<NordigenApiResponse<BasicResponse, BasicError>> DeleteAgreement(Guid id,
+    Task<NordigenApiResponse<BasicResponse, BasicResponse>> DeleteAgreement(Guid id,
         CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -67,7 +67,7 @@ public interface IAgreementsEndpoint
     /// <param name="id">The id of the agreement to delete.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
     /// <returns>A <see cref="NordigenApiResponse{TResponse, TError}" /> containing a confirmation of the deletion.</returns>
-    Task<NordigenApiResponse<BasicResponse, BasicError>> DeleteAgreement(string id,
+    Task<NordigenApiResponse<BasicResponse, BasicResponse>> DeleteAgreement(string id,
         CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -77,7 +77,7 @@ public interface IAgreementsEndpoint
     /// <param name="metadata">The metadata required to accept the end user agreement.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
     /// <returns></returns>
-    Task<NordigenApiResponse<Agreement, BasicError>> AcceptAgreement(Guid id,
+    Task<NordigenApiResponse<Agreement, BasicResponse>> AcceptAgreement(Guid id,
         AcceptAgreementRequest metadata, CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -87,6 +87,6 @@ public interface IAgreementsEndpoint
     /// <param name="metadata">The metadata required to accept the end user agreement.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
     /// <returns></returns>
-    Task<NordigenApiResponse<Agreement, BasicError>> AcceptAgreement(string id,
+    Task<NordigenApiResponse<Agreement, BasicResponse>> AcceptAgreement(string id,
         AcceptAgreementRequest metadata, CancellationToken cancellationToken = default);
 }

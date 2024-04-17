@@ -57,8 +57,8 @@ public class InstitutionsEndpoint : IInstitutionsEndpoint
         => new(flag, value.ToString().ToLower());
 
     /// <inheritdoc />
-    public async Task<NordigenApiResponse<Institution, BasicError>> GetInstitution(string id,
+    public async Task<NordigenApiResponse<Institution, BasicResponse>> GetInstitution(string id,
         CancellationToken cancellationToken = default) =>
-        await _nordigenClient.MakeRequest<Institution, BasicError>(
+        await _nordigenClient.MakeRequest<Institution, BasicResponse>(
             $"{NordigenEndpointUrls.InstitutionsEndpoint}{id}/", HttpMethod.Get, cancellationToken);
 }

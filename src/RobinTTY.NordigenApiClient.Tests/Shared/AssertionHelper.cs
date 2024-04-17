@@ -1,5 +1,4 @@
 ﻿using System.Net;
-using RobinTTY.NordigenApiClient.Models.Errors;
 using RobinTTY.NordigenApiClient.Models.Responses;
 
 namespace RobinTTY.NordigenApiClient.Tests.Shared;
@@ -7,7 +6,7 @@ namespace RobinTTY.NordigenApiClient.Tests.Shared;
 public class AssertionHelper
 {
     internal static void AssertThatAgreementPageContainsAgreement(
-        NordigenApiResponse<ResponsePage<Agreement>, BasicError> pagedResponse, List<string> ids)
+        NordigenApiResponse<ResponsePage<Agreement>, BasicResponse> pagedResponse, List<string> ids)
     {
         TestHelpers.AssertNordigenApiResponseIsSuccessful(pagedResponse, HttpStatusCode.OK);
         var page2Result = pagedResponse.Result!;

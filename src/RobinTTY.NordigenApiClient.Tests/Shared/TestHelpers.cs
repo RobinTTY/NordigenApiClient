@@ -4,7 +4,6 @@ using FakeItEasy;
 using RobinTTY.NordigenApiClient.Endpoints;
 using RobinTTY.NordigenApiClient.JsonConverters;
 using RobinTTY.NordigenApiClient.Models;
-using RobinTTY.NordigenApiClient.Models.Errors;
 using RobinTTY.NordigenApiClient.Models.Responses;
 using RobinTTY.NordigenApiClient.Tests.Mocks;
 using RobinTTY.NordigenApiClient.Tests.Mocks.Responses;
@@ -99,6 +98,6 @@ internal static class TestHelpers
         }
     };
 
-    internal static bool BasicResponseMatchesExpectations(BasicError? error, string summary, string detail) =>
+    internal static bool BasicResponseMatchesExpectations(BasicResponse? error, string summary, string detail) =>
         error?.Summary == summary && error.Detail == detail;
 }

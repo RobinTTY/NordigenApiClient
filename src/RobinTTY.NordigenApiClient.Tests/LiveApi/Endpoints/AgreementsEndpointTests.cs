@@ -111,8 +111,10 @@ internal class AgreementsEndpointTests
     {
         const string guid = "f84d7b8-dee4-4cd9-bc6d-842ef78f6028";
         var response = await _apiClient.AgreementsEndpoint.GetAgreement(guid);
-        TestHelpers.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.NotFound);
-        Assert.That(response.Error!.Detail, Is.EqualTo("Not found."));
+        TestHelpers.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.BadRequest);
+        // TODO: Use TestHelpers
+        Assert.That(response.Error!.Summary, Is.EqualTo("Invalid EndUserAgreement ID"));
+        Assert.That(response.Error!.Detail, Is.EqualTo($"{guid} is not a valid EndUserAgreement UUID. "));
     }
 
     /// <summary>
