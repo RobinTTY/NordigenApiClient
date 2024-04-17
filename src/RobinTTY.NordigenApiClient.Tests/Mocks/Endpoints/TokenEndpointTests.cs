@@ -11,6 +11,8 @@ public class TokenEndpointTests
 {
     private readonly JsonSerializerOptions _jsonOptions = TestHelpers.GetSerializerOptions();
 
+    #region RequestsWithSuccessfulResponse
+
     /// <summary>
     /// Tests the retrieving of a new token.
     /// </summary>
@@ -37,7 +39,7 @@ public class TokenEndpointTests
             Assert.That(tokenPair.Result!.AccessToken.EncodedToken,
                 Is.EqualTo(
                     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwic3ViIjoiMTIzNDU2Nzg5MCIsIm5hbWUiOiJKb2huIERvZSIsImlhdCI6MTUxNjIzOTAyMiwiZXhwIjozMzI3MDExNzU5NH0.gEa5VdPSqZW2xk9IqCEqiw6bzBOer_uAR1yp2XK7FFo"));
-            
+
             Assert.That(tokenPair.Result!.RefreshExpires, Is.EqualTo(2_592_000));
             Assert.That(tokenPair.Result!.RefreshToken.IsExpired(), Is.False);
             Assert.That(tokenPair.Result!.RefreshToken.EncodedToken,
@@ -70,7 +72,7 @@ public class TokenEndpointTests
             });
         }));
         TestHelpers.AssertNordigenApiResponseIsSuccessful(tokenPair, HttpStatusCode.OK);
-        
+
         Assert.Multiple(() =>
         {
             Assert.That(tokenPair.Result!.AccessExpires, Is.EqualTo(86_400));
@@ -80,4 +82,36 @@ public class TokenEndpointTests
                     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwic3ViIjoiMTIzNDU2Nzg5MCIsIm5hbWUiOiJKb2huIERvZSIsImlhdCI6MTUxNjIzOTAyMiwiZXhwIjozMzI3MDExNzU5NH0.gEa5VdPSqZW2xk9IqCEqiw6bzBOer_uAR1yp2XK7FFo"));
         });
     }
+
+    #endregion
+
+    #region RequestsWithErrors
+
+    /// <summary>
+    /// Tests the failure of authentication when trying to get a new token pair.
+    /// </summary>
+    [Test]
+    public async Task GetTokenPairWithInvalidCredentials()
+    {
+        var responsePayload =
+            JsonSerializer.Serialize(
+                TestHelpers.GetMockData().TokenEndpointMockData.NoActiveAccountForGivenCredentialsError, _jsonOptions);
+        var response = new HttpResponseMessage
+        {
+            StatusCode = HttpStatusCode.Unauthorized,
+            Content = new StringContent(responsePayload)
+        };
+        var apiClient = TestHelpers.GetMockClient([response], addDefaultAuthToken: false);
+
+        var tokenPairResponse = await apiClient.TokenEndpoint.GetTokenPair();
+        
+        Assert.Multiple(() =>
+        {
+            TestHelpers.AssertNordigenApiResponseIsUnsuccessful(tokenPairResponse, HttpStatusCode.Unauthorized);
+            Assert.That(TestHelpers.BasicResponseMatchesExpectations(tokenPairResponse.Error, "Authentication failed",
+                "No active account found with the given credentials"));
+        });
+    }
+
+    #endregion
 }

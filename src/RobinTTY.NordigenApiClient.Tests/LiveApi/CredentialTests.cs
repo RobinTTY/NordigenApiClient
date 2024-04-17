@@ -1,4 +1,5 @@
-﻿using RobinTTY.NordigenApiClient.Models;
+﻿using System.Net;
+using RobinTTY.NordigenApiClient.Models;
 using RobinTTY.NordigenApiClient.Models.Errors;
 using RobinTTY.NordigenApiClient.Models.Requests;
 
@@ -15,7 +16,6 @@ internal class CredentialTests
     /// Tests the creation of the <see cref="NordigenClient" /> with invalid credentials.
     /// The credentials have the correct structure but were not issued for use.
     /// </summary>
-    /// <returns></returns>
     [Test]
     public async Task MakeRequestWithInvalidCredentials()
     {
@@ -26,16 +26,25 @@ internal class CredentialTests
 
         // Returns BasicError
         var agreementsResponse = await apiClient.AgreementsEndpoint.GetAgreements(10, 0);
-        Assert.That(ErrorMatchesExpectation(agreementsResponse.Error!), Is.True);
+        Assert.Multiple(() =>
+        {
+            Assert.That(agreementsResponse.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
+            Assert.That(ErrorMatchesExpectation(agreementsResponse.Error!), Is.True);
+        });
 
         // Returns InstitutionsError
         var institutionResponse = await apiClient.InstitutionsEndpoint.GetInstitutions();
-        Assert.That(ErrorMatchesExpectation(institutionResponse.Error!), Is.True);
+        Assert.Multiple(() =>
+        {
+            Assert.That(institutionResponse.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
+            Assert.That(ErrorMatchesExpectation(institutionResponse.Error!), Is.True);
+        });
 
         // Returns AccountsError
         var balancesResponse = await apiClient.AccountsEndpoint.GetBalances(_secrets[9]);
         Assert.Multiple(() =>
         {
+            Assert.That(balancesResponse.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
             Assert.That(ErrorMatchesExpectation(balancesResponse.Error!), Is.True);
             Assert.That(
                 new object?[]
@@ -47,10 +56,11 @@ internal class CredentialTests
 
         // Returns CreateAgreementError
         var agreementRequest = new CreateAgreementRequest(90, 90,
-            new List<string> {"balances", "details", "transactions"}, "SANDBOXFINANCE_SFIN0000");
+            ["balances", "details", "transactions"], "SANDBOXFINANCE_SFIN0000");
         var createAgreementResponse = await apiClient.AgreementsEndpoint.CreateAgreement(agreementRequest);
         Assert.Multiple(() =>
         {
+            Assert.That(balancesResponse.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
             Assert.That(ErrorMatchesExpectation(createAgreementResponse.Error!), Is.True);
             Assert.That(new object?[]
             {
@@ -67,6 +77,7 @@ internal class CredentialTests
         var requisitionResponse = await apiClient.RequisitionsEndpoint.CreateRequisition(requisitionRequest);
         Assert.Multiple(() =>
         {
+            Assert.That(balancesResponse.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
             Assert.That(ErrorMatchesExpectation(requisitionResponse.Error!), Is.True);
             Assert.That(new object?[]
             {

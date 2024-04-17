@@ -4,6 +4,7 @@ using FakeItEasy;
 using RobinTTY.NordigenApiClient.Endpoints;
 using RobinTTY.NordigenApiClient.JsonConverters;
 using RobinTTY.NordigenApiClient.Models;
+using RobinTTY.NordigenApiClient.Models.Errors;
 using RobinTTY.NordigenApiClient.Models.Responses;
 using RobinTTY.NordigenApiClient.Tests.Mocks;
 using RobinTTY.NordigenApiClient.Tests.Mocks.Responses;
@@ -65,7 +66,8 @@ internal static class TestHelpers
         return new NordigenClient(httpClient, credentials);
     }
 
-    internal static NordigenClient GetMockClient(List<HttpResponseMessage> responseMessages, bool addDefaultAuthToken = true)
+    internal static NordigenClient GetMockClient(List<HttpResponseMessage> responseMessages,
+        bool addDefaultAuthToken = true)
     {
         var fakeHttpMessageHandler = A.Fake<FakeHttpMessageHandler>();
         var token = new HttpResponseMessage(HttpStatusCode.OK)
@@ -96,4 +98,7 @@ internal static class TestHelpers
             new CultureSpecificDecimalConverter(), new InstitutionsErrorConverter()
         }
     };
+
+    internal static bool BasicResponseMatchesExpectations(BasicError? error, string summary, string detail) =>
+        error?.Summary == summary && error.Detail == detail;
 }
