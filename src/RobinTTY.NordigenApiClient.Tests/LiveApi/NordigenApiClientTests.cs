@@ -28,8 +28,8 @@ public class NordigenApiClientTests
     private async Task ExecuteExampleRequest(NordigenClient apiClient)
     {
         var response = await apiClient.TokenEndpoint.GetTokenPair();
-        TestHelpers.AssertNordigenApiResponseIsSuccessful(response, HttpStatusCode.OK);
+        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(response, HttpStatusCode.OK);
         var response2 = await apiClient.TokenEndpoint.RefreshAccessToken(response.Result!.RefreshToken);
-        TestHelpers.AssertNordigenApiResponseIsSuccessful(response2, HttpStatusCode.OK);
+        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(response2, HttpStatusCode.OK);
     }
 }

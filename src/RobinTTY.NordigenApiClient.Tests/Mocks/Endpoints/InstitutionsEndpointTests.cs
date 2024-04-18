@@ -16,7 +16,7 @@ public class InstitutionsEndpointTests
     public async Task GetInstitutions()
     {
         var responsePayload =
-            JsonSerializer.Serialize(TestHelpers.GetMockData().InstitutionsEndpointMockData.GetInstitutions,
+            JsonSerializer.Serialize(TestHelpers.MockData.InstitutionsEndpointMockData.GetInstitutions,
                 _jsonOptions);
         var response = new HttpResponseMessage
         {
@@ -26,7 +26,7 @@ public class InstitutionsEndpointTests
         var apiClient = TestHelpers.GetMockClient([response]);
 
         var institutions = await apiClient.InstitutionsEndpoint.GetInstitutions();
-        TestHelpers.AssertNordigenApiResponseIsSuccessful(institutions, HttpStatusCode.OK);
+        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(institutions, HttpStatusCode.OK);
 
         var result = institutions.Result!.ToList();
 
@@ -40,7 +40,7 @@ public class InstitutionsEndpointTests
     public async Task GetInstitution()
     {
         var responsePayload =
-            JsonSerializer.Serialize(TestHelpers.GetMockData().InstitutionsEndpointMockData.GetInstitution,
+            JsonSerializer.Serialize(TestHelpers.MockData.InstitutionsEndpointMockData.GetInstitution,
                 _jsonOptions);
         var response = new HttpResponseMessage
         {
@@ -50,7 +50,7 @@ public class InstitutionsEndpointTests
         var apiClient = TestHelpers.GetMockClient([response]);
 
         var institution = await apiClient.InstitutionsEndpoint.GetInstitution("N26_NTSBDEB1");
-        TestHelpers.AssertNordigenApiResponseIsSuccessful(institution, HttpStatusCode.OK);
+        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(institution, HttpStatusCode.OK);
 
         var result = institution.Result!;
         var expectedSupportedFeatures = new[]

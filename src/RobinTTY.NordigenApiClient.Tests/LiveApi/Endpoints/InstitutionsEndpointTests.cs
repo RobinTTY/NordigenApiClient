@@ -21,9 +21,9 @@ internal class InstitutionsEndpointTests
     public async Task GetInstitutions()
     {
         var response = await _apiClient.InstitutionsEndpoint.GetInstitutions();
-        TestHelpers.AssertNordigenApiResponseIsSuccessful(response, HttpStatusCode.OK);
+        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(response, HttpStatusCode.OK);
         var response2 = await _apiClient.InstitutionsEndpoint.GetInstitutions("GB");
-        TestHelpers.AssertNordigenApiResponseIsSuccessful(response2, HttpStatusCode.OK);
+        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(response2, HttpStatusCode.OK);
 
         var result = response.Result!.ToList();
         var result2 = response2.Result!.ToList();
@@ -45,18 +45,18 @@ internal class InstitutionsEndpointTests
     {
         var allFlagsSetTrue = await _apiClient.InstitutionsEndpoint.GetInstitutions("GB", true, true, true, true, true,
             true, true, true, true, true, true);
-        TestHelpers.AssertNordigenApiResponseIsSuccessful(allFlagsSetTrue, HttpStatusCode.OK);
+        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(allFlagsSetTrue, HttpStatusCode.OK);
         var allFlagsSetFalse = await _apiClient.InstitutionsEndpoint.GetInstitutions("GB", false, false, false, false,
             false, false, false, false, false, false, false);
-        TestHelpers.AssertNordigenApiResponseIsSuccessful(allFlagsSetFalse, HttpStatusCode.OK);
+        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(allFlagsSetFalse, HttpStatusCode.OK);
         var institutionsWithAccountSelection =
             await _apiClient.InstitutionsEndpoint.GetInstitutions(accountSelectionSupported: true);
-        TestHelpers.AssertNordigenApiResponseIsSuccessful(institutionsWithAccountSelection, HttpStatusCode.OK);
+        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(institutionsWithAccountSelection, HttpStatusCode.OK);
         var institutionsWithoutAccountSelection =
             await _apiClient.InstitutionsEndpoint.GetInstitutions(accountSelectionSupported: false);
-        TestHelpers.AssertNordigenApiResponseIsSuccessful(institutionsWithoutAccountSelection, HttpStatusCode.OK);
+        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(institutionsWithoutAccountSelection, HttpStatusCode.OK);
         var allInstitutions = await _apiClient.InstitutionsEndpoint.GetInstitutions();
-        TestHelpers.AssertNordigenApiResponseIsSuccessful(allInstitutions, HttpStatusCode.OK);
+        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(allInstitutions, HttpStatusCode.OK);
 
         var allFlagsTrueResult = allFlagsSetTrue.Result!.ToList();
         var withAccountSelectionResult = institutionsWithAccountSelection.Result!.ToList();
@@ -82,7 +82,7 @@ internal class InstitutionsEndpointTests
     public async Task GetInstitutionsForNotCoveredCountry()
     {
         var response = await _apiClient.InstitutionsEndpoint.GetInstitutions("US");
-        TestHelpers.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.BadRequest);
+        AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.BadRequest);
 
         Assert.Multiple(() =>
         {
@@ -99,7 +99,7 @@ internal class InstitutionsEndpointTests
     public async Task GetInstitution()
     {
         var response = await _apiClient.InstitutionsEndpoint.GetInstitution("SANDBOXFINANCE_SFIN0000");
-        TestHelpers.AssertNordigenApiResponseIsSuccessful(response, HttpStatusCode.OK);
+        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(response, HttpStatusCode.OK);
 
         var result = response.Result!;
         Assert.Multiple(() =>

@@ -18,7 +18,7 @@ public class RequisitionsEndpointTests
     public async Task GetRequisitions()
     {
         var responsePayload =
-            JsonSerializer.Serialize(TestHelpers.GetMockData().RequisitionsEndpointMockData.GetRequisitions,
+            JsonSerializer.Serialize(TestHelpers.MockData.RequisitionsEndpointMockData.GetRequisitions,
                 _jsonOptions);
         var response = new HttpResponseMessage
         {
@@ -28,7 +28,7 @@ public class RequisitionsEndpointTests
         var apiClient = TestHelpers.GetMockClient([response]);
 
         var requisitions = await apiClient.RequisitionsEndpoint.GetRequisitions(100, 0);
-        TestHelpers.AssertNordigenApiResponseIsSuccessful(requisitions, HttpStatusCode.OK);
+        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(requisitions, HttpStatusCode.OK);
 
         var result = requisitions.Result!;
         var requisition = result.Results.First();
@@ -71,7 +71,7 @@ public class RequisitionsEndpointTests
     public async Task GetRequisition()
     {
         var responsePayload =
-            JsonSerializer.Serialize(TestHelpers.GetMockData().RequisitionsEndpointMockData.GetRequisition,
+            JsonSerializer.Serialize(TestHelpers.MockData.RequisitionsEndpointMockData.GetRequisition,
                 _jsonOptions);
         var response = new HttpResponseMessage
         {
@@ -81,7 +81,7 @@ public class RequisitionsEndpointTests
         var apiClient = TestHelpers.GetMockClient([response]);
 
         var requisition = await apiClient.RequisitionsEndpoint.GetRequisition(A.Dummy<Guid>());
-        TestHelpers.AssertNordigenApiResponseIsSuccessful(requisition, HttpStatusCode.OK);
+        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(requisition, HttpStatusCode.OK);
         var expectedAccountGuids = new List<Guid>
             {new("3fa85f64-5717-4562-b3fc-2c963f66afa6"), new("3fa85f64-5717-4562-b3fc-2c963f66afa7")};
         
@@ -115,7 +115,7 @@ public class RequisitionsEndpointTests
     public async Task CreateRequisitions()
     {
         var responsePayload =
-            JsonSerializer.Serialize(TestHelpers.GetMockData().RequisitionsEndpointMockData.CreateRequisition,
+            JsonSerializer.Serialize(TestHelpers.MockData.RequisitionsEndpointMockData.CreateRequisition,
                 _jsonOptions);
         var response = new HttpResponseMessage
         {
@@ -125,7 +125,7 @@ public class RequisitionsEndpointTests
         var apiClient = TestHelpers.GetMockClient([response]);
 
         var requisition = await apiClient.RequisitionsEndpoint.CreateRequisition(A.Fake<CreateRequisitionRequest>());
-        TestHelpers.AssertNordigenApiResponseIsSuccessful(requisition, HttpStatusCode.Created);
+        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(requisition, HttpStatusCode.Created);
         
         Assert.Multiple(() =>
         {
@@ -148,7 +148,7 @@ public class RequisitionsEndpointTests
     public async Task DeleteRequisitions()
     {
         var responsePayload =
-            JsonSerializer.Serialize(TestHelpers.GetMockData().RequisitionsEndpointMockData.DeleteRequisition,
+            JsonSerializer.Serialize(TestHelpers.MockData.RequisitionsEndpointMockData.DeleteRequisition,
                 _jsonOptions);
         var response = new HttpResponseMessage
         {
@@ -158,7 +158,7 @@ public class RequisitionsEndpointTests
         var apiClient = TestHelpers.GetMockClient([response]);
         
         var result = await apiClient.RequisitionsEndpoint.DeleteRequisition(A.Dummy<Guid>());
-        TestHelpers.AssertNordigenApiResponseIsSuccessful(result, HttpStatusCode.OK);
+        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(result, HttpStatusCode.OK);
 
         Assert.Multiple(() =>
         {

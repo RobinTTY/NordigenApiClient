@@ -23,9 +23,9 @@ internal class TokenEndpointTests
     public async Task GetJsonWebTokenPairAndRefresh()
     {
         var response = await _apiClient.TokenEndpoint.GetTokenPair();
-        TestHelpers.AssertNordigenApiResponseIsSuccessful(response, HttpStatusCode.OK);
+        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(response, HttpStatusCode.OK);
         var response2 = await _apiClient.TokenEndpoint.RefreshAccessToken(response.Result!.RefreshToken);
-        TestHelpers.AssertNordigenApiResponseIsSuccessful(response2, HttpStatusCode.OK);
+        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(response2, HttpStatusCode.OK);
     }
 
     /// <summary>
@@ -68,6 +68,6 @@ internal class TokenEndpointTests
         var apiClient = new NordigenClient(httpClient, credentials, tokenPair);
 
         var result = await apiClient.RequisitionsEndpoint.GetRequisitions(10, 0);
-        TestHelpers.AssertNordigenApiResponseIsSuccessful(result, HttpStatusCode.OK);
+        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(result, HttpStatusCode.OK);
     }
 }

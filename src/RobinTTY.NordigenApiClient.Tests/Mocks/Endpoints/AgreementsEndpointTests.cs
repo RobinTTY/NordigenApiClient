@@ -17,7 +17,7 @@ public class AgreementsEndpointTests
     public async Task GetAgreements()
     {
         var responsePayload =
-            JsonSerializer.Serialize(TestHelpers.GetMockData().AgreementsEndpointMockData.GetAgreements,
+            JsonSerializer.Serialize(TestHelpers.MockData.AgreementsEndpointMockData.GetAgreements,
                 _jsonOptions);
         var response = new HttpResponseMessage
         {
@@ -27,7 +27,7 @@ public class AgreementsEndpointTests
         var apiClient = TestHelpers.GetMockClient([response]);
 
         var agreements = await apiClient.AgreementsEndpoint.GetAgreements(100, 0);
-        TestHelpers.AssertNordigenApiResponseIsSuccessful(agreements, HttpStatusCode.OK);
+        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(agreements, HttpStatusCode.OK);
 
         var responseAgreement = agreements.Result!.Results.First();
         Assert.Multiple(() =>
@@ -63,7 +63,7 @@ public class AgreementsEndpointTests
     public async Task GetAgreement()
     {
         var responsePayload =
-            JsonSerializer.Serialize(TestHelpers.GetMockData().AgreementsEndpointMockData.GetAgreement,
+            JsonSerializer.Serialize(TestHelpers.MockData.AgreementsEndpointMockData.GetAgreement,
                 _jsonOptions);
         var response = new HttpResponseMessage
         {
@@ -73,7 +73,7 @@ public class AgreementsEndpointTests
         var apiClient = TestHelpers.GetMockClient([response]);
 
         var agreement = await apiClient.AgreementsEndpoint.GetAgreement(A.Dummy<Guid>());
-        TestHelpers.AssertNordigenApiResponseIsSuccessful(agreement, HttpStatusCode.OK);
+        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(agreement, HttpStatusCode.OK);
 
         Assert.Multiple(() =>
         {
@@ -97,7 +97,7 @@ public class AgreementsEndpointTests
     public async Task CreateAgreement()
     {
         var responsePayload =
-            JsonSerializer.Serialize(TestHelpers.GetMockData().AgreementsEndpointMockData.CreateAgreement,
+            JsonSerializer.Serialize(TestHelpers.MockData.AgreementsEndpointMockData.CreateAgreement,
                 _jsonOptions);
         var response = new HttpResponseMessage
         {
@@ -109,7 +109,7 @@ public class AgreementsEndpointTests
         var agreementRequest = new CreateAgreementRequest(145, 145,
             ["balances", "details", "transactions"], "SANDBOXFINANCE_SFIN0000");
         var createResponse = await apiClient.AgreementsEndpoint.CreateAgreement(agreementRequest);
-        TestHelpers.AssertNordigenApiResponseIsSuccessful(createResponse, HttpStatusCode.Created);
+        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(createResponse, HttpStatusCode.Created);
 
         Assert.Multiple(() =>
         {
@@ -130,7 +130,7 @@ public class AgreementsEndpointTests
     public async Task DeleteAgreement()
     {
         var responsePayload =
-            JsonSerializer.Serialize(TestHelpers.GetMockData().AgreementsEndpointMockData.DeleteAgreement,
+            JsonSerializer.Serialize(TestHelpers.MockData.AgreementsEndpointMockData.DeleteAgreement,
                 _jsonOptions);
         var response = new HttpResponseMessage
         {
@@ -140,7 +140,7 @@ public class AgreementsEndpointTests
         var apiClient = TestHelpers.GetMockClient([response]);
         
         var result = await apiClient.AgreementsEndpoint.DeleteAgreement(A.Dummy<Guid>());
-        TestHelpers.AssertNordigenApiResponseIsSuccessful(result, HttpStatusCode.OK);
+        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(result, HttpStatusCode.OK);
         Assert.Multiple(() =>
         {
             Assert.That(result.Result?.Summary, Is.EqualTo("End User Agreement deleted"));

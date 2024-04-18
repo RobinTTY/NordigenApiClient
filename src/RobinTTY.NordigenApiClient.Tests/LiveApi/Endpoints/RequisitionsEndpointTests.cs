@@ -23,7 +23,7 @@ internal class RequisitionsEndpointTests
     public async Task GetRequisitions()
     {
         var response = await _apiClient.RequisitionsEndpoint.GetRequisitions(100, 0);
-        TestHelpers.AssertNordigenApiResponseIsSuccessful(response, HttpStatusCode.OK);
+        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(response, HttpStatusCode.OK);
 
         var requisitions = response.Result?.Results.ToList();
         Assert.That(requisitions, Is.Not.Null);
@@ -49,12 +49,12 @@ internal class RequisitionsEndpointTests
         var agreementRequest = new CreateAgreementRequest(90, 90,
             new List<string> {"balances", "details", "transactions"}, institutionId);
         var agreementResponse = await _apiClient.AgreementsEndpoint.CreateAgreement(agreementRequest);
-        TestHelpers.AssertNordigenApiResponseIsSuccessful(agreementResponse, HttpStatusCode.Created);
+        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(agreementResponse, HttpStatusCode.Created);
         var agreementId = agreementResponse.Result!.Id;
 
         // Get existing requisitions
         var existingRequisitions = await _apiClient.RequisitionsEndpoint.GetRequisitions(100, 0);
-        TestHelpers.AssertNordigenApiResponseIsSuccessful(existingRequisitions, HttpStatusCode.OK);
+        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(existingRequisitions, HttpStatusCode.OK);
 
         // Create 3 example requisitions
         var redirect = new Uri("https://github.com/RobinTTY/NordigenApiClient");
@@ -67,7 +67,7 @@ internal class RequisitionsEndpointTests
             var requisitionRequest =
                 new CreateRequisitionRequest(redirect, institutionId, $"reference_{i}", "EN", agreementId);
             var createResponse = await _apiClient.RequisitionsEndpoint.CreateRequisition(requisitionRequest);
-            TestHelpers.AssertNordigenApiResponseIsSuccessful(createResponse, HttpStatusCode.Created);
+            AssertionHelpers.AssertNordigenApiResponseIsSuccessful(createResponse, HttpStatusCode.Created);
             ids.Add(createResponse.Result!.Id.ToString());
         }
 
@@ -100,20 +100,20 @@ internal class RequisitionsEndpointTests
 
         // Retrieve a single requisition via guid/string id
         var requisitionResponseGuid = await _apiClient.RequisitionsEndpoint.GetRequisition(page2RequisitionId);
-        TestHelpers.AssertNordigenApiResponseIsSuccessful(requisitionResponseGuid, HttpStatusCode.OK);
+        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(requisitionResponseGuid, HttpStatusCode.OK);
         var requisitionResponseString =
             await _apiClient.RequisitionsEndpoint.GetRequisition(page2RequisitionId.ToString());
-        TestHelpers.AssertNordigenApiResponseIsSuccessful(requisitionResponseString, HttpStatusCode.OK);
+        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(requisitionResponseString, HttpStatusCode.OK);
         Assert.That(requisitionResponseString.Result!.Id, Is.EqualTo(requisitionResponseGuid.Result!.Id));
 
         // Delete created resources
         var agreementDeletion = await _apiClient.AgreementsEndpoint.DeleteAgreement(agreementId);
-        TestHelpers.AssertNordigenApiResponseIsSuccessful(agreementDeletion, HttpStatusCode.OK);
+        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(agreementDeletion, HttpStatusCode.OK);
         existingIds.ForEach(id => ids.Remove(id));
         foreach (var id in ids)
         {
             var result = await _apiClient.RequisitionsEndpoint.DeleteRequisition(id);
-            TestHelpers.AssertNordigenApiResponseIsSuccessful(result, HttpStatusCode.OK);
+            AssertionHelpers.AssertNordigenApiResponseIsSuccessful(result, HttpStatusCode.OK);
         }
     }
 
@@ -126,7 +126,7 @@ internal class RequisitionsEndpointTests
     {
         const string guid = "f84d7b8-dee4-4cd9-bc6d-842ef78f6028";
         var response = await _apiClient.RequisitionsEndpoint.GetRequisition(guid);
-        TestHelpers.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.NotFound);
+        AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.NotFound);
         Assert.That(response.Error!.Detail, Is.EqualTo("Not found."));
     }
 
@@ -143,7 +143,7 @@ internal class RequisitionsEndpointTests
             new CreateRequisitionRequest(redirect, "123", "internal_reference", "EN", agreementId, null, true, true);
         var response = await _apiClient.RequisitionsEndpoint.CreateRequisition(requisitionRequest);
 
-        TestHelpers.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.BadRequest);
+        AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.BadRequest);
         Assert.Multiple(() =>
         {
             Assert.That(response.Error!.Summary, Is.EqualTo("Invalid  ID"));
@@ -155,7 +155,7 @@ internal class RequisitionsEndpointTests
     private static void AssertThatRequisitionsPageContainsRequisition(
         NordigenApiResponse<ResponsePage<Requisition>, BasicResponse> pagedResponse, List<string> ids)
     {
-        TestHelpers.AssertNordigenApiResponseIsSuccessful(pagedResponse, HttpStatusCode.OK);
+        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(pagedResponse, HttpStatusCode.OK);
         var page2Result = pagedResponse.Result!;
         var page2Requisitions = page2Result.Results.ToList();
         Assert.Multiple(() =>

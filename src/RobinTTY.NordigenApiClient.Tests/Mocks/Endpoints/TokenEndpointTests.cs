@@ -20,7 +20,7 @@ public class TokenEndpointTests
     public async Task GetNewToken()
     {
         var responsePayload =
-            JsonSerializer.Serialize(TestHelpers.GetMockData().TokenEndpointMockData.GetNewToken,
+            JsonSerializer.Serialize(TestHelpers.MockData.TokenEndpointMockData.GetNewToken,
                 _jsonOptions);
         var response = new HttpResponseMessage
         {
@@ -30,7 +30,7 @@ public class TokenEndpointTests
         var apiClient = TestHelpers.GetMockClient([response], addDefaultAuthToken: false);
 
         var tokenPair = await apiClient.TokenEndpoint.GetTokenPair();
-        TestHelpers.AssertNordigenApiResponseIsSuccessful(tokenPair, HttpStatusCode.OK);
+        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(tokenPair, HttpStatusCode.OK);
 
         Assert.Multiple(() =>
         {
@@ -55,7 +55,7 @@ public class TokenEndpointTests
     public async Task RefreshAccessToken()
     {
         var responsePayload =
-            JsonSerializer.Serialize(TestHelpers.GetMockData().TokenEndpointMockData.RefreshAccessToken,
+            JsonSerializer.Serialize(TestHelpers.MockData.TokenEndpointMockData.RefreshAccessToken,
                 _jsonOptions);
         var response = new HttpResponseMessage
         {
@@ -71,7 +71,7 @@ public class TokenEndpointTests
                 "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsInN1YiI6IjEyMzQ1Njc4OTAiLCJuYW1lIjoiSm9obiBEb2UiLCJpYXQiOjE1MTYyMzkwMjIsImV4cCI6MzMyNzAxMTc1OTR9.xfOrczY3KvG-SiHLZkVLPas017ZX8DHkcCN78Xd9cac"
             });
         }));
-        TestHelpers.AssertNordigenApiResponseIsSuccessful(tokenPair, HttpStatusCode.OK);
+        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(tokenPair, HttpStatusCode.OK);
 
         Assert.Multiple(() =>
         {
@@ -95,7 +95,7 @@ public class TokenEndpointTests
     {
         var responsePayload =
             JsonSerializer.Serialize(
-                TestHelpers.GetMockData().TokenEndpointMockData.NoActiveAccountForGivenCredentialsError, _jsonOptions);
+                TestHelpers.MockData.TokenEndpointMockData.NoActiveAccountForGivenCredentialsError, _jsonOptions);
         var response = new HttpResponseMessage
         {
             StatusCode = HttpStatusCode.Unauthorized,
@@ -107,9 +107,9 @@ public class TokenEndpointTests
         
         Assert.Multiple(() =>
         {
-            TestHelpers.AssertNordigenApiResponseIsUnsuccessful(tokenPairResponse, HttpStatusCode.Unauthorized);
-            Assert.That(TestHelpers.BasicResponseMatchesExpectations(tokenPairResponse.Error, "Authentication failed",
-                "No active account found with the given credentials"));
+            AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(tokenPairResponse, HttpStatusCode.Unauthorized);
+            AssertionHelpers.AssertBasicResponseMatchesExpectations(tokenPairResponse.Error, "Authentication failed",
+                "No active account found with the given credentials");
         });
     }
 

@@ -17,7 +17,7 @@ public class AccountsEndpointTests
     public async Task GetAccount()
     {
         var responsePayload =
-            JsonSerializer.Serialize(TestHelpers.GetMockData().AccountsEndpointMockData.GetAccount, _jsonOptions);
+            JsonSerializer.Serialize(TestHelpers.MockData.AccountsEndpointMockData.GetAccount, _jsonOptions);
         var response = new HttpResponseMessage
         {
             StatusCode = HttpStatusCode.OK,
@@ -26,7 +26,7 @@ public class AccountsEndpointTests
         var apiClient = TestHelpers.GetMockClient([response]);
 
         var accountResponse = await apiClient.AccountsEndpoint.GetAccount(A.Dummy<Guid>());
-        TestHelpers.AssertNordigenApiResponseIsSuccessful(accountResponse, HttpStatusCode.OK);
+        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(accountResponse, HttpStatusCode.OK);
         var account = accountResponse.Result!;
         Assert.Multiple(() =>
         {
@@ -43,7 +43,7 @@ public class AccountsEndpointTests
     public async Task GetBalances()
     {
         var responsePayload =
-            JsonSerializer.Serialize(TestHelpers.GetMockData().AccountsEndpointMockData.GetBalances, _jsonOptions);
+            JsonSerializer.Serialize(TestHelpers.MockData.AccountsEndpointMockData.GetBalances, _jsonOptions);
         var response = new HttpResponseMessage
         {
             StatusCode = HttpStatusCode.OK,
@@ -52,7 +52,7 @@ public class AccountsEndpointTests
         var apiClient = TestHelpers.GetMockClient([response]);
 
         var balancesResponse = await apiClient.AccountsEndpoint.GetBalances(A.Dummy<Guid>());
-        TestHelpers.AssertNordigenApiResponseIsSuccessful(balancesResponse, HttpStatusCode.OK);
+        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(balancesResponse, HttpStatusCode.OK);
         var balances = balancesResponse.Result!;
         Assert.Multiple(() =>
         {
@@ -69,7 +69,7 @@ public class AccountsEndpointTests
     [Test]
     public async Task GetAccountDetails()
     {
-        var responsePayload = JsonSerializer.Serialize(TestHelpers.GetMockData().AccountsEndpointMockData.GetAccountDetails,
+        var responsePayload = JsonSerializer.Serialize(TestHelpers.MockData.AccountsEndpointMockData.GetAccountDetails,
             _jsonOptions);
         var response = new HttpResponseMessage
         {
@@ -79,7 +79,7 @@ public class AccountsEndpointTests
         var apiClient = TestHelpers.GetMockClient([response]);
 
         var detailsResponse = await apiClient.AccountsEndpoint.GetAccountDetails(A.Dummy<Guid>());
-        TestHelpers.AssertNordigenApiResponseIsSuccessful(detailsResponse, HttpStatusCode.OK);
+        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(detailsResponse, HttpStatusCode.OK);
         var details = detailsResponse.Result!;
 
         Assert.Multiple(() =>
@@ -101,7 +101,7 @@ public class AccountsEndpointTests
     public async Task GetTransactions()
     {
         var responsePayload =
-            JsonSerializer.Serialize(TestHelpers.GetMockData().AccountsEndpointMockData.GetTransactions, _jsonOptions);
+            JsonSerializer.Serialize(TestHelpers.MockData.AccountsEndpointMockData.GetTransactions, _jsonOptions);
         var response = new HttpResponseMessage
         {
             StatusCode = HttpStatusCode.OK,
@@ -110,7 +110,7 @@ public class AccountsEndpointTests
         var apiClient = TestHelpers.GetMockClient([response]);
 
         var transactionsResponse = await apiClient.AccountsEndpoint.GetTransactions(A.Dummy<Guid>());
-        TestHelpers.AssertNordigenApiResponseIsSuccessful(transactionsResponse, HttpStatusCode.OK);
+        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(transactionsResponse, HttpStatusCode.OK);
         var transactions = transactionsResponse.Result!;
 
         Assert.Multiple(() =>
@@ -138,7 +138,7 @@ public class AccountsEndpointTests
     public async Task GetTransactionRange()
     {
         var responsePayload =
-            JsonSerializer.Serialize(TestHelpers.GetMockData().AccountsEndpointMockData.GetTransactionRange, _jsonOptions);
+            JsonSerializer.Serialize(TestHelpers.MockData.AccountsEndpointMockData.GetTransactionRange, _jsonOptions);
         var response = new HttpResponseMessage
         {
             StatusCode = HttpStatusCode.OK,
@@ -157,7 +157,7 @@ public class AccountsEndpointTests
             DateTime.Now.Subtract(TimeSpan.FromDays(1)));
 #endif
 
-        TestHelpers.AssertNordigenApiResponseIsSuccessful(balancesResponse, HttpStatusCode.OK);
+        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(balancesResponse, HttpStatusCode.OK);
         Assert.That(balancesResponse.Result!.BookedTransactions, Has.Count.EqualTo(2));
     }
     
@@ -168,7 +168,7 @@ public class AccountsEndpointTests
     public async Task GetTransactionRangeInFuture()
     {
         var responsePayload =
-            JsonSerializer.Serialize(TestHelpers.GetMockData().AccountsEndpointMockData.GetTransactionRangeInFuture, _jsonOptions);
+            JsonSerializer.Serialize(TestHelpers.MockData.AccountsEndpointMockData.GetTransactionRangeInFuture, _jsonOptions);
         var response = new HttpResponseMessage
         {
             StatusCode = HttpStatusCode.BadRequest,
@@ -186,7 +186,7 @@ public class AccountsEndpointTests
             await apiClient.AccountsEndpoint.GetTransactions(A.Dummy<Guid>(), dateInFuture, dateInFuture.AddDays(1));
 #endif
         
-        TestHelpers.AssertNordigenApiResponseIsUnsuccessful(balancesResponse, HttpStatusCode.BadRequest);
+        AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(balancesResponse, HttpStatusCode.BadRequest);
         Assert.Multiple(() =>
         {
             Assert.That(balancesResponse.Error!.StartDateError, Is.Not.Null);

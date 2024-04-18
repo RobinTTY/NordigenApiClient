@@ -4,7 +4,6 @@ using FakeItEasy;
 using RobinTTY.NordigenApiClient.Endpoints;
 using RobinTTY.NordigenApiClient.JsonConverters;
 using RobinTTY.NordigenApiClient.Models;
-using RobinTTY.NordigenApiClient.Models.Responses;
 using RobinTTY.NordigenApiClient.Tests.Mocks;
 using RobinTTY.NordigenApiClient.Tests.Mocks.Responses;
 
@@ -13,7 +12,7 @@ namespace RobinTTY.NordigenApiClient.Tests.Shared;
 internal static class TestHelpers
 {
     private static readonly string[] Secrets = File.ReadAllLines("secrets.txt");
-    private static MockResponsesModel MockData { get; }
+    public static MockResponsesModel MockData { get; }
 
     static TestHelpers()
     {
@@ -28,32 +27,6 @@ internal static class TestHelpers
         };
         MockData = JsonSerializer.Deserialize<MockResponsesModel>(json, jsonOptions) ??
                    throw new InvalidOperationException("Could not deserialize mock Data");
-    }
-
-    internal static void AssertNordigenApiResponseIsSuccessful<TResponse, TError>(
-        NordigenApiResponse<TResponse, TError> response, HttpStatusCode statusCode)
-        where TResponse : class where TError : class
-    {
-        Assert.Multiple(() =>
-        {
-            Assert.That(response.IsSuccess, Is.True);
-            Assert.That(response.Result, Is.Not.Null);
-            Assert.That(response.Error, Is.Null);
-            Assert.That(response.StatusCode, Is.EqualTo(statusCode));
-        });
-    }
-
-    internal static void AssertNordigenApiResponseIsUnsuccessful<TResponse, TError>(
-        NordigenApiResponse<TResponse, TError> response, HttpStatusCode statusCode)
-        where TResponse : class where TError : class
-    {
-        Assert.Multiple(() =>
-        {
-            Assert.That(response.IsSuccess, Is.False);
-            Assert.That(response.Result, Is.Null);
-            Assert.That(response.Error, Is.Not.Null);
-            Assert.That(response.StatusCode, Is.EqualTo(statusCode));
-        });
     }
 
     internal static NordigenClient GetConfiguredClient(string? baseAddress = null)
@@ -87,8 +60,6 @@ internal static class TestHelpers
         return new(mockHttpClient, credentials);
     }
 
-    internal static MockResponsesModel GetMockData() => MockData;
-
     internal static JsonSerializerOptions GetSerializerOptions() => new()
     {
         Converters =
@@ -97,7 +68,4 @@ internal static class TestHelpers
             new CultureSpecificDecimalConverter(), new InstitutionsErrorConverter()
         }
     };
-
-    internal static bool BasicResponseMatchesExpectations(BasicResponse? error, string summary, string detail) =>
-        error?.Summary == summary && error.Detail == detail;
 }
