@@ -2,6 +2,7 @@
 using RobinTTY.NordigenApiClient.Models;
 using RobinTTY.NordigenApiClient.Models.Requests;
 using RobinTTY.NordigenApiClient.Models.Responses;
+using RobinTTY.NordigenApiClient.Tests.Shared;
 
 namespace RobinTTY.NordigenApiClient.Tests.LiveApi;
 
@@ -29,7 +30,7 @@ internal class CredentialTests
         Assert.Multiple(() =>
         {
             Assert.That(agreementsResponse.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
-            Assert.That(ErrorMatchesExpectation(agreementsResponse.Error!), Is.True);
+            AssertErrorMatchesExpectation(agreementsResponse.Error!);
         });
 
         // Returns InstitutionsError
@@ -37,7 +38,7 @@ internal class CredentialTests
         Assert.Multiple(() =>
         {
             Assert.That(institutionResponse.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
-            Assert.That(ErrorMatchesExpectation(institutionResponse.Error!), Is.True);
+            AssertErrorMatchesExpectation(institutionResponse.Error!);
         });
 
         // Returns AccountsError
@@ -45,7 +46,7 @@ internal class CredentialTests
         Assert.Multiple(() =>
         {
             Assert.That(balancesResponse.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
-            Assert.That(ErrorMatchesExpectation(balancesResponse.Error!), Is.True);
+            AssertErrorMatchesExpectation(balancesResponse.Error!);
             Assert.That(
                 new object?[]
                 {
@@ -61,7 +62,7 @@ internal class CredentialTests
         Assert.Multiple(() =>
         {
             Assert.That(balancesResponse.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
-            Assert.That(ErrorMatchesExpectation(createAgreementResponse.Error!), Is.True);
+            AssertErrorMatchesExpectation(createAgreementResponse.Error!);
             Assert.That(new object?[]
             {
                 createAgreementResponse.Error!.AccessScopeError, createAgreementResponse.Error.AccessValidForDaysError,
@@ -78,7 +79,7 @@ internal class CredentialTests
         Assert.Multiple(() =>
         {
             Assert.That(balancesResponse.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
-            Assert.That(ErrorMatchesExpectation(requisitionResponse.Error!), Is.True);
+            AssertErrorMatchesExpectation(requisitionResponse.Error!);
             Assert.That(new object?[]
             {
                 requisitionResponse.Error!.AgreementError, requisitionResponse.Error.InstitutionIdError,
@@ -89,8 +90,7 @@ internal class CredentialTests
         });
     }
 
-    private static bool ErrorMatchesExpectation(BasicResponse error)
-    {
-        return error is {Detail: "Authentication credentials were not provided.", Summary: "Authentication failed"};
-    }
+    private static void AssertErrorMatchesExpectation(BasicResponse error) =>
+        AssertionHelpers.AssertBasicResponseMatchesExpectations(error, "Authentication failed",
+            "No active account found with the given credentials");
 }

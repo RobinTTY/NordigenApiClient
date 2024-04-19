@@ -57,6 +57,11 @@ public class CreateRequisitionError : BasicResponse
     /// </summary>
     [JsonPropertyName("institution_id")]
     public BasicResponse? InstitutionIdError { get; }
+    
+    /// <summary>
+    /// Creates a new instance of <see cref="CreateRequisitionError" />.
+    /// </summary>
+    public CreateRequisitionError(){}
 
     /// <summary>
     /// Creates a new instance of <see cref="CreateRequisitionError" />.

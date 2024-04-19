@@ -31,6 +31,7 @@ public class AccountsError : BasicResponse
 #endif
     [JsonPropertyName("date_from")]
     public BasicResponse? StartDateError { get; }
+
 #if NET6_0_OR_GREATER
     /// <summary>
     /// An error that was returned related to the
@@ -48,6 +49,12 @@ public class AccountsError : BasicResponse
 #endif
     [JsonPropertyName("date_to")]
     public BasicResponse? EndDateError { get; }
+    
+    /// <summary>
+    /// Creates a new instance of <see cref="AccountsError" />.
+    /// </summary>
+    public AccountsError(){}
+
 #if NET6_0_OR_GREATER
     /// <summary>
     /// Creates a new instance of <see cref="AccountsError" />.

@@ -11,6 +11,11 @@ public class InstitutionsError : BasicResponse
     /// <summary>
     /// Creates a new instance of <see cref="InstitutionsError" />.
     /// </summary>
+    public InstitutionsError(){}
+    
+    /// <summary>
+    /// Creates a new instance of <see cref="InstitutionsError" />.
+    /// </summary>
     /// <param name="country">The error related to the requested institutions.</param>
     [JsonConstructor]
     public InstitutionsError(BasicResponse country) : base(country.Summary, country.Detail)
@@ -23,19 +28,12 @@ public class InstitutionsError : BasicResponse
 /// Since this representation doesn't add any useful information (only extra encapsulation)
 /// it is transformed to align this error with other errors returned by the API.
 /// </summary>
-internal class InstitutionsErrorInternal
+[method: JsonConstructor]
+internal class InstitutionsErrorInternal(BasicResponse? country, string? summary, string? detail)
 {
-    [JsonPropertyName("country")] public BasicResponse? Country { get; }
+    [JsonPropertyName("country")] public BasicResponse? Country { get; } = country;
 
-    [JsonPropertyName("summary")] public string? Summary { get; }
+    [JsonPropertyName("summary")] public string? Summary { get; } = summary;
 
-    [JsonPropertyName("detail")] public string? Detail { get; }
-
-    [JsonConstructor]
-    public InstitutionsErrorInternal(BasicResponse? country, string? summary, string? detail)
-    {
-        Country = country;
-        Summary = summary;
-        Detail = detail;
-    }
+    [JsonPropertyName("detail")] public string? Detail { get; } = detail;
 }

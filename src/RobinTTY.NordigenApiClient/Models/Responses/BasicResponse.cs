@@ -11,14 +11,19 @@ public class BasicResponse
     /// The summary text of the response/error.
     /// </summary>
     [JsonPropertyName("summary")]
-    public string? Summary { get; }
+    public string? Summary { get; init; }
 
     /// <summary>
     /// The detailed description of the response/error.
     /// </summary>
     [JsonPropertyName("detail")]
-    public string? Detail { get; }
-
+    public string? Detail { get; init; }
+    
+    /// <summary>
+    /// Creates a new instance of <see cref="BasicResponse" />.
+    /// </summary>
+    public BasicResponse(){}
+    
     /// <summary>
     /// Creates a new instance of <see cref="BasicResponse" />.
     /// </summary>

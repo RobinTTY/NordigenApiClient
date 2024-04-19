@@ -43,6 +43,11 @@ public class CreateAgreementError : BasicResponse
     /// </summary>
     [JsonPropertyName("agreement")]
     public BasicResponse? AgreementError { get; }
+    
+    /// <summary>
+    /// Creates a new instance of <see cref="CreateAgreementError" />.
+    /// </summary>
+    public CreateAgreementError(){}
 
     /// <summary>
     /// Creates a new instance of <see cref="CreateAgreementError" />.
