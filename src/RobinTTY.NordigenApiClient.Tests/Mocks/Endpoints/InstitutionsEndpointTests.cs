@@ -1,5 +1,4 @@
 ﻿using System.Net;
-using System.Text.Json;
 using RobinTTY.NordigenApiClient.Models.Responses;
 using RobinTTY.NordigenApiClient.Tests.Shared;
 
@@ -7,24 +6,14 @@ namespace RobinTTY.NordigenApiClient.Tests.Mocks.Endpoints;
 
 public class InstitutionsEndpointTests
 {
-    private readonly JsonSerializerOptions _jsonOptions = TestHelpers.GetSerializerOptions();
-
     /// <summary>
     /// Tests the retrieving of institutions for all countries and a specific country (Great Britain).
     /// </summary>
     [Test]
     public async Task GetInstitutions()
     {
-        var responsePayload =
-            JsonSerializer.Serialize(TestHelpers.MockData.InstitutionsEndpointMockData.GetInstitutions,
-                _jsonOptions);
-        var response = new HttpResponseMessage
-        {
-            StatusCode = HttpStatusCode.OK,
-            Content = new StringContent(responsePayload)
-        };
-        var apiClient = TestHelpers.GetMockClient([response]);
-
+        var apiClient = TestHelpers.GetMockClient(TestHelpers.MockData.InstitutionsEndpointMockData.GetInstitutions, HttpStatusCode.OK);
+        
         var institutions = await apiClient.InstitutionsEndpoint.GetInstitutions();
         AssertionHelpers.AssertNordigenApiResponseIsSuccessful(institutions, HttpStatusCode.OK);
 
@@ -39,16 +28,8 @@ public class InstitutionsEndpointTests
     [Test]
     public async Task GetInstitution()
     {
-        var responsePayload =
-            JsonSerializer.Serialize(TestHelpers.MockData.InstitutionsEndpointMockData.GetInstitution,
-                _jsonOptions);
-        var response = new HttpResponseMessage
-        {
-            StatusCode = HttpStatusCode.OK,
-            Content = new StringContent(responsePayload)
-        };
-        var apiClient = TestHelpers.GetMockClient([response]);
-
+        var apiClient = TestHelpers.GetMockClient(TestHelpers.MockData.InstitutionsEndpointMockData.GetInstitution, HttpStatusCode.OK);
+        
         var institution = await apiClient.InstitutionsEndpoint.GetInstitution("N26_NTSBDEB1");
         AssertionHelpers.AssertNordigenApiResponseIsSuccessful(institution, HttpStatusCode.OK);
 

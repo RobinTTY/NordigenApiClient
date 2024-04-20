@@ -11,13 +11,14 @@ namespace RobinTTY.NordigenApiClient.Tests.Shared;
 
 internal static class TestHelpers
 {
+    private static readonly JsonSerializerOptions JsonSerializerOptions;
     private static readonly string[] Secrets = File.ReadAllLines("secrets.txt");
     public static MockResponsesModel MockData { get; }
 
     static TestHelpers()
     {
         var json = File.ReadAllText("Mocks/Responses/responses.json");
-        var jsonOptions = new JsonSerializerOptions
+        JsonSerializerOptions = new JsonSerializerOptions
         {
             Converters =
             {
@@ -25,7 +26,7 @@ internal static class TestHelpers
                 new CultureSpecificDecimalConverter(), new InstitutionsErrorConverter()
             }
         };
-        MockData = JsonSerializer.Deserialize<MockResponsesModel>(json, jsonOptions) ??
+        MockData = JsonSerializer.Deserialize<MockResponsesModel>(json, JsonSerializerOptions) ??
                    throw new InvalidOperationException("Could not deserialize mock Data");
     }
 
@@ -38,34 +39,43 @@ internal static class TestHelpers
         return new NordigenClient(httpClient, credentials);
     }
 
-    internal static NordigenClient GetMockClient(List<HttpResponseMessage> responseMessages,
+    internal static NordigenClient GetMockClient(object value, HttpStatusCode statusCode,
+        bool addDefaultAuthToken = true) => GetMockClient([new ValueTuple<object, HttpStatusCode>(value, statusCode)],
+        addDefaultAuthToken);
+
+    private static NordigenClient GetMockClient(List<(object Value, HttpStatusCode StatusCode)> responses,
         bool addDefaultAuthToken = true)
     {
         var fakeHttpMessageHandler = A.Fake<FakeHttpMessageHandler>();
+        var httpResponseMessages = new List<HttpResponseMessage>();
         var token = new HttpResponseMessage(HttpStatusCode.OK)
         {
             Content = new StringContent(
                 $"{{\n  \"access\": \"{Secrets[4]}\",\n  \"access_expires\": 86400,\n" +
                 $" \"refresh\": \"{Secrets[5]}\",\n  \"refresh_expires\": 2592000\n}}")
         };
-        var responses = new List<HttpResponseMessage>();
-        responses.AddRange(addDefaultAuthToken ? [token, ..responseMessages] : responseMessages);
+
+        if (addDefaultAuthToken)
+            httpResponseMessages.Add(token);
+
+        responses.ForEach(response =>
+        {
+            var responsePayload = JsonSerializer.Serialize(response.Value, JsonSerializerOptions);
+            httpResponseMessages.Add(
+                new HttpResponseMessage
+                {
+                    StatusCode = response.StatusCode,
+                    Content = new StringContent(responsePayload)
+                }
+            );
+        });
 
         A.CallTo(() =>
                 fakeHttpMessageHandler.FakeSendAsync(A<HttpRequestMessage>.Ignored, A<CancellationToken>.Ignored))
-            .ReturnsNextFromSequence(responses.ToArray());
+            .ReturnsNextFromSequence(httpResponseMessages.ToArray());
 
         var mockHttpClient = new HttpClient(fakeHttpMessageHandler);
         var credentials = new NordigenClientCredentials(Secrets[0], Secrets[1]);
-        return new(mockHttpClient, credentials);
+        return new NordigenClient(mockHttpClient, credentials);
     }
-
-    internal static JsonSerializerOptions GetSerializerOptions() => new()
-    {
-        Converters =
-        {
-            new JsonWebTokenConverter(), new GuidConverter(),
-            new CultureSpecificDecimalConverter(), new InstitutionsErrorConverter()
-        }
-    };
 }

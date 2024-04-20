@@ -1,5 +1,4 @@
 ﻿using System.Net;
-using System.Text.Json;
 using FakeItEasy;
 using RobinTTY.NordigenApiClient.Models.Responses;
 using RobinTTY.NordigenApiClient.Tests.Shared;
@@ -8,23 +7,14 @@ namespace RobinTTY.NordigenApiClient.Tests.Mocks.Endpoints;
 
 public class AccountsEndpointTests
 {
-    private readonly JsonSerializerOptions _jsonOptions = TestHelpers.GetSerializerOptions();
-
     /// <summary>
     /// Tests the retrieval of an account.
     /// </summary>
     [Test]
     public async Task GetAccount()
     {
-        var responsePayload =
-            JsonSerializer.Serialize(TestHelpers.MockData.AccountsEndpointMockData.GetAccount, _jsonOptions);
-        var response = new HttpResponseMessage
-        {
-            StatusCode = HttpStatusCode.OK,
-            Content = new StringContent(responsePayload)
-        };
-        var apiClient = TestHelpers.GetMockClient([response]);
-
+        var apiClient = TestHelpers.GetMockClient(TestHelpers.MockData.AccountsEndpointMockData.GetAccount, HttpStatusCode.OK);
+        
         var accountResponse = await apiClient.AccountsEndpoint.GetAccount(A.Dummy<Guid>());
         AssertionHelpers.AssertNordigenApiResponseIsSuccessful(accountResponse, HttpStatusCode.OK);
         var account = accountResponse.Result!;
@@ -42,15 +32,8 @@ public class AccountsEndpointTests
     [Test]
     public async Task GetBalances()
     {
-        var responsePayload =
-            JsonSerializer.Serialize(TestHelpers.MockData.AccountsEndpointMockData.GetBalances, _jsonOptions);
-        var response = new HttpResponseMessage
-        {
-            StatusCode = HttpStatusCode.OK,
-            Content = new StringContent(responsePayload)
-        };
-        var apiClient = TestHelpers.GetMockClient([response]);
-
+        var apiClient = TestHelpers.GetMockClient(TestHelpers.MockData.AccountsEndpointMockData.GetBalances, HttpStatusCode.OK);
+        
         var balancesResponse = await apiClient.AccountsEndpoint.GetBalances(A.Dummy<Guid>());
         AssertionHelpers.AssertNordigenApiResponseIsSuccessful(balancesResponse, HttpStatusCode.OK);
         var balances = balancesResponse.Result!;
@@ -69,15 +52,8 @@ public class AccountsEndpointTests
     [Test]
     public async Task GetAccountDetails()
     {
-        var responsePayload = JsonSerializer.Serialize(TestHelpers.MockData.AccountsEndpointMockData.GetAccountDetails,
-            _jsonOptions);
-        var response = new HttpResponseMessage
-        {
-            StatusCode = HttpStatusCode.OK,
-            Content = new StringContent(responsePayload)
-        };
-        var apiClient = TestHelpers.GetMockClient([response]);
-
+        var apiClient = TestHelpers.GetMockClient(TestHelpers.MockData.AccountsEndpointMockData.GetAccountDetails, HttpStatusCode.OK);
+        
         var detailsResponse = await apiClient.AccountsEndpoint.GetAccountDetails(A.Dummy<Guid>());
         AssertionHelpers.AssertNordigenApiResponseIsSuccessful(detailsResponse, HttpStatusCode.OK);
         var details = detailsResponse.Result!;
@@ -100,14 +76,7 @@ public class AccountsEndpointTests
     [Test]
     public async Task GetTransactions()
     {
-        var responsePayload =
-            JsonSerializer.Serialize(TestHelpers.MockData.AccountsEndpointMockData.GetTransactions, _jsonOptions);
-        var response = new HttpResponseMessage
-        {
-            StatusCode = HttpStatusCode.OK,
-            Content = new StringContent(responsePayload)
-        };
-        var apiClient = TestHelpers.GetMockClient([response]);
+        var apiClient = TestHelpers.GetMockClient(TestHelpers.MockData.AccountsEndpointMockData.GetTransactions, HttpStatusCode.OK);
 
         var transactionsResponse = await apiClient.AccountsEndpoint.GetTransactions(A.Dummy<Guid>());
         AssertionHelpers.AssertNordigenApiResponseIsSuccessful(transactionsResponse, HttpStatusCode.OK);
@@ -137,14 +106,7 @@ public class AccountsEndpointTests
     [Test]
     public async Task GetTransactionRange()
     {
-        var responsePayload =
-            JsonSerializer.Serialize(TestHelpers.MockData.AccountsEndpointMockData.GetTransactionRange, _jsonOptions);
-        var response = new HttpResponseMessage
-        {
-            StatusCode = HttpStatusCode.OK,
-            Content = new StringContent(responsePayload)
-        };
-        var apiClient = TestHelpers.GetMockClient([response]);
+        var apiClient = TestHelpers.GetMockClient(TestHelpers.MockData.AccountsEndpointMockData.GetTransactionRange, HttpStatusCode.OK);
 
 #if NET6_0_OR_GREATER
         var startDate = new DateOnly(2022, 08, 04);
@@ -167,15 +129,8 @@ public class AccountsEndpointTests
     [Test]
     public async Task GetTransactionRangeInFuture()
     {
-        var responsePayload =
-            JsonSerializer.Serialize(TestHelpers.MockData.AccountsEndpointMockData.GetTransactionRangeInFuture, _jsonOptions);
-        var response = new HttpResponseMessage
-        {
-            StatusCode = HttpStatusCode.BadRequest,
-            Content = new StringContent(responsePayload)
-        };
-        var apiClient = TestHelpers.GetMockClient([response]);
-        
+        var apiClient = TestHelpers.GetMockClient(TestHelpers.MockData.AccountsEndpointMockData.GetTransactionRangeInFuture, HttpStatusCode.BadRequest);
+
         var dateInFuture = DateTime.Now.AddDays(1);
 #if NET6_0_OR_GREATER
         var balancesResponse =

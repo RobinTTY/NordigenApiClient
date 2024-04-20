@@ -1,5 +1,4 @@
 ﻿using System.Net;
-using System.Text.Json;
 using FakeItEasy;
 using Microsoft.IdentityModel.JsonWebTokens;
 using RobinTTY.NordigenApiClient.Tests.Shared;
@@ -9,8 +8,6 @@ namespace RobinTTY.NordigenApiClient.Tests.Mocks.Endpoints;
 
 public class TokenEndpointTests
 {
-    private readonly JsonSerializerOptions _jsonOptions = TestHelpers.GetSerializerOptions();
-
     #region RequestsWithSuccessfulResponse
 
     /// <summary>
@@ -19,15 +16,8 @@ public class TokenEndpointTests
     [Test]
     public async Task GetNewToken()
     {
-        var responsePayload =
-            JsonSerializer.Serialize(TestHelpers.MockData.TokenEndpointMockData.GetNewToken,
-                _jsonOptions);
-        var response = new HttpResponseMessage
-        {
-            StatusCode = HttpStatusCode.OK,
-            Content = new StringContent(responsePayload)
-        };
-        var apiClient = TestHelpers.GetMockClient([response], addDefaultAuthToken: false);
+        var apiClient = TestHelpers.GetMockClient(TestHelpers.MockData.TokenEndpointMockData.GetNewToken,
+            HttpStatusCode.OK, addDefaultAuthToken: false);
 
         var tokenPair = await apiClient.TokenEndpoint.GetTokenPair();
         AssertionHelpers.AssertNordigenApiResponseIsSuccessful(tokenPair, HttpStatusCode.OK);
@@ -54,15 +44,8 @@ public class TokenEndpointTests
     [Test]
     public async Task RefreshAccessToken()
     {
-        var responsePayload =
-            JsonSerializer.Serialize(TestHelpers.MockData.TokenEndpointMockData.RefreshAccessToken,
-                _jsonOptions);
-        var response = new HttpResponseMessage
-        {
-            StatusCode = HttpStatusCode.OK,
-            Content = new StringContent(responsePayload)
-        };
-        var apiClient = TestHelpers.GetMockClient([response], addDefaultAuthToken: false);
+        var apiClient = TestHelpers.GetMockClient(TestHelpers.MockData.TokenEndpointMockData.RefreshAccessToken,
+            HttpStatusCode.OK, addDefaultAuthToken: false);
 
         var tokenPair = await apiClient.TokenEndpoint.RefreshAccessToken(A.Fake<JsonWebToken>(options =>
         {
@@ -93,18 +76,12 @@ public class TokenEndpointTests
     [Test]
     public async Task GetTokenPairWithInvalidCredentials()
     {
-        var responsePayload =
-            JsonSerializer.Serialize(
-                TestHelpers.MockData.TokenEndpointMockData.NoActiveAccountForGivenCredentialsError, _jsonOptions);
-        var response = new HttpResponseMessage
-        {
-            StatusCode = HttpStatusCode.Unauthorized,
-            Content = new StringContent(responsePayload)
-        };
-        var apiClient = TestHelpers.GetMockClient([response], addDefaultAuthToken: false);
+        var apiClient = TestHelpers.GetMockClient(
+            TestHelpers.MockData.TokenEndpointMockData.NoActiveAccountForGivenCredentialsError,
+            HttpStatusCode.Unauthorized, addDefaultAuthToken: false);
 
         var tokenPairResponse = await apiClient.TokenEndpoint.GetTokenPair();
-        
+
         Assert.Multiple(() =>
         {
             AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(tokenPairResponse, HttpStatusCode.Unauthorized);
