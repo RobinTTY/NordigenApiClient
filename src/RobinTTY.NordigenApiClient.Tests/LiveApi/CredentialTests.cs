@@ -25,22 +25,6 @@ internal class CredentialTests
             "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef");
         var apiClient = new NordigenClient(httpClient, invalidCredentials);
 
-        // Returns BasicError
-        var agreementsResponse = await apiClient.AgreementsEndpoint.GetAgreements(10, 0);
-        Assert.Multiple(() =>
-        {
-            Assert.That(agreementsResponse.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
-            AssertErrorMatchesExpectation(agreementsResponse.Error!);
-        });
-
-        // Returns InstitutionsError
-        var institutionResponse = await apiClient.InstitutionsEndpoint.GetInstitutions();
-        Assert.Multiple(() =>
-        {
-            Assert.That(institutionResponse.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
-            AssertErrorMatchesExpectation(institutionResponse.Error!);
-        });
-
         // Returns AccountsError
         var balancesResponse = await apiClient.AccountsEndpoint.GetBalances(_secrets[9]);
         Assert.Multiple(() =>

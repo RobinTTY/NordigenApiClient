@@ -70,4 +70,26 @@ internal class TokenEndpointTests
         var result = await apiClient.RequisitionsEndpoint.GetRequisitions(10, 0);
         AssertionHelpers.AssertNordigenApiResponseIsSuccessful(result, HttpStatusCode.OK);
     }
+
+    /// <summary>
+    /// Tests the failure of authentication when trying to get a new token pair.
+    /// </summary>
+    [Test]
+    public async Task GetTokenPairWithInvalidCredentials()
+    {
+        using var httpClient = new HttpClient();
+        var invalidCredentials = new NordigenClientCredentials("01234567-89ab-cdef-0123-456789abcdef",
+            "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef");
+        var apiClient = new NordigenClient(httpClient, invalidCredentials);
+
+        // Returns BasicError
+        var agreementsResponse = await apiClient.AgreementsEndpoint.GetAgreements(10, 0);
+        Assert.Multiple(() =>
+        {
+            Assert.That(agreementsResponse.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
+            AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(agreementsResponse, HttpStatusCode.Unauthorized);
+            AssertionHelpers.AssertBasicResponseMatchesExpectations(agreementsResponse.Error, "Authentication failed",
+                "No active account found with the given credentials");
+        });
+    }
 }
