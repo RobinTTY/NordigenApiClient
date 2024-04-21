@@ -1,5 +1,4 @@
-﻿using System.Net;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 using System.Text.Json;
 using RobinTTY.NordigenApiClient.JsonConverters;
 using RobinTTY.NordigenApiClient.Models.Errors;

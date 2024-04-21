@@ -1,5 +1,4 @@
-﻿using System.Net;
-using RobinTTY.NordigenApiClient.Models.Responses;
+﻿using RobinTTY.NordigenApiClient.Models.Responses;
 using RobinTTY.NordigenApiClient.Tests.Shared;
 
 namespace RobinTTY.NordigenApiClient.Tests.Mocks.Endpoints;

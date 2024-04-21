@@ -1,5 +1,4 @@
-﻿using System.Net;
-using FakeItEasy;
+﻿using FakeItEasy;
 using Microsoft.IdentityModel.JsonWebTokens;
 using RobinTTY.NordigenApiClient.Tests.Shared;
 using RobinTTY.NordigenApiClient.Utility;

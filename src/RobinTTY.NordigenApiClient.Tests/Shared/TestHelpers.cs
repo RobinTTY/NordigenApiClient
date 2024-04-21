@@ -1,5 +1,4 @@
-﻿using System.Net;
-using System.Text.Json;
+﻿using System.Text.Json;
 using FakeItEasy;
 using RobinTTY.NordigenApiClient.Endpoints;
 using RobinTTY.NordigenApiClient.JsonConverters;

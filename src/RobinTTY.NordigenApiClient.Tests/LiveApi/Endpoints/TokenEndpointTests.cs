@@ -1,5 +1,4 @@
-﻿using System.Net;
-using RobinTTY.NordigenApiClient.Models;
+﻿using RobinTTY.NordigenApiClient.Models;
 using RobinTTY.NordigenApiClient.Models.Jwt;
 using RobinTTY.NordigenApiClient.Tests.Shared;
 
