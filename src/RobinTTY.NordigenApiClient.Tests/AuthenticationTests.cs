@@ -6,9 +6,9 @@ using RobinTTY.NordigenApiClient.Utility;
 namespace RobinTTY.NordigenApiClient.Tests;
 
 /// <summary>
-/// Tests aspects of <see cref="NordigenClientCredentials"/> and <see cref="JsonWebTokenPair"/> classes used for authentication.
+/// Tests aspects of authentication related to the <see cref="NordigenClientCredentials"/> and <see cref="JsonWebTokenPair"/> classes.
 /// </summary>
-internal class CredentialTests
+internal class AuthenticationTests
 {
     /// <summary>
     /// Tests creating <see cref="NordigenClientCredentials"/>, passing null as an argument.

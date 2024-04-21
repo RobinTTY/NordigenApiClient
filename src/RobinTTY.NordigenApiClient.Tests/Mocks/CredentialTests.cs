@@ -3,7 +3,7 @@ using RobinTTY.NordigenApiClient.Tests.Shared;
 
 namespace RobinTTY.NordigenApiClient.Tests.Mocks;
 
-public class AuthenticationTests
+public class CredentialTests
 {
     /// <summary>
     /// Tests the failure of authentication when trying to execute a request using mocks.
