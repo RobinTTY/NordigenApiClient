@@ -1,12 +1,11 @@
 ﻿using System.Net;
-using RobinTTY.NordigenApiClient.Models.Errors;
 using RobinTTY.NordigenApiClient.Models.Requests;
 using RobinTTY.NordigenApiClient.Models.Responses;
 using RobinTTY.NordigenApiClient.Tests.Shared;
 
 namespace RobinTTY.NordigenApiClient.Tests.LiveApi.Endpoints;
 
-internal class RequisitionsEndpointTests
+public class RequisitionsEndpointTests
 {
     private NordigenClient _apiClient = null!;
 

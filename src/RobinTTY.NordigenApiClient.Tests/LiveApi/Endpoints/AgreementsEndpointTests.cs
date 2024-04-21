@@ -5,7 +5,7 @@ using RobinTTY.NordigenApiClient.Tests.Shared;
 
 namespace RobinTTY.NordigenApiClient.Tests.LiveApi.Endpoints;
 
-internal class AgreementsEndpointTests
+public class AgreementsEndpointTests
 {
     private NordigenClient _apiClient = null!;
 

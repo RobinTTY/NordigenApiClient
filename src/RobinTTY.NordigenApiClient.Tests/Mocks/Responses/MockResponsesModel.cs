@@ -67,9 +67,9 @@ internal class RequisitionsEndpointMockData(
 internal class TokenEndpointMockData(
     JsonWebTokenPair getNewToken,
     JsonWebAccessToken refreshAccessToken,
-    BasicResponse noActiveAccountForGivenCredentialsError)
+    BasicResponse noAccountForGivenCredentialsError)
 {
     public JsonWebTokenPair GetNewToken { get; set; } = getNewToken;
     public JsonWebAccessToken RefreshAccessToken { get; set; } = refreshAccessToken;
-    public BasicResponse NoActiveAccountForGivenCredentialsError { get; set; } = noActiveAccountForGivenCredentialsError;
+    public BasicResponse NoAccountForGivenCredentialsError { get; set; } = noAccountForGivenCredentialsError;
 }
