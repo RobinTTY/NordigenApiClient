@@ -12,7 +12,7 @@ namespace RobinTTY.NordigenApiClient.Tests.Shared;
 internal static class TestHelpers
 {
     private static readonly JsonSerializerOptions JsonSerializerOptions;
-    private static readonly string[] Secrets = File.ReadAllLines("secrets.txt");
+    public static readonly string[] Secrets = File.ReadAllLines("secrets.txt");
     public static MockResponsesModel MockData { get; }
 
     static TestHelpers()

@@ -6,14 +6,13 @@ namespace RobinTTY.NordigenApiClient.Tests.LiveApi.Endpoints;
 
 public class AccountsEndpointTests
 {
-    private readonly string[] _secrets = File.ReadAllLines("secrets.txt");
     private Guid _accountId;
     private NordigenClient _apiClient = null!;
 
     [OneTimeSetUp]
     public void Setup()
     {
-        _accountId = Guid.Parse(_secrets[9]);
+        _accountId = Guid.Parse(TestHelpers.Secrets[9]);
         _apiClient = TestHelpers.GetConfiguredClient();
     }
 
@@ -135,10 +134,10 @@ public class AccountsEndpointTests
 
         // Returns AccountsError
 #if NET6_0_OR_GREATER
-        var transactionsResponse = await _apiClient.AccountsEndpoint.GetTransactions(_secrets[9],
+        var transactionsResponse = await _apiClient.AccountsEndpoint.GetTransactions(TestHelpers.Secrets[9],
             DateOnly.FromDateTime(startDate), DateOnly.FromDateTime(endDate));
 #else
-        var transactionsResponse = await _apiClient.AccountsEndpoint.GetTransactions(_secrets[9],
+        var transactionsResponse = await _apiClient.AccountsEndpoint.GetTransactions(TestHelpers.Secrets[9],
             startDate, endDate);
 #endif
 
