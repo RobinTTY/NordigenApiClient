@@ -9,13 +9,15 @@ internal class MockResponsesModel(
     AgreementsEndpointMockData agreementsEndpointMockData,
     InstitutionsEndpointMockData institutionsEndpointMockData,
     RequisitionsEndpointMockData requisitionsEndpointMockData,
-    TokenEndpointMockData tokenEndpointMockData)
+    TokenEndpointMockData tokenEndpointMockData,
+    CredentialMockData credentialMockData)
 {
     public AccountsEndpointMockData AccountsEndpointMockData { get; set; } = accountsEndpointMockData;
     public AgreementsEndpointMockData AgreementsEndpointMockData { get; set; } = agreementsEndpointMockData;
     public InstitutionsEndpointMockData InstitutionsEndpointMockData { get; set; } = institutionsEndpointMockData;
     public RequisitionsEndpointMockData RequisitionsEndpointMockData { get; set; } = requisitionsEndpointMockData;
     public TokenEndpointMockData TokenEndpointMockData { get; set; } = tokenEndpointMockData;
+    public CredentialMockData CredentialMockData { get; set; } = credentialMockData;
 }
 
 internal class AccountsEndpointMockData(
@@ -66,10 +68,14 @@ internal class RequisitionsEndpointMockData(
 
 internal class TokenEndpointMockData(
     JsonWebTokenPair getNewToken,
-    JsonWebAccessToken refreshAccessToken,
-    BasicResponse noAccountForGivenCredentialsError)
+    JsonWebAccessToken refreshAccessToken)
 {
     public JsonWebTokenPair GetNewToken { get; set; } = getNewToken;
     public JsonWebAccessToken RefreshAccessToken { get; set; } = refreshAccessToken;
+}
+
+internal class CredentialMockData(BasicResponse noAccountForGivenCredentialsError, BasicResponse ipNotWhitelistedError)
+{
     public BasicResponse NoAccountForGivenCredentialsError { get; set; } = noAccountForGivenCredentialsError;
+    public BasicResponse IpNotWhitelistedError { get; set; } = ipNotWhitelistedError;
 }

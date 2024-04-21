@@ -12,9 +12,27 @@ public class CredentialTests
     {
         _apiClient = TestHelpers.GetConfiguredClient();
     }
-    
+
     /// <summary>
-    /// Tests the failure of authentication when trying to execute a request using the live API.
+    /// Tests that <see cref="NordigenClient.JsonWebTokenPair" /> is populated after the first authenticated request is made.
+    /// </summary>
+    [Test]
+    public async Task CheckValidTokensAfterRequest()
+    {
+        Assert.That(_apiClient.JsonWebTokenPair, Is.Null);
+
+        await _apiClient.RequisitionsEndpoint.GetRequisitions(5, 0, CancellationToken.None);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(_apiClient.JsonWebTokenPair, Is.Not.Null);
+            Assert.That(_apiClient.JsonWebTokenPair!.AccessToken.EncodedToken, Has.Length.GreaterThan(0));
+            Assert.That(_apiClient.JsonWebTokenPair!.RefreshToken.EncodedToken, Has.Length.GreaterThan(0));
+        });
+    }
+
+    /// <summary>
+    /// Tests the failure of authentication when trying to execute a request.
     /// </summary>
     [Test]
     public async Task ExecuteRequestWithInvalidCredentials()
@@ -33,20 +51,25 @@ public class CredentialTests
                 "No active account found with the given credentials");
         });
     }
-    
+
     /// <summary>
-    /// Tests that <see cref="NordigenClient.JsonWebTokenPair" /> is populated after the first authenticated request is made.
+    /// Tries to execute a request using credentials that haven't whitelisted the used IP. This should cause an error.
     /// </summary>
     [Test]
-    public async Task CheckValidTokensAfterRequest()
+    public async Task ExecuteRequestWithUnauthorizedIp()
     {
-        Assert.That(_apiClient.JsonWebTokenPair, Is.Null);
-        await _apiClient.RequisitionsEndpoint.GetRequisitions(5, 0, CancellationToken.None);
+        using var httpClient = new HttpClient();
+        var credentials = new NordigenClientCredentials(TestHelpers.Secrets[11], TestHelpers.Secrets[12]);
+        var apiClient = new NordigenClient(httpClient, credentials);
+
+        var externalIp = await httpClient.GetStringAsync("https://ipinfo.io/ip");
+        var response = await apiClient.RequisitionsEndpoint.GetRequisitions(5, 0, CancellationToken.None);
+
         Assert.Multiple(() =>
         {
-            Assert.That(_apiClient.JsonWebTokenPair, Is.Not.Null);
-            Assert.That(_apiClient.JsonWebTokenPair!.AccessToken.EncodedToken, Has.Length.GreaterThan(0));
-            Assert.That(_apiClient.JsonWebTokenPair!.RefreshToken.EncodedToken, Has.Length.GreaterThan(0));
+            AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.Forbidden);
+            AssertionHelpers.AssertBasicResponseMatchesExpectations(response.Error, "IP address access denied",
+                $"Your IP {externalIp} isn't whitelisted to perform this action");
         });
     }
 }

@@ -395,10 +395,18 @@
     "RefreshAccessToken": {
       "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwic3ViIjoiMTIzNDU2Nzg5MCIsIm5hbWUiOiJKb2huIERvZSIsImlhdCI6MTUxNjIzOTAyMiwiZXhwIjozMzI3MDExNzU5NH0.gEa5VdPSqZW2xk9IqCEqiw6bzBOer_uAR1yp2XK7FFo",
       "access_expires": 86400
-    },
+    }
+  },
+  "CredentialMockData": {
     "NoAccountForGivenCredentialsError": {
       "summary": "Authentication failed",
-      "detail": "No active account found with the given credentials"
+      "detail": "No active account found with the given credentials",
+      "status_code": 401
+    },
+    "IpNotWhitelistedError": {
+      "summary": "IP address access denied",
+      "detail": "Your IP 127.0.0.1 isn't whitelisted to perform this action",
+      "status_code": 403
     }
   }
 }
