@@ -106,7 +106,6 @@ public class NordigenClient : INordigenClient
             {
                 var tokenResponse = await TryGetValidTokenPair(cancellationToken);
 
-
                 if (tokenResponse.IsSuccess)
                     JsonWebTokenPair = tokenResponse.Result;
                 else

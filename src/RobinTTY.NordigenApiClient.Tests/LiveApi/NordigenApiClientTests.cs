@@ -1,4 +1,7 @@
-﻿using RobinTTY.NordigenApiClient.Tests.Shared;
+﻿using System.Collections.Concurrent;
+using RobinTTY.NordigenApiClient.Models.Errors;
+using RobinTTY.NordigenApiClient.Models.Responses;
+using RobinTTY.NordigenApiClient.Tests.Shared;
 
 namespace RobinTTY.NordigenApiClient.Tests.LiveApi;
 
@@ -13,7 +16,7 @@ public class NordigenApiClientTests
         var apiClient = TestHelpers.GetConfiguredClient();
         await ExecuteExampleRequest(apiClient);
     }
-    
+
     /// <summary>
     /// Executes a request to the Nordigen API using a custom base address.
     /// </summary>
@@ -23,7 +26,36 @@ public class NordigenApiClientTests
         var apiClient = TestHelpers.GetConfiguredClient("https://ob.gocardless.com/api/v2/");
         await ExecuteExampleRequest(apiClient);
     }
-    
+
+    [Test]
+    [Ignore("Test executes a lot of requests using the LiveAPI.")]
+    public async Task ExecuteRequestsUntilRateLimitReached()
+    {
+        var apiClient = TestHelpers.GetConfiguredClient();
+        NordigenApiResponse<List<Institution>, InstitutionsError>? unsuccessfulRequest = null;
+
+        while (unsuccessfulRequest is null)
+        {
+            var tasks = new ConcurrentBag<Task<NordigenApiResponse<List<Institution>, InstitutionsError>>>();
+            Parallel.For(0, 10, _ =>
+            {
+                var task = apiClient.InstitutionsEndpoint.GetInstitutions("LI");
+                tasks.Add(task);
+            });
+
+            var results = await Task.WhenAll(tasks);
+            unsuccessfulRequest = results.FirstOrDefault(result => !result.IsSuccess);
+        }
+
+#if NET6_0_OR_GREATER
+        AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(unsuccessfulRequest, HttpStatusCode.TooManyRequests);
+#else
+    AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(unsuccessfulRequest, (HttpStatusCode)429);
+#endif
+        Assert.That(unsuccessfulRequest.Error!.Summary, Is.EqualTo("Rate limit exceeded"));
+        Assert.That(unsuccessfulRequest.Error!.Detail, Does.Match("The rate limit for this resource is [0-9]*\\/\\w*\\. Please try again in [0-9]* \\w*"));
+    }
+
     private async Task ExecuteExampleRequest(NordigenClient apiClient)
     {
         var response = await apiClient.TokenEndpoint.GetTokenPair();
