@@ -4,7 +4,7 @@ using RobinTTY.NordigenApiClient.Tests.Shared;
 
 namespace RobinTTY.NordigenApiClient.Tests.LiveApi.Endpoints;
 
-internal class AccountsEndpointTests
+public class AccountsEndpointTests
 {
     private readonly string[] _secrets = File.ReadAllLines("secrets.txt");
     private Guid _accountId;
@@ -16,6 +16,8 @@ internal class AccountsEndpointTests
         _accountId = Guid.Parse(_secrets[9]);
         _apiClient = TestHelpers.GetConfiguredClient();
     }
+
+    #region RequestsWithSuccessfulResponse
 
     /// <summary>
     /// Tests the retrieval of an account.
@@ -118,26 +120,68 @@ internal class AccountsEndpointTests
         Assert.That(balancesResponse.Result!.BookedTransactions, Has.Count.AtLeast(6));
     }
 
+    #endregion
+
+    #region RequestsWithErrors
+
     /// <summary>
     /// Tests the retrieval of transactions within a specific time frame in the future. This should return an error.
     /// </summary>
     [Test]
     public async Task GetTransactionRangeInFuture()
     {
-        var dateInFuture = DateTime.Now.AddDays(1);
+        var startDate = DateTime.Today.AddDays(1);
+        var endDate = DateTime.Today.AddMonths(1).AddDays(1);
+
+        // Returns AccountsError
 #if NET6_0_OR_GREATER
-        var balancesResponse =
-            await _apiClient.AccountsEndpoint.GetTransactions(_accountId, DateOnly.FromDateTime(dateInFuture),
-                DateOnly.FromDateTime(dateInFuture.AddDays(1)));
+        var transactionsResponse = await _apiClient.AccountsEndpoint.GetTransactions(_secrets[9],
+            DateOnly.FromDateTime(startDate), DateOnly.FromDateTime(endDate));
 #else
-        var balancesResponse =
-            await _apiClient.AccountsEndpoint.GetTransactions(_accountId, dateInFuture, dateInFuture.AddDays(1));
+        var transactionsResponse = await _apiClient.AccountsEndpoint.GetTransactions(_secrets[9],
+            startDate, endDate);
 #endif
-        AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(balancesResponse, HttpStatusCode.BadRequest);
+
         Assert.Multiple(() =>
         {
-            Assert.That(balancesResponse.Error!.StartDateError, Is.Not.Null);
-            Assert.That(balancesResponse.Error!.EndDateError, Is.Not.Null);
+            AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(transactionsResponse, HttpStatusCode.BadRequest);
+            Assert.That(transactionsResponse.Error?.StartDateError, Is.Not.Null);
+            Assert.That(transactionsResponse.Error?.EndDateError, Is.Not.Null);
+            AssertionHelpers.AssertBasicResponseMatchesExpectations(transactionsResponse.Error?.StartDateError,
+                "Date can't be in future",
+                $"'{startDate:yyyy-MM-dd}' can't be greater than {DateTime.Today:yyyy-MM-dd}. Specify correct date range");
+            AssertionHelpers.AssertBasicResponseMatchesExpectations(transactionsResponse.Error?.EndDateError,
+                "Date can't be in future",
+                $"'{endDate:yyyy-MM-dd}' can't be greater than {DateTime.Today:yyyy-MM-dd}. Specify correct date range");
         });
     }
+
+    /// <summary>
+    /// Tests the retrieval of transactions within a specific time frame where the date range is incorrect, since the endDate is before the startDate. This should throw an exception.
+    /// </summary>
+    [Test]
+    public void GetTransactionRangeWithIncorrectRange()
+    {
+        var startDate = DateTime.Now.AddMonths(-1);
+        var endDateBeforeStartDate = startDate.AddDays(-1);
+
+#if NET6_0_OR_GREATER
+        var exception = Assert.ThrowsAsync<ArgumentException>(async () =>
+            await _apiClient.AccountsEndpoint.GetTransactions(_accountId, DateOnly.FromDateTime(startDate),
+                DateOnly.FromDateTime(endDateBeforeStartDate)));
+
+        Assert.That(exception.Message,
+            Is.EqualTo(
+                $"Starting date '{DateOnly.FromDateTime(startDate)}' is greater than end date '{DateOnly.FromDateTime(endDateBeforeStartDate)}'. When specifying date range, starting date must precede the end date."));
+#else
+        var exception = Assert.ThrowsAsync<ArgumentException>(async () =>
+                await _apiClient.AccountsEndpoint.GetTransactions(_accountId, startDate, endDateBeforeStartDate));
+        
+        Assert.That(exception.Message,
+            Is.EqualTo(
+                $"Starting date '{startDate}' is greater than end date '{endDateBeforeStartDate}'. When specifying date range, starting date must precede the end date."));
+#endif
+    }
+
+    #endregion
 }

@@ -14,6 +14,7 @@ public class AccountsError : BasicResponse
     /// </summary>
     [JsonPropertyName("type")]
     public string? Type { get; }
+    
 #if NET6_0_OR_GREATER
     /// <summary>
     /// An error that was returned related to the

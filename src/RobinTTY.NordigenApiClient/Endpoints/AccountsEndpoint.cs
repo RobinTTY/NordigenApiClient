@@ -102,6 +102,10 @@ public class AccountsEndpoint : IAccountsEndpoint
         DateTime? startDate, DateTime? endDate, CancellationToken cancellationToken)
 #endif
     {
+        if (startDate > endDate)
+            throw new ArgumentException(
+                $"Starting date '{startDate}' is greater than end date '{endDate}'. When specifying date range, starting date must precede the end date.");
+            
         var query = new List<KeyValuePair<string, string>>();
         if (startDate != null)
             query.Add(new KeyValuePair<string, string>("date_from", DateToIso8601(startDate.Value)));

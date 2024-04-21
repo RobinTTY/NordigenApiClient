@@ -126,15 +126,14 @@
     },
     "GetTransactionRangeInFuture": {
       "date_from": {
-        "summary": "Incorrect date range",
-        "detail": "Starting date '2024-04-15' is greater than end date '2024-04-05'. When specifying date range, starting date must precede the end date",
-        "status_code": 400
+        "summary": "Date can't be in future",
+        "detail": "'2024-04-21' can't be greater than 2024-04-20. Specify correct date range"
       },
       "date_to": {
-        "summary": "Incorrect date range",
-        "detail": "Starting date '2024-04-15' is greater than end date '2024-04-05'. When specifying date range, starting date must precede the end date",
-        "status_code": 400
-      }
+        "summary": "Date can't be in future",
+        "detail": "'2024-05-21' can't be greater than 2024-04-20. Specify correct date range"
+      },
+      "status_code": 400
     }
   },
   "AgreementsEndpointMockData": {
@@ -397,10 +396,9 @@
       "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwic3ViIjoiMTIzNDU2Nzg5MCIsIm5hbWUiOiJKb2huIERvZSIsImlhdCI6MTUxNjIzOTAyMiwiZXhwIjozMzI3MDExNzU5NH0.gEa5VdPSqZW2xk9IqCEqiw6bzBOer_uAR1yp2XK7FFo",
       "access_expires": 86400
     },
-    "NoActiveAccountForGivenCredentialsError": {
+    "NoAccountForGivenCredentialsError": {
       "summary": "Authentication failed",
       "detail": "No active account found with the given credentials"
     }
-    
   }
 }

@@ -129,23 +129,30 @@ public class AccountsEndpointTests
     [Test]
     public async Task GetTransactionRangeInFuture()
     {
+        var startDate = new DateTime(year: 2024, month: 4, day: 21);
+        var endDate = new DateTime(year: 2024, month: 5, day: 21);
         var apiClient = TestHelpers.GetMockClient(TestHelpers.MockData.AccountsEndpointMockData.GetTransactionRangeInFuture, HttpStatusCode.BadRequest);
 
-        var dateInFuture = DateTime.Now.AddDays(1);
+        // Returns AccountsError
 #if NET6_0_OR_GREATER
-        var balancesResponse =
-            await apiClient.AccountsEndpoint.GetTransactions(A.Dummy<Guid>(), DateOnly.FromDateTime(dateInFuture),
-                DateOnly.FromDateTime(dateInFuture.AddDays(1)));
+        var transactionsResponse = await apiClient.AccountsEndpoint.GetTransactions(A.Dummy<Guid>(),
+            DateOnly.FromDateTime(startDate), DateOnly.FromDateTime(endDate));
 #else
-        var balancesResponse =
-            await apiClient.AccountsEndpoint.GetTransactions(A.Dummy<Guid>(), dateInFuture, dateInFuture.AddDays(1));
+        var transactionsResponse = await apiClient.AccountsEndpoint.GetTransactions(A.Dummy<Guid>(),
+            startDate, endDate);
 #endif
-        
-        AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(balancesResponse, HttpStatusCode.BadRequest);
+
         Assert.Multiple(() =>
         {
-            Assert.That(balancesResponse.Error!.StartDateError, Is.Not.Null);
-            Assert.That(balancesResponse.Error!.EndDateError, Is.Not.Null);
+            AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(transactionsResponse, HttpStatusCode.BadRequest);
+            Assert.That(transactionsResponse.Error?.StartDateError, Is.Not.Null);
+            Assert.That(transactionsResponse.Error?.EndDateError, Is.Not.Null);
+            AssertionHelpers.AssertBasicResponseMatchesExpectations(transactionsResponse.Error?.StartDateError,
+                "Date can't be in future",
+                "'2024-04-21' can't be greater than 2024-04-20. Specify correct date range");
+            AssertionHelpers.AssertBasicResponseMatchesExpectations(transactionsResponse.Error?.EndDateError,
+                "Date can't be in future",
+                "'2024-05-21' can't be greater than 2024-04-20. Specify correct date range");
         });
     }
 }
