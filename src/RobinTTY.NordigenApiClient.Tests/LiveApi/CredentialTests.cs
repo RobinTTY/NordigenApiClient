@@ -1,4 +1,5 @@
 ﻿using RobinTTY.NordigenApiClient.Models;
+using RobinTTY.NordigenApiClient.Models.Jwt;
 using RobinTTY.NordigenApiClient.Tests.Shared;
 
 namespace RobinTTY.NordigenApiClient.Tests.LiveApi;
@@ -32,7 +33,7 @@ public class CredentialTests
     }
 
     /// <summary>
-    /// Tests the failure of authentication when trying to execute a request.
+    /// Tests the failure of authentication due to invalid credentials when trying to execute a request.
     /// </summary>
     [Test]
     public async Task ExecuteRequestWithInvalidCredentials()
@@ -42,13 +43,35 @@ public class CredentialTests
             "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef");
         var apiClient = new NordigenClient(httpClient, invalidCredentials);
 
-        // Returns BasicError
         var agreementsResponse = await apiClient.TokenEndpoint.GetTokenPair();
+
         Assert.Multiple(() =>
         {
             AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(agreementsResponse, HttpStatusCode.Unauthorized);
             AssertionHelpers.AssertBasicResponseMatchesExpectations(agreementsResponse.Error, "Authentication failed",
                 "No active account found with the given credentials");
+        });
+    }
+
+    /// <summary>
+    /// Tests the failure of authentication due to an invalid token when trying to execute a request.
+    /// </summary>
+    [Test]
+    public async Task ExecuteRequestWithUnauthorizedToken()
+    {
+        using var httpClient = new HttpClient();
+        var invalidCredentials = new NordigenClientCredentials("01234567-89ab-cdef-0123-456789abcdef",
+            "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef");
+        var token = new JsonWebTokenPair(TestHelpers.Secrets[14], TestHelpers.Secrets[14]);
+        var apiClient = new NordigenClient(httpClient, invalidCredentials, token);
+
+        var response = await apiClient.InstitutionsEndpoint.GetInstitutions();
+
+        Assert.Multiple(() =>
+        {
+            AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.Unauthorized);
+            AssertionHelpers.AssertBasicResponseMatchesExpectations(response.Error, "Invalid token",
+                "Token is invalid or expired");
         });
     }
 

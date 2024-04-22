@@ -6,12 +6,15 @@ namespace RobinTTY.NordigenApiClient.Tests.LiveApi.Endpoints;
 public class AccountsEndpointTests
 {
     private Guid _accountId;
+    private Guid _nonExistingAccountId;
+    private const string InvalidGuid = "abcdefg";
     private NordigenClient _apiClient = null!;
 
     [OneTimeSetUp]
     public void Setup()
     {
         _accountId = Guid.Parse(TestHelpers.Secrets[9]);
+        _nonExistingAccountId = Guid.Parse("f1d53c46-260d-4556-82df-4e5fed58e37c");
         _apiClient = TestHelpers.GetConfiguredClient();
     }
 
@@ -121,6 +124,21 @@ public class AccountsEndpointTests
     #endregion
 
     #region RequestsWithErrors
+    
+    /// <summary>
+    /// Tests the retrieval of an account that does not exist. This should return an error.
+    /// </summary>
+    [Test]
+    public async Task GetAccountWithInvalidGuid()
+    {
+        var accountResponse = await _apiClient.AccountsEndpoint.GetAccount(InvalidGuid);
+        
+        Assert.Multiple(() =>
+        {
+            AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(accountResponse, HttpStatusCode.BadRequest);
+            AssertionHelpers.AssertBasicResponseMatchesExpectations(accountResponse.Error, "Invalid Account ID", $"{InvalidGuid} is not a valid Account UUID. ");
+        });
+    }
 
     /// <summary>
     /// Tests the retrieval of an account that does not exist. This should return an error.
@@ -128,12 +146,27 @@ public class AccountsEndpointTests
     [Test]
     public async Task GetAccountThatDoesNotExist()
     {
-        var accountResponse = await _apiClient.AccountsEndpoint.GetAccount("f1d53c46-260d-4556-82df-4e5fed58e37c");
+        var accountResponse = await _apiClient.AccountsEndpoint.GetAccount(_nonExistingAccountId);
         
         Assert.Multiple(() =>
         {
             AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(accountResponse, HttpStatusCode.NotFound);
             AssertionHelpers.AssertBasicResponseMatchesExpectations(accountResponse.Error, "Not found.", "Not found.");
+        });
+    }
+
+    /// <summary>
+    /// Tests the retrieval of balances of an account that does not exist. This should return an error.
+    /// </summary>
+    [Test]
+    public async Task GetBalancesForAccountThatDoesNotExist()
+    {
+        var balancesResponse = await _apiClient.AccountsEndpoint.GetBalances(_nonExistingAccountId);
+        
+        Assert.Multiple(() =>
+        {
+            AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(balancesResponse, HttpStatusCode.NotFound);
+            AssertionHelpers.AssertBasicResponseMatchesExpectations(balancesResponse.Error, $"Account ID {_nonExistingAccountId} not found", "Please check whether you specified a valid Account ID");
         });
     }
 
