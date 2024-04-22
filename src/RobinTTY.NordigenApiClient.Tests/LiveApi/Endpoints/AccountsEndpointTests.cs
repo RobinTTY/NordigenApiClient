@@ -123,6 +123,21 @@ public class AccountsEndpointTests
     #region RequestsWithErrors
 
     /// <summary>
+    /// Tests the retrieval of an account that does not exist. This should return an error.
+    /// </summary>
+    [Test]
+    public async Task GetAccountThatDoesNotExist()
+    {
+        var accountResponse = await _apiClient.AccountsEndpoint.GetAccount("f1d53c46-260d-4556-82df-4e5fed58e37c");
+        
+        Assert.Multiple(() =>
+        {
+            AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(accountResponse, HttpStatusCode.NotFound);
+            AssertionHelpers.AssertBasicResponseMatchesExpectations(accountResponse.Error, "Not found.", "Not found.");
+        });
+    }
+
+    /// <summary>
     /// Tests the retrieval of transactions within a specific time frame in the future. This should return an error.
     /// </summary>
     [Test]

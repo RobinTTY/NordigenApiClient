@@ -26,7 +26,9 @@ internal class AccountsEndpointMockData(
     BankAccountDetailsWrapper getAccountDetails,
     AccountTransactionsWrapper getTransactions,
     AccountTransactionsWrapper getTransactionRange,
-    AccountsError getTransactionRangeInFuture)
+    AccountsError getTransactionRangeInFuture,
+    AccountsError getAccountThatDoesNotExist
+    )
 {
     public BankAccount GetAccount { get; set; } = getAccount;
     public BalanceJsonWrapper GetBalances { get; set; } = getBalances;
@@ -34,6 +36,7 @@ internal class AccountsEndpointMockData(
     public AccountTransactionsWrapper GetTransactions { get; set; } = getTransactions;
     public AccountTransactionsWrapper GetTransactionRange { get; set; } = getTransactionRange;
     public AccountsError GetTransactionRangeInFuture { get; set; } = getTransactionRangeInFuture;
+    public AccountsError GetAccountThatDoesNotExist { get; set; } = getAccountThatDoesNotExist;
 }
 
 internal class AgreementsEndpointMockData(

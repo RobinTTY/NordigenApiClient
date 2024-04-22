@@ -124,6 +124,11 @@
         ]
       }
     },
+    "GetAccountThatDoesNotExist": {
+      "detail": "Not found.",
+      "summary": "Not found.",
+      "status_code": 404
+    },
     "GetTransactionRangeInFuture": {
       "date_from": {
         "summary": "Date can't be in future",

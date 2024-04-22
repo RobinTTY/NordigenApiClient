@@ -12,8 +12,9 @@ public class AccountsEndpointTests
     [Test]
     public async Task GetAccount()
     {
-        var apiClient = TestHelpers.GetMockClient(TestHelpers.MockData.AccountsEndpointMockData.GetAccount, HttpStatusCode.OK);
-        
+        var apiClient =
+            TestHelpers.GetMockClient(TestHelpers.MockData.AccountsEndpointMockData.GetAccount, HttpStatusCode.OK);
+
         var accountResponse = await apiClient.AccountsEndpoint.GetAccount(A.Dummy<Guid>());
         AssertionHelpers.AssertNordigenApiResponseIsSuccessful(accountResponse, HttpStatusCode.OK);
         var account = accountResponse.Result!;
@@ -31,8 +32,9 @@ public class AccountsEndpointTests
     [Test]
     public async Task GetBalances()
     {
-        var apiClient = TestHelpers.GetMockClient(TestHelpers.MockData.AccountsEndpointMockData.GetBalances, HttpStatusCode.OK);
-        
+        var apiClient = TestHelpers.GetMockClient(TestHelpers.MockData.AccountsEndpointMockData.GetBalances,
+            HttpStatusCode.OK);
+
         var balancesResponse = await apiClient.AccountsEndpoint.GetBalances(A.Dummy<Guid>());
         AssertionHelpers.AssertNordigenApiResponseIsSuccessful(balancesResponse, HttpStatusCode.OK);
         var balances = balancesResponse.Result!;
@@ -51,8 +53,9 @@ public class AccountsEndpointTests
     [Test]
     public async Task GetAccountDetails()
     {
-        var apiClient = TestHelpers.GetMockClient(TestHelpers.MockData.AccountsEndpointMockData.GetAccountDetails, HttpStatusCode.OK);
-        
+        var apiClient = TestHelpers.GetMockClient(TestHelpers.MockData.AccountsEndpointMockData.GetAccountDetails,
+            HttpStatusCode.OK);
+
         var detailsResponse = await apiClient.AccountsEndpoint.GetAccountDetails(A.Dummy<Guid>());
         AssertionHelpers.AssertNordigenApiResponseIsSuccessful(detailsResponse, HttpStatusCode.OK);
         var details = detailsResponse.Result!;
@@ -75,7 +78,8 @@ public class AccountsEndpointTests
     [Test]
     public async Task GetTransactions()
     {
-        var apiClient = TestHelpers.GetMockClient(TestHelpers.MockData.AccountsEndpointMockData.GetTransactions, HttpStatusCode.OK);
+        var apiClient = TestHelpers.GetMockClient(TestHelpers.MockData.AccountsEndpointMockData.GetTransactions,
+            HttpStatusCode.OK);
 
         var transactionsResponse = await apiClient.AccountsEndpoint.GetTransactions(A.Dummy<Guid>());
         AssertionHelpers.AssertNordigenApiResponseIsSuccessful(transactionsResponse, HttpStatusCode.OK);
@@ -105,7 +109,8 @@ public class AccountsEndpointTests
     [Test]
     public async Task GetTransactionRange()
     {
-        var apiClient = TestHelpers.GetMockClient(TestHelpers.MockData.AccountsEndpointMockData.GetTransactionRange, HttpStatusCode.OK);
+        var apiClient = TestHelpers.GetMockClient(TestHelpers.MockData.AccountsEndpointMockData.GetTransactionRange,
+            HttpStatusCode.OK);
 
 #if NET6_0_OR_GREATER
         var startDate = new DateOnly(2022, 08, 04);
@@ -121,7 +126,24 @@ public class AccountsEndpointTests
         AssertionHelpers.AssertNordigenApiResponseIsSuccessful(balancesResponse, HttpStatusCode.OK);
         Assert.That(balancesResponse.Result!.BookedTransactions, Has.Count.EqualTo(2));
     }
-    
+
+    /// <summary>
+    /// Tests the retrieval of an account that does not exist. This should return an error.
+    /// </summary>
+    [Test]
+    public async Task GetAccountThatDoesNotExist()
+    {
+        var apiClient = TestHelpers.GetMockClient(TestHelpers.MockData.AccountsEndpointMockData.GetAccountThatDoesNotExist, HttpStatusCode.NotFound);
+        
+        var accountResponse = await apiClient.AccountsEndpoint.GetAccount(A.Dummy<Guid>());
+
+        Assert.Multiple(() =>
+        {
+            AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(accountResponse, HttpStatusCode.NotFound);
+            AssertionHelpers.AssertBasicResponseMatchesExpectations(accountResponse.Error, "Not found.", "Not found.");
+        });
+    }
+
     /// <summary>
     /// Tests the retrieval of transactions within a specific time frame in the future. This should return an error.
     /// </summary>
@@ -130,7 +152,8 @@ public class AccountsEndpointTests
     {
         var startDate = new DateTime(year: 2024, month: 4, day: 21);
         var endDate = new DateTime(year: 2024, month: 5, day: 21);
-        var apiClient = TestHelpers.GetMockClient(TestHelpers.MockData.AccountsEndpointMockData.GetTransactionRangeInFuture, HttpStatusCode.BadRequest);
+        var apiClient = TestHelpers.GetMockClient(
+            TestHelpers.MockData.AccountsEndpointMockData.GetTransactionRangeInFuture, HttpStatusCode.BadRequest);
 
         // Returns AccountsError
 #if NET6_0_OR_GREATER
@@ -153,5 +176,33 @@ public class AccountsEndpointTests
                 "Date can't be in future",
                 "'2024-05-21' can't be greater than 2024-04-20. Specify correct date range");
         });
+    }
+
+    /// <summary>
+    /// Tests the retrieval of transactions within a specific time frame where the date range is incorrect, since the endDate is before the startDate. This should throw an exception.
+    /// </summary>
+    [Test]
+    public void GetTransactionRangeWithIncorrectRange()
+    {
+        var apiClient = TestHelpers.GetMockClient(null!, HttpStatusCode.BadRequest);
+        var startDate = DateTime.Now.AddMonths(-1);
+        var endDateBeforeStartDate = startDate.AddDays(-1);
+
+#if NET6_0_OR_GREATER
+        var exception = Assert.ThrowsAsync<ArgumentException>(async () =>
+            await apiClient.AccountsEndpoint.GetTransactions(A.Dummy<Guid>(), DateOnly.FromDateTime(startDate),
+                DateOnly.FromDateTime(endDateBeforeStartDate)));
+
+        Assert.That(exception.Message,
+            Is.EqualTo(
+                $"Starting date '{DateOnly.FromDateTime(startDate)}' is greater than end date '{DateOnly.FromDateTime(endDateBeforeStartDate)}'. When specifying date range, starting date must precede the end date."));
+#else
+        var exception = Assert.ThrowsAsync<ArgumentException>(async () =>
+                await apiClient.AccountsEndpoint.GetTransactions(A.Dummy<Guid>(), startDate, endDateBeforeStartDate));
+        
+        Assert.That(exception.Message,
+            Is.EqualTo(
+                $"Starting date '{startDate}' is greater than end date '{endDateBeforeStartDate}'. When specifying date range, starting date must precede the end date."));
+#endif
     }
 }
