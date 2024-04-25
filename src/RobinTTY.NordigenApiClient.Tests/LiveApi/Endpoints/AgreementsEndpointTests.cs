@@ -102,19 +102,6 @@ public class AgreementsEndpointTests
     }
 
     /// <summary>
-    /// Tests the retrieval of an agreement with an invalid guid.
-    /// </summary>
-    [Test]
-    public async Task GetAgreementWithInvalidGuid()
-    {
-        const string guid = "f84d7b8-dee4-4cd9-bc6d-842ef78f6028";
-        var response = await _apiClient.AgreementsEndpoint.GetAgreement(guid);
-        AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.BadRequest);
-        AssertionHelpers.AssertBasicResponseMatchesExpectations(response.Error, "Invalid EndUserAgreement ID",
-            $"{guid} is not a valid EndUserAgreement UUID. ");
-    }
-
-    /// <summary>
     /// Tests the creation and deletion of an end user agreement.
     /// </summary>
     [Test]
@@ -156,24 +143,20 @@ public class AgreementsEndpointTests
     #region RequestsWithErrors
 
     /// <summary>
-    /// Tests the retrieving of an end user agreement with an invalid institution id.
+    /// Tests the retrieval of an agreement with an invalid guid.
     /// </summary>
     [Test]
-    public async Task GetAgreementWithInvalidInstitutionId()
+    public async Task GetAgreementWithInvalidGuid()
     {
-        var agreement = new CreateAgreementRequest(90, 90,
-            ["balances", "details", "transactions"], "invalid_institution");
+        const string guid = "f84d7b8-dee4-4cd9-bc6d-842ef78f6028";
 
-        var response = await _apiClient.AgreementsEndpoint.CreateAgreement(agreement);
+        var response = await _apiClient.AgreementsEndpoint.GetAgreement(guid);
 
-        AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.BadRequest);
         Assert.Multiple(() =>
         {
-            Assert.That(response.Error!.InstitutionIdError, Is.Not.Null);
-            Assert.That(response.Error!.InstitutionIdError!.Summary,
-                Is.EqualTo("Unknown Institution ID invalid_institution"));
-            Assert.That(response.Error!.InstitutionIdError!.Detail,
-                Is.EqualTo("Get Institution IDs from /institutions/?country={$COUNTRY_CODE}"));
+            AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.BadRequest);
+            AssertionHelpers.AssertBasicResponseMatchesExpectations(response.Error, "Invalid EndUserAgreement ID",
+                $"{guid} is not a valid EndUserAgreement UUID. ");
         });
     }
 
@@ -232,15 +215,14 @@ public class AgreementsEndpointTests
             ["balances", "transactions"], "PKO_BPKOPLPW");
 
         var response = await _apiClient.AgreementsEndpoint.CreateAgreement(agreement);
-        var result = response.Error!;
 
         Assert.Multiple(() =>
         {
             AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.BadRequest);
-            Assert.That(new[] {result.InstitutionIdError, result.AgreementError}, Has.All.Null);
-            Assert.That(result.Detail,
+            Assert.That(new[] {response.Error!.InstitutionIdError, response.Error!.AgreementError}, Has.All.Null);
+            Assert.That(response.Error!.Detail,
                 Is.EqualTo("For this institution the following scopes are required together: ['details', 'balances']"));
-            Assert.That(result.Summary, Is.EqualTo("Institution access scope dependencies error"));
+            Assert.That(response.Error!.Summary, Is.EqualTo("Institution access scope dependencies error"));
         });
     }
 

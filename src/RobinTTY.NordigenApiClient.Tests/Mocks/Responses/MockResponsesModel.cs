@@ -46,12 +46,26 @@ internal class AgreementsEndpointMockData(
     ResponsePage<Agreement> getAgreements,
     Agreement createAgreement,
     Agreement getAgreement,
-    BasicResponse deleteAgreement)
+    BasicResponse deleteAgreement,
+    BasicResponse getAgreementWithInvalidGuid,
+    CreateAgreementError createAgreementWithInvalidInstitutionId,
+    CreateAgreementError createAgreementWithInvalidParams,
+    CreateAgreementError createAgreementWithInvalidParamsAtPolishInstitution)
 {
     public ResponsePage<Agreement> GetAgreements { get; set; } = getAgreements;
     public Agreement CreateAgreement { get; set; } = createAgreement;
     public Agreement GetAgreement { get; set; } = getAgreement;
     public BasicResponse DeleteAgreement { get; set; } = deleteAgreement;
+
+    public BasicResponse GetAgreementWithInvalidGuid { get; set; } = getAgreementWithInvalidGuid;
+
+    public CreateAgreementError CreateAgreementWithInvalidInstitutionId { get; set; } =
+        createAgreementWithInvalidInstitutionId;
+
+    public CreateAgreementError CreateAgreementWithInvalidParams { get; set; } = createAgreementWithInvalidParams;
+
+    public CreateAgreementError CreateAgreementWithInvalidParamsAtPolishInstitution { get; set; } =
+        createAgreementWithInvalidParamsAtPolishInstitution;
 }
 
 internal class InstitutionsEndpointMockData(List<Institution> getInstitutions, Institution getInstitution)
