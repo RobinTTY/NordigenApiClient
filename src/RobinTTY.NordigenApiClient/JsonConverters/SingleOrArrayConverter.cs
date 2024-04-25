@@ -6,7 +6,7 @@ namespace RobinTTY.NordigenApiClient.JsonConverters;
 internal class SingleOrArrayConverter<TEnumerable, TItem> : JsonConverter<TEnumerable>
     where TEnumerable : IEnumerable<TItem>
 {
-    public override TEnumerable? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    public override TEnumerable Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         switch (reader.TokenType)
         {
@@ -20,6 +20,7 @@ internal class SingleOrArrayConverter<TEnumerable, TItem> : JsonConverter<TEnume
                     var listItem = JsonSerializer.Deserialize<TItem>(ref reader, options);
                     if (listItem != null) list.Add(listItem);
                 }
+
                 return (TEnumerable) (IEnumerable<TItem>) list;
             default:
                 var item = JsonSerializer.Deserialize<TItem>(ref reader, options);

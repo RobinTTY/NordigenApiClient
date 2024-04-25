@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using RobinTTY.NordigenApiClient.JsonConverters;
 
 namespace RobinTTY.NordigenApiClient.Models.Responses;
 
@@ -11,12 +12,14 @@ public class BasicResponse
     /// The summary text of the response/error.
     /// </summary>
     [JsonPropertyName("summary")]
+    [JsonConverter(typeof(StringArrayMergeConverter))]
     public string? Summary { get; init; }
 
     /// <summary>
     /// The detailed description of the response/error.
     /// </summary>
     [JsonPropertyName("detail")]
+    [JsonConverter(typeof(StringArrayMergeConverter))]
     public string? Detail { get; init; }
     
     /// <summary>

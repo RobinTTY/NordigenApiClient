@@ -14,11 +14,12 @@ public class AgreementsEndpointTests
         _apiClient = TestHelpers.GetConfiguredClient();
     }
 
+    #region RequestsWithSuccessfulResponse
+
     /// <summary>
     /// Tests the paging mechanism of retrieving end user agreements.
     /// Creates 3 agreements, retrieves them using 3 <see cref="ResponsePage{T}" />s and deletes the agreements after.
     /// </summary>
-    /// <returns></returns>
     [Test]
     public async Task GetAgreementsPaged()
     {
@@ -78,7 +79,6 @@ public class AgreementsEndpointTests
     /// <summary>
     /// Tests the retrieval of one agreement via <see cref="Guid" /> and string id.
     /// </summary>
-    /// <returns></returns>
     [Test]
     public async Task GetAgreement()
     {
@@ -104,7 +104,6 @@ public class AgreementsEndpointTests
     /// <summary>
     /// Tests the retrieval of an agreement with an invalid guid.
     /// </summary>
-    /// <returns></returns>
     [Test]
     public async Task GetAgreementWithInvalidGuid()
     {
@@ -118,7 +117,6 @@ public class AgreementsEndpointTests
     /// <summary>
     /// Tests the creation and deletion of an end user agreement.
     /// </summary>
-    /// <returns></returns>
     [Test]
     public async Task CreateAcceptAndDeleteAgreement()
     {
@@ -153,42 +151,70 @@ public class AgreementsEndpointTests
         Assert.That(deletionResponse.Result!.Summary, Is.EqualTo("End User Agreement deleted"));
     }
 
+    #endregion
+
+    #region RequestsWithErrors
+
+    /// <summary>
+    /// Tests the retrieving of an end user agreement with an invalid institution id.
+    /// </summary>
+    [Test]
+    public async Task GetAgreementWithInvalidInstitutionId()
+    {
+        var agreement = new CreateAgreementRequest(90, 90,
+            ["balances", "details", "transactions"], "invalid_institution");
+
+        var response = await _apiClient.AgreementsEndpoint.CreateAgreement(agreement);
+
+        AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.BadRequest);
+        Assert.Multiple(() =>
+        {
+            Assert.That(response.Error!.InstitutionIdError, Is.Not.Null);
+            Assert.That(response.Error!.InstitutionIdError!.Summary,
+                Is.EqualTo("Unknown Institution ID invalid_institution"));
+            Assert.That(response.Error!.InstitutionIdError!.Detail,
+                Is.EqualTo("Get Institution IDs from /institutions/?country={$COUNTRY_CODE}"));
+        });
+    }
+
     /// <summary>
     /// Tests the creation of an end user agreement with an invalid institution id.
     /// </summary>
-    /// <returns></returns>
     [Test]
     public async Task CreateAgreementWithInvalidInstitutionId()
     {
-        var agreement = new CreateAgreementRequest(90, 90, ["balances", "details", "transactions"],
-            "SANDBOXFINANCE_SFIN000");
-        var response = await _apiClient.AgreementsEndpoint.CreateAgreement(agreement);
-        AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.BadRequest);
+        var agreement = new CreateAgreementRequest(90, 90,
+            ["balances", "details", "transactions"], "invalid_institution");
 
-        var result = response.Error!;
-        Assert.That(result.InstitutionIdError, Is.Not.Null);
-        Assert.That(result.InstitutionIdError!.Detail,
-            Is.EqualTo("Get Institution IDs from /institutions/?country={$COUNTRY_CODE}"));
+        var response = await _apiClient.AgreementsEndpoint.CreateAgreement(agreement);
+
+        AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.BadRequest);
+        Assert.Multiple(() =>
+        {
+            Assert.That(response.Error!.InstitutionIdError, Is.Not.Null);
+            Assert.That(response.Error!.InstitutionIdError!.Summary,
+                Is.EqualTo("Unknown Institution ID invalid_institution"));
+            Assert.That(response.Error!.InstitutionIdError!.Detail,
+                Is.EqualTo("Get Institution IDs from /institutions/?country={$COUNTRY_CODE}"));
+        });
     }
 
     /// <summary>
     /// Tests the creation of an end user agreement with invalid parameters.
     /// </summary>
-    /// <returns></returns>
     [Test]
     public async Task CreateAgreementWithInvalidParams()
     {
         var agreement = new CreateAgreementRequest(200, 200,
             ["balances", "details", "transactions", "invalid", "invalid2"], "SANDBOXFINANCE_SFIN0000");
-        var response = await _apiClient.AgreementsEndpoint.CreateAgreement(agreement);
-        AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.BadRequest);
 
+        var response = await _apiClient.AgreementsEndpoint.CreateAgreement(agreement);
         var result = response.Error!;
+
         Assert.Multiple(() =>
         {
-            Assert.That(
-                new[] {result.InstitutionIdError, result.AgreementError},
-                Has.All.Null);
+            AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.BadRequest);
+            Assert.That(new[] {result.InstitutionIdError, result.AgreementError}, Has.All.Null);
             Assert.That(result.AccessScopeError!.Detail,
                 Is.EqualTo("Choose one or several from ['balances', 'details', 'transactions']"));
             Assert.That(result.AccessValidForDaysError!.Detail,
@@ -198,4 +224,25 @@ public class AgreementsEndpointTests
                     "max_historical_days must be > 0 and <= SANDBOXFINANCE_SFIN0000 transaction_total_days (90)"));
         });
     }
+
+    [Test]
+    public async Task CreateAgreementWithInvalidParamsAtPolishInstitution()
+    {
+        var agreement = new CreateAgreementRequest(90, 90,
+            ["balances", "transactions"], "PKO_BPKOPLPW");
+
+        var response = await _apiClient.AgreementsEndpoint.CreateAgreement(agreement);
+        var result = response.Error!;
+
+        Assert.Multiple(() =>
+        {
+            AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.BadRequest);
+            Assert.That(new[] {result.InstitutionIdError, result.AgreementError}, Has.All.Null);
+            Assert.That(result.Detail,
+                Is.EqualTo("For this institution the following scopes are required together: ['details', 'balances']"));
+            Assert.That(result.Summary, Is.EqualTo("Institution access scope dependencies error"));
+        });
+    }
+
+    #endregion
 }
