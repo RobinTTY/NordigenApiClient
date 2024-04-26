@@ -59,7 +59,7 @@ public class ResponsePage<T>
     public async Task<NordigenApiResponse<ResponsePage<T>, BasicResponse>?> GetNextPage(NordigenClient nordigenClient,
         CancellationToken cancellationToken = default)
     {
-        if (Next == null) return null;
+        if (Next is null) return null;
         return await nordigenClient.MakeRequest<ResponsePage<T>, BasicResponse>(Next.AbsoluteUri, HttpMethod.Get,
             cancellationToken);
     }
@@ -76,7 +76,7 @@ public class ResponsePage<T>
     public async Task<NordigenApiResponse<ResponsePage<T>, BasicResponse>?> GetPreviousPage(NordigenClient nordigenClient,
         CancellationToken cancellationToken = default)
     {
-        if (Previous == null) return null;
+        if (Previous is null) return null;
         return await nordigenClient.MakeRequest<ResponsePage<T>, BasicResponse>(Previous.AbsoluteUri, HttpMethod.Get,
             cancellationToken);
     }

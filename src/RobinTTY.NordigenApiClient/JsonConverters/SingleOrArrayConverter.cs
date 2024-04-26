@@ -16,7 +16,7 @@ internal class SingleOrArrayConverter<TEnumerable, TItem> : JsonConverter<TEnume
                 var list = new List<TItem>();
                 while (reader.Read())
                 {
-                    if (reader.TokenType == JsonTokenType.EndArray) break;
+                    if (reader.TokenType is JsonTokenType.EndArray) break;
                     var listItem = JsonSerializer.Deserialize<TItem>(ref reader, options);
                     if (listItem != null) list.Add(listItem);
                 }

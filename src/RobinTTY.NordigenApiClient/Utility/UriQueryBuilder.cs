@@ -16,6 +16,6 @@ internal static class UriQueryBuilder
     {
         var query = HttpUtility.ParseQueryString(string.Empty);
         foreach (var kvp in queryKeyValuePairs) query.Add(kvp.Key, kvp.Value);
-        return query.ToString() == null ? string.Empty : $"?{query}";
+        return query.ToString() is null ? string.Empty : $"?{query}";
     }
 }

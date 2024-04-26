@@ -17,7 +17,7 @@ internal static class HttpClientExtensions
     /// </param>
     internal static HttpClient UseNordigenAuthenticationHeader(this HttpClient client, JsonWebTokenPair? tokenPair)
     {
-        if (tokenPair == null) return client;
+        if (tokenPair is null) return client;
         var rawToken = tokenPair.AccessToken.EncodedToken;
         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", rawToken);
         return client;

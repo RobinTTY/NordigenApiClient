@@ -57,9 +57,7 @@ public class NordigenClient : INordigenClient
                 new CultureSpecificDecimalConverter()
             }
         };
-
-        if (_httpClient.BaseAddress == null)
-            _httpClient.BaseAddress = new Uri(NordigenEndpointUrls.Base);
+        _httpClient.BaseAddress ??= new Uri(NordigenEndpointUrls.Base);
 
         Credentials = credentials;
         JsonWebTokenPair = jsonWebTokenPair;
