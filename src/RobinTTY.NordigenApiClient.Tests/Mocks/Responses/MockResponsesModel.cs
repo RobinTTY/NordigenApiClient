@@ -68,10 +68,16 @@ internal class AgreementsEndpointMockData(
         createAgreementWithInvalidParamsAtPolishInstitution;
 }
 
-internal class InstitutionsEndpointMockData(List<Institution> getInstitutions, Institution getInstitution)
+internal class InstitutionsEndpointMockData(
+    List<Institution> getInstitutions,
+    Institution getInstitution,
+    InstitutionsErrorInternal getInstitutionsForNotCoveredCountry,
+    BasicResponse getNonExistingInstitution)
 {
     public List<Institution> GetInstitutions { get; set; } = getInstitutions;
     public Institution GetInstitution { get; set; } = getInstitution;
+    public InstitutionsErrorInternal GetInstitutionsForNotCoveredCountry { get; set; } = getInstitutionsForNotCoveredCountry;
+    public BasicResponse GetNonExistingInstitution { get; set; } = getNonExistingInstitution;
 }
 
 internal class RequisitionsEndpointMockData(

@@ -22,7 +22,7 @@ internal static class TestHelpers
             Converters =
             {
                 new JsonWebTokenConverter(), new GuidConverter(),
-                new CultureSpecificDecimalConverter(), new InstitutionsErrorConverter()
+                new CultureSpecificDecimalConverter()
             }
         };
         MockData = JsonSerializer.Deserialize<MockResponsesModel>(json, JsonSerializerOptions) ??

@@ -375,6 +375,18 @@
         "private_accounts"
       ],
       "identification_codes": []
+    },
+    "GetInstitutionsForNotCoveredCountry": {
+      "country": {
+        "summary": "Invalid country choice.",
+        "detail": "US is not a valid choice."
+      },
+      "status_code": 400
+    },
+    "GetNonExistingInstitution": {
+      "summary": "Not found.",
+      "detail": "Not found.",
+      "status_code": 404
     }
   },
   "RequisitionsEndpointMockData": {

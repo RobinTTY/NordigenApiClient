@@ -46,11 +46,11 @@ public class NordigenApiClientTests
     public async Task ExecuteRequestsUntilRateLimitReached()
     {
         var apiClient = TestHelpers.GetConfiguredClient();
-        NordigenApiResponse<List<Institution>, InstitutionsError>? unsuccessfulRequest = null;
+        NordigenApiResponse<List<Institution>, BasicResponse>? unsuccessfulRequest = null;
 
         while (unsuccessfulRequest is null)
         {
-            var tasks = new ConcurrentBag<Task<NordigenApiResponse<List<Institution>, InstitutionsError>>>();
+            var tasks = new ConcurrentBag<Task<NordigenApiResponse<List<Institution>, BasicResponse>>>();
             Parallel.For(0, 10, _ =>
             {
                 var task = apiClient.InstitutionsEndpoint.GetInstitutions("LI");

@@ -54,7 +54,7 @@ public class NordigenClient : INordigenClient
             Converters =
             {
                 new JsonWebTokenConverter(), new GuidConverter(),
-                new CultureSpecificDecimalConverter(), new InstitutionsErrorConverter()
+                new CultureSpecificDecimalConverter()
             }
         };
 

@@ -17,7 +17,6 @@ public class InstitutionsEndpointTests
     /// <summary>
     /// Tests the retrieving of institutions for all countries and a specific country (Great Britain).
     /// </summary>
-    /// <returns></returns>
     [Test]
     public async Task GetInstitutions()
     {
@@ -40,7 +39,6 @@ public class InstitutionsEndpointTests
     /// <summary>
     /// Tests the retrieving of institutions with various query parameters set.
     /// </summary>
-    /// <returns></returns>
     [Test]
     public async Task GetInstitutionsWithFlags()
     {
@@ -78,20 +76,18 @@ public class InstitutionsEndpointTests
     /// <summary>
     /// Tests the retrieving of a specific institution.
     /// </summary>
-    /// <returns></returns>
     [Test]
     public async Task GetInstitution()
     {
         var response = await _apiClient.InstitutionsEndpoint.GetInstitution("SANDBOXFINANCE_SFIN0000");
-        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(response, HttpStatusCode.OK);
 
-        var result = response.Result!;
         Assert.Multiple(() =>
         {
-            Assert.That(result.Bic, Is.EqualTo("SFIN0000"));
-            Assert.That(result.Id, Is.EqualTo("SANDBOXFINANCE_SFIN0000"));
-            Assert.That(result.Name, Is.EqualTo("Sandbox Finance"));
-            Assert.That(result.TransactionTotalDays, Is.EqualTo(90));
+            AssertionHelpers.AssertNordigenApiResponseIsSuccessful(response, HttpStatusCode.OK);
+            Assert.That(response.Result!.Bic, Is.EqualTo("SFIN0000"));
+            Assert.That(response.Result!.Id, Is.EqualTo("SANDBOXFINANCE_SFIN0000"));
+            Assert.That(response.Result!.Name, Is.EqualTo("Sandbox Finance"));
+            Assert.That(response.Result!.TransactionTotalDays, Is.EqualTo(90));
         });
     }
 
@@ -102,17 +98,32 @@ public class InstitutionsEndpointTests
     /// <summary>
     /// Tests the retrieving of institutions for a country which is not covered by the API.
     /// </summary>
-    /// <returns></returns>
     [Test]
     public async Task GetInstitutionsForNotCoveredCountry()
     {
         var response = await _apiClient.InstitutionsEndpoint.GetInstitutions("US");
-        AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.BadRequest);
 
         Assert.Multiple(() =>
         {
+            AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.BadRequest);
             Assert.That(response.Error!.Detail, Is.EqualTo("US is not a valid choice."));
             Assert.That(response.Error!.Summary, Is.EqualTo("Invalid country choice."));
+        });
+    }
+
+    /// <summary>
+    /// Tests the retrieving of an institution with an invalid id.
+    /// </summary>
+    [Test]
+    public async Task GetNonExistingInstitution()
+    {
+        var response = await _apiClient.InstitutionsEndpoint.GetInstitution("invalid_id");
+        
+        Assert.Multiple(() =>
+        {
+            AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.NotFound);
+            Assert.That(response.Error!.Detail, Is.EqualTo("Not found."));
+            Assert.That(response.Error!.Summary, Is.EqualTo("Not found."));
         });
     }
 
