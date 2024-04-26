@@ -7,6 +7,8 @@ namespace RobinTTY.NordigenApiClient.Tests.Mocks.Endpoints;
 
 public class RequisitionsEndpointTests
 {
+    #region RequestsWithSuccessfulResponse
+    
     /// <summary>
     /// Tests the retrieving of all existing requisitions.
     /// </summary>
@@ -132,4 +134,6 @@ public class RequisitionsEndpointTests
                     "Requisition b5462cad-5a7f-42e1-881d-d0fa066f54bc deleted with all its End User Agreements"));
         });
     }
+    
+    #endregion
 }

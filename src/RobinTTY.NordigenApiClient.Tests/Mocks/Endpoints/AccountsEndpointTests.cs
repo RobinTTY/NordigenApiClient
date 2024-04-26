@@ -8,6 +8,8 @@ public class AccountsEndpointTests
 {
     private const string InvalidGuid = "abcdefg";
 
+    #region RequestsWithSuccessfulResponse
+
     /// <summary>
     /// Tests the retrieval of an account.
     /// </summary>
@@ -128,21 +130,27 @@ public class AccountsEndpointTests
         AssertionHelpers.AssertNordigenApiResponseIsSuccessful(balancesResponse, HttpStatusCode.OK);
         Assert.That(balancesResponse.Result!.BookedTransactions, Has.Count.EqualTo(2));
     }
-    
+
+    #endregion
+
+    #region RequestsWithErrors
+
     /// <summary>
     /// Tests the retrieval of an account that does not exist. This should return an error.
     /// </summary>
     [Test]
     public async Task GetAccountWithInvalidGuid()
     {
-        var apiClient = TestHelpers.GetMockClient(TestHelpers.MockData.AccountsEndpointMockData.GetAccountWithInvalidGuid, HttpStatusCode.BadRequest);
-        
+        var apiClient = TestHelpers.GetMockClient(
+            TestHelpers.MockData.AccountsEndpointMockData.GetAccountWithInvalidGuid, HttpStatusCode.BadRequest);
+
         var accountResponse = await apiClient.AccountsEndpoint.GetAccount(InvalidGuid);
-        
+
         Assert.Multiple(() =>
         {
             AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(accountResponse, HttpStatusCode.BadRequest);
-            AssertionHelpers.AssertBasicResponseMatchesExpectations(accountResponse.Error, "Invalid Account ID", $"{InvalidGuid} is not a valid Account UUID. ");
+            AssertionHelpers.AssertBasicResponseMatchesExpectations(accountResponse.Error, "Invalid Account ID",
+                $"{InvalidGuid} is not a valid Account UUID. ");
         });
     }
 
@@ -152,8 +160,10 @@ public class AccountsEndpointTests
     [Test]
     public async Task GetAccountThatDoesNotExist()
     {
-        var apiClient = TestHelpers.GetMockClient(TestHelpers.MockData.AccountsEndpointMockData.GetAccountThatDoesNotExist, HttpStatusCode.NotFound);
-        
+        var apiClient =
+            TestHelpers.GetMockClient(TestHelpers.MockData.AccountsEndpointMockData.GetAccountThatDoesNotExist,
+                HttpStatusCode.NotFound);
+
         var accountResponse = await apiClient.AccountsEndpoint.GetAccount(A.Dummy<Guid>());
 
         Assert.Multiple(() =>
@@ -162,22 +172,26 @@ public class AccountsEndpointTests
             AssertionHelpers.AssertBasicResponseMatchesExpectations(accountResponse.Error, "Not found.", "Not found.");
         });
     }
-    
+
     /// <summary>
     /// Tests the retrieval of balances of an account that does not exist. This should return an error.
     /// </summary>
     [Test]
     public async Task GetBalancesForAccountThatDoesNotExist()
     {
-        var apiClient = TestHelpers.GetMockClient(TestHelpers.MockData.AccountsEndpointMockData.GetBalancesForAccountThatDoesNotExist, HttpStatusCode.NotFound);
-        
+        var apiClient = TestHelpers.GetMockClient(
+            TestHelpers.MockData.AccountsEndpointMockData.GetBalancesForAccountThatDoesNotExist,
+            HttpStatusCode.NotFound);
+
         var nonExistingAccountId = Guid.Parse("f1d53c46-260d-4556-82df-4e5fed58e37c");
         var balancesResponse = await apiClient.AccountsEndpoint.GetBalances(A.Dummy<Guid>());
-        
+
         Assert.Multiple(() =>
         {
             AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(balancesResponse, HttpStatusCode.NotFound);
-            AssertionHelpers.AssertBasicResponseMatchesExpectations(balancesResponse.Error, $"Account ID {nonExistingAccountId} not found", "Please check whether you specified a valid Account ID");
+            AssertionHelpers.AssertBasicResponseMatchesExpectations(balancesResponse.Error,
+                $"Account ID {nonExistingAccountId} not found",
+                "Please check whether you specified a valid Account ID");
         });
     }
 
@@ -235,11 +249,13 @@ public class AccountsEndpointTests
                 $"Starting date '{DateOnly.FromDateTime(startDate)}' is greater than end date '{DateOnly.FromDateTime(endDateBeforeStartDate)}'. When specifying date range, starting date must precede the end date."));
 #else
         var exception = Assert.ThrowsAsync<ArgumentException>(async () =>
-                await apiClient.AccountsEndpoint.GetTransactions(A.Dummy<Guid>(), startDate, endDateBeforeStartDate));
-        
+            await apiClient.AccountsEndpoint.GetTransactions(A.Dummy<Guid>(), startDate, endDateBeforeStartDate));
+
         Assert.That(exception.Message,
             Is.EqualTo(
                 $"Starting date '{startDate}' is greater than end date '{endDateBeforeStartDate}'. When specifying date range, starting date must precede the end date."));
 #endif
     }
+
+    #endregion
 }

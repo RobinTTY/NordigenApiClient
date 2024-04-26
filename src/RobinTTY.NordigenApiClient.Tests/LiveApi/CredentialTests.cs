@@ -13,6 +13,8 @@ public class CredentialTests
     {
         _apiClient = TestHelpers.GetConfiguredClient();
     }
+    
+    #region RequestsWithSuccessfulResponse
 
     /// <summary>
     /// Tests that <see cref="NordigenClient.JsonWebTokenPair" /> is populated after the first authenticated request is made.
@@ -31,6 +33,10 @@ public class CredentialTests
             Assert.That(_apiClient.JsonWebTokenPair!.RefreshToken.EncodedToken, Has.Length.GreaterThan(0));
         });
     }
+    
+    #endregion
+    
+    #region RequestsWithErrors
 
     /// <summary>
     /// Tests the failure of authentication due to invalid credentials when trying to execute a request.
@@ -95,4 +101,6 @@ public class CredentialTests
                 $"Your IP {externalIp} isn't whitelisted to perform this action");
         });
     }
+    
+    #endregion
 }

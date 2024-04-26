@@ -4,6 +4,8 @@ namespace RobinTTY.NordigenApiClient.Tests.Mocks;
 
 public class CredentialTests
 {
+    #region RequestsWithSuccessfulResponse
+    
     /// <summary>
     /// Tests that <see cref="NordigenClient.JsonWebTokenPair" /> is populated after the first authenticated request is made.
     /// </summary>
@@ -22,6 +24,10 @@ public class CredentialTests
             Assert.That(apiClient.JsonWebTokenPair!.RefreshToken.EncodedToken, Has.Length.GreaterThan(0));
         });
     }
+    
+    #endregion
+    
+    #region RequestsWithErrors
     
     /// <summary>
     /// Tests the failure of authentication when trying to execute a request.
@@ -62,4 +68,6 @@ public class CredentialTests
                 $"Your IP 127.0.0.1 isn't whitelisted to perform this action");
         });
     }
+    
+    #endregion
 }

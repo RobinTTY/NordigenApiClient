@@ -12,6 +12,8 @@ public class InstitutionsEndpointTests
         _apiClient = TestHelpers.GetConfiguredClient();
     }
 
+    #region RequestsWithSuccessfulResponse
+
     /// <summary>
     /// Tests the retrieving of institutions for all countries and a specific country (Great Britain).
     /// </summary>
@@ -74,23 +76,6 @@ public class InstitutionsEndpointTests
     }
 
     /// <summary>
-    /// Tests the retrieving of institutions for a country which is not covered by the API.
-    /// </summary>
-    /// <returns></returns>
-    [Test]
-    public async Task GetInstitutionsForNotCoveredCountry()
-    {
-        var response = await _apiClient.InstitutionsEndpoint.GetInstitutions("US");
-        AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.BadRequest);
-
-        Assert.Multiple(() =>
-        {
-            Assert.That(response.Error!.Detail, Is.EqualTo("US is not a valid choice."));
-            Assert.That(response.Error!.Summary, Is.EqualTo("Invalid country choice."));
-        });
-    }
-
-    /// <summary>
     /// Tests the retrieving of a specific institution.
     /// </summary>
     /// <returns></returns>
@@ -109,4 +94,27 @@ public class InstitutionsEndpointTests
             Assert.That(result.TransactionTotalDays, Is.EqualTo(90));
         });
     }
+
+    #endregion
+
+    #region RequestsWithErrors
+
+    /// <summary>
+    /// Tests the retrieving of institutions for a country which is not covered by the API.
+    /// </summary>
+    /// <returns></returns>
+    [Test]
+    public async Task GetInstitutionsForNotCoveredCountry()
+    {
+        var response = await _apiClient.InstitutionsEndpoint.GetInstitutions("US");
+        AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.BadRequest);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(response.Error!.Detail, Is.EqualTo("US is not a valid choice."));
+            Assert.That(response.Error!.Summary, Is.EqualTo("Invalid country choice."));
+        });
+    }
+
+    #endregion
 }

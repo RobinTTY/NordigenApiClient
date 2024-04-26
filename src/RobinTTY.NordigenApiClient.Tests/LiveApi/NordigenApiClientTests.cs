@@ -7,6 +7,8 @@ namespace RobinTTY.NordigenApiClient.Tests.LiveApi;
 
 public class NordigenApiClientTests
 {
+    #region RequestsWithSuccessfulResponse
+    
     /// <summary>
     /// Executes a request to the Nordigen API using the default base address.
     /// </summary>
@@ -26,6 +28,18 @@ public class NordigenApiClientTests
         var apiClient = TestHelpers.GetConfiguredClient("https://ob.gocardless.com/api/v2/");
         await ExecuteExampleRequest(apiClient);
     }
+    
+    private async Task ExecuteExampleRequest(NordigenClient apiClient)
+    {
+        var response = await apiClient.TokenEndpoint.GetTokenPair();
+        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(response, HttpStatusCode.OK);
+        var response2 = await apiClient.TokenEndpoint.RefreshAccessToken(response.Result!.RefreshToken);
+        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(response2, HttpStatusCode.OK);
+    }
+    
+    #endregion
+    
+    #region RequestsWithErrors
 
     [Test]
     [Ignore("Test executes a lot of requests using the LiveAPI.")]
@@ -55,12 +69,6 @@ public class NordigenApiClientTests
         Assert.That(unsuccessfulRequest.Error!.Summary, Is.EqualTo("Rate limit exceeded"));
         Assert.That(unsuccessfulRequest.Error!.Detail, Does.Match("The rate limit for this resource is [0-9]*\\/\\w*\\. Please try again in [0-9]* \\w*"));
     }
-
-    private async Task ExecuteExampleRequest(NordigenClient apiClient)
-    {
-        var response = await apiClient.TokenEndpoint.GetTokenPair();
-        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(response, HttpStatusCode.OK);
-        var response2 = await apiClient.TokenEndpoint.RefreshAccessToken(response.Result!.RefreshToken);
-        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(response2, HttpStatusCode.OK);
-    }
+    
+    #endregion
 }

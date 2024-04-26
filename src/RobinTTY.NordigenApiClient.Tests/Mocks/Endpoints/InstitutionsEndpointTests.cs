@@ -5,6 +5,8 @@ namespace RobinTTY.NordigenApiClient.Tests.Mocks.Endpoints;
 
 public class InstitutionsEndpointTests
 {
+    #region RequestsWithSuccessfulResponse
+    
     /// <summary>
     /// Tests the retrieving of institutions for all countries and a specific country (Great Britain).
     /// </summary>
@@ -56,4 +58,6 @@ public class InstitutionsEndpointTests
             Assert.That(result.IdentificationCodes, Is.Empty);
         });
     }
+    
+    #endregion
 }

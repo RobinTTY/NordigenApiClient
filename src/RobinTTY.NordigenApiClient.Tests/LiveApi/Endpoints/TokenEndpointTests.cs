@@ -13,6 +13,8 @@ public class TokenEndpointTests
     {
         _apiClient = TestHelpers.GetConfiguredClient();
     }
+    
+    #region RequestsWithSuccessfulResponse
 
     /// <summary>
     /// Tests the retrieving and refreshing of the JWT access tokens.
@@ -27,6 +29,27 @@ public class TokenEndpointTests
         AssertionHelpers.AssertNordigenApiResponseIsSuccessful(response2, HttpStatusCode.OK);
     }
 
+    /// <summary>
+    /// Tests using the API with an expired access token.
+    /// Requires secrets.txt to contain expired access token / valid refresh token pair.
+    /// </summary>
+    /// <returns></returns>
+    [Test]
+    public async Task ReuseExpiredToken()
+    {
+        var httpClient = new HttpClient();
+        var credentials = new NordigenClientCredentials(TestHelpers.Secrets[0], TestHelpers.Secrets[1]);
+        var tokenPair = new JsonWebTokenPair(TestHelpers.Secrets[6], TestHelpers.Secrets[7]);
+        var apiClient = new NordigenClient(httpClient, credentials, tokenPair);
+
+        var result = await apiClient.RequisitionsEndpoint.GetRequisitions(10, 0);
+        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(result, HttpStatusCode.OK);
+    }
+    
+    #endregion
+    
+    #region RequestsWithErrors
+    
     /// <summary>
     /// Tests retrieving a token with invalid credentials.
     /// </summary>
@@ -47,21 +70,6 @@ public class TokenEndpointTests
             Assert.That(response.Error, Is.Not.Null);
         });
     }
-
-    /// <summary>
-    /// Tests using the API with an expired access token.
-    /// Requires secrets.txt to contain expired access token / valid refresh token pair.
-    /// </summary>
-    /// <returns></returns>
-    [Test]
-    public async Task ReuseExpiredToken()
-    {
-        var httpClient = new HttpClient();
-        var credentials = new NordigenClientCredentials(TestHelpers.Secrets[0], TestHelpers.Secrets[1]);
-        var tokenPair = new JsonWebTokenPair(TestHelpers.Secrets[6], TestHelpers.Secrets[7]);
-        var apiClient = new NordigenClient(httpClient, credentials, tokenPair);
-
-        var result = await apiClient.RequisitionsEndpoint.GetRequisitions(10, 0);
-        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(result, HttpStatusCode.OK);
-    }
+    
+    #endregion
 }

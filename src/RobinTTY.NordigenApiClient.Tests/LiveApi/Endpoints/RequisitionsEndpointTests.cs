@@ -14,6 +14,8 @@ public class RequisitionsEndpointTests
         _apiClient = TestHelpers.GetConfiguredClient();
     }
 
+    #region RequestsWithSuccessfulResponse
+
     /// <summary>
     /// Tests the retrieval of all existing requisitions.
     /// </summary>
@@ -115,6 +117,24 @@ public class RequisitionsEndpointTests
         }
     }
 
+    private static void AssertThatRequisitionsPageContainsRequisition(
+        NordigenApiResponse<ResponsePage<Requisition>, BasicResponse> pagedResponse, List<string> ids)
+    {
+        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(pagedResponse, HttpStatusCode.OK);
+        var page2Result = pagedResponse.Result!;
+        var page2Requisitions = page2Result.Results.ToList();
+        Assert.Multiple(() =>
+        {
+            Assert.That(page2Requisitions, Has.Count.EqualTo(1));
+            Assert.That(ids, Does.Contain(page2Requisitions.First().Id.ToString()));
+            Assert.That(page2Requisitions.ToList().All(req => req.Status != RequisitionStatus.Undefined));
+        });
+    }
+
+    #endregion
+
+    #region RequestsWithErrors
+
     /// <summary>
     /// Tests the retrieval of a requisition with an invalid guid.
     /// </summary>
@@ -150,17 +170,5 @@ public class RequisitionsEndpointTests
         });
     }
 
-    private static void AssertThatRequisitionsPageContainsRequisition(
-        NordigenApiResponse<ResponsePage<Requisition>, BasicResponse> pagedResponse, List<string> ids)
-    {
-        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(pagedResponse, HttpStatusCode.OK);
-        var page2Result = pagedResponse.Result!;
-        var page2Requisitions = page2Result.Results.ToList();
-        Assert.Multiple(() =>
-        {
-            Assert.That(page2Requisitions, Has.Count.EqualTo(1));
-            Assert.That(ids, Does.Contain(page2Requisitions.First().Id.ToString()));
-            Assert.That(page2Requisitions.ToList().All(req => req.Status != RequisitionStatus.Undefined));
-        });
-    }
+    #endregion
 }
