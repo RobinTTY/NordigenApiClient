@@ -22,7 +22,7 @@ internal class StringArrayMergeConverter : JsonConverter<string>
                 while (reader.Read())
                 {
                     if (reader.TokenType == JsonTokenType.EndArray) break;
-                    var listItem = JsonSerializer.Deserialize<string>(ref reader, options);
+                    var listItem = reader.GetString();
                     if (listItem != null) list.Add(listItem);
                 }
 
