@@ -1,7 +1,8 @@
 # NordigenApiClient
 
 This project provides a C# client for
-the [GoCardless Bank Account Data API](https://gocardless.com/bank-account-data/) (formerly Nordigen API). The following API endpoints are supported:
+the [GoCardless Bank Account Data API](https://gocardless.com/bank-account-data/) (formerly Nordigen API). The following
+API endpoints are supported:
 
 - Token
 - Institutions
@@ -9,7 +10,8 @@ the [GoCardless Bank Account Data API](https://gocardless.com/bank-account-data/
 - Requisitions
 - Accounts
 
-You can find the official GoCardless documentation for the API [here](https://developer.gocardless.com/bank-account-data/endpoints).
+You can find the official GoCardless documentation for the
+API [here](https://developer.gocardless.com/bank-account-data/endpoints).
 
 ## Getting started
 

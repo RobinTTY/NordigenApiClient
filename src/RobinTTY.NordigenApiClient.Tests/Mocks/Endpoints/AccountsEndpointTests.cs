@@ -201,8 +201,8 @@ public class AccountsEndpointTests
     [Test]
     public async Task GetTransactionRangeInFuture()
     {
-        var startDate = new DateTime(year: 2024, month: 4, day: 21);
-        var endDate = new DateTime(year: 2024, month: 5, day: 21);
+        var startDate = new DateTime(2024, 4, 21);
+        var endDate = new DateTime(2024, 5, 21);
         var apiClient = TestHelpers.GetMockClient(
             TestHelpers.MockData.AccountsEndpointMockData.GetTransactionRangeInFuture, HttpStatusCode.BadRequest);
 

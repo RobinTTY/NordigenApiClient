@@ -175,7 +175,7 @@ public class RequisitionsEndpointTests
     }
 
     /// <summary>
-    /// Tests the creation of an end user agreement with invalid parameters in the <see cref="CreateRequisitionRequest"/>.
+    /// Tests the creation of an end user agreement with invalid parameters in the <see cref="CreateRequisitionRequest" />.
     /// </summary>
     [Test]
     public async Task CreateRequisitionWithInvalidParameters()

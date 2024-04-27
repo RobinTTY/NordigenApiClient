@@ -18,7 +18,8 @@ public class RequisitionsEndpoint : IRequisitionsEndpoint
     internal RequisitionsEndpoint(NordigenClient client) => _nordigenClient = client;
 
     /// <inheritdoc />
-    public async Task<NordigenApiResponse<ResponsePage<Requisition>, BasicResponse>> GetRequisitions(int limit, int offset,
+    public async Task<NordigenApiResponse<ResponsePage<Requisition>, BasicResponse>> GetRequisitions(int limit,
+        int offset,
         CancellationToken cancellationToken = default)
     {
         var query = new KeyValuePair<string, string>[]
@@ -36,11 +37,6 @@ public class RequisitionsEndpoint : IRequisitionsEndpoint
     public async Task<NordigenApiResponse<Requisition, BasicResponse>> GetRequisition(string id,
         CancellationToken cancellationToken = default) =>
         await GetRequisitionInternal(id, cancellationToken);
-
-    private async Task<NordigenApiResponse<Requisition, BasicResponse>> GetRequisitionInternal(string id,
-        CancellationToken cancellationToken = default) =>
-        await _nordigenClient.MakeRequest<Requisition, BasicResponse>(
-            $"{NordigenEndpointUrls.RequisitionsEndpoint}{id}/", HttpMethod.Get, cancellationToken);
 
     /// <inheritdoc />
     public async Task<NordigenApiResponse<Requisition, CreateRequisitionError>> CreateRequisition(
@@ -60,6 +56,11 @@ public class RequisitionsEndpoint : IRequisitionsEndpoint
     public async Task<NordigenApiResponse<BasicResponse, BasicResponse>> DeleteRequisition(string id,
         CancellationToken cancellationToken = default) =>
         await DeleteRequisitionInternal(id, cancellationToken);
+
+    private async Task<NordigenApiResponse<Requisition, BasicResponse>> GetRequisitionInternal(string id,
+        CancellationToken cancellationToken = default) =>
+        await _nordigenClient.MakeRequest<Requisition, BasicResponse>(
+            $"{NordigenEndpointUrls.RequisitionsEndpoint}{id}/", HttpMethod.Get, cancellationToken);
 
     private async Task<NordigenApiResponse<BasicResponse, BasicResponse>> DeleteRequisitionInternal(string id,
         CancellationToken cancellationToken) =>

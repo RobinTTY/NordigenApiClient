@@ -173,7 +173,8 @@ public class RequisitionsEndpointTests
         var requisitionRequest =
             new CreateRequisitionRequest(redirect, "123", "internal_reference", "EN", agreementId, null, true, true);
         var apiClient = TestHelpers.GetMockClient(
-            TestHelpers.MockData.RequisitionsEndpointMockData.CreateRequisitionWithInvalidId, HttpStatusCode.BadRequest);
+            TestHelpers.MockData.RequisitionsEndpointMockData.CreateRequisitionWithInvalidId,
+            HttpStatusCode.BadRequest);
 
         var response = await apiClient.RequisitionsEndpoint.CreateRequisition(requisitionRequest);
 
@@ -185,9 +186,9 @@ public class RequisitionsEndpointTests
                 Is.EqualTo("00000000-0000-0000-0000-000000000000 is not a valid  UUID. "));
         });
     }
-    
+
     /// <summary>
-    /// Tests the creation of an end user agreement with invalid parameters in the <see cref="CreateRequisitionRequest"/>.
+    /// Tests the creation of an end user agreement with invalid parameters in the <see cref="CreateRequisitionRequest" />.
     /// </summary>
     [Test]
     public async Task CreateRequisitionWithInvalidParameters()
@@ -198,8 +199,9 @@ public class RequisitionsEndpointTests
         var requisitionRequest =
             new CreateRequisitionRequest(redirect, "", "", "AB", agreementId, "12345", true, true);
         var apiClient = TestHelpers.GetMockClient(
-            TestHelpers.MockData.RequisitionsEndpointMockData.CreateRequisitionWithInvalidParameters, HttpStatusCode.BadRequest);
-        
+            TestHelpers.MockData.RequisitionsEndpointMockData.CreateRequisitionWithInvalidParameters,
+            HttpStatusCode.BadRequest);
+
         var response = await apiClient.RequisitionsEndpoint.CreateRequisition(requisitionRequest);
 
         Assert.Multiple(() =>

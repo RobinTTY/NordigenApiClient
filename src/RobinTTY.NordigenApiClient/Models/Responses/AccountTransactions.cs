@@ -48,8 +48,5 @@ internal class AccountTransactionsWrapper
     /// </summary>
     /// <param name="transactions">A list of transactions.</param>
     [JsonConstructor]
-    public AccountTransactionsWrapper(AccountTransactions transactions)
-    {
-        Transactions = transactions;
-    }
+    public AccountTransactionsWrapper(AccountTransactions transactions) => Transactions = transactions;
 }

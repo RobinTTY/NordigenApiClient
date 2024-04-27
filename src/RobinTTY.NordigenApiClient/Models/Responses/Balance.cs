@@ -95,8 +95,5 @@ internal class BalanceJsonWrapper
     /// Creates a new instance of <see cref="BalanceJsonWrapper" />.
     /// </summary>
     /// <param name="balances">A list of account balances.</param>
-    public BalanceJsonWrapper(List<Balance> balances)
-    {
-        Balances = balances;
-    }
+    public BalanceJsonWrapper(List<Balance> balances) => Balances = balances;
 }

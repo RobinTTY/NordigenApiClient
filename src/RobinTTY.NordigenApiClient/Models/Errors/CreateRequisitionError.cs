@@ -65,11 +65,11 @@ public class CreateRequisitionError : BasicResponse
     [JsonPropertyName("institution_id")]
     [JsonConverter(typeof(StringArrayToBasicResponseConverter))]
     public BasicResponse? InstitutionIdError { get; }
-    
+
     /// <summary>
     /// Creates a new instance of <see cref="CreateRequisitionError" />.
     /// </summary>
-    public CreateRequisitionError(){}
+    public CreateRequisitionError() { }
 
     /// <summary>
     /// Creates a new instance of <see cref="CreateRequisitionError" />.

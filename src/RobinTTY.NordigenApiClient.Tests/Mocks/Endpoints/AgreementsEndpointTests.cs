@@ -168,7 +168,7 @@ public class AgreementsEndpointTests
                 Is.EqualTo("Get Institution IDs from /institutions/?country={$COUNTRY_CODE}"));
         });
     }
-    
+
     /// <summary>
     /// Tests the creation of an end user agreement with an empty institution id and empty access scopes.
     /// </summary>
@@ -188,10 +188,9 @@ public class AgreementsEndpointTests
             Assert.That(response.Error!.InstitutionIdError, Is.Not.Null);
             Assert.That(response.Error!.InstitutionIdError!.Summary, Is.EqualTo("This field may not be null."));
             Assert.That(response.Error!.InstitutionIdError!.Detail, Is.EqualTo("This field may not be null."));
-            
+
             Assert.That(response.Error!.AccessScopeError!.Summary, Is.EqualTo("This field may not be null."));
             Assert.That(response.Error!.AccessScopeError!.Detail, Is.EqualTo("This field may not be null."));
-
         });
     }
 

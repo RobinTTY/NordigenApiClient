@@ -44,21 +44,24 @@ public class Institution
     /// </summary>
     [JsonPropertyName("logo")]
     public Uri Logo { get; }
-    
+
     /// <summary>
-    /// Supported payment products for this institution. Only populated when calling <see cref="InstitutionsEndpoint.GetInstitution"/>.
+    /// Supported payment products for this institution. Only populated when calling
+    /// <see cref="InstitutionsEndpoint.GetInstitution" />.
     /// </summary>
     [JsonPropertyName("supported_payments")]
     public SupportedPayments? SupportedPayments { get; }
-    
+
     /// <summary>
-    /// Supported features for this institution. Only populated when calling <see cref="InstitutionsEndpoint.GetInstitution"/>.
+    /// Supported features for this institution. Only populated when calling <see cref="InstitutionsEndpoint.GetInstitution" />
+    /// .
     /// </summary>
     [JsonPropertyName("supported_features")]
     public List<string>? SupportedFeatures { get; }
-    
+
     /// <summary>
-    /// Undocumented field returned by the GoCardless API. Only populated when calling <see cref="InstitutionsEndpoint.GetInstitution"/>.
+    /// Undocumented field returned by the GoCardless API. Only populated when calling
+    /// <see cref="InstitutionsEndpoint.GetInstitution" />.
     /// </summary>
     [JsonPropertyName("identification_codes")]
     public List<string>? IdentificationCodes { get; }
@@ -77,7 +80,8 @@ public class Institution
     /// <param name="identificationCodes">Undocumented field returned by the GoCardless API.</param>
     [JsonConstructor]
     public Institution(string id, string name, string bic, uint transactionTotalDays, List<string> countries,
-        Uri logo, SupportedPayments? supportedPayments, List<string>? supportedFeatures, List<string>? identificationCodes)
+        Uri logo, SupportedPayments? supportedPayments, List<string>? supportedFeatures,
+        List<string>? identificationCodes)
     {
         Id = id;
         Name = name;
@@ -101,13 +105,10 @@ public class SupportedPayments
     /// </summary>
     [JsonPropertyName("single-payment")]
     public List<PaymentProduct> SinglePayment { get; }
-    
+
     /// <summary>
-    /// Creates a new instance of <see cref="SupportedPayments"/>
+    /// Creates a new instance of <see cref="SupportedPayments" />
     /// </summary>
     /// <param name="singlePayment">Supported payment products in the single-payment category.</param>
-    public SupportedPayments(List<PaymentProduct> singlePayment)
-    {
-        SinglePayment = singlePayment;
-    }
+    public SupportedPayments(List<PaymentProduct> singlePayment) => SinglePayment = singlePayment;
 }

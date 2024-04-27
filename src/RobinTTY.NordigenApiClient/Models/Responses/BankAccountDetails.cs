@@ -189,8 +189,5 @@ internal class BankAccountDetailsWrapper
     /// </summary>
     /// <param name="account">Detailed information about a bank account.</param>
     [JsonConstructor]
-    public BankAccountDetailsWrapper(BankAccountDetails account)
-    {
-        Account = account;
-    }
+    public BankAccountDetailsWrapper(BankAccountDetails account) => Account = account;
 }

@@ -29,7 +29,7 @@ public static class AssertionHelpers
             Assert.That(response.StatusCode, Is.EqualTo(statusCode));
         });
     }
-    
+
     internal static void AssertThatAgreementPageContainsAgreement(
         NordigenApiResponse<ResponsePage<Agreement>, BasicResponse> pagedResponse, List<string> ids)
     {
@@ -42,7 +42,7 @@ public static class AssertionHelpers
             Assert.That(ids, Does.Contain(page2Agreements.First().Id.ToString()));
         });
     }
-    
+
     internal static void AssertBasicResponseMatchesExpectations(BasicResponse? response, string summary, string detail)
     {
         Assert.Multiple(() =>

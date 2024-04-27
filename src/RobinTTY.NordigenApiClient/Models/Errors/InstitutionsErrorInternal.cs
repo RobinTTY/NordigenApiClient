@@ -10,12 +10,13 @@ namespace RobinTTY.NordigenApiClient.Models.Errors;
 /// </summary>
 internal class InstitutionsErrorInternal : BasicResponse
 {
-    [JsonPropertyName("country")] public BasicResponse? Country { get; }
-    
+    [JsonPropertyName("country")]
+    public BasicResponse? Country { get; }
+
     /// <summary>
     /// Creates a new instance of <see cref="InstitutionsErrorInternal" />.
     /// </summary>
-    public InstitutionsErrorInternal(){}
+    public InstitutionsErrorInternal() { }
 
     /// <summary>
     /// Creates a new instance of <see cref="InstitutionsErrorInternal" />.

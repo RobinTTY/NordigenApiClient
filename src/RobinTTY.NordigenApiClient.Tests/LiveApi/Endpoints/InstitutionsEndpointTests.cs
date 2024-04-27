@@ -118,7 +118,7 @@ public class InstitutionsEndpointTests
     public async Task GetNonExistingInstitution()
     {
         var response = await _apiClient.InstitutionsEndpoint.GetInstitution("invalid_id");
-        
+
         Assert.Multiple(() =>
         {
             AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.NotFound);

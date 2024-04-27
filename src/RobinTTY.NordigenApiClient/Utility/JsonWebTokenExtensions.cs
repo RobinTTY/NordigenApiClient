@@ -10,8 +10,6 @@ internal static class JsonWebTokenExtensions
     /// <param name="token">The token to check for expiration.</param>
     /// <param name="timeToExpiry">Optional <see cref="TimeSpan" /> added to the current time.</param>
     /// <returns>True if token is expired otherwise false.</returns>
-    internal static bool IsExpired(this SecurityToken token, TimeSpan timeToExpiry = default)
-    {
-        return token.ValidTo.ToUniversalTime() < DateTime.UtcNow.Add(timeToExpiry);
-    }
+    internal static bool IsExpired(this SecurityToken token, TimeSpan timeToExpiry = default) =>
+        token.ValidTo.ToUniversalTime() < DateTime.UtcNow.Add(timeToExpiry);
 }

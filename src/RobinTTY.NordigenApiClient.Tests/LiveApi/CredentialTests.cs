@@ -13,7 +13,7 @@ public class CredentialTests
     {
         _apiClient = TestHelpers.GetConfiguredClient();
     }
-    
+
     #region RequestsWithSuccessfulResponse
 
     /// <summary>
@@ -33,9 +33,9 @@ public class CredentialTests
             Assert.That(_apiClient.JsonWebTokenPair!.RefreshToken.EncodedToken, Has.Length.GreaterThan(0));
         });
     }
-    
+
     #endregion
-    
+
     #region RequestsWithErrors
 
     /// <summary>
@@ -101,6 +101,6 @@ public class CredentialTests
                 $"Your IP {externalIp} isn't whitelisted to perform this action");
         });
     }
-    
+
     #endregion
 }

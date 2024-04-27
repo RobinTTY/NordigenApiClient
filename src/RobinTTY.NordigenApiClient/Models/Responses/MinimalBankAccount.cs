@@ -17,8 +17,5 @@ public class MinimalBankAccount
     /// Creates a new instance of <see cref="MinimalBankAccount" />.
     /// </summary>
     /// <param name="iban">The IBAN of the account.</param>
-    public MinimalBankAccount(string iban)
-    {
-        Iban = iban;
-    }
+    public MinimalBankAccount(string iban) => Iban = iban;
 }

@@ -21,12 +21,12 @@ public class BasicResponse
     [JsonPropertyName("detail")]
     [JsonConverter(typeof(StringArrayMergeConverter))]
     public string? Detail { get; init; }
-    
+
     /// <summary>
     /// Creates a new instance of <see cref="BasicResponse" />.
     /// </summary>
-    public BasicResponse(){}
-    
+    public BasicResponse() { }
+
     /// <summary>
     /// Creates a new instance of <see cref="BasicResponse" />.
     /// </summary>

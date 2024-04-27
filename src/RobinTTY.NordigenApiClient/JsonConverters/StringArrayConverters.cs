@@ -6,9 +6,10 @@ using RobinTTY.NordigenApiClient.Models.Responses;
 namespace RobinTTY.NordigenApiClient.JsonConverters;
 
 /// <summary>
-/// For some errors the GoCardless API returns arrays for Summary/Detail properties inside the <see cref="BasicResponse"/>.
+/// For some errors the GoCardless API returns arrays for Summary/Detail properties inside the <see cref="BasicResponse" />
+/// .
 /// I've never actually seen them contain multiple values, but this converter merges them into one string so that the
-/// <see cref="BasicResponse"/> can stay as simple as possible.
+/// <see cref="BasicResponse" /> can stay as simple as possible.
 /// </summary>
 internal class StringArrayMergeConverter : JsonConverter<string>
 {
@@ -39,8 +40,8 @@ internal class StringArrayMergeConverter : JsonConverter<string>
 
 /// <summary>
 /// For some errors (so far only seen when creating requisitions) the GoCardless API returns a simple array of strings
-/// as response to a field in the <see cref="CreateRequisitionRequest"/> having an invalid value. To bring them in line
-/// with errors from other fields in the response this converter converts them to the <see cref="BasicResponse"/> type.
+/// as response to a field in the <see cref="CreateRequisitionRequest" /> having an invalid value. To bring them in line
+/// with errors from other fields in the response this converter converts them to the <see cref="BasicResponse" /> type.
 /// </summary>
 internal class StringArrayToBasicResponseConverter : JsonConverter<BasicResponse>
 {

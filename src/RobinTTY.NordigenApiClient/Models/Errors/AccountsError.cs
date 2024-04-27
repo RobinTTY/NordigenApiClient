@@ -14,7 +14,7 @@ public class AccountsError : BasicResponse
     /// </summary>
     [JsonPropertyName("type")]
     public string? Type { get; }
-    
+
 #if NET6_0_OR_GREATER
     /// <summary>
     /// An error that was returned related to the
@@ -50,11 +50,11 @@ public class AccountsError : BasicResponse
 #endif
     [JsonPropertyName("date_to")]
     public BasicResponse? EndDateError { get; }
-    
+
     /// <summary>
     /// Creates a new instance of <see cref="AccountsError" />.
     /// </summary>
-    public AccountsError(){}
+    public AccountsError() { }
 
 #if NET6_0_OR_GREATER
     /// <summary>

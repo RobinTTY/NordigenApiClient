@@ -1,7 +1,6 @@
 ﻿using System.Net.Http.Json;
 using Microsoft.IdentityModel.JsonWebTokens;
 using RobinTTY.NordigenApiClient.Contracts;
-using RobinTTY.NordigenApiClient.Models.Errors;
 using RobinTTY.NordigenApiClient.Models.Jwt;
 using RobinTTY.NordigenApiClient.Models.Responses;
 
@@ -29,7 +28,8 @@ public class TokenEndpoint : ITokenEndpoint
     }
 
     /// <inheritdoc />
-    public async Task<NordigenApiResponse<JsonWebAccessToken, BasicResponse>> RefreshAccessToken(JsonWebToken refreshToken,
+    public async Task<NordigenApiResponse<JsonWebAccessToken, BasicResponse>> RefreshAccessToken(
+        JsonWebToken refreshToken,
         CancellationToken cancellationToken = default)
     {
         var requestBody = JsonContent.Create(new {refresh = refreshToken.EncodedToken});

@@ -8,7 +8,7 @@ namespace RobinTTY.NordigenApiClient.Tests.Mocks.Endpoints;
 public class TokenEndpointTests
 {
     #region RequestsWithSuccessfulResponse
-    
+
     /// <summary>
     /// Tests the retrieving of a new token.
     /// </summary>
@@ -16,7 +16,7 @@ public class TokenEndpointTests
     public async Task GetNewToken()
     {
         var apiClient = TestHelpers.GetMockClient(TestHelpers.MockData.TokenEndpointMockData.GetNewToken,
-            HttpStatusCode.OK, addDefaultAuthToken: false);
+            HttpStatusCode.OK, false);
 
         var tokenPair = await apiClient.TokenEndpoint.GetTokenPair();
         AssertionHelpers.AssertNordigenApiResponseIsSuccessful(tokenPair, HttpStatusCode.OK);
@@ -44,7 +44,7 @@ public class TokenEndpointTests
     public async Task RefreshAccessToken()
     {
         var apiClient = TestHelpers.GetMockClient(TestHelpers.MockData.TokenEndpointMockData.RefreshAccessToken,
-            HttpStatusCode.OK, addDefaultAuthToken: false);
+            HttpStatusCode.OK, false);
 
         var tokenPair = await apiClient.TokenEndpoint.RefreshAccessToken(A.Fake<JsonWebToken>(options =>
         {
@@ -64,6 +64,6 @@ public class TokenEndpointTests
                     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwic3ViIjoiMTIzNDU2Nzg5MCIsIm5hbWUiOiJKb2huIERvZSIsImlhdCI6MTUxNjIzOTAyMiwiZXhwIjozMzI3MDExNzU5NH0.gEa5VdPSqZW2xk9IqCEqiw6bzBOer_uAR1yp2XK7FFo"));
         });
     }
-    
+
     #endregion
 }

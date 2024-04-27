@@ -5,18 +5,19 @@ namespace RobinTTY.NordigenApiClient.Tests.Mocks;
 public class CredentialTests
 {
     #region RequestsWithSuccessfulResponse
-    
+
     /// <summary>
     /// Tests that <see cref="NordigenClient.JsonWebTokenPair" /> is populated after the first authenticated request is made.
     /// </summary>
     [Test]
     public async Task CheckValidTokensAfterRequest()
     {
-        var apiClient = TestHelpers.GetMockClient(TestHelpers.MockData.RequisitionsEndpointMockData.GetRequisitions, HttpStatusCode.OK);
+        var apiClient = TestHelpers.GetMockClient(TestHelpers.MockData.RequisitionsEndpointMockData.GetRequisitions,
+            HttpStatusCode.OK);
         Assert.That(apiClient.JsonWebTokenPair, Is.Null);
-        
+
         await apiClient.RequisitionsEndpoint.GetRequisitions(5, 0, CancellationToken.None);
-        
+
         Assert.Multiple(() =>
         {
             Assert.That(apiClient.JsonWebTokenPair, Is.Not.Null);
@@ -24,11 +25,11 @@ public class CredentialTests
             Assert.That(apiClient.JsonWebTokenPair!.RefreshToken.EncodedToken, Has.Length.GreaterThan(0));
         });
     }
-    
+
     #endregion
-    
+
     #region RequestsWithErrors
-    
+
     /// <summary>
     /// Tests the failure of authentication when trying to execute a request.
     /// </summary>
@@ -37,7 +38,7 @@ public class CredentialTests
     {
         var apiClient = TestHelpers.GetMockClient(
             TestHelpers.MockData.CredentialMockData.NoAccountForGivenCredentialsError,
-            HttpStatusCode.Unauthorized, addDefaultAuthToken: false);
+            HttpStatusCode.Unauthorized, false);
 
         var tokenPairResponse = await apiClient.TokenEndpoint.GetTokenPair();
 
@@ -48,7 +49,7 @@ public class CredentialTests
                 "No active account found with the given credentials");
         });
     }
-    
+
     /// <summary>
     /// Tries to execute a request using credentials that haven't whitelisted the used IP. This should cause an error.
     /// </summary>
@@ -65,9 +66,9 @@ public class CredentialTests
         {
             AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.Forbidden);
             AssertionHelpers.AssertBasicResponseMatchesExpectations(response.Error, "IP address access denied",
-                $"Your IP 127.0.0.1 isn't whitelisted to perform this action");
+                "Your IP 127.0.0.1 isn't whitelisted to perform this action");
         });
     }
-    
+
     #endregion
 }

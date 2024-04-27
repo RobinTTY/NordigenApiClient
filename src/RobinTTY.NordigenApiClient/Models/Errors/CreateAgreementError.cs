@@ -49,11 +49,11 @@ public class CreateAgreementError : BasicResponse
     [JsonPropertyName("agreement")]
     [JsonConverter(typeof(StringArrayToBasicResponseConverter))]
     public BasicResponse? AgreementError { get; }
-    
+
     /// <summary>
     /// Creates a new instance of <see cref="CreateAgreementError" />.
     /// </summary>
-    public CreateAgreementError(){}
+    public CreateAgreementError() { }
 
     /// <summary>
     /// Creates a new instance of <see cref="CreateAgreementError" />.

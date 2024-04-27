@@ -73,7 +73,8 @@ public class ResponsePage<T>
     /// Either a <see cref="NordigenApiResponse{TResponse, TError}" /> containing the previous
     /// <see cref="ResponsePage{T}" /> or null if there is no previous page to retrieve.
     /// </returns>
-    public async Task<NordigenApiResponse<ResponsePage<T>, BasicResponse>?> GetPreviousPage(NordigenClient nordigenClient,
+    public async Task<NordigenApiResponse<ResponsePage<T>, BasicResponse>?> GetPreviousPage(
+        NordigenClient nordigenClient,
         CancellationToken cancellationToken = default)
     {
         if (Previous is null) return null;

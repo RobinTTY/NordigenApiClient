@@ -22,7 +22,7 @@ internal class TransactionTests
             Converters = {new CultureSpecificDecimalConverter()}
         };
         var transaction = JsonSerializer.Deserialize<Transaction>(json, options);
-        
+
         Assert.Multiple(() =>
         {
             Assert.That(transaction!.CurrencyExchange, Is.Not.Null);
@@ -47,10 +47,10 @@ internal class TransactionTests
 
         var options = new JsonSerializerOptions
         {
-            Converters = { new CultureSpecificDecimalConverter() }
+            Converters = {new CultureSpecificDecimalConverter()}
         };
         var transaction = JsonSerializer.Deserialize<Transaction>(json, options);
-        
+
         Assert.Multiple(() =>
         {
             Assert.That(transaction!.CurrencyExchange, Is.Not.Null);

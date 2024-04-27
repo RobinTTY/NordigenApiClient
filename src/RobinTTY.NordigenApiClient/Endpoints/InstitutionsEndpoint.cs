@@ -27,7 +27,7 @@ public class InstitutionsEndpoint : IInstitutionsEndpoint
     {
         var query = new List<KeyValuePair<string, string>>();
         if (country != null) query.Add(new KeyValuePair<string, string>("country", country));
-        
+
         // Add any required query parameter
         if (accessScopesSupported.HasValue)
             query.Add(GetSupportFlagQuery("access_scopes_supported", accessScopesSupported.Value));
@@ -50,20 +50,21 @@ public class InstitutionsEndpoint : IInstitutionsEndpoint
             query.Add(GetSupportFlagQuery("pending_transactions_supported", pendingTransactionsSupported.Value));
         if (ssnVerificationSupported.HasValue)
             query.Add(GetSupportFlagQuery("ssn_verification_supported", ssnVerificationSupported.Value));
-        
+
         var response = await _nordigenClient.MakeRequest<List<Institution>, InstitutionsErrorInternal>(
             NordigenEndpointUrls.InstitutionsEndpoint, HttpMethod.Get, cancellationToken, query);
-        
-        return new NordigenApiResponse<List<Institution>, BasicResponse>(response.StatusCode, response.IsSuccess, response.Result,
+
+        return new NordigenApiResponse<List<Institution>, BasicResponse>(response.StatusCode, response.IsSuccess,
+            response.Result,
             response.Error);
     }
-
-    private static KeyValuePair<string, string> GetSupportFlagQuery(string flag, bool value)
-        => new(flag, value.ToString().ToLower());
 
     /// <inheritdoc />
     public async Task<NordigenApiResponse<Institution, BasicResponse>> GetInstitution(string id,
         CancellationToken cancellationToken = default) =>
         await _nordigenClient.MakeRequest<Institution, BasicResponse>(
             $"{NordigenEndpointUrls.InstitutionsEndpoint}{id}/", HttpMethod.Get, cancellationToken);
+
+    private static KeyValuePair<string, string> GetSupportFlagQuery(string flag, bool value)
+        => new(flag, value.ToString().ToLower());
 }

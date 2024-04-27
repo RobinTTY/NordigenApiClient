@@ -37,11 +37,6 @@ public class AgreementsEndpoint : IAgreementsEndpoint
         CancellationToken cancellationToken = default) =>
         await GetAgreementInternal(id, cancellationToken);
 
-    private async Task<NordigenApiResponse<Agreement, BasicResponse>> GetAgreementInternal(string id,
-        CancellationToken cancellationToken) =>
-        await _nordigenClient.MakeRequest<Agreement, BasicResponse>(
-            $"{NordigenEndpointUrls.AgreementsEndpoint}{id}/", HttpMethod.Get, cancellationToken);
-
     /// <inheritdoc />
     public async Task<NordigenApiResponse<Agreement, CreateAgreementError>> CreateAgreement(
         CreateAgreementRequest agreement, CancellationToken cancellationToken = default)
@@ -61,13 +56,6 @@ public class AgreementsEndpoint : IAgreementsEndpoint
         CancellationToken cancellationToken = default) =>
         await DeleteAgreementInternal(id, cancellationToken);
 
-    private async Task<NordigenApiResponse<BasicResponse, BasicResponse>> DeleteAgreementInternal(string id,
-        CancellationToken cancellationToken)
-    {
-        return await _nordigenClient.MakeRequest<BasicResponse, BasicResponse>(
-            $"{NordigenEndpointUrls.AgreementsEndpoint}{id}/", HttpMethod.Delete, cancellationToken);
-    }
-
     /// <inheritdoc />
     public async Task<NordigenApiResponse<Agreement, BasicResponse>> AcceptAgreement(Guid id,
         AcceptAgreementRequest metadata, CancellationToken cancellationToken = default) =>
@@ -77,6 +65,16 @@ public class AgreementsEndpoint : IAgreementsEndpoint
     public async Task<NordigenApiResponse<Agreement, BasicResponse>> AcceptAgreement(string id,
         AcceptAgreementRequest metadata, CancellationToken cancellationToken = default) =>
         await AcceptAgreementInternal(id, metadata, cancellationToken);
+
+    private async Task<NordigenApiResponse<Agreement, BasicResponse>> GetAgreementInternal(string id,
+        CancellationToken cancellationToken) =>
+        await _nordigenClient.MakeRequest<Agreement, BasicResponse>(
+            $"{NordigenEndpointUrls.AgreementsEndpoint}{id}/", HttpMethod.Get, cancellationToken);
+
+    private async Task<NordigenApiResponse<BasicResponse, BasicResponse>> DeleteAgreementInternal(string id,
+        CancellationToken cancellationToken) =>
+        await _nordigenClient.MakeRequest<BasicResponse, BasicResponse>(
+            $"{NordigenEndpointUrls.AgreementsEndpoint}{id}/", HttpMethod.Delete, cancellationToken);
 
     private async Task<NordigenApiResponse<Agreement, BasicResponse>> AcceptAgreementInternal(string id,
         AcceptAgreementRequest metadata, CancellationToken cancellationToken)

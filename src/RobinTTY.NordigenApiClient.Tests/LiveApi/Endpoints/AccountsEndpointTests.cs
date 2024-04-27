@@ -5,10 +5,10 @@ namespace RobinTTY.NordigenApiClient.Tests.LiveApi.Endpoints;
 
 public class AccountsEndpointTests
 {
-    private Guid _accountId;
-    private Guid _nonExistingAccountId;
     private const string InvalidGuid = "abcdefg";
+    private Guid _accountId;
     private NordigenClient _apiClient = null!;
+    private Guid _nonExistingAccountId;
 
     [OneTimeSetUp]
     public void Setup()
@@ -124,7 +124,7 @@ public class AccountsEndpointTests
     #endregion
 
     #region RequestsWithErrors
-    
+
     /// <summary>
     /// Tests the retrieval of an account that does not exist. This should return an error.
     /// </summary>
@@ -132,11 +132,12 @@ public class AccountsEndpointTests
     public async Task GetAccountWithInvalidGuid()
     {
         var accountResponse = await _apiClient.AccountsEndpoint.GetAccount(InvalidGuid);
-        
+
         Assert.Multiple(() =>
         {
             AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(accountResponse, HttpStatusCode.BadRequest);
-            AssertionHelpers.AssertBasicResponseMatchesExpectations(accountResponse.Error, "Invalid Account ID", $"{InvalidGuid} is not a valid Account UUID. ");
+            AssertionHelpers.AssertBasicResponseMatchesExpectations(accountResponse.Error, "Invalid Account ID",
+                $"{InvalidGuid} is not a valid Account UUID. ");
         });
     }
 
@@ -147,7 +148,7 @@ public class AccountsEndpointTests
     public async Task GetAccountThatDoesNotExist()
     {
         var accountResponse = await _apiClient.AccountsEndpoint.GetAccount(_nonExistingAccountId);
-        
+
         Assert.Multiple(() =>
         {
             AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(accountResponse, HttpStatusCode.NotFound);
@@ -162,11 +163,13 @@ public class AccountsEndpointTests
     public async Task GetBalancesForAccountThatDoesNotExist()
     {
         var balancesResponse = await _apiClient.AccountsEndpoint.GetBalances(_nonExistingAccountId);
-        
+
         Assert.Multiple(() =>
         {
             AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(balancesResponse, HttpStatusCode.NotFound);
-            AssertionHelpers.AssertBasicResponseMatchesExpectations(balancesResponse.Error, $"Account ID {_nonExistingAccountId} not found", "Please check whether you specified a valid Account ID");
+            AssertionHelpers.AssertBasicResponseMatchesExpectations(balancesResponse.Error,
+                $"Account ID {_nonExistingAccountId} not found",
+                "Please check whether you specified a valid Account ID");
         });
     }
 

@@ -18,27 +18,6 @@ public class NordigenClient : INordigenClient
     private readonly JsonSerializerOptions _serializerOptions;
     internal readonly NordigenClientCredentials Credentials;
 
-    /// <inheritdoc />
-    public JsonWebTokenPair? JsonWebTokenPair { get; set; }
-
-    /// <inheritdoc />
-    public ITokenEndpoint TokenEndpoint { get; }
-
-    /// <inheritdoc />
-    public IInstitutionsEndpoint InstitutionsEndpoint { get; }
-
-    /// <inheritdoc />
-    public IAgreementsEndpoint AgreementsEndpoint { get; }
-
-    /// <inheritdoc />
-    public IRequisitionsEndpoint RequisitionsEndpoint { get; }
-
-    /// <inheritdoc />
-    public IAccountsEndpoint AccountsEndpoint { get; }
-
-    /// <inheritdoc />
-    public event EventHandler<TokenPairUpdatedEventArgs>? TokenPairUpdated;
-
     /// <summary>
     /// Creates a new instance of <see cref="NordigenClient" />.
     /// </summary>
@@ -68,16 +47,37 @@ public class NordigenClient : INordigenClient
         AccountsEndpoint = new AccountsEndpoint(this);
     }
 
+    /// <inheritdoc />
+    public JsonWebTokenPair? JsonWebTokenPair { get; set; }
+
+    /// <inheritdoc />
+    public ITokenEndpoint TokenEndpoint { get; }
+
+    /// <inheritdoc />
+    public IInstitutionsEndpoint InstitutionsEndpoint { get; }
+
+    /// <inheritdoc />
+    public IAgreementsEndpoint AgreementsEndpoint { get; }
+
+    /// <inheritdoc />
+    public IRequisitionsEndpoint RequisitionsEndpoint { get; }
+
+    /// <inheritdoc />
+    public IAccountsEndpoint AccountsEndpoint { get; }
+
+    /// <inheritdoc />
+    public event EventHandler<TokenPairUpdatedEventArgs>? TokenPairUpdated;
+
     /// <summary>
     /// Carries out the request to the GoCardless API, gathering a valid JWT if necessary.
     /// </summary>
     /// <param name="uri">The URI of the API endpoint.</param>
-    /// <param name="method">The <see cref="HttpMethod"/> to use for this request.</param>
+    /// <param name="method">The <see cref="HttpMethod" /> to use for this request.</param>
     /// <param name="cancellationToken">Token to signal cancellation of the operation.</param>
     /// <param name="query">Optional query parameters to add to the request.</param>
     /// <param name="body">Optional body to add to the request.</param>
     /// <param name="useAuthentication">Whether to use authentication.</param>
-    /// <typeparam name="TResponse">The type of the response.</typeparam> 
+    /// <typeparam name="TResponse">The type of the response.</typeparam>
     /// <typeparam name="TError">The type of the error.</typeparam>
     /// <returns>The response to the request.</returns>
     internal async Task<NordigenApiResponse<TResponse, TError>> MakeRequest<TResponse, TError>(
@@ -149,7 +149,7 @@ public class NordigenClient : INordigenClient
     /// </summary>
     /// <param name="cancellationToken">An optional token to signal cancellation of the operation.</param>
     /// <returns>
-    /// A <see cref="NordigenApiResponse{TResult,TError}"/> containing the <see cref="JsonWebTokenPair"/> or
+    /// A <see cref="NordigenApiResponse{TResult,TError}" /> containing the <see cref="JsonWebTokenPair" /> or
     /// the error of the operation.
     /// </returns>
     private async Task<NordigenApiResponse<JsonWebTokenPair, BasicResponse>> TryGetValidTokenPair(
@@ -203,8 +203,5 @@ public class TokenPairUpdatedEventArgs : EventArgs
     /// Creates a new instance of <see cref="TokenPairUpdatedEventArgs" />.
     /// </summary>
     /// <param name="jsonWebTokenPair">The updated <see cref="Models.Jwt.JsonWebTokenPair" />.</param>
-    public TokenPairUpdatedEventArgs(JsonWebTokenPair jsonWebTokenPair)
-    {
-        JsonWebTokenPair = jsonWebTokenPair;
-    }
+    public TokenPairUpdatedEventArgs(JsonWebTokenPair jsonWebTokenPair) => JsonWebTokenPair = jsonWebTokenPair;
 }

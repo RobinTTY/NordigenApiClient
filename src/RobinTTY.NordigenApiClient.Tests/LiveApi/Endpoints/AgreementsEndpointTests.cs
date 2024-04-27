@@ -198,10 +198,9 @@ public class AgreementsEndpointTests
             Assert.That(response.Error!.InstitutionIdError, Is.Not.Null);
             Assert.That(response.Error!.InstitutionIdError!.Summary, Is.EqualTo("This field may not be null."));
             Assert.That(response.Error!.InstitutionIdError!.Detail, Is.EqualTo("This field may not be null."));
-            
+
             Assert.That(response.Error!.AccessScopeError!.Summary, Is.EqualTo("This field may not be null."));
             Assert.That(response.Error!.AccessScopeError!.Detail, Is.EqualTo("This field may not be null."));
-
         });
     }
 

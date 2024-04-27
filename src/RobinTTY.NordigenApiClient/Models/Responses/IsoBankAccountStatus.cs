@@ -18,15 +18,18 @@ public enum IsoBankAccountStatus
     /// <summary>
     /// Account is available.
     /// </summary>
-    [Description("enabled")] Enabled,
+    [Description("enabled")]
+    Enabled,
 
     /// <summary>
     /// Account has been terminated.
     /// </summary>
-    [Description("deleted")] Deleted,
+    [Description("deleted")]
+    Deleted,
 
     /// <summary>
     /// Account has been blocked (e.g. for legal reasons).
     /// </summary>
-    [Description("blocked")] Blocked
+    [Description("blocked")]
+    Blocked
 }

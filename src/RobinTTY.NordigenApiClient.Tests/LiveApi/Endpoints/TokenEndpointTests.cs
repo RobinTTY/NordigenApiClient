@@ -13,7 +13,31 @@ public class TokenEndpointTests
     {
         _apiClient = TestHelpers.GetConfiguredClient();
     }
-    
+
+    #region RequestsWithErrors
+
+    /// <summary>
+    /// Tests retrieving a token with invalid credentials.
+    /// </summary>
+    [Test]
+    public async Task GetTokenWithInvalidCredentials()
+    {
+        var httpClient = new HttpClient();
+        var credentials = new NordigenClientCredentials("invalid", "invalid");
+        var apiClient = new NordigenClient(httpClient, credentials);
+        var response = await apiClient.TokenEndpoint.GetTokenPair();
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(response.IsSuccess, Is.False);
+            Assert.That(response.Result, Is.Null);
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
+            Assert.That(response.Error, Is.Not.Null);
+        });
+    }
+
+    #endregion
+
     #region RequestsWithSuccessfulResponse
 
     /// <summary>
@@ -43,30 +67,6 @@ public class TokenEndpointTests
         var result = await apiClient.RequisitionsEndpoint.GetRequisitions(10, 0);
         AssertionHelpers.AssertNordigenApiResponseIsSuccessful(result, HttpStatusCode.OK);
     }
-    
-    #endregion
-    
-    #region RequestsWithErrors
-    
-    /// <summary>
-    /// Tests retrieving a token with invalid credentials.
-    /// </summary>
-    [Test]
-    public async Task GetTokenWithInvalidCredentials()
-    {
-        var httpClient = new HttpClient();
-        var credentials = new NordigenClientCredentials("invalid", "invalid");
-        var apiClient = new NordigenClient(httpClient, credentials);
-        var response = await apiClient.TokenEndpoint.GetTokenPair();
 
-        Assert.Multiple(() =>
-        {
-            Assert.That(response.IsSuccess, Is.False);
-            Assert.That(response.Result, Is.Null);
-            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
-            Assert.That(response.Error, Is.Not.Null);
-        });
-    }
-    
     #endregion
 }
