@@ -16,7 +16,7 @@ public class InstitutionsEndpoint : IInstitutionsEndpoint
     internal InstitutionsEndpoint(NordigenClient client) => _nordigenClient = client;
 
     /// <inheritdoc />
-    public async Task<NordigenApiResponse<List<Institution>, InstitutionsError>> GetInstitutions(string? country = null,
+    public async Task<NordigenApiResponse<List<Institution>, BasicResponse>> GetInstitutions(string? country = null,
         bool? accessScopesSupported = null, bool? accountSelectionSupported = null,
         bool? businessAccountsSupported = null,
         bool? cardAccountsSupported = null, bool? corporateAccountsSupported = null,
@@ -27,6 +27,8 @@ public class InstitutionsEndpoint : IInstitutionsEndpoint
     {
         var query = new List<KeyValuePair<string, string>>();
         if (country != null) query.Add(new KeyValuePair<string, string>("country", country));
+        
+        // Add any required query parameter
         if (accessScopesSupported.HasValue)
             query.Add(GetSupportFlagQuery("access_scopes_supported", accessScopesSupported.Value));
         if (accountSelectionSupported.HasValue)
@@ -48,16 +50,20 @@ public class InstitutionsEndpoint : IInstitutionsEndpoint
             query.Add(GetSupportFlagQuery("pending_transactions_supported", pendingTransactionsSupported.Value));
         if (ssnVerificationSupported.HasValue)
             query.Add(GetSupportFlagQuery("ssn_verification_supported", ssnVerificationSupported.Value));
-        return await _nordigenClient.MakeRequest<List<Institution>, InstitutionsError>(
+        
+        var response = await _nordigenClient.MakeRequest<List<Institution>, InstitutionsErrorInternal>(
             NordigenEndpointUrls.InstitutionsEndpoint, HttpMethod.Get, cancellationToken, query);
+        
+        return new NordigenApiResponse<List<Institution>, BasicResponse>(response.StatusCode, response.IsSuccess, response.Result,
+            response.Error);
     }
 
     private static KeyValuePair<string, string> GetSupportFlagQuery(string flag, bool value)
         => new(flag, value.ToString().ToLower());
 
     /// <inheritdoc />
-    public async Task<NordigenApiResponse<Institution, BasicError>> GetInstitution(string id,
+    public async Task<NordigenApiResponse<Institution, BasicResponse>> GetInstitution(string id,
         CancellationToken cancellationToken = default) =>
-        await _nordigenClient.MakeRequest<Institution, BasicError>(
+        await _nordigenClient.MakeRequest<Institution, BasicResponse>(
             $"{NordigenEndpointUrls.InstitutionsEndpoint}{id}/", HttpMethod.Get, cancellationToken);
 }

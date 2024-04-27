@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Net;
+using System.Text.Json;
 using RobinTTY.NordigenApiClient.Contracts;
 using RobinTTY.NordigenApiClient.Endpoints;
 using RobinTTY.NordigenApiClient.JsonConverters;
@@ -34,7 +35,7 @@ public class NordigenClient : INordigenClient
 
     /// <inheritdoc />
     public IAccountsEndpoint AccountsEndpoint { get; }
-    
+
     /// <inheritdoc />
     public event EventHandler<TokenPairUpdatedEventArgs>? TokenPairUpdated;
 
@@ -53,12 +54,10 @@ public class NordigenClient : INordigenClient
             Converters =
             {
                 new JsonWebTokenConverter(), new GuidConverter(),
-                new CultureSpecificDecimalConverter(), new InstitutionsErrorConverter()
+                new CultureSpecificDecimalConverter()
             }
         };
-
-        if (_httpClient.BaseAddress == null)
-            _httpClient.BaseAddress = new Uri(NordigenEndpointUrls.Base);
+        _httpClient.BaseAddress ??= new Uri(NordigenEndpointUrls.Base);
 
         Credentials = credentials;
         JsonWebTokenPair = jsonWebTokenPair;
@@ -69,6 +68,18 @@ public class NordigenClient : INordigenClient
         AccountsEndpoint = new AccountsEndpoint(this);
     }
 
+    /// <summary>
+    /// Carries out the request to the GoCardless API, gathering a valid JWT if necessary.
+    /// </summary>
+    /// <param name="uri">The URI of the API endpoint.</param>
+    /// <param name="method">The <see cref="HttpMethod"/> to use for this request.</param>
+    /// <param name="cancellationToken">Token to signal cancellation of the operation.</param>
+    /// <param name="query">Optional query parameters to add to the request.</param>
+    /// <param name="body">Optional body to add to the request.</param>
+    /// <param name="useAuthentication">Whether to use authentication.</param>
+    /// <typeparam name="TResponse">The type of the response.</typeparam> 
+    /// <typeparam name="TError">The type of the error.</typeparam>
+    /// <returns>The response to the request.</returns>
     internal async Task<NordigenApiResponse<TResponse, TError>> MakeRequest<TResponse, TError>(
         string uri,
         HttpMethod method,
@@ -76,16 +87,28 @@ public class NordigenClient : INordigenClient
         IEnumerable<KeyValuePair<string, string>>? query = null,
         HttpContent? body = null,
         bool useAuthentication = true
-    ) where TResponse : class where TError : class
+    ) where TResponse : class where TError : BasicResponse, new()
     {
         var requestUri = query != null ? uri + UriQueryBuilder.GetQueryString(query) : uri;
         HttpClient client;
+
+        // When an endpoint that requires authentication is called the client tries to update the JWT first
+        // - The updating is done using a semaphore to avoid multiple threads trying to update the token simultaneously
+        // - If the request to get the token succeeds, the subsequent request is executed
+        // - If the request to get the token fails, the error response from the token endpoint is returned instead
         if (useAuthentication)
         {
             await TokenSemaphore.WaitAsync(cancellationToken);
+
             try
             {
-                JsonWebTokenPair = await TryGetValidTokenPair(cancellationToken);
+                var tokenResponse = await TryGetValidTokenPair(cancellationToken);
+
+                if (tokenResponse.IsSuccess)
+                    JsonWebTokenPair = tokenResponse.Result;
+                else
+                    return new NordigenApiResponse<TResponse, TError>(tokenResponse.StatusCode, tokenResponse.IsSuccess,
+                        null, new TError {Summary = tokenResponse.Error.Summary, Detail = tokenResponse.Error.Detail});
             }
             finally
             {
@@ -99,20 +122,26 @@ public class NordigenClient : INordigenClient
             client = _httpClient;
         }
 
-        HttpResponseMessage? response;
-        if (method == HttpMethod.Get)
-            response = await client.GetAsync(requestUri, cancellationToken);
-        else if (method == HttpMethod.Post)
-            response = await client.PostAsync(requestUri, body, cancellationToken);
-        else if (method == HttpMethod.Delete)
-            response = await client.DeleteAsync(requestUri, cancellationToken);
-        else if (method == HttpMethod.Put)
-            response = await client.PutAsync(requestUri, body, cancellationToken);
-        else
-            throw new NotImplementedException();
+        var response = await ExecuteRequest(client, method, requestUri, cancellationToken, body);
 
         return await NordigenApiResponse<TResponse, TError>.FromHttpResponse(response, _serializerOptions,
             cancellationToken);
+    }
+
+    private static async Task<HttpResponseMessage> ExecuteRequest(HttpClient client, HttpMethod method,
+        string requestUri,
+        CancellationToken cancellationToken, HttpContent? body = null)
+    {
+        if (method == HttpMethod.Get)
+            return await client.GetAsync(requestUri, cancellationToken);
+        if (method == HttpMethod.Post)
+            return await client.PostAsync(requestUri, body, cancellationToken);
+        if (method == HttpMethod.Delete)
+            return await client.DeleteAsync(requestUri, cancellationToken);
+        if (method == HttpMethod.Put)
+            return await client.PutAsync(requestUri, body, cancellationToken);
+
+        throw new NotImplementedException();
     }
 
     /// <summary>
@@ -120,17 +149,20 @@ public class NordigenClient : INordigenClient
     /// </summary>
     /// <param name="cancellationToken">An optional token to signal cancellation of the operation.</param>
     /// <returns>
-    /// A valid <see cref="Models.Jwt.JsonWebTokenPair" /> if the operation was successful.
-    /// Otherwise returns null.
+    /// A <see cref="NordigenApiResponse{TResult,TError}"/> containing the <see cref="JsonWebTokenPair"/> or
+    /// the error of the operation.
     /// </returns>
-    private async Task<JsonWebTokenPair?> TryGetValidTokenPair(CancellationToken cancellationToken = default)
+    private async Task<NordigenApiResponse<JsonWebTokenPair, BasicResponse>> TryGetValidTokenPair(
+        CancellationToken cancellationToken = default)
     {
         // Request a new token if it is null or if the refresh token has expired
         if (JsonWebTokenPair == null || JsonWebTokenPair.RefreshToken.IsExpired(TimeSpan.FromMinutes(1)))
         {
             var response = await TokenEndpoint.GetTokenPair(cancellationToken);
-            TokenPairUpdated?.Invoke(this, new TokenPairUpdatedEventArgs(response.Result));
-            return response.Result;
+            if (response.IsSuccess)
+                TokenPairUpdated?.Invoke(this, new TokenPairUpdatedEventArgs(response.Result));
+
+            return response;
         }
 
         // Refresh the current access token if it's expired (or valid for less than a minute)
@@ -139,15 +171,21 @@ public class NordigenClient : INordigenClient
             var response = await TokenEndpoint.RefreshAccessToken(JsonWebTokenPair.RefreshToken, cancellationToken);
             // Create a new token pair consisting of the new access token and existing refresh token
             var token = response.IsSuccess
-                ? new JsonWebTokenPair(response.Result!.AccessToken, JsonWebTokenPair.RefreshToken,
+                ? new JsonWebTokenPair(response.Result.AccessToken, JsonWebTokenPair.RefreshToken,
                     response.Result!.AccessExpires, JsonWebTokenPair.RefreshExpires)
                 : null;
-            TokenPairUpdated?.Invoke(this, new TokenPairUpdatedEventArgs(token));
-            return token;
+            var tokenPairResponse = new NordigenApiResponse<JsonWebTokenPair, BasicResponse>(response.StatusCode,
+                response.IsSuccess, token, response.Error);
+
+            if (token is not null)
+                TokenPairUpdated?.Invoke(this, new TokenPairUpdatedEventArgs(token));
+
+            return tokenPairResponse;
         }
 
-        // Token pair is still valid and can be returned
-        return JsonWebTokenPair;
+        // Token pair is still valid and can be returned - wrap in NordigenApiResponse
+        return new NordigenApiResponse<JsonWebTokenPair, BasicResponse>(HttpStatusCode.OK, true, JsonWebTokenPair,
+            null);
     }
 }
 
@@ -159,13 +197,13 @@ public class TokenPairUpdatedEventArgs : EventArgs
     /// <summary>
     /// The updated <see cref="Models.Jwt.JsonWebTokenPair" />.
     /// </summary>
-    public JsonWebTokenPair? JsonWebTokenPair { get; set; }
+    public JsonWebTokenPair JsonWebTokenPair { get; set; }
 
     /// <summary>
     /// Creates a new instance of <see cref="TokenPairUpdatedEventArgs" />.
     /// </summary>
     /// <param name="jsonWebTokenPair">The updated <see cref="Models.Jwt.JsonWebTokenPair" />.</param>
-    public TokenPairUpdatedEventArgs(JsonWebTokenPair? jsonWebTokenPair)
+    public TokenPairUpdatedEventArgs(JsonWebTokenPair jsonWebTokenPair)
     {
         JsonWebTokenPair = jsonWebTokenPair;
     }

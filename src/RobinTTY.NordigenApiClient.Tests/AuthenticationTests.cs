@@ -1,17 +1,22 @@
 ﻿using Microsoft.IdentityModel.JsonWebTokens;
+using RobinTTY.NordigenApiClient.Models;
 using RobinTTY.NordigenApiClient.Models.Jwt;
 using RobinTTY.NordigenApiClient.Utility;
 
 namespace RobinTTY.NordigenApiClient.Tests;
 
-internal class JsonWebTokenPairTests
+/// <summary>
+/// Tests aspects of authentication related to the <see cref="NordigenClientCredentials"/> and <see cref="JsonWebTokenPair"/> classes.
+/// </summary>
+internal class AuthenticationTests
 {
-    private NordigenClient _apiClient = null!;
-
-    [OneTimeSetUp]
-    public void Setup()
+    /// <summary>
+    /// Tests creating <see cref="NordigenClientCredentials"/>, passing null as an argument.
+    /// </summary>
+    [Test]
+    public void CreateCredentialsWithNull()
     {
-        _apiClient = TestExtensions.GetConfiguredClient();
+        Assert.Throws<ArgumentNullException>(() => { _ = new NordigenClientCredentials(null!, null!); });
     }
 
     /// <summary>
@@ -46,22 +51,6 @@ internal class JsonWebTokenPairTests
             "eyJhbGciOiJIUzI1NisInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiYWNjZXNzIiwic3ViIjoiMTIzNDU2Nzg5MCIsIm5iZiI6MTY1OTE5OTU5MiwiZXhwIjoxNjU5MjE5NTkyLCJuYWIjoiSm9obiBEb2UiLCJpYXQiOjE1MTYyMzkwMjJ9.WP7xByegwjRvWZMwHScxunAOkwkW77ocaLvGen2PAU";
         // ReSharper disable once ObjectCreationAsStatement
         Assert.Throws<ArgumentException>(() => new JsonWebTokenPair(exampleToken, exampleToken));
-    }
-
-    /// <summary>
-    /// Tests that <see cref="NordigenClient.JsonWebTokenPair" /> is populated after the first authenticated request is made.
-    /// </summary>
-    [Test]
-    public async Task CheckValidTokensAfterRequest()
-    {
-        Assert.That(_apiClient.JsonWebTokenPair, Is.Null);
-        await _apiClient.RequisitionsEndpoint.GetRequisitions(5, 0, CancellationToken.None);
-        Assert.Multiple(() =>
-        {
-            Assert.That(_apiClient.JsonWebTokenPair, Is.Not.Null);
-            Assert.That(_apiClient.JsonWebTokenPair!.AccessToken.EncodedToken, Has.Length.GreaterThan(0));
-            Assert.That(_apiClient.JsonWebTokenPair!.RefreshToken.EncodedToken, Has.Length.GreaterThan(0));
-        });
     }
 
     /// <summary>

@@ -1,5 +1,4 @@
 ﻿using System.Text.Json.Serialization;
-using RobinTTY.NordigenApiClient.Models.Errors;
 
 namespace RobinTTY.NordigenApiClient.Models.Responses;
 
@@ -31,7 +30,7 @@ public class ResponsePage<T>
     /// The results that were fetched with this page.
     /// </summary>
     [JsonPropertyName("results")]
-    public IEnumerable<T> Results { get; }
+    public List<T> Results { get; }
 
     /// <summary>
     /// Creates a new instance of <see cref="ResponsePage{T}" />.
@@ -40,7 +39,7 @@ public class ResponsePage<T>
     /// <param name="next">The URI of the next response page.</param>
     /// <param name="previous">The URI of the last response page.</param>
     /// <param name="results">The results that were fetched with this page.</param>
-    public ResponsePage(uint count, Uri? next, Uri? previous, IEnumerable<T> results)
+    public ResponsePage(uint count, Uri? next, Uri? previous, List<T> results)
     {
         Count = count;
         Next = next;
@@ -57,11 +56,11 @@ public class ResponsePage<T>
     /// Either a <see cref="NordigenApiResponse{TResponse, TError}" /> containing the next
     /// <see cref="ResponsePage{T}" /> or null if there is no next page to retrieve.
     /// </returns>
-    public async Task<NordigenApiResponse<ResponsePage<T>, BasicError>?> GetNextPage(NordigenClient nordigenClient,
+    public async Task<NordigenApiResponse<ResponsePage<T>, BasicResponse>?> GetNextPage(NordigenClient nordigenClient,
         CancellationToken cancellationToken = default)
     {
-        if (Next == null) return null;
-        return await nordigenClient.MakeRequest<ResponsePage<T>, BasicError>(Next.AbsoluteUri, HttpMethod.Get,
+        if (Next is null) return null;
+        return await nordigenClient.MakeRequest<ResponsePage<T>, BasicResponse>(Next.AbsoluteUri, HttpMethod.Get,
             cancellationToken);
     }
 
@@ -74,11 +73,11 @@ public class ResponsePage<T>
     /// Either a <see cref="NordigenApiResponse{TResponse, TError}" /> containing the previous
     /// <see cref="ResponsePage{T}" /> or null if there is no previous page to retrieve.
     /// </returns>
-    public async Task<NordigenApiResponse<ResponsePage<T>, BasicError>?> GetPreviousPage(NordigenClient nordigenClient,
+    public async Task<NordigenApiResponse<ResponsePage<T>, BasicResponse>?> GetPreviousPage(NordigenClient nordigenClient,
         CancellationToken cancellationToken = default)
     {
-        if (Previous == null) return null;
-        return await nordigenClient.MakeRequest<ResponsePage<T>, BasicError>(Previous.AbsoluteUri, HttpMethod.Get,
+        if (Previous is null) return null;
+        return await nordigenClient.MakeRequest<ResponsePage<T>, BasicResponse>(Previous.AbsoluteUri, HttpMethod.Get,
             cancellationToken);
     }
 }

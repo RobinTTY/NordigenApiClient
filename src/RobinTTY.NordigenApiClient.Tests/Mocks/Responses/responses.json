@@ -1,0 +1,519 @@
+{
+  "AccountsEndpointMockData": {
+    "GetAccount": {
+      "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "created": "2024-04-05T21:51:12.694Z",
+      "last_accessed": "2024-04-05T21:51:12.694Z",
+      "iban": "GL2010440000010445",
+      "institution_id": "SANDBOXFINANCE_SFIN0000",
+      "status": "READY",
+      "owner_name": "John Doe"
+    },
+    "GetBalances": {
+      "balances": [
+        {
+          "balanceAmount": {
+            "amount": "1913.12",
+            "currency": "EUR"
+          },
+          "balanceType": "closingAvailable",
+          "referenceDate": "2021-11-22"
+        },
+        {
+          "balanceAmount": {
+            "amount": "1913.12",
+            "currency": "EUR"
+          },
+          "balanceType": "forwardAvailable",
+          "referenceDate": "2021-11-19"
+        }
+      ]
+    },
+    "GetAccountDetails": {
+      "account": {
+        "resourceId": "abc",
+        "iban": "GL2010440000010445",
+        "currency": "EUR",
+        "ownerName": "Jane Doe",
+        "name": "Main Account",
+        "product": "Credit Card",
+        "cashAccountType": "CACC"
+      }
+    },
+    "GetTransactions": {
+      "transactions": {
+        "booked": [
+          {
+            "transactionId": "string",
+            "debtorName": "MON MOTHMA",
+            "debtorAccount": {
+              "iban": "GL2010440000010445"
+            },
+            "transactionAmount": {
+              "currency": "EUR",
+              "amount": "45.00"
+            },
+            "bankTransactionCode": "PMNT",
+            "bookingDate": "2021-11-19",
+            "valueDate": "2021-11-19",
+            "remittanceInformationUnstructured": "For the support of Restoration of the Republic foundation"
+          },
+          {
+            "transactionId": "string",
+            "transactionAmount": {
+              "currency": "string",
+              "amount": "947.26"
+            },
+            "bankTransactionCode": "string",
+            "bookingDate": "2021-11-19",
+            "valueDate": "2021-11-19",
+            "remittanceInformationUnstructured": "string"
+          }
+        ],
+        "pending": [
+          {
+            "transactionAmount": {
+              "currency": "string",
+              "amount": "99.20"
+            },
+            "valueDate": "2021-11-19",
+            "remittanceInformationUnstructured": "string"
+          }
+        ]
+      }
+    },
+    "GetTransactionRange": {
+      "transactions": {
+        "booked": [
+          {
+            "transactionId": "string",
+            "debtorName": "MON MOTHMA",
+            "debtorAccount": {
+              "iban": "GL2010440000010445"
+            },
+            "transactionAmount": {
+              "currency": "EUR",
+              "amount": "45.00"
+            },
+            "bankTransactionCode": "PMNT",
+            "bookingDate": "2021-11-19",
+            "valueDate": "2021-11-19",
+            "remittanceInformationUnstructured": "For the support of Restoration of the Republic foundation"
+          },
+          {
+            "transactionId": "string",
+            "transactionAmount": {
+              "currency": "string",
+              "amount": "947.26"
+            },
+            "bankTransactionCode": "string",
+            "bookingDate": "2021-11-19",
+            "valueDate": "2021-11-19",
+            "remittanceInformationUnstructured": "string"
+          }
+        ],
+        "pending": [
+          {
+            "transactionAmount": {
+              "currency": "string",
+              "amount": "99.20"
+            },
+            "valueDate": "2021-11-19",
+            "remittanceInformationUnstructured": "string"
+          }
+        ]
+      }
+    },
+    "GetAccountWithInvalidGuid": {
+      "summary": "Invalid Account ID",
+      "detail": "abcdefg is not a valid Account UUID. ",
+      "status_code": 400
+    },
+    "GetAccountThatDoesNotExist": {
+      "detail": "Not found.",
+      "summary": "Not found.",
+      "status_code": 404
+    },
+    "GetBalancesForAccountThatDoesNotExist": {
+      "summary": "Account ID f1d53c46-260d-4556-82df-4e5fed58e37c not found",
+      "detail": "Please check whether you specified a valid Account ID",
+      "status_code": 404
+    },
+    "GetTransactionRangeInFuture": {
+      "date_from": {
+        "summary": "Date can't be in future",
+        "detail": "'2024-04-21' can't be greater than 2024-04-20. Specify correct date range"
+      },
+      "date_to": {
+        "summary": "Date can't be in future",
+        "detail": "'2024-05-21' can't be greater than 2024-04-20. Specify correct date range"
+      },
+      "status_code": 400
+    }
+  },
+  "AgreementsEndpointMockData": {
+    "GetAgreements": {
+      "count": 1,
+      "next": "https://bankaccountdata.gocardless.com/api/v2/agreements/enduser/?limit=100&offset=0",
+      "previous": "https://bankaccountdata.gocardless.com/api/v2/agreements/enduser/?limit=100&offset=0",
+      "results": [
+        {
+          "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+          "created": "2024-04-08T20:57:00.550Z",
+          "institution_id": "SANDBOXFINANCE_SFIN0000",
+          "max_historical_days": 90,
+          "access_valid_for_days": 90,
+          "access_scope": [
+            "balances",
+            "details",
+            "transactions"
+          ],
+          "accepted": "2024-04-08T20:57:00.550Z"
+        }
+      ]
+    },
+    "GetAgreement": {
+      "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "created": "2024-04-08T22:54:54.869Z",
+      "institution_id": "SANDBOXFINANCE_SFIN0000",
+      "max_historical_days": 90,
+      "access_valid_for_days": 90,
+      "access_scope": [
+        "balances",
+        "details",
+        "transactions"
+      ],
+      "accepted": "2024-04-08T22:54:54.869Z"
+    },
+    "CreateAgreement": {
+      "id": "3fa85f64-5717-4562-b3fc-2c963f66afa7",
+      "institution_id": "SANDBOXFINANCE_SFIN0000",
+      "max_historical_days": 145,
+      "access_valid_for_days": 145,
+      "access_scope": [
+        "balances",
+        "details",
+        "transactions"
+      ]
+    },
+    "DeleteAgreement": {
+      "summary": "End User Agreement deleted",
+      "detail": "End User Agreement bb37bc52-5b1d-44f9-b1cd-ec9594f25387 deleted"
+    },
+    "GetAgreementWithInvalidGuid": {
+      "summary": "Invalid EndUserAgreement ID",
+      "detail": "f84d7b8-dee4-4cd9-bc6d-842ef78f6028 is not a valid EndUserAgreement UUID. ",
+      "status_code": 400
+    },
+    "CreateAgreementWithInvalidInstitutionId": {
+      "institution_id": {
+        "summary": "Unknown Institution ID invalid_institution",
+        "detail": "Get Institution IDs from /institutions/?country\u003d{$COUNTRY_CODE}"
+      },
+      "status_code": 400
+    },
+    "CreateAgreementWithInvalidParams": {
+      "max_historical_days": {
+        "summary": "Incorrect max_historical_days",
+        "detail": "max_historical_days must be \u003e 0 and \u003c\u003d SANDBOXFINANCE_SFIN0000 transaction_total_days (90)"
+      },
+      "access_valid_for_days": {
+        "summary": "Incorrect access_valid_for_days",
+        "detail": "access_valid_for_days must be \u003e 0 and \u003c\u003d 180"
+      },
+      "access_scope": {
+        "summary": "Unknown value \u0027[\u0027invalid2\u0027, \u0027invalid\u0027]\u0027 in access_scope",
+        "detail": "Choose one or several from [\u0027balances\u0027, \u0027details\u0027, \u0027transactions\u0027]"
+      },
+      "status_code": 400
+    },
+    "CreateAgreementWithEmptyInstitutionIdAndAccessScopes": {
+      "institution_id": [
+        "This field may not be null."
+      ],
+      "access_scope": [
+        "This field may not be null."
+      ],
+      "status_code": 400
+    },
+    "CreateAgreementWithInvalidParamsAtPolishInstitution": {
+      "summary": [
+        "Institution access scope dependencies error"
+      ],
+      "detail": [
+        "For this institution the following scopes are required together: [\u0027details\u0027, \u0027balances\u0027]"
+      ],
+      "status_code": 400
+    }
+  },
+  "InstitutionsEndpointMockData": {
+    "GetInstitutions": [
+      {
+        "id": "N26_NTSBDEB1",
+        "name": "N26 Bank",
+        "bic": "NTSBDEB1",
+        "transaction_total_days": "90",
+        "countries": [
+          "GB",
+          "NO",
+          "SE",
+          "FI",
+          "DK",
+          "EE",
+          "LV",
+          "LT",
+          "NL",
+          "CZ",
+          "ES",
+          "PL",
+          "BE",
+          "DE",
+          "AT",
+          "BG",
+          "HR",
+          "CY",
+          "FR",
+          "GR",
+          "HU",
+          "IS",
+          "IE",
+          "IT",
+          "LI",
+          "LU",
+          "MT",
+          "PT",
+          "RO",
+          "SK",
+          "SI"
+        ],
+        "logo": "https://cdn-logos.gocardless.com/ais/N26_SANDBOX_NTSBDEB1.png",
+        "identification_codes": []
+      },
+      {
+        "id": "N26_NTSBDEB1",
+        "name": "N26 Bank",
+        "bic": "NTSBDEB1",
+        "transaction_total_days": "90",
+        "countries": [
+          "GB",
+          "NO",
+          "SE",
+          "FI",
+          "DK",
+          "EE",
+          "LV",
+          "LT",
+          "NL",
+          "CZ",
+          "ES",
+          "PL",
+          "BE",
+          "DE",
+          "AT",
+          "BG",
+          "HR",
+          "CY",
+          "FR",
+          "GR",
+          "HU",
+          "IS",
+          "IE",
+          "IT",
+          "LI",
+          "LU",
+          "MT",
+          "PT",
+          "RO",
+          "SK",
+          "SI"
+        ],
+        "logo": "https://cdn-logos.gocardless.com/ais/N26_SANDBOX_NTSBDEB1.png",
+        "identification_codes": []
+      }
+    ],
+    "GetInstitution": {
+      "id": "N26_NTSBDEB1",
+      "name": "N26 Bank",
+      "bic": "NTSBDEB1",
+      "transaction_total_days": "90",
+      "countries": [
+        "GB",
+        "NO",
+        "SE",
+        "FI",
+        "DK",
+        "EE",
+        "LV",
+        "LT",
+        "NL",
+        "CZ",
+        "ES",
+        "PL",
+        "BE",
+        "DE",
+        "AT",
+        "BG",
+        "HR",
+        "CY",
+        "FR",
+        "GR",
+        "HU",
+        "IS",
+        "IE",
+        "IT",
+        "LI",
+        "LU",
+        "MT",
+        "PT",
+        "RO",
+        "SK",
+        "SI"
+      ],
+      "logo": "https://cdn-logos.gocardless.com/ais/N26_SANDBOX_NTSBDEB1.png",
+      "supported_payments": {
+        "single-payment": [
+          "SCT",
+          "ISCT"
+        ]
+      },
+      "supported_features": [
+        "account_selection",
+        "business_accounts",
+        "card_accounts",
+        "payments",
+        "private_accounts"
+      ],
+      "identification_codes": []
+    },
+    "GetInstitutionsForNotCoveredCountry": {
+      "country": {
+        "summary": "Invalid country choice.",
+        "detail": "US is not a valid choice."
+      },
+      "status_code": 400
+    },
+    "GetNonExistingInstitution": {
+      "summary": "Not found.",
+      "detail": "Not found.",
+      "status_code": 404
+    }
+  },
+  "RequisitionsEndpointMockData": {
+    "GetRequisitions": {
+      "count": 1,
+      "next": "https://bankaccountdata.gocardless.com/api/v2/requisitions/?limit=100&offset=0",
+      "previous": "https://bankaccountdata.gocardless.com/api/v2/requisitions/?limit=100&offset=0",
+      "results": [
+        {
+          "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+          "created": "2024-04-12T23:50:34.962Z",
+          "redirect": "https://www.robintty.com",
+          "status": "CR",
+          "institution_id": "SANDBOXFINANCE_SFIN0000",
+          "agreement": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+          "reference": "example-reference",
+          "accounts": [
+            "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+            "3fa85f64-5717-4562-b3fc-2c963f66afa7"
+          ],
+          "user_language": "EN",
+          "link": "https://ob.nordigen.com/psd2/start/3fa85f64-5717-4562-b3fc-2c963f66afa6/SANDBOXFINANCE_SFIN0000",
+          "ssn": "555-50-1234",
+          "account_selection": false,
+          "redirect_immediate": true
+        }
+      ]
+    },
+    "GetRequisition": {
+      "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "created": "2024-04-12T23:50:34.962Z",
+      "redirect": "https://www.robintty.com",
+      "status": "CR",
+      "institution_id": "SANDBOXFINANCE_SFIN0000",
+      "agreement": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "reference": "example-reference",
+      "accounts": [
+        "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "3fa85f64-5717-4562-b3fc-2c963f66afa7"
+      ],
+      "user_language": "EN",
+      "link": "https://ob.nordigen.com/psd2/start/3fa85f64-5717-4562-b3fc-2c963f66afa6/SANDBOXFINANCE_SFIN0000",
+      "ssn": "555-50-1234",
+      "account_selection": false,
+      "redirect_immediate": true
+    },
+    "CreateRequisition": {
+      "redirect": "https://www.robintty.com",
+      "institution_id": "SANDBOXFINANCE_SFIN0000",
+      "agreement": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "reference": "example-reference",
+      "user_language": "EN",
+      "ssn": "555-50-1234",
+      "account_selection": false,
+      "redirect_immediate": true
+    },
+    "DeleteRequisition": {
+      "summary": "Requisition deleted",
+      "detail": "Requisition b5462cad-5a7f-42e1-881d-d0fa066f54bc deleted with all its End User Agreements"
+    },
+    "GetRequisitionWithInvalidGuid": {
+      "summary": "Not found.",
+      "detail": "Not found.",
+      "status_code": 404
+    },
+    "CreateRequisitionWithInvalidId": {
+      "summary": "Invalid  ID",
+      "detail": "00000000-0000-0000-0000-000000000000 is not a valid  UUID. ",
+      "status_code": 400
+    },
+    "CreateRequisitionWithInvalidParameters": {
+      "institution_id": [
+        "This field may not be blank."
+      ],
+      "agreement": {
+        "summary": "Incorrect Institution ID ",
+        "detail": "Provided Institution ID: \u0027\u0027 for requisition does not match EUA institution ID \u0027SANDBOXFINANCE_SFIN0000\u0027. Please provide correct institution ID: \u0027SANDBOXFINANCE_SFIN0000\u0027"
+      },
+      "reference": [
+        "This field may not be blank."
+      ],
+      "user_language": {
+        "summary": "Provided user_language is invalid or not supported",
+        "detail": "\u0027AB\u0027 is an invalid or unsupported language"
+      },
+      "ssn": {
+        "summary": "SSN verification not supported",
+        "detail": "SSN verification not supported for "
+      },
+      "account_selection": {
+        "summary": "Account selection not supported",
+        "detail": "Account selection not supported for "
+      },
+      "status_code": 400
+    }
+  },
+  "TokenEndpointMockData": {
+    "GetNewToken": {
+      "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwic3ViIjoiMTIzNDU2Nzg5MCIsIm5hbWUiOiJKb2huIERvZSIsImlhdCI6MTUxNjIzOTAyMiwiZXhwIjozMzI3MDExNzU5NH0.gEa5VdPSqZW2xk9IqCEqiw6bzBOer_uAR1yp2XK7FFo",
+      "access_expires": 86400,
+      "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsInN1YiI6IjEyMzQ1Njc4OTAiLCJuYW1lIjoiSm9obiBEb2UiLCJpYXQiOjE1MTYyMzkwMjIsImV4cCI6MzMyNzAxMTc1OTR9.xfOrczY3KvG-SiHLZkVLPas017ZX8DHkcCN78Xd9cac",
+      "refresh_expires": 2592000
+    },
+    "RefreshAccessToken": {
+      "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwic3ViIjoiMTIzNDU2Nzg5MCIsIm5hbWUiOiJKb2huIERvZSIsImlhdCI6MTUxNjIzOTAyMiwiZXhwIjozMzI3MDExNzU5NH0.gEa5VdPSqZW2xk9IqCEqiw6bzBOer_uAR1yp2XK7FFo",
+      "access_expires": 86400
+    }
+  },
+  "CredentialMockData": {
+    "NoAccountForGivenCredentialsError": {
+      "summary": "Authentication failed",
+      "detail": "No active account found with the given credentials",
+      "status_code": 401
+    },
+    "IpNotWhitelistedError": {
+      "summary": "IP address access denied",
+      "detail": "Your IP 127.0.0.1 isn't whitelisted to perform this action",
+      "status_code": 403
+    }
+  }
+}

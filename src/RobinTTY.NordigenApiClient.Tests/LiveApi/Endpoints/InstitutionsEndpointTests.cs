@@ -1,28 +1,29 @@
-﻿using System.Net;
+﻿using RobinTTY.NordigenApiClient.Tests.Shared;
 
-namespace RobinTTY.NordigenApiClient.Tests.Endpoints;
+namespace RobinTTY.NordigenApiClient.Tests.LiveApi.Endpoints;
 
-internal class InstitutionsEndpointTests
+public class InstitutionsEndpointTests
 {
     private NordigenClient _apiClient = null!;
 
     [OneTimeSetUp]
     public void Setup()
     {
-        _apiClient = TestExtensions.GetConfiguredClient();
+        _apiClient = TestHelpers.GetConfiguredClient();
     }
+
+    #region RequestsWithSuccessfulResponse
 
     /// <summary>
     /// Tests the retrieving of institutions for all countries and a specific country (Great Britain).
     /// </summary>
-    /// <returns></returns>
     [Test]
     public async Task GetInstitutions()
     {
         var response = await _apiClient.InstitutionsEndpoint.GetInstitutions();
-        TestExtensions.AssertNordigenApiResponseIsSuccessful(response, HttpStatusCode.OK);
+        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(response, HttpStatusCode.OK);
         var response2 = await _apiClient.InstitutionsEndpoint.GetInstitutions("GB");
-        TestExtensions.AssertNordigenApiResponseIsSuccessful(response2, HttpStatusCode.OK);
+        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(response2, HttpStatusCode.OK);
 
         var result = response.Result!.ToList();
         var result2 = response2.Result!.ToList();
@@ -38,24 +39,23 @@ internal class InstitutionsEndpointTests
     /// <summary>
     /// Tests the retrieving of institutions with various query parameters set.
     /// </summary>
-    /// <returns></returns>
     [Test]
     public async Task GetInstitutionsWithFlags()
     {
         var allFlagsSetTrue = await _apiClient.InstitutionsEndpoint.GetInstitutions("GB", true, true, true, true, true,
             true, true, true, true, true, true);
-        TestExtensions.AssertNordigenApiResponseIsSuccessful(allFlagsSetTrue, HttpStatusCode.OK);
+        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(allFlagsSetTrue, HttpStatusCode.OK);
         var allFlagsSetFalse = await _apiClient.InstitutionsEndpoint.GetInstitutions("GB", false, false, false, false,
             false, false, false, false, false, false, false);
-        TestExtensions.AssertNordigenApiResponseIsSuccessful(allFlagsSetFalse, HttpStatusCode.OK);
+        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(allFlagsSetFalse, HttpStatusCode.OK);
         var institutionsWithAccountSelection =
             await _apiClient.InstitutionsEndpoint.GetInstitutions(accountSelectionSupported: true);
-        TestExtensions.AssertNordigenApiResponseIsSuccessful(institutionsWithAccountSelection, HttpStatusCode.OK);
+        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(institutionsWithAccountSelection, HttpStatusCode.OK);
         var institutionsWithoutAccountSelection =
             await _apiClient.InstitutionsEndpoint.GetInstitutions(accountSelectionSupported: false);
-        TestExtensions.AssertNordigenApiResponseIsSuccessful(institutionsWithoutAccountSelection, HttpStatusCode.OK);
+        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(institutionsWithoutAccountSelection, HttpStatusCode.OK);
         var allInstitutions = await _apiClient.InstitutionsEndpoint.GetInstitutions();
-        TestExtensions.AssertNordigenApiResponseIsSuccessful(allInstitutions, HttpStatusCode.OK);
+        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(allInstitutions, HttpStatusCode.OK);
 
         var allFlagsTrueResult = allFlagsSetTrue.Result!.ToList();
         var withAccountSelectionResult = institutionsWithAccountSelection.Result!.ToList();
@@ -74,39 +74,58 @@ internal class InstitutionsEndpointTests
     }
 
     /// <summary>
+    /// Tests the retrieving of a specific institution.
+    /// </summary>
+    [Test]
+    public async Task GetInstitution()
+    {
+        var response = await _apiClient.InstitutionsEndpoint.GetInstitution("SANDBOXFINANCE_SFIN0000");
+
+        Assert.Multiple(() =>
+        {
+            AssertionHelpers.AssertNordigenApiResponseIsSuccessful(response, HttpStatusCode.OK);
+            Assert.That(response.Result!.Bic, Is.EqualTo("SFIN0000"));
+            Assert.That(response.Result!.Id, Is.EqualTo("SANDBOXFINANCE_SFIN0000"));
+            Assert.That(response.Result!.Name, Is.EqualTo("Sandbox Finance"));
+            Assert.That(response.Result!.TransactionTotalDays, Is.EqualTo(90));
+        });
+    }
+
+    #endregion
+
+    #region RequestsWithErrors
+
+    /// <summary>
     /// Tests the retrieving of institutions for a country which is not covered by the API.
     /// </summary>
-    /// <returns></returns>
     [Test]
     public async Task GetInstitutionsForNotCoveredCountry()
     {
         var response = await _apiClient.InstitutionsEndpoint.GetInstitutions("US");
-        TestExtensions.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.BadRequest);
 
         Assert.Multiple(() =>
         {
+            AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.BadRequest);
             Assert.That(response.Error!.Detail, Is.EqualTo("US is not a valid choice."));
             Assert.That(response.Error!.Summary, Is.EqualTo("Invalid country choice."));
         });
     }
 
     /// <summary>
-    /// Tests the retrieving of a specific institution.
+    /// Tests the retrieving of an institution with an invalid id.
     /// </summary>
-    /// <returns></returns>
     [Test]
-    public async Task GetInstitution()
+    public async Task GetNonExistingInstitution()
     {
-        var response = await _apiClient.InstitutionsEndpoint.GetInstitution("SANDBOXFINANCE_SFIN0000");
-        TestExtensions.AssertNordigenApiResponseIsSuccessful(response, HttpStatusCode.OK);
-
-        var result = response.Result!;
+        var response = await _apiClient.InstitutionsEndpoint.GetInstitution("invalid_id");
+        
         Assert.Multiple(() =>
         {
-            Assert.That(result.Bic, Is.EqualTo("SFIN0000"));
-            Assert.That(result.Id, Is.EqualTo("SANDBOXFINANCE_SFIN0000"));
-            Assert.That(result.Name, Is.EqualTo("Sandbox Finance"));
-            Assert.That(result.TransactionTotalDays, Is.EqualTo(90));
+            AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.NotFound);
+            Assert.That(response.Error!.Detail, Is.EqualTo("Not found."));
+            Assert.That(response.Error!.Summary, Is.EqualTo("Not found."));
         });
     }
+
+    #endregion
 }

@@ -1,61 +1,75 @@
 ﻿using System.Text.Json.Serialization;
+using RobinTTY.NordigenApiClient.JsonConverters;
 using RobinTTY.NordigenApiClient.Models.Requests;
+using RobinTTY.NordigenApiClient.Models.Responses;
 
 namespace RobinTTY.NordigenApiClient.Models.Errors;
 
 /// <summary>
 /// An error description as returned by the create operation of the requisitions endpoint of the Nordigen API.
 /// </summary>
-public class CreateRequisitionError : BasicError
+public class CreateRequisitionError : BasicResponse
 {
     /// <summary>
     /// An error that was returned related to the <see cref="CreateRequisitionRequest.Reference" /> property sent during
     /// the request.
     /// </summary>
     [JsonPropertyName("reference")]
-    public BasicError? ReferenceError { get; }
+    [JsonConverter(typeof(StringArrayToBasicResponseConverter))]
+    public BasicResponse? ReferenceError { get; }
 
     /// <summary>
     /// An error that was returned related to the <see cref="CreateRequisitionRequest.UserLanguage" /> property sent during
     /// the request.
     /// </summary>
     [JsonPropertyName("user_language")]
-    public BasicError? UserLanguageError { get; }
+    [JsonConverter(typeof(StringArrayToBasicResponseConverter))]
+    public BasicResponse? UserLanguageError { get; }
 
     /// <summary>
     /// An error that was returned related to the <see cref="CreateRequisitionRequest.AgreementId" /> property sent during
     /// the request.
     /// </summary>
     [JsonPropertyName("agreement")]
-    public BasicError? AgreementError { get; }
+    [JsonConverter(typeof(StringArrayToBasicResponseConverter))]
+    public BasicResponse? AgreementError { get; }
 
     /// <summary>
     /// An error that was returned related to the <see cref="CreateRequisitionRequest.Redirect" /> property sent during the
     /// request.
     /// </summary>
     [JsonPropertyName("redirect")]
-    public BasicError? RedirectError { get; }
+    [JsonConverter(typeof(StringArrayToBasicResponseConverter))]
+    public BasicResponse? RedirectError { get; }
 
     /// <summary>
     /// An error that was returned related to the <see cref="CreateRequisitionRequest.SocialSecurityNumber" /> property
     /// sent during the request.
     /// </summary>
     [JsonPropertyName("ssn")]
-    public BasicError? SocialSecurityNumberError { get; }
+    [JsonConverter(typeof(StringArrayToBasicResponseConverter))]
+    public BasicResponse? SocialSecurityNumberError { get; }
 
     /// <summary>
     /// An error that was returned related to the <see cref="CreateRequisitionRequest.AccountSelection" /> property sent
     /// during the request.
     /// </summary>
     [JsonPropertyName("account_selection")]
-    public BasicError? AccountSelectionError { get; }
+    [JsonConverter(typeof(StringArrayToBasicResponseConverter))]
+    public BasicResponse? AccountSelectionError { get; }
 
     /// <summary>
     /// An error that was returned related to the <see cref="CreateRequisitionRequest.InstitutionId" /> property sent
     /// during the request.
     /// </summary>
     [JsonPropertyName("institution_id")]
-    public BasicError? InstitutionIdError { get; }
+    [JsonConverter(typeof(StringArrayToBasicResponseConverter))]
+    public BasicResponse? InstitutionIdError { get; }
+    
+    /// <summary>
+    /// Creates a new instance of <see cref="CreateRequisitionError" />.
+    /// </summary>
+    public CreateRequisitionError(){}
 
     /// <summary>
     /// Creates a new instance of <see cref="CreateRequisitionError" />.
@@ -91,10 +105,10 @@ public class CreateRequisitionError : BasicError
     /// <see cref="CreateRequisitionRequest.InstitutionId" /> property sent during the request.
     /// </param>
     [JsonConstructor]
-    public CreateRequisitionError(string summary, string detail, BasicError? referenceError,
-        BasicError? userLanguageError, BasicError? agreementError,
-        BasicError? redirectError, BasicError? socialSecurityNumberError, BasicError? accountSelectionError,
-        BasicError? institutionIdError) : base(summary, detail)
+    public CreateRequisitionError(string summary, string detail, BasicResponse? referenceError,
+        BasicResponse? userLanguageError, BasicResponse? agreementError,
+        BasicResponse? redirectError, BasicResponse? socialSecurityNumberError, BasicResponse? accountSelectionError,
+        BasicResponse? institutionIdError) : base(summary, detail)
     {
         ReferenceError = referenceError;
         UserLanguageError = userLanguageError;

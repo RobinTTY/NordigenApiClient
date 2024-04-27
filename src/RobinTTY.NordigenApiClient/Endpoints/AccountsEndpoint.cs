@@ -17,20 +17,20 @@ public class AccountsEndpoint : IAccountsEndpoint
     internal AccountsEndpoint(NordigenClient client) => _nordigenClient = client;
 
     /// <inheritdoc />
-    public async Task<NordigenApiResponse<BankAccount, BasicError>> GetAccount(Guid id,
+    public async Task<NordigenApiResponse<BankAccount, BasicResponse>> GetAccount(Guid id,
         CancellationToken cancellationToken = default) =>
         await GetAccountInternal(id.ToString(), cancellationToken);
 
 
     /// <inheritdoc />
-    public async Task<NordigenApiResponse<BankAccount, BasicError>> GetAccount(string id,
+    public async Task<NordigenApiResponse<BankAccount, BasicResponse>> GetAccount(string id,
         CancellationToken cancellationToken = default) =>
         await GetAccountInternal(id, cancellationToken);
 
-    private async Task<NordigenApiResponse<BankAccount, BasicError>> GetAccountInternal(string id,
+    private async Task<NordigenApiResponse<BankAccount, BasicResponse>> GetAccountInternal(string id,
         CancellationToken cancellationToken)
     {
-        return await _nordigenClient.MakeRequest<BankAccount, BasicError>(
+        return await _nordigenClient.MakeRequest<BankAccount, BasicResponse>(
             $"{NordigenEndpointUrls.AccountsEndpoint}{id}/", HttpMethod.Get, cancellationToken);
     }
 
@@ -102,6 +102,10 @@ public class AccountsEndpoint : IAccountsEndpoint
         DateTime? startDate, DateTime? endDate, CancellationToken cancellationToken)
 #endif
     {
+        if (startDate > endDate)
+            throw new ArgumentException(
+                $"Starting date '{startDate}' is greater than end date '{endDate}'. When specifying date range, starting date must precede the end date.");
+            
         var query = new List<KeyValuePair<string, string>>();
         if (startDate != null)
             query.Add(new KeyValuePair<string, string>("date_from", DateToIso8601(startDate.Value)));
