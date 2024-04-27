@@ -19,7 +19,6 @@ public class TokenEndpointTests
     /// <summary>
     /// Tests the retrieving and refreshing of the JWT access tokens.
     /// </summary>
-    /// <returns></returns>
     [Test]
     public async Task GetJsonWebTokenPairAndRefresh()
     {
@@ -33,7 +32,6 @@ public class TokenEndpointTests
     /// Tests using the API with an expired access token.
     /// Requires secrets.txt to contain expired access token / valid refresh token pair.
     /// </summary>
-    /// <returns></returns>
     [Test]
     public async Task ReuseExpiredToken()
     {
@@ -53,7 +51,6 @@ public class TokenEndpointTests
     /// <summary>
     /// Tests retrieving a token with invalid credentials.
     /// </summary>
-    /// <returns></returns>
     [Test]
     public async Task GetTokenWithInvalidCredentials()
     {

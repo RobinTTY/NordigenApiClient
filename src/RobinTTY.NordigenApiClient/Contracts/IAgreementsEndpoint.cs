@@ -76,7 +76,7 @@ public interface IAgreementsEndpoint
     /// <param name="id">The id of the end user agreement to accept.</param>
     /// <param name="metadata">The metadata required to accept the end user agreement.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
-    /// <returns></returns>
+    /// <returns>A <see cref="NordigenApiResponse{TResponse, TError}" /> which contains the accepted end user agreement.</returns>
     Task<NordigenApiResponse<Agreement, BasicResponse>> AcceptAgreement(Guid id,
         AcceptAgreementRequest metadata, CancellationToken cancellationToken = default);
 
@@ -86,7 +86,7 @@ public interface IAgreementsEndpoint
     /// <param name="id">The id of the end user agreement to accept.</param>
     /// <param name="metadata">The metadata required to accept the end user agreement.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
-    /// <returns></returns>
+    /// <returns>A <see cref="NordigenApiResponse{TResponse, TError}" /> which contains the accepted end user agreement.</returns>
     Task<NordigenApiResponse<Agreement, BasicResponse>> AcceptAgreement(string id,
         AcceptAgreementRequest metadata, CancellationToken cancellationToken = default);
 }

@@ -65,7 +65,6 @@ internal class TransactionTests
     /// <summary>
     /// Tests that a malformed json throws a human readable error containing the raw json content of the API response.
     /// </summary>
-    /// <returns></returns>
     [Test]
     public async Task DeserializeWithException()
     {
