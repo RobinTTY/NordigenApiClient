@@ -50,6 +50,7 @@ internal class AgreementsEndpointMockData(
     BasicResponse getAgreementWithInvalidGuid,
     CreateAgreementError createAgreementWithInvalidInstitutionId,
     CreateAgreementError createAgreementWithInvalidParams,
+    CreateAgreementError createAgreementWithEmptyInstitutionIdAndAccessScopes,
     CreateAgreementError createAgreementWithInvalidParamsAtPolishInstitution)
 {
     public ResponsePage<Agreement> GetAgreements { get; set; } = getAgreements;
@@ -64,6 +65,9 @@ internal class AgreementsEndpointMockData(
 
     public CreateAgreementError CreateAgreementWithInvalidParams { get; set; } = createAgreementWithInvalidParams;
 
+    public CreateAgreementError CreateAgreementWithEmptyInstitutionIdAndAccessScopes { get; set; } =
+        createAgreementWithEmptyInstitutionIdAndAccessScopes;
+
     public CreateAgreementError CreateAgreementWithInvalidParamsAtPolishInstitution { get; set; } =
         createAgreementWithInvalidParamsAtPolishInstitution;
 }
@@ -76,7 +80,10 @@ internal class InstitutionsEndpointMockData(
 {
     public List<Institution> GetInstitutions { get; set; } = getInstitutions;
     public Institution GetInstitution { get; set; } = getInstitution;
-    public InstitutionsErrorInternal GetInstitutionsForNotCoveredCountry { get; set; } = getInstitutionsForNotCoveredCountry;
+
+    public InstitutionsErrorInternal GetInstitutionsForNotCoveredCountry { get; set; } =
+        getInstitutionsForNotCoveredCountry;
+
     public BasicResponse GetNonExistingInstitution { get; set; } = getNonExistingInstitution;
 }
 

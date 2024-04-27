@@ -227,6 +227,15 @@
       },
       "status_code": 400
     },
+    "CreateAgreementWithEmptyInstitutionIdAndAccessScopes": {
+      "institution_id": [
+        "This field may not be null."
+      ],
+      "access_scope": [
+        "This field may not be null."
+      ],
+      "status_code": 400
+    },
     "CreateAgreementWithInvalidParamsAtPolishInstitution": {
       "summary": [
         "Institution access scope dependencies error"

@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using RobinTTY.NordigenApiClient.JsonConverters;
 using RobinTTY.NordigenApiClient.Models.Requests;
 using RobinTTY.NordigenApiClient.Models.Responses;
 
@@ -14,6 +15,7 @@ public class CreateAgreementError : BasicResponse
     /// the request.
     /// </summary>
     [JsonPropertyName("institution_id")]
+    [JsonConverter(typeof(StringArrayToBasicResponseConverter))]
     public BasicResponse? InstitutionIdError { get; }
 
     /// <summary>
@@ -21,6 +23,7 @@ public class CreateAgreementError : BasicResponse
     /// the request.
     /// </summary>
     [JsonPropertyName("access_scope")]
+    [JsonConverter(typeof(StringArrayToBasicResponseConverter))]
     public BasicResponse? AccessScopeError { get; }
 
     /// <summary>
@@ -28,6 +31,7 @@ public class CreateAgreementError : BasicResponse
     /// during the request.
     /// </summary>
     [JsonPropertyName("max_historical_days")]
+    [JsonConverter(typeof(StringArrayToBasicResponseConverter))]
     public BasicResponse? MaxHistoricalDaysError { get; }
 
     /// <summary>
@@ -35,6 +39,7 @@ public class CreateAgreementError : BasicResponse
     /// during the request.
     /// </summary>
     [JsonPropertyName("access_valid_for_days")]
+    [JsonConverter(typeof(StringArrayToBasicResponseConverter))]
     public BasicResponse? AccessValidForDaysError { get; }
 
     /// <summary>
@@ -42,6 +47,7 @@ public class CreateAgreementError : BasicResponse
     /// the request.
     /// </summary>
     [JsonPropertyName("agreement")]
+    [JsonConverter(typeof(StringArrayToBasicResponseConverter))]
     public BasicResponse? AgreementError { get; }
     
     /// <summary>
