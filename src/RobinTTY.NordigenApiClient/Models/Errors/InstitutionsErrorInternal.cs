@@ -16,14 +16,18 @@ internal class InstitutionsErrorInternal : BasicResponse
     /// Creates a new instance of <see cref="InstitutionsErrorInternal" />.
     /// </summary>
     public InstitutionsErrorInternal(){}
-    
+
     /// <summary>
     /// Creates a new instance of <see cref="InstitutionsErrorInternal" />.
     /// </summary>
+    /// <param name="summary">The summary text of the response/error.</param>
+    /// <param name="detail">The detailed description of the response/error.</param>
     /// <param name="country">The error response returned for some requests.</param>
     [JsonConstructor]
-    public InstitutionsErrorInternal(BasicResponse country) : base(country.Summary, country.Detail)
+    public InstitutionsErrorInternal(string? summary, string? detail, BasicResponse? country)
     {
         Country = country;
+        Summary = country?.Summary ?? summary;
+        Detail = country?.Detail ?? detail;
     }
 }
