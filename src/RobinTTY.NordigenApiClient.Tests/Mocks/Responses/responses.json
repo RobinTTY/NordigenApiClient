@@ -446,6 +446,41 @@
     "DeleteRequisition": {
       "summary": "Requisition deleted",
       "detail": "Requisition b5462cad-5a7f-42e1-881d-d0fa066f54bc deleted with all its End User Agreements"
+    },
+    "GetRequisitionWithInvalidGuid": {
+      "summary": "Not found.",
+      "detail": "Not found.",
+      "status_code": 404
+    },
+    "CreateRequisitionWithInvalidId": {
+      "summary": "Invalid  ID",
+      "detail": "00000000-0000-0000-0000-000000000000 is not a valid  UUID. ",
+      "status_code": 400
+    },
+    "CreateRequisitionWithInvalidParameters": {
+      "institution_id": [
+        "This field may not be blank."
+      ],
+      "agreement": {
+        "summary": "Incorrect Institution ID ",
+        "detail": "Provided Institution ID: \u0027\u0027 for requisition does not match EUA institution ID \u0027SANDBOXFINANCE_SFIN0000\u0027. Please provide correct institution ID: \u0027SANDBOXFINANCE_SFIN0000\u0027"
+      },
+      "reference": [
+        "This field may not be blank."
+      ],
+      "user_language": {
+        "summary": "Provided user_language is invalid or not supported",
+        "detail": "\u0027AB\u0027 is an invalid or unsupported language"
+      },
+      "ssn": {
+        "summary": "SSN verification not supported",
+        "detail": "SSN verification not supported for "
+      },
+      "account_selection": {
+        "summary": "Account selection not supported",
+        "detail": "Account selection not supported for "
+      },
+      "status_code": 400
     }
   },
   "TokenEndpointMockData": {

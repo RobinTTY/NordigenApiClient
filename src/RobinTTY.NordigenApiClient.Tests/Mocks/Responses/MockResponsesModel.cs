@@ -84,12 +84,20 @@ internal class RequisitionsEndpointMockData(
     ResponsePage<Requisition> getRequisitions,
     Requisition getRequisition,
     Requisition createRequisition,
-    BasicResponse deleteRequisition)
+    BasicResponse deleteRequisition,
+    BasicResponse getRequisitionWithInvalidGuid,
+    CreateRequisitionError createRequisitionWithInvalidId,
+    CreateRequisitionError createRequisitionWithInvalidParameters)
 {
     public ResponsePage<Requisition> GetRequisitions { get; set; } = getRequisitions;
     public Requisition GetRequisition { get; set; } = getRequisition;
     public Requisition CreateRequisition { get; set; } = createRequisition;
     public BasicResponse DeleteRequisition { get; set; } = deleteRequisition;
+    public BasicResponse GetRequisitionWithInvalidGuid { get; set; } = getRequisitionWithInvalidGuid;
+    public CreateRequisitionError CreateRequisitionWithInvalidId { get; set; } = createRequisitionWithInvalidId;
+
+    public CreateRequisitionError CreateRequisitionWithInvalidParameters { get; set; } =
+        createRequisitionWithInvalidParameters;
 }
 
 internal class TokenEndpointMockData(

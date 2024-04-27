@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using RobinTTY.NordigenApiClient.JsonConverters;
 using RobinTTY.NordigenApiClient.Models.Requests;
 using RobinTTY.NordigenApiClient.Models.Responses;
 
@@ -14,6 +15,7 @@ public class CreateRequisitionError : BasicResponse
     /// the request.
     /// </summary>
     [JsonPropertyName("reference")]
+    [JsonConverter(typeof(StringArrayToBasicResponseConverter))]
     public BasicResponse? ReferenceError { get; }
 
     /// <summary>
@@ -21,6 +23,7 @@ public class CreateRequisitionError : BasicResponse
     /// the request.
     /// </summary>
     [JsonPropertyName("user_language")]
+    [JsonConverter(typeof(StringArrayToBasicResponseConverter))]
     public BasicResponse? UserLanguageError { get; }
 
     /// <summary>
@@ -28,6 +31,7 @@ public class CreateRequisitionError : BasicResponse
     /// the request.
     /// </summary>
     [JsonPropertyName("agreement")]
+    [JsonConverter(typeof(StringArrayToBasicResponseConverter))]
     public BasicResponse? AgreementError { get; }
 
     /// <summary>
@@ -35,6 +39,7 @@ public class CreateRequisitionError : BasicResponse
     /// request.
     /// </summary>
     [JsonPropertyName("redirect")]
+    [JsonConverter(typeof(StringArrayToBasicResponseConverter))]
     public BasicResponse? RedirectError { get; }
 
     /// <summary>
@@ -42,6 +47,7 @@ public class CreateRequisitionError : BasicResponse
     /// sent during the request.
     /// </summary>
     [JsonPropertyName("ssn")]
+    [JsonConverter(typeof(StringArrayToBasicResponseConverter))]
     public BasicResponse? SocialSecurityNumberError { get; }
 
     /// <summary>
@@ -49,6 +55,7 @@ public class CreateRequisitionError : BasicResponse
     /// during the request.
     /// </summary>
     [JsonPropertyName("account_selection")]
+    [JsonConverter(typeof(StringArrayToBasicResponseConverter))]
     public BasicResponse? AccountSelectionError { get; }
 
     /// <summary>
@@ -56,6 +63,7 @@ public class CreateRequisitionError : BasicResponse
     /// during the request.
     /// </summary>
     [JsonPropertyName("institution_id")]
+    [JsonConverter(typeof(StringArrayToBasicResponseConverter))]
     public BasicResponse? InstitutionIdError { get; }
     
     /// <summary>

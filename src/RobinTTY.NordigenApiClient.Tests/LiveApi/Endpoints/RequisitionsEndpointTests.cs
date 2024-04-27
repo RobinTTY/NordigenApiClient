@@ -23,13 +23,14 @@ public class RequisitionsEndpointTests
     public async Task GetRequisitions()
     {
         var response = await _apiClient.RequisitionsEndpoint.GetRequisitions(100, 0);
-        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(response, HttpStatusCode.OK);
 
         var requisitions = response.Result?.Results.ToList();
-        Assert.That(requisitions, Is.Not.Null);
-        Assert.That(requisitions, Has.Count.GreaterThan(0));
+
         Assert.Multiple(() =>
         {
+            AssertionHelpers.AssertNordigenApiResponseIsSuccessful(response, HttpStatusCode.OK);
+            Assert.That(requisitions, Is.Not.Null);
+            Assert.That(requisitions, Has.Count.GreaterThan(0));
             Assert.That(requisitions!.All(req => req.Status != RequisitionStatus.Undefined));
             Assert.That(requisitions, Has.All.Matches<Requisition>(req => req.Id != Guid.Empty));
         });
@@ -39,7 +40,6 @@ public class RequisitionsEndpointTests
     /// Tests all methods of the requisitions endpoint.
     /// Creates 3 requisitions, retrieves them using 3 <see cref="ResponsePage{T}" />s and deletes the requisitions after.
     /// </summary>
-    /// <returns></returns>
     [Test]
     public async Task GetRequisitionsPaged()
     {
@@ -123,6 +123,7 @@ public class RequisitionsEndpointTests
         AssertionHelpers.AssertNordigenApiResponseIsSuccessful(pagedResponse, HttpStatusCode.OK);
         var page2Result = pagedResponse.Result!;
         var page2Requisitions = page2Result.Results.ToList();
+
         Assert.Multiple(() =>
         {
             Assert.That(page2Requisitions, Has.Count.EqualTo(1));
@@ -138,20 +139,23 @@ public class RequisitionsEndpointTests
     /// <summary>
     /// Tests the retrieval of a requisition with an invalid guid.
     /// </summary>
-    /// <returns></returns>
     [Test]
     public async Task GetRequisitionWithInvalidGuid()
     {
         const string guid = "f84d7b8-dee4-4cd9-bc6d-842ef78f6028";
+
         var response = await _apiClient.RequisitionsEndpoint.GetRequisition(guid);
-        AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.NotFound);
-        Assert.That(response.Error!.Detail, Is.EqualTo("Not found."));
+
+        Assert.Multiple(() =>
+        {
+            AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.NotFound);
+            Assert.That(response.Error!.Detail, Is.EqualTo("Not found."));
+        });
     }
 
     /// <summary>
     /// Tests the creation of an end user agreement with invalid id.
     /// </summary>
-    /// <returns></returns>
     [Test]
     public async Task CreateRequisitionWithInvalidId()
     {
@@ -167,6 +171,51 @@ public class RequisitionsEndpointTests
             Assert.That(response.Error!.Summary, Is.EqualTo("Invalid  ID"));
             Assert.That(response.Error!.Detail,
                 Is.EqualTo("00000000-0000-0000-0000-000000000000 is not a valid  UUID. "));
+        });
+    }
+
+    /// <summary>
+    /// Tests the creation of an end user agreement with invalid parameters in the <see cref="CreateRequisitionRequest"/>.
+    /// </summary>
+    [Test]
+    public async Task CreateRequisitionWithInvalidParameters()
+    {
+        var redirect = new Uri("ftp://ftp.test.com");
+        // Agreement belongs to SANDBOXFINANCE_SFIN0000
+        var agreementId = Guid.Parse("f34c3c71-4a62-4a25-b998-3f37ddce84a2");
+        var requisitionRequest =
+            new CreateRequisitionRequest(redirect, "", "", "AB", agreementId, "12345", true, true);
+
+        var response = await _apiClient.RequisitionsEndpoint.CreateRequisition(requisitionRequest);
+
+        Assert.Multiple(() =>
+        {
+            AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.BadRequest);
+
+            Assert.That(response.Error!.AccountSelectionError!.Summary, Is.EqualTo("Account selection not supported"));
+            Assert.That(response.Error!.AccountSelectionError!.Detail,
+                Is.EqualTo("Account selection not supported for "));
+
+            Assert.That(response.Error!.AgreementError!.Summary, Is.EqualTo("Incorrect Institution ID "));
+            Assert.That(response.Error!.AgreementError!.Detail,
+                Is.EqualTo(
+                    "Provided Institution ID: '' for requisition does not match EUA institution ID 'SANDBOXFINANCE_SFIN0000'. Please provide correct institution ID: 'SANDBOXFINANCE_SFIN0000'"));
+
+            Assert.That(response.Error!.InstitutionIdError!.Summary, Is.EqualTo("This field may not be blank."));
+            Assert.That(response.Error!.InstitutionIdError!.Detail, Is.EqualTo("This field may not be blank."));
+
+            Assert.That(response.Error!.InstitutionIdError!.Summary, Is.EqualTo("This field may not be blank."));
+            Assert.That(response.Error!.InstitutionIdError!.Detail, Is.EqualTo("This field may not be blank."));
+
+            Assert.That(response.Error!.SocialSecurityNumberError!.Summary,
+                Is.EqualTo("SSN verification not supported"));
+            Assert.That(response.Error!.SocialSecurityNumberError!.Detail,
+                Is.EqualTo("SSN verification not supported for "));
+
+            Assert.That(response.Error!.UserLanguageError!.Summary,
+                Is.EqualTo("Provided user_language is invalid or not supported"));
+            Assert.That(response.Error!.UserLanguageError!.Detail,
+                Is.EqualTo("'AB' is an invalid or unsupported language"));
         });
     }
 
