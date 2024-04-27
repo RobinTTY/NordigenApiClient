@@ -3,36 +3,34 @@ using System.Text.Json.Serialization;
 
 namespace RobinTTY.NordigenApiClient.JsonConverters;
 
-internal class SingleOrArrayConverter<TEnumerable, TItem> : JsonConverter<TEnumerable>
-    where TEnumerable : IEnumerable<TItem>
+internal class SingleOrArrayConverter<TCollection, TItem> : JsonConverter<TCollection>
+    where TCollection : class, ICollection<TItem>, new()
 {
-    public override TEnumerable Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    public override TCollection Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         switch (reader.TokenType)
         {
             case JsonTokenType.Null:
-                return (TEnumerable) Enumerable.Empty<TItem>();
+                return [];
             case JsonTokenType.StartArray:
-                var list = new List<TItem>();
+                var collection = new TCollection();
                 while (reader.Read())
                 {
                     if (reader.TokenType is JsonTokenType.EndArray) break;
                     var listItem = JsonSerializer.Deserialize<TItem>(ref reader, options);
-                    if (listItem != null) list.Add(listItem);
+                    if (listItem != null) collection.Add(listItem);
                 }
 
-                return (TEnumerable) (IEnumerable<TItem>) list;
+                return collection;
             default:
                 var item = JsonSerializer.Deserialize<TItem>(ref reader, options);
-                return item != null
-                    ? (TEnumerable) (IEnumerable<TItem>) new List<TItem> {item}
-                    : (TEnumerable) Enumerable.Empty<TItem>();
+                return item != null ? [item] : [];
         }
     }
 
-    public override void Write(Utf8JsonWriter writer, TEnumerable value, JsonSerializerOptions options)
+    public override void Write(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options)
     {
-        if (value.Count() == 1)
+        if (value.Count == 1)
         {
             JsonSerializer.Serialize(writer, value.First(), options);
         }

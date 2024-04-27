@@ -139,7 +139,7 @@ public class Transaction
     /// </para>
     /// </summary>
     [JsonPropertyName("remittanceInformationUnstructuredArray")]
-    public IEnumerable<string>? RemittanceInformationUnstructuredArray { get; }
+    public List<string>? RemittanceInformationUnstructuredArray { get; }
 
     /// <summary>
     /// Reference issued by the seller used to establish a link between the payment of an invoice and the invoice instance.
@@ -157,7 +157,7 @@ public class Transaction
     /// purchase order number.
     /// </summary>
     [JsonPropertyName("remittanceInformationStructuredArray")]
-    public IEnumerable<string>? RemittanceInformationStructuredArray { get; }
+    public List<string>? RemittanceInformationStructuredArray { get; }
 
     /// <summary>
     /// Unique identification assigned by the initiating party to unambiguously identify the transaction. This
@@ -219,8 +219,8 @@ public class Transaction
     /// Array of the report exchange rate.
     /// </summary>
     [JsonPropertyName("currencyExchange")]
-    [JsonConverter(typeof(SingleOrArrayConverter<IEnumerable<CurrencyExchange>, CurrencyExchange>))]
-    public IEnumerable<CurrencyExchange>? CurrencyExchange { get; }
+    [JsonConverter(typeof(SingleOrArrayConverter<List<CurrencyExchange>, CurrencyExchange>))]
+    public List<CurrencyExchange>? CurrencyExchange { get; }
 
     /// <summary>
     /// The identification of the transaction as used for reference by the financial institution.
@@ -339,13 +339,13 @@ public class Transaction
     public Transaction(string? transactionId, string? debtorName, MinimalBankAccount? debtorAccount,
         string? ultimateDebtor, string? creditorName, MinimalBankAccount? creditorAccount,
         AmountCurrencyPair transactionAmount, string? bankTransactionCode, DateTime? bookingDate, DateTime? valueDate,
-        string? remittanceInformationUnstructured, IEnumerable<string>? remittanceInformationUnstructuredArray,
+        string? remittanceInformationUnstructured, List<string>? remittanceInformationUnstructuredArray,
         string? endToEndId, string? mandateId, string? proprietaryBankTransactionCode, string? purposeCode,
         string? debtorAgent, string? creditorAgent, string? ultimateCreditor, string? creditorId,
         DateTime? valueDateTime, string? remittanceInformationStructured,
-        IEnumerable<string>? remittanceInformationStructuredArray, string? additionalInformation,
+        List<string>? remittanceInformationStructuredArray, string? additionalInformation,
         string? additionalInformationStructured, Balance? balanceAfterTransaction, string? checkId,
-        IEnumerable<CurrencyExchange>? currencyExchange, string? entryReference, string? internalTransactionId,
+        List<CurrencyExchange>? currencyExchange, string? entryReference, string? internalTransactionId,
         string? merchantCategoryCode, DateTime? bookingDateTime)
     {
         TransactionId = transactionId;

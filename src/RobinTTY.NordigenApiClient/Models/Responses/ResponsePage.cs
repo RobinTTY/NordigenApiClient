@@ -30,7 +30,7 @@ public class ResponsePage<T>
     /// The results that were fetched with this page.
     /// </summary>
     [JsonPropertyName("results")]
-    public IEnumerable<T> Results { get; }
+    public List<T> Results { get; }
 
     /// <summary>
     /// Creates a new instance of <see cref="ResponsePage{T}" />.
@@ -39,7 +39,7 @@ public class ResponsePage<T>
     /// <param name="next">The URI of the next response page.</param>
     /// <param name="previous">The URI of the last response page.</param>
     /// <param name="results">The results that were fetched with this page.</param>
-    public ResponsePage(uint count, Uri? next, Uri? previous, IEnumerable<T> results)
+    public ResponsePage(uint count, Uri? next, Uri? previous, List<T> results)
     {
         Count = count;
         Next = next;
