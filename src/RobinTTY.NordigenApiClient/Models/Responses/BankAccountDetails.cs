@@ -56,7 +56,7 @@ public class BankAccountDetails
     /// Address of the legal account owner.
     /// </summary>
     [JsonPropertyName("ownerAddressUnstructured")]
-    public string? OwnerAddressUnstructured { get; }
+    public string[]? OwnerAddressUnstructured { get; }
 
     /// <summary>
     /// Name of the account, as assigned by the bank, in agreement with the account owner in
@@ -150,7 +150,7 @@ public class BankAccountDetails
     /// </param>
     [JsonConstructor]
     public BankAccountDetails(string resourceId, string iban, string? bic, string? bban, string currency,
-        string ownerName, string? ownerAddressUnstructured, string name, string product,
+        string ownerName, string[]? ownerAddressUnstructured, string name, string product,
         CashAccountType? cashAccountType, string? details, string? linkedAccounts, string? msisdn,
         IsoBankAccountStatus? status, BankAccountUsage? usage, string? maskedPan)
     {
