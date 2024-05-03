@@ -1,5 +1,6 @@
 ﻿using FakeItEasy;
 using RobinTTY.NordigenApiClient.Models.Requests;
+using RobinTTY.NordigenApiClient.Models.Responses;
 using RobinTTY.NordigenApiClient.Tests.Shared;
 
 namespace RobinTTY.NordigenApiClient.Tests.Mocks.Endpoints;
@@ -42,7 +43,7 @@ public class AgreementsEndpointTests
             Assert.That(responseAgreement.AccessValidForDays, Is.EqualTo(90));
             Assert.That(responseAgreement.AccessScope, Has.Count.EqualTo(3));
 
-            var expectedAccessScopes = new[] {"balances", "details", "transactions"};
+            var expectedAccessScopes = new[] {AccessScope.Balances, AccessScope.Details, AccessScope.Transactions};
             Assert.That(responseAgreement.AccessScope, Is.EqualTo(expectedAccessScopes));
         });
     }
@@ -69,7 +70,7 @@ public class AgreementsEndpointTests
                 Is.EqualTo(DateTime.Parse("2024-04-08T22:54:54.869Z").ToUniversalTime()));
             Assert.That(((DateTime) agreement.Result!.Accepted!).ToUniversalTime(),
                 Is.EqualTo(DateTime.Parse("2024-04-08T22:54:54.869Z").ToUniversalTime()));
-            var expectedAccessScopes = new[] {"balances", "details", "transactions"};
+            var expectedAccessScopes = new[] {AccessScope.Balances, AccessScope.Details, AccessScope.Transactions};
             Assert.That(agreement.Result!.AccessScope, Is.EqualTo(expectedAccessScopes));
         });
     }
@@ -83,8 +84,8 @@ public class AgreementsEndpointTests
         var apiClient = TestHelpers.GetMockClient(TestHelpers.MockData.AgreementsEndpointMockData.CreateAgreement,
             HttpStatusCode.Created);
 
-        var agreementRequest = new CreateAgreementRequest(145, 145,
-            ["balances", "details", "transactions"], "SANDBOXFINANCE_SFIN0000");
+        var agreementRequest = new CreateAgreementRequest("SANDBOXFINANCE_SFIN0000",
+            [AccessScope.Balances, AccessScope.Details, AccessScope.Transactions], 145, 145);
         var createResponse = await apiClient.AgreementsEndpoint.CreateAgreement(agreementRequest);
         AssertionHelpers.AssertNordigenApiResponseIsSuccessful(createResponse, HttpStatusCode.Created);
 
@@ -95,7 +96,7 @@ public class AgreementsEndpointTests
             Assert.That(createResponse.Result!.MaxHistoricalDays, Is.EqualTo(145));
             Assert.That(createResponse.Result!.AccessValidForDays, Is.EqualTo(145));
 
-            var expectedAccessScopes = new[] {"balances", "details", "transactions"};
+            var expectedAccessScopes = new[] {AccessScope.Balances, AccessScope.Details, AccessScope.Transactions};
             Assert.That(createResponse.Result!.AccessScope, Is.EqualTo(expectedAccessScopes));
         });
     }
@@ -153,8 +154,8 @@ public class AgreementsEndpointTests
         var apiClient = TestHelpers.GetMockClient(
             TestHelpers.MockData.AgreementsEndpointMockData.CreateAgreementWithInvalidInstitutionId,
             HttpStatusCode.BadRequest);
-        var agreement = new CreateAgreementRequest(90, 90,
-            ["balances", "details", "transactions"], "invalid_institution");
+        var agreement = new CreateAgreementRequest("invalid_institution",
+            [AccessScope.Balances, AccessScope.Details, AccessScope.Transactions]);
 
         var response = await apiClient.AgreementsEndpoint.CreateAgreement(agreement);
 
@@ -178,7 +179,7 @@ public class AgreementsEndpointTests
         var apiClient = TestHelpers.GetMockClient(
             TestHelpers.MockData.AgreementsEndpointMockData.CreateAgreementWithEmptyInstitutionIdAndAccessScopes,
             HttpStatusCode.BadRequest);
-        var agreement = new CreateAgreementRequest(90, 90, null!, null!);
+        var agreement = new CreateAgreementRequest(null!, null!, null, null);
 
         var response = await apiClient.AgreementsEndpoint.CreateAgreement(agreement);
 
@@ -191,6 +192,10 @@ public class AgreementsEndpointTests
 
             Assert.That(response.Error!.AccessScopeError!.Summary, Is.EqualTo("This field may not be null."));
             Assert.That(response.Error!.AccessScopeError!.Detail, Is.EqualTo("This field may not be null."));
+
+            Assert.That(response.Error.AccessValidForDaysError, Is.Null);
+            Assert.That(response.Error.MaxHistoricalDaysError, Is.Null);
+            Assert.That(response.Error.AgreementError, Is.Null);
         });
     }
 
@@ -203,8 +208,8 @@ public class AgreementsEndpointTests
         var apiClient = TestHelpers.GetMockClient(
             TestHelpers.MockData.AgreementsEndpointMockData.CreateAgreementWithInvalidParams,
             HttpStatusCode.BadRequest);
-        var agreement = new CreateAgreementRequest(200, 200,
-            ["balances", "details", "transactions", "invalid", "invalid2"], "SANDBOXFINANCE_SFIN0000");
+        var agreement = new CreateAgreementRequest("SANDBOXFINANCE_SFIN0000",
+            [AccessScope.Balances, AccessScope.Details, AccessScope.Transactions], 200, 200);
 
         var response = await apiClient.AgreementsEndpoint.CreateAgreement(agreement);
         var result = response.Error!;
@@ -229,8 +234,7 @@ public class AgreementsEndpointTests
         var apiClient = TestHelpers.GetMockClient(
             TestHelpers.MockData.AgreementsEndpointMockData.CreateAgreementWithInvalidParamsAtPolishInstitution,
             HttpStatusCode.BadRequest);
-        var agreement = new CreateAgreementRequest(90, 90,
-            ["balances", "transactions"], "PKO_BPKOPLPW");
+        var agreement = new CreateAgreementRequest("PKO_BPKOPLPW", [AccessScope.Balances, AccessScope.Transactions]);
 
         var response = await apiClient.AgreementsEndpoint.CreateAgreement(agreement);
 

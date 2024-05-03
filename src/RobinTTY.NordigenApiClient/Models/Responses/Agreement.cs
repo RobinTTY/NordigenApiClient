@@ -40,12 +40,12 @@ public class Agreement : CreateAgreementRequest
     public Agreement(
         uint maxHistoricalDays,
         uint accessValidForDays,
-        List<string> accessScope,
+        List<AccessScope> accessScope,
         string institutionId,
         Guid id,
         DateTime created,
         DateTime? accepted
-    ) : base(maxHistoricalDays, accessValidForDays, accessScope, institutionId)
+    ) : base(institutionId, accessScope, maxHistoricalDays, accessValidForDays)
     {
         Id = id;
         Created = created;

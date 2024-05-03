@@ -28,8 +28,8 @@ public class AgreementsEndpointTests
         AssertionHelpers.AssertNordigenApiResponseIsSuccessful(existingAgreements, HttpStatusCode.OK);
 
         // Create 3 example agreements
-        var agreementRequest = new CreateAgreementRequest(90, 90,
-            ["balances", "details", "transactions"], "SANDBOXFINANCE_SFIN0000");
+        var agreementRequest = new CreateAgreementRequest("SANDBOXFINANCE_SFIN0000",
+            [AccessScope.Balances, AccessScope.Details, AccessScope.Transactions]);
         var ids = new List<string>();
 
         var existingIds = existingAgreements.Result!.Results.Select(agreement => agreement.Id.ToString()).ToList();
@@ -83,8 +83,8 @@ public class AgreementsEndpointTests
     public async Task GetAgreement()
     {
         // Create agreement
-        var agreementRequest = new CreateAgreementRequest(90, 90,
-            ["balances", "details", "transactions"], "SANDBOXFINANCE_SFIN0000");
+        var agreementRequest = new CreateAgreementRequest("SANDBOXFINANCE_SFIN0000",
+            [AccessScope.Balances, AccessScope.Details, AccessScope.Transactions]);
         var createResponse = await _apiClient.AgreementsEndpoint.CreateAgreement(agreementRequest);
         AssertionHelpers.AssertNordigenApiResponseIsSuccessful(createResponse, HttpStatusCode.Created);
         var id = createResponse.Result!.Id;
@@ -108,8 +108,8 @@ public class AgreementsEndpointTests
     public async Task CreateAcceptAndDeleteAgreement()
     {
         // Create the agreement
-        var agreement = new CreateAgreementRequest(90, 90, ["balances", "details", "transactions"],
-            "SANDBOXFINANCE_SFIN0000");
+        var agreement = new CreateAgreementRequest("SANDBOXFINANCE_SFIN0000",
+            [AccessScope.Balances, AccessScope.Details, AccessScope.Transactions]);
         var response = await _apiClient.AgreementsEndpoint.CreateAgreement(agreement);
         AssertionHelpers.AssertNordigenApiResponseIsSuccessful(response, HttpStatusCode.Created);
 
@@ -119,7 +119,9 @@ public class AgreementsEndpointTests
             Assert.That(result.Id, Is.Not.EqualTo(Guid.Empty));
             Assert.That(result.Created - DateTime.UtcNow, Is.AtMost(TimeSpan.FromSeconds(5)));
             Assert.That(result.Accepted, Is.Null);
-            Assert.That(result.AccessScope.Except(new[] {"balances", "details", "transactions"}), Is.Empty);
+            Assert.That(
+                result.AccessScope.Except([AccessScope.Balances, AccessScope.Details, AccessScope.Transactions]),
+                Is.Empty);
             Assert.That(result.MaxHistoricalDays, Is.EqualTo(90));
             Assert.That(result.AccessValidForDays, Is.EqualTo(90));
         });
@@ -166,8 +168,8 @@ public class AgreementsEndpointTests
     [Test]
     public async Task CreateAgreementWithInvalidInstitutionId()
     {
-        var agreement = new CreateAgreementRequest(90, 90,
-            ["balances", "details", "transactions"], "invalid_institution");
+        var agreement = new CreateAgreementRequest("invalid_institution",
+            [AccessScope.Balances, AccessScope.Details, AccessScope.Transactions]);
 
         var response = await _apiClient.AgreementsEndpoint.CreateAgreement(agreement);
 
@@ -188,7 +190,7 @@ public class AgreementsEndpointTests
     [Test]
     public async Task CreateAgreementWithEmptyInstitutionIdAndAccessScopes()
     {
-        var agreement = new CreateAgreementRequest(90, 90, null!, null!);
+        var agreement = new CreateAgreementRequest(null!, null!);
 
         var response = await _apiClient.AgreementsEndpoint.CreateAgreement(agreement);
 
@@ -210,8 +212,8 @@ public class AgreementsEndpointTests
     [Test]
     public async Task CreateAgreementWithInvalidParams()
     {
-        var agreement = new CreateAgreementRequest(200, 200,
-            ["balances", "details", "transactions", "invalid", "invalid2"], "SANDBOXFINANCE_SFIN0000");
+        var agreement = new CreateAgreementRequest("SANDBOXFINANCE_SFIN0000",
+            [AccessScope.Balances, AccessScope.Details, AccessScope.Transactions], 200, 200);
 
         var response = await _apiClient.AgreementsEndpoint.CreateAgreement(agreement);
         var result = response.Error!;
@@ -233,8 +235,7 @@ public class AgreementsEndpointTests
     [Test]
     public async Task CreateAgreementWithInvalidParamsAtPolishInstitution()
     {
-        var agreement = new CreateAgreementRequest(90, 90,
-            ["balances", "transactions"], "PKO_BPKOPLPW");
+        var agreement = new CreateAgreementRequest("PKO_BPKOPLPW", [AccessScope.Balances, AccessScope.Transactions]);
 
         var response = await _apiClient.AgreementsEndpoint.CreateAgreement(agreement);
 

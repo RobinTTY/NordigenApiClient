@@ -46,8 +46,7 @@ public class RequisitionsEndpointTests
         const string institutionId = "SANDBOXFINANCE_SFIN0000";
 
         // Create required agreement first
-        var agreementRequest = new CreateAgreementRequest(90, 90,
-            new List<string> {"balances", "details", "transactions"}, institutionId);
+        var agreementRequest = new CreateAgreementRequest(institutionId, [AccessScope.Balances, AccessScope.Details, AccessScope.Transactions]);
         var agreementResponse = await _apiClient.AgreementsEndpoint.CreateAgreement(agreementRequest);
         AssertionHelpers.AssertNordigenApiResponseIsSuccessful(agreementResponse, HttpStatusCode.Created);
         var agreementId = agreementResponse.Result!.Id;

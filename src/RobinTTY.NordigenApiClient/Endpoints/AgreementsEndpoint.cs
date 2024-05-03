@@ -1,4 +1,6 @@
 ﻿using System.Net.Http.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using RobinTTY.NordigenApiClient.Contracts;
 using RobinTTY.NordigenApiClient.Models.Errors;
 using RobinTTY.NordigenApiClient.Models.Requests;
@@ -41,7 +43,8 @@ public class AgreementsEndpoint : IAgreementsEndpoint
     public async Task<NordigenApiResponse<Agreement, CreateAgreementError>> CreateAgreement(
         CreateAgreementRequest agreement, CancellationToken cancellationToken = default)
     {
-        var body = JsonContent.Create(agreement);
+        var body = JsonContent.Create(agreement,
+            options: new JsonSerializerOptions {DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull});
         return await _nordigenClient.MakeRequest<Agreement, CreateAgreementError>(
             NordigenEndpointUrls.AgreementsEndpoint, HttpMethod.Post, cancellationToken, body: body);
     }
