@@ -150,7 +150,7 @@ public class BankAccountDetails
     /// </param>
     [JsonConstructor]
     public BankAccountDetails(string resourceId, string iban, string? bic, string? bban, string currency,
-        string ownerName, string[]? ownerAddressUnstructured, string name, string product,
+        string ownerName, List<string>? ownerAddressUnstructured, string name, string product,
         CashAccountType? cashAccountType, string? details, string? linkedAccounts, string? msisdn,
         IsoBankAccountStatus? status, BankAccountUsage? usage, string? maskedPan)
     {
