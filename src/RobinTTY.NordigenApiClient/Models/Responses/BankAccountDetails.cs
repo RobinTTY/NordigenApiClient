@@ -56,7 +56,7 @@ public class BankAccountDetails
     /// Address of the legal account owner.
     /// </summary>
     [JsonPropertyName("ownerAddressUnstructured")]
-    public string[]? OwnerAddressUnstructured { get; }
+    public List<string>? OwnerAddressUnstructured { get; }
 
     /// <summary>
     /// Name of the account, as assigned by the bank, in agreement with the account owner in
