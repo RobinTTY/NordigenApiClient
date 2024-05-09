@@ -40,11 +40,15 @@ public class AgreementsEndpoint : IAgreementsEndpoint
         await GetAgreementInternal(id, cancellationToken);
 
     /// <inheritdoc />
-    public async Task<NordigenApiResponse<Agreement, CreateAgreementError>> CreateAgreement(
-        CreateAgreementRequest agreement, CancellationToken cancellationToken = default)
+    public async Task<NordigenApiResponse<Agreement, CreateAgreementError>> CreateAgreement(string institutionId,
+        uint maxHistoricalDays = 90, uint accessValidForDays = 90, List<AccessScope>? accessScope = null,
+        CancellationToken cancellationToken = default)
     {
+        var scope = accessScope ?? [AccessScope.Balances, AccessScope.Transactions, AccessScope.Details];
+        var agreement = new CreateAgreementRequest(institutionId, scope, maxHistoricalDays, accessValidForDays);
         var body = JsonContent.Create(agreement,
             options: new JsonSerializerOptions {DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull});
+
         return await _nordigenClient.MakeRequest<Agreement, CreateAgreementError>(
             NordigenEndpointUrls.AgreementsEndpoint, HttpMethod.Post, cancellationToken, body: body);
     }
