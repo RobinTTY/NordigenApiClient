@@ -62,9 +62,9 @@ public class RequisitionsEndpointTests
         ids.AddRange(existingIds);
         for (var i = 3; i < 6; i++)
         {
-            var requisitionRequest =
-                new CreateRequisitionRequest(redirect, institutionId, $"reference_{i}", "EN", agreementId);
-            var createResponse = await _apiClient.RequisitionsEndpoint.CreateRequisition(requisitionRequest);
+            var createResponse =
+                await _apiClient.RequisitionsEndpoint.CreateRequisition(institutionId, redirect, agreementId,
+                    $"reference_{i}");
             AssertionHelpers.AssertNordigenApiResponseIsSuccessful(createResponse, HttpStatusCode.Created);
             ids.Add(createResponse.Result!.Id.ToString());
         }
@@ -159,9 +159,8 @@ public class RequisitionsEndpointTests
     {
         var redirect = new Uri("ftp://ftp.test.com");
         var agreementId = Guid.Empty;
-        var requisitionRequest =
-            new CreateRequisitionRequest(redirect, "123", "internal_reference", "EN", agreementId, null, true, true);
-        var response = await _apiClient.RequisitionsEndpoint.CreateRequisition(requisitionRequest);
+        var response = await _apiClient.RequisitionsEndpoint.CreateRequisition("123", redirect, agreementId,
+            "internal_reference", "EN", null, true, true);
 
         AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.BadRequest);
         Assert.Multiple(() =>
@@ -181,10 +180,10 @@ public class RequisitionsEndpointTests
         var redirect = new Uri("ftp://ftp.test.com");
         // Agreement belongs to SANDBOXFINANCE_SFIN0000
         var agreementId = Guid.Parse("f34c3c71-4a62-4a25-b998-3f37ddce84a2");
-        var requisitionRequest =
-            new CreateRequisitionRequest(redirect, "", "", "AB", agreementId, "12345", true, true);
 
-        var response = await _apiClient.RequisitionsEndpoint.CreateRequisition(requisitionRequest);
+        var response =
+            await _apiClient.RequisitionsEndpoint.CreateRequisition("", redirect, agreementId, "", "AB", "12345", true,
+                true);
 
         Assert.Multiple(() =>
         {
@@ -202,8 +201,8 @@ public class RequisitionsEndpointTests
             Assert.That(response.Error!.InstitutionIdError!.Summary, Is.EqualTo("This field may not be blank."));
             Assert.That(response.Error!.InstitutionIdError!.Detail, Is.EqualTo("This field may not be blank."));
 
-            Assert.That(response.Error!.InstitutionIdError!.Summary, Is.EqualTo("This field may not be blank."));
-            Assert.That(response.Error!.InstitutionIdError!.Detail, Is.EqualTo("This field may not be blank."));
+            Assert.That(response.Error!.ReferenceError!.Summary, Is.EqualTo("This field may not be blank."));
+            Assert.That(response.Error!.ReferenceError!.Detail, Is.EqualTo("This field may not be blank."));
 
             Assert.That(response.Error!.SocialSecurityNumberError!.Summary,
                 Is.EqualTo("SSN verification not supported"));

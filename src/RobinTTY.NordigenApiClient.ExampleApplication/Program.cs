@@ -1,6 +1,5 @@
 ﻿using RobinTTY.NordigenApiClient;
 using RobinTTY.NordigenApiClient.Models;
-using RobinTTY.NordigenApiClient.Models.Requests;
 
 // Create the client used to access the API
 using var httpClient = new HttpClient();
@@ -21,11 +20,8 @@ else
 // 2. Choose the institution your bank account is registered with and create a requisition for it:
 
 var institution = "BANK_OF_SCOTLAND_BOFSGBS1";
-var userLanguage = "EN";
-var reference = "your-internal-reference";
 var redirect = new Uri("https://where-nordigen-will-redirect-after-authentication.com");
-var requisitionRequest = new CreateRequisitionRequest(redirect, institution, reference, userLanguage);
-var requisitionResponse = await client.RequisitionsEndpoint.CreateRequisition(requisitionRequest);
+var requisitionResponse = await client.RequisitionsEndpoint.CreateRequisition(institution, redirect);
 
 if (requisitionResponse.IsSuccess)
 {
