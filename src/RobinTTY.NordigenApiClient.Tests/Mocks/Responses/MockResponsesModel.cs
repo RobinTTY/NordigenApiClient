@@ -44,8 +44,9 @@ internal class AccountsEndpointMockData(
 
 internal class AgreementsEndpointMockData(
     ResponsePage<Agreement> getAgreements,
-    Agreement createAgreement,
     Agreement getAgreement,
+    Agreement createAgreement,
+    BasicResponse acceptAgreement,
     BasicResponse deleteAgreement,
     BasicResponse getAgreementWithInvalidGuid,
     CreateAgreementError createAgreementWithInvalidInstitutionId,
@@ -54,8 +55,9 @@ internal class AgreementsEndpointMockData(
     CreateAgreementError createAgreementWithInvalidParamsAtPolishInstitution)
 {
     public ResponsePage<Agreement> GetAgreements { get; set; } = getAgreements;
-    public Agreement CreateAgreement { get; set; } = createAgreement;
     public Agreement GetAgreement { get; set; } = getAgreement;
+    public Agreement CreateAgreement { get; set; } = createAgreement;
+    public BasicResponse AcceptAgreement { get; set; } = acceptAgreement;
     public BasicResponse DeleteAgreement { get; set; } = deleteAgreement;
 
     public BasicResponse GetAgreementWithInvalidGuid { get; set; } = getAgreementWithInvalidGuid;

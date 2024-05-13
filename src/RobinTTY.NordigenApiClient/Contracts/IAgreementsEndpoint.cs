@@ -1,5 +1,4 @@
 ﻿using RobinTTY.NordigenApiClient.Models.Errors;
-using RobinTTY.NordigenApiClient.Models.Requests;
 using RobinTTY.NordigenApiClient.Models.Responses;
 
 namespace RobinTTY.NordigenApiClient.Contracts;
@@ -79,19 +78,21 @@ public interface IAgreementsEndpoint
     /// Accepts an end user agreement. Only available to customers with an enterprise contract at Nordigen.
     /// </summary>
     /// <param name="id">The id of the end user agreement to accept.</param>
-    /// <param name="metadata">The metadata required to accept the end user agreement.</param>
+    /// <param name="userAgent">User agent of the client that accepts the request.</param>
+    /// <param name="ipAddress">IP address of the client that accepts the request.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
     /// <returns>A <see cref="NordigenApiResponse{TResponse, TError}" /> which contains the accepted end user agreement.</returns>
-    Task<NordigenApiResponse<Agreement, BasicResponse>> AcceptAgreement(Guid id,
-        AcceptAgreementRequest metadata, CancellationToken cancellationToken = default);
+    Task<NordigenApiResponse<Agreement, BasicResponse>> AcceptAgreement(Guid id, string userAgent, string ipAddress,
+        CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Accepts an end user agreement. Only available to customers with an enterprise contract at Nordigen.
     /// </summary>
     /// <param name="id">The id of the end user agreement to accept.</param>
-    /// <param name="metadata">The metadata required to accept the end user agreement.</param>
+    /// <param name="userAgent">User agent of the client that accepts the request.</param>
+    /// <param name="ipAddress">IP address of the client that accepts the request.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
     /// <returns>A <see cref="NordigenApiResponse{TResponse, TError}" /> which contains the accepted end user agreement.</returns>
-    Task<NordigenApiResponse<Agreement, BasicResponse>> AcceptAgreement(string id,
-        AcceptAgreementRequest metadata, CancellationToken cancellationToken = default);
+    Task<NordigenApiResponse<Agreement, BasicResponse>> AcceptAgreement(string id, string userAgent, string ipAddress,
+        CancellationToken cancellationToken = default);
 }

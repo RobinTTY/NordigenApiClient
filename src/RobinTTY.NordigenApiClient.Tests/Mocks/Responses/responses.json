@@ -196,6 +196,11 @@
         "transactions"
       ]
     },
+    "AcceptAgreement": {
+      "summary": "Insufficient permissions",
+      "detail": "Your company doesn't have permission to accept EUA. You'll have to use our default form for this action.",
+      "status_code": 403
+    },
     "DeleteAgreement": {
       "summary": "End User Agreement deleted",
       "detail": "End User Agreement bb37bc52-5b1d-44f9-b1cd-ec9594f25387 deleted"

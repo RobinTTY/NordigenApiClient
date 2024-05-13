@@ -1,5 +1,4 @@
 ﻿using FakeItEasy;
-using RobinTTY.NordigenApiClient.Models.Requests;
 using RobinTTY.NordigenApiClient.Models.Responses;
 using RobinTTY.NordigenApiClient.Tests.Shared;
 
@@ -100,6 +99,28 @@ public class AgreementsEndpointTests
     }
 
     /// <summary>
+    /// Tests the process of accepting an end user agreement.
+    /// </summary>
+    [Test]
+    public async Task AcceptAgreement()
+    {
+        var apiClient = TestHelpers.GetMockClient(TestHelpers.MockData.AgreementsEndpointMockData.AcceptAgreement,
+            HttpStatusCode.Forbidden);
+
+        var result =
+            await apiClient.AgreementsEndpoint.AcceptAgreement(A.Dummy<Guid>(), A.Dummy<string>(), A.Dummy<string>());
+
+        AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(result, HttpStatusCode.Forbidden);
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.Error?.Summary, Is.EqualTo("Insufficient permissions"));
+            Assert.That(result.Error?.Detail,
+                Is.EqualTo(
+                    "Your company doesn't have permission to accept EUA. You'll have to use our default form for this action."));
+        });
+    }
+
+    /// <summary>
     /// Tests the creation of end user agreements.
     /// </summary>
     [Test]
@@ -109,6 +130,7 @@ public class AgreementsEndpointTests
             HttpStatusCode.OK);
 
         var result = await apiClient.AgreementsEndpoint.DeleteAgreement(A.Dummy<Guid>());
+
         AssertionHelpers.AssertNordigenApiResponseIsSuccessful(result, HttpStatusCode.OK);
         Assert.Multiple(() =>
         {

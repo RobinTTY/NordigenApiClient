@@ -121,8 +121,7 @@ public class AgreementsEndpointTests
         });
 
         // Accept the agreement (should fail)
-        var acceptMetadata = new AcceptAgreementRequest("example_user_agent", "192.168.178.1");
-        var acceptResponse = await _apiClient.AgreementsEndpoint.AcceptAgreement(response.Result!.Id, acceptMetadata);
+        var acceptResponse = await _apiClient.AgreementsEndpoint.AcceptAgreement(response.Result!.Id, "example_user_agent", "192.168.178.1");
         AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(acceptResponse, HttpStatusCode.Forbidden);
         Assert.That(acceptResponse.Error!.Detail,
             Is.EqualTo(
