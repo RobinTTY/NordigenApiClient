@@ -36,4 +36,22 @@ public class Address
     /// </summary>
     [JsonPropertyName("country")]
     public string? Country { get; }
+
+    /// <summary>
+    /// Creates a new instance of <see cref="Address"/>.
+    /// </summary>
+    /// <param name="streetName">The name of the street.</param>
+    /// <param name="buildingNumber">The number of the building.</param>
+    /// <param name="postCode">The postcode of the town.</param>
+    /// <param name="townName">The name of the town.</param>
+    /// <param name="country">The name of the country.</param>
+    [JsonConstructor]
+    public Address(string? streetName, string? buildingNumber, string? postCode, string? townName, string? country)
+    {
+        StreetName = streetName;
+        BuildingNumber = buildingNumber;
+        PostCode = postCode;
+        TownName = townName;
+        Country = country;
+    }
 }
