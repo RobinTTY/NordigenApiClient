@@ -1,4 +1,5 @@
-﻿using RobinTTY.NordigenApiClient.Tests.Shared;
+﻿using RobinTTY.NordigenApiClient.Models.Requests;
+using RobinTTY.NordigenApiClient.Tests.Shared;
 
 namespace RobinTTY.NordigenApiClient.Tests.LiveApi.Endpoints;
 
@@ -33,6 +34,21 @@ public class InstitutionsEndpointTests
             Assert.That(result, Has.Count.GreaterThan(0));
             Assert.That(result2, Has.Count.GreaterThan(0));
             Assert.That(result, Has.Count.GreaterThan(result2.Count));
+        });
+    }
+    
+    /// <summary>
+    /// Tests the retrieving of institutions for a specific country.
+    /// </summary>
+    [Test]
+    public async Task GetInstitutionsInBulgaria()
+    {
+        var institutions = await _apiClient.InstitutionsEndpoint.GetInstitutions(SupportedCountry.Bulgaria);
+
+        Assert.Multiple(() =>
+        {
+            AssertionHelpers.AssertNordigenApiResponseIsSuccessful(institutions, HttpStatusCode.OK);
+            Assert.That(institutions.Result!, Has.Count.GreaterThan(20));
         });
     }
 
