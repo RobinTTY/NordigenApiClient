@@ -41,7 +41,7 @@ public class AgreementsEndpoint : IAgreementsEndpoint
 
     /// <inheritdoc />
     public async Task<NordigenApiResponse<Agreement, CreateAgreementError>> CreateAgreement(string institutionId,
-        uint maxHistoricalDays = 90, uint accessValidForDays = 90, List<AccessScope>? accessScope = null,
+        uint accessValidForDays = 90, uint maxHistoricalDays = 90, List<AccessScope>? accessScope = null,
         CancellationToken cancellationToken = default)
     {
         var scope = accessScope ?? [AccessScope.Balances, AccessScope.Transactions, AccessScope.Details];
