@@ -82,7 +82,7 @@ public interface IRequisitionsEndpoint
     /// .</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
     /// <returns>A <see cref="NordigenApiResponse{TResponse, TError}" /> which contains the created requisition.</returns>
-    public Task<NordigenApiResponse<Requisition, CreateRequisitionError>> CreateRequisition(string institutionId,
+    Task<NordigenApiResponse<Requisition, CreateRequisitionError>> CreateRequisition(string institutionId,
         Uri redirect, Guid? agreementId = null, string? reference = null, string userLanguage = "EN",
         string? socialSecurityNumber = null, bool accountSelection = false, bool redirectImmediate = false,
         CancellationToken cancellationToken = default);

@@ -132,7 +132,7 @@ public interface IInstitutionsEndpoint
     /// A <see cref="NordigenApiResponse{TResponse, TError}" /> containing a list of supported institutions if the
     /// request was successful.
     /// </returns>
-    public Task<NordigenApiResponse<List<Institution>, BasicResponse>> GetInstitutions(SupportedCountry country,
+    Task<NordigenApiResponse<List<Institution>, BasicResponse>> GetInstitutions(SupportedCountry country,
         bool? accessScopesSupported = null, bool? accountSelectionSupported = null,
         bool? businessAccountsSupported = null, bool? cardAccountsSupported = null,
         bool? corporateAccountsSupported = null, bool? privateAccountsSupported = null,

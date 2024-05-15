@@ -52,7 +52,7 @@ public interface IAgreementsEndpoint
     /// (balances, transactions and details) will be requested.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
     /// <returns>A <see cref="NordigenApiResponse{TResponse, TError}" /> containing the created <see cref="Agreement" />.</returns>
-    public Task<NordigenApiResponse<Agreement, CreateAgreementError>> CreateAgreement(string institutionId,
+    Task<NordigenApiResponse<Agreement, CreateAgreementError>> CreateAgreement(string institutionId,
         uint accessValidForDays = 90, uint maxHistoricalDays = 90, List<AccessScope>? accessScope = null,
         CancellationToken cancellationToken = default);
 
