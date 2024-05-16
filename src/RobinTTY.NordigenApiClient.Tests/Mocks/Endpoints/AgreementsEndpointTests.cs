@@ -1,5 +1,5 @@
 ﻿using FakeItEasy;
-using RobinTTY.NordigenApiClient.Models.Requests;
+using RobinTTY.NordigenApiClient.Models.Responses;
 using RobinTTY.NordigenApiClient.Tests.Shared;
 
 namespace RobinTTY.NordigenApiClient.Tests.Mocks.Endpoints;
@@ -42,7 +42,7 @@ public class AgreementsEndpointTests
             Assert.That(responseAgreement.AccessValidForDays, Is.EqualTo(90));
             Assert.That(responseAgreement.AccessScope, Has.Count.EqualTo(3));
 
-            var expectedAccessScopes = new[] {"balances", "details", "transactions"};
+            var expectedAccessScopes = new[] {AccessScope.Balances, AccessScope.Details, AccessScope.Transactions};
             Assert.That(responseAgreement.AccessScope, Is.EqualTo(expectedAccessScopes));
         });
     }
@@ -69,7 +69,7 @@ public class AgreementsEndpointTests
                 Is.EqualTo(DateTime.Parse("2024-04-08T22:54:54.869Z").ToUniversalTime()));
             Assert.That(((DateTime) agreement.Result!.Accepted!).ToUniversalTime(),
                 Is.EqualTo(DateTime.Parse("2024-04-08T22:54:54.869Z").ToUniversalTime()));
-            var expectedAccessScopes = new[] {"balances", "details", "transactions"};
+            var expectedAccessScopes = new[] {AccessScope.Balances, AccessScope.Details, AccessScope.Transactions};
             Assert.That(agreement.Result!.AccessScope, Is.EqualTo(expectedAccessScopes));
         });
     }
@@ -83,9 +83,7 @@ public class AgreementsEndpointTests
         var apiClient = TestHelpers.GetMockClient(TestHelpers.MockData.AgreementsEndpointMockData.CreateAgreement,
             HttpStatusCode.Created);
 
-        var agreementRequest = new CreateAgreementRequest(145, 145,
-            ["balances", "details", "transactions"], "SANDBOXFINANCE_SFIN0000");
-        var createResponse = await apiClient.AgreementsEndpoint.CreateAgreement(agreementRequest);
+        var createResponse = await apiClient.AgreementsEndpoint.CreateAgreement("SANDBOXFINANCE_SFIN0000", 145, 145);
         AssertionHelpers.AssertNordigenApiResponseIsSuccessful(createResponse, HttpStatusCode.Created);
 
         Assert.Multiple(() =>
@@ -95,8 +93,30 @@ public class AgreementsEndpointTests
             Assert.That(createResponse.Result!.MaxHistoricalDays, Is.EqualTo(145));
             Assert.That(createResponse.Result!.AccessValidForDays, Is.EqualTo(145));
 
-            var expectedAccessScopes = new[] {"balances", "details", "transactions"};
+            var expectedAccessScopes = new[] {AccessScope.Balances, AccessScope.Details, AccessScope.Transactions};
             Assert.That(createResponse.Result!.AccessScope, Is.EqualTo(expectedAccessScopes));
+        });
+    }
+
+    /// <summary>
+    /// Tests the process of accepting an end user agreement.
+    /// </summary>
+    [Test]
+    public async Task AcceptAgreement()
+    {
+        var apiClient = TestHelpers.GetMockClient(TestHelpers.MockData.AgreementsEndpointMockData.AcceptAgreement,
+            HttpStatusCode.Forbidden);
+
+        var result =
+            await apiClient.AgreementsEndpoint.AcceptAgreement(A.Dummy<Guid>(), A.Dummy<string>(), A.Dummy<string>());
+
+        AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(result, HttpStatusCode.Forbidden);
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.Error?.Summary, Is.EqualTo("Insufficient permissions"));
+            Assert.That(result.Error?.Detail,
+                Is.EqualTo(
+                    "Your company doesn't have permission to accept EUA. You'll have to use our default form for this action."));
         });
     }
 
@@ -110,6 +130,7 @@ public class AgreementsEndpointTests
             HttpStatusCode.OK);
 
         var result = await apiClient.AgreementsEndpoint.DeleteAgreement(A.Dummy<Guid>());
+
         AssertionHelpers.AssertNordigenApiResponseIsSuccessful(result, HttpStatusCode.OK);
         Assert.Multiple(() =>
         {
@@ -153,10 +174,8 @@ public class AgreementsEndpointTests
         var apiClient = TestHelpers.GetMockClient(
             TestHelpers.MockData.AgreementsEndpointMockData.CreateAgreementWithInvalidInstitutionId,
             HttpStatusCode.BadRequest);
-        var agreement = new CreateAgreementRequest(90, 90,
-            ["balances", "details", "transactions"], "invalid_institution");
 
-        var response = await apiClient.AgreementsEndpoint.CreateAgreement(agreement);
+        var response = await apiClient.AgreementsEndpoint.CreateAgreement("invalid_institution");
 
         AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.BadRequest);
         Assert.Multiple(() =>
@@ -173,24 +192,31 @@ public class AgreementsEndpointTests
     /// Tests the creation of an end user agreement with an empty institution id and empty access scopes.
     /// </summary>
     [Test]
-    public async Task CreateAgreementWithEmptyInstitutionIdAndAccessScopes()
+    public async Task CreateAgreementWithInvalidArguments()
     {
         var apiClient = TestHelpers.GetMockClient(
-            TestHelpers.MockData.AgreementsEndpointMockData.CreateAgreementWithEmptyInstitutionIdAndAccessScopes,
+            TestHelpers.MockData.AgreementsEndpointMockData.CreateAgreementWithInvalidArguments,
             HttpStatusCode.BadRequest);
-        var agreement = new CreateAgreementRequest(90, 90, null!, null!);
 
-        var response = await apiClient.AgreementsEndpoint.CreateAgreement(agreement);
+        var response =
+            await apiClient.AgreementsEndpoint.CreateAgreement(null!, uint.MaxValue, uint.MaxValue,
+                new List<AccessScope>());
 
-        AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.BadRequest);
         Assert.Multiple(() =>
         {
+            AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.BadRequest);
             Assert.That(response.Error!.InstitutionIdError, Is.Not.Null);
-            Assert.That(response.Error!.InstitutionIdError!.Summary, Is.EqualTo("This field may not be null."));
-            Assert.That(response.Error!.InstitutionIdError!.Detail, Is.EqualTo("This field may not be null."));
+            Assert.That(response.Error!.InstitutionIdError!.Summary, Is.EqualTo("This field is required."));
+            Assert.That(response.Error!.InstitutionIdError!.Detail, Is.EqualTo("This field is required."));
 
-            Assert.That(response.Error!.AccessScopeError!.Summary, Is.EqualTo("This field may not be null."));
-            Assert.That(response.Error!.AccessScopeError!.Detail, Is.EqualTo("This field may not be null."));
+            Assert.That(response.Error!.AccessValidForDaysError!.Summary,
+                Is.EqualTo("Incorrect access_valid_for_days"));
+            Assert.That(response.Error!.AccessValidForDaysError!.Detail,
+                Is.EqualTo("access_valid_for_days must be > 0 and <= 180"));
+
+            Assert.That(response.Error!.AgreementError, Is.Null);
+            Assert.That(response.Error!.AccessScopeError, Is.Null);
+            Assert.That(response.Error!.MaxHistoricalDaysError, Is.Null);
         });
     }
 
@@ -198,28 +224,27 @@ public class AgreementsEndpointTests
     /// Tests the creation of an end user agreement with invalid parameters.
     /// </summary>
     [Test]
-    public async Task CreateAgreementWithInvalidParams()
+    public async Task CreateAgreementWithInvalidArgumentsForInstitution()
     {
         var apiClient = TestHelpers.GetMockClient(
-            TestHelpers.MockData.AgreementsEndpointMockData.CreateAgreementWithInvalidParams,
+            TestHelpers.MockData.AgreementsEndpointMockData.CreateAgreementWithInvalidArgumentsForInstitution,
             HttpStatusCode.BadRequest);
-        var agreement = new CreateAgreementRequest(200, 200,
-            ["balances", "details", "transactions", "invalid", "invalid2"], "SANDBOXFINANCE_SFIN0000");
 
-        var response = await apiClient.AgreementsEndpoint.CreateAgreement(agreement);
+        var response = await apiClient.AgreementsEndpoint.CreateAgreement("SANDBOXFINANCE_SFIN0000", 200, 200);
         var result = response.Error!;
 
         Assert.Multiple(() =>
         {
             AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.BadRequest);
-            Assert.That(new[] {result.InstitutionIdError, result.AgreementError}, Has.All.Null);
-            Assert.That(result.AccessScopeError!.Detail,
-                Is.EqualTo("Choose one or several from ['balances', 'details', 'transactions']"));
+
             Assert.That(result.AccessValidForDaysError!.Detail,
                 Is.EqualTo("access_valid_for_days must be > 0 and <= 180"));
             Assert.That(result.MaxHistoricalDaysError!.Detail,
                 Is.EqualTo(
                     "max_historical_days must be > 0 and <= SANDBOXFINANCE_SFIN0000 transaction_total_days (90)"));
+
+            Assert.That(new[] {result.InstitutionIdError, result.AgreementError, result.AccessScopeError},
+                Has.All.Null);
         });
     }
 
@@ -229,10 +254,8 @@ public class AgreementsEndpointTests
         var apiClient = TestHelpers.GetMockClient(
             TestHelpers.MockData.AgreementsEndpointMockData.CreateAgreementWithInvalidParamsAtPolishInstitution,
             HttpStatusCode.BadRequest);
-        var agreement = new CreateAgreementRequest(90, 90,
-            ["balances", "transactions"], "PKO_BPKOPLPW");
 
-        var response = await apiClient.AgreementsEndpoint.CreateAgreement(agreement);
+        var response = await apiClient.AgreementsEndpoint.CreateAgreement("PKO_BPKOPLPW");
 
         Assert.Multiple(() =>
         {

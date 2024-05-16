@@ -1,4 +1,6 @@
 ﻿using System.Net.Http.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using RobinTTY.NordigenApiClient.Contracts;
 using RobinTTY.NordigenApiClient.Models.Errors;
 using RobinTTY.NordigenApiClient.Models.Requests;
@@ -39,10 +41,17 @@ public class RequisitionsEndpoint : IRequisitionsEndpoint
         await GetRequisitionInternal(id, cancellationToken);
 
     /// <inheritdoc />
-    public async Task<NordigenApiResponse<Requisition, CreateRequisitionError>> CreateRequisition(
-        CreateRequisitionRequest requisition, CancellationToken cancellationToken = default)
+    public async Task<NordigenApiResponse<Requisition, CreateRequisitionError>> CreateRequisition(string institutionId,
+        Uri redirect, Guid? agreementId = null, string? reference = null, string userLanguage = "EN",
+        string? socialSecurityNumber = null, bool accountSelection = false, bool redirectImmediate = false,
+        CancellationToken cancellationToken = default)
     {
-        var body = JsonContent.Create(requisition);
+        var internalReference = reference ?? Guid.NewGuid().ToString();
+        var requisition = new CreateRequisitionRequest(institutionId, redirect, internalReference, userLanguage,
+            agreementId, socialSecurityNumber, accountSelection, redirectImmediate);
+        var body = JsonContent.Create(requisition,
+            options: new JsonSerializerOptions {DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull});
+        
         return await _nordigenClient.MakeRequest<Requisition, CreateRequisitionError>(
             NordigenEndpointUrls.RequisitionsEndpoint, HttpMethod.Post, cancellationToken, body: body);
     }

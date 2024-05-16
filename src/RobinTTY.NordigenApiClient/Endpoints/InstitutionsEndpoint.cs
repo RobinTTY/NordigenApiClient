@@ -1,6 +1,8 @@
 ﻿using RobinTTY.NordigenApiClient.Contracts;
 using RobinTTY.NordigenApiClient.Models.Errors;
+using RobinTTY.NordigenApiClient.Models.Requests;
 using RobinTTY.NordigenApiClient.Models.Responses;
+using RobinTTY.NordigenApiClient.Utility;
 
 namespace RobinTTY.NordigenApiClient.Endpoints;
 
@@ -18,10 +20,9 @@ public class InstitutionsEndpoint : IInstitutionsEndpoint
     /// <inheritdoc />
     public async Task<NordigenApiResponse<List<Institution>, BasicResponse>> GetInstitutions(string? country = null,
         bool? accessScopesSupported = null, bool? accountSelectionSupported = null,
-        bool? businessAccountsSupported = null,
-        bool? cardAccountsSupported = null, bool? corporateAccountsSupported = null,
-        bool? privateAccountsSupported = null, bool? readRefundAccountSupported = null, bool? paymentsEnabled = null,
-        bool? paymentSubmissionSupported = null,
+        bool? businessAccountsSupported = null, bool? cardAccountsSupported = null,
+        bool? corporateAccountsSupported = null, bool? privateAccountsSupported = null,
+        bool? readRefundAccountSupported = null, bool? paymentsEnabled = null, bool? paymentSubmissionSupported = null,
         bool? pendingTransactionsSupported = null, bool? ssnVerificationSupported = null,
         CancellationToken cancellationToken = default)
     {
@@ -58,6 +59,19 @@ public class InstitutionsEndpoint : IInstitutionsEndpoint
             response.Result,
             response.Error);
     }
+
+    /// <inheritdoc />
+    public async Task<NordigenApiResponse<List<Institution>, BasicResponse>> GetInstitutions(SupportedCountry country,
+        bool? accessScopesSupported = null, bool? accountSelectionSupported = null,
+        bool? businessAccountsSupported = null, bool? cardAccountsSupported = null,
+        bool? corporateAccountsSupported = null, bool? privateAccountsSupported = null,
+        bool? readRefundAccountSupported = null, bool? paymentsEnabled = null, bool? paymentSubmissionSupported = null,
+        bool? pendingTransactionsSupported = null, bool? ssnVerificationSupported = null,
+        CancellationToken cancellationToken = default) =>
+        await GetInstitutions(country.GetDescription(), accessScopesSupported, accountSelectionSupported,
+            businessAccountsSupported, cardAccountsSupported, corporateAccountsSupported, privateAccountsSupported,
+            readRefundAccountSupported, paymentsEnabled, paymentSubmissionSupported, pendingTransactionsSupported,
+            ssnVerificationSupported, cancellationToken);
 
     /// <inheritdoc />
     public async Task<NordigenApiResponse<Institution, BasicResponse>> GetInstitution(string id,

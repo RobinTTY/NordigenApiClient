@@ -44,18 +44,20 @@ internal class AccountsEndpointMockData(
 
 internal class AgreementsEndpointMockData(
     ResponsePage<Agreement> getAgreements,
-    Agreement createAgreement,
     Agreement getAgreement,
+    Agreement createAgreement,
+    BasicResponse acceptAgreement,
     BasicResponse deleteAgreement,
     BasicResponse getAgreementWithInvalidGuid,
     CreateAgreementError createAgreementWithInvalidInstitutionId,
-    CreateAgreementError createAgreementWithInvalidParams,
-    CreateAgreementError createAgreementWithEmptyInstitutionIdAndAccessScopes,
+    CreateAgreementError createAgreementWithInvalidArgumentsForInstitution,
+    CreateAgreementError createAgreementWithInvalidArguments,
     CreateAgreementError createAgreementWithInvalidParamsAtPolishInstitution)
 {
     public ResponsePage<Agreement> GetAgreements { get; set; } = getAgreements;
-    public Agreement CreateAgreement { get; set; } = createAgreement;
     public Agreement GetAgreement { get; set; } = getAgreement;
+    public Agreement CreateAgreement { get; set; } = createAgreement;
+    public BasicResponse AcceptAgreement { get; set; } = acceptAgreement;
     public BasicResponse DeleteAgreement { get; set; } = deleteAgreement;
 
     public BasicResponse GetAgreementWithInvalidGuid { get; set; } = getAgreementWithInvalidGuid;
@@ -63,10 +65,10 @@ internal class AgreementsEndpointMockData(
     public CreateAgreementError CreateAgreementWithInvalidInstitutionId { get; set; } =
         createAgreementWithInvalidInstitutionId;
 
-    public CreateAgreementError CreateAgreementWithInvalidParams { get; set; } = createAgreementWithInvalidParams;
+    public CreateAgreementError CreateAgreementWithInvalidArgumentsForInstitution { get; set; } = createAgreementWithInvalidArgumentsForInstitution;
 
-    public CreateAgreementError CreateAgreementWithEmptyInstitutionIdAndAccessScopes { get; set; } =
-        createAgreementWithEmptyInstitutionIdAndAccessScopes;
+    public CreateAgreementError CreateAgreementWithInvalidArguments { get; set; } =
+        createAgreementWithInvalidArguments;
 
     public CreateAgreementError CreateAgreementWithInvalidParamsAtPolishInstitution { get; set; } =
         createAgreementWithInvalidParamsAtPolishInstitution;

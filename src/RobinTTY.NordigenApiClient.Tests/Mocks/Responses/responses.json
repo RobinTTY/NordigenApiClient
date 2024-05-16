@@ -196,6 +196,11 @@
         "transactions"
       ]
     },
+    "AcceptAgreement": {
+      "summary": "Insufficient permissions",
+      "detail": "Your company doesn't have permission to accept EUA. You'll have to use our default form for this action.",
+      "status_code": 403
+    },
     "DeleteAgreement": {
       "summary": "End User Agreement deleted",
       "detail": "End User Agreement bb37bc52-5b1d-44f9-b1cd-ec9594f25387 deleted"
@@ -212,7 +217,7 @@
       },
       "status_code": 400
     },
-    "CreateAgreementWithInvalidParams": {
+    "CreateAgreementWithInvalidArgumentsForInstitution": {
       "max_historical_days": {
         "summary": "Incorrect max_historical_days",
         "detail": "max_historical_days must be \u003e 0 and \u003c\u003d SANDBOXFINANCE_SFIN0000 transaction_total_days (90)"
@@ -221,19 +226,16 @@
         "summary": "Incorrect access_valid_for_days",
         "detail": "access_valid_for_days must be \u003e 0 and \u003c\u003d 180"
       },
-      "access_scope": {
-        "summary": "Unknown value \u0027[\u0027invalid2\u0027, \u0027invalid\u0027]\u0027 in access_scope",
-        "detail": "Choose one or several from [\u0027balances\u0027, \u0027details\u0027, \u0027transactions\u0027]"
-      },
       "status_code": 400
     },
-    "CreateAgreementWithEmptyInstitutionIdAndAccessScopes": {
+    "CreateAgreementWithInvalidArguments": {
       "institution_id": [
-        "This field may not be null."
+        "This field is required."
       ],
-      "access_scope": [
-        "This field may not be null."
-      ],
+      "access_valid_for_days": {
+        "summary": "Incorrect access_valid_for_days",
+        "detail": "access_valid_for_days must be > 0 and <= 180"
+      },
       "status_code": 400
     },
     "CreateAgreementWithInvalidParamsAtPolishInstitution": {

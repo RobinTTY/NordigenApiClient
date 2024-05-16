@@ -29,7 +29,7 @@ public class Transaction
     /// The account of the party which owes the money.
     /// </summary>
     [JsonPropertyName("debtorAccount")]
-    public MinimalBankAccount? DebtorAccount { get; }
+    public AccountDetails? DebtorAccount { get; }
 
     /// <summary>
     /// The BIC code allocated to the financial institution servicing an account for the debtor.
@@ -53,7 +53,7 @@ public class Transaction
     /// The account of the party which is owed the money.
     /// </summary>
     [JsonPropertyName("creditorAccount")]
-    public MinimalBankAccount? CreditorAccount { get; }
+    public AccountDetails? CreditorAccount { get; }
 
     /// <summary>
     /// The BIC code allocated to the financial institution servicing an account for the creditor.
@@ -229,7 +229,7 @@ public class Transaction
     public string? EntryReference { get; }
 
     /// <summary>
-    /// Transaction identifier given by Nordigen.
+    /// Transaction identifier given by GoCardless.
     /// </summary>
     [JsonPropertyName("internalTransactionId")]
     public string? InternalTransactionId { get; }
@@ -336,8 +336,8 @@ public class Transaction
     /// <param name="merchantCategoryCode">Merchant category code as defined by the card issuer.</param>
     /// <param name="bookingDateTime">The date and time when the transaction was posted to the account.</param>
     [JsonConstructor]
-    public Transaction(string? transactionId, string? debtorName, MinimalBankAccount? debtorAccount,
-        string? ultimateDebtor, string? creditorName, MinimalBankAccount? creditorAccount,
+    public Transaction(string? transactionId, string? debtorName, AccountDetails? debtorAccount,
+        string? ultimateDebtor, string? creditorName, AccountDetails? creditorAccount,
         AmountCurrencyPair transactionAmount, string? bankTransactionCode, DateTime? bookingDate, DateTime? valueDate,
         string? remittanceInformationUnstructured, List<string>? remittanceInformationUnstructuredArray,
         string? endToEndId, string? mandateId, string? proprietaryBankTransactionCode, string? purposeCode,

@@ -1,4 +1,5 @@
-﻿using RobinTTY.NordigenApiClient.Models.Responses;
+﻿using RobinTTY.NordigenApiClient.Models.Requests;
+using RobinTTY.NordigenApiClient.Models.Responses;
 using RobinTTY.NordigenApiClient.Tests.Shared;
 
 namespace RobinTTY.NordigenApiClient.Tests.Mocks.Endpoints;
@@ -8,7 +9,7 @@ public class InstitutionsEndpointTests
     #region RequestsWithSuccessfulResponse
 
     /// <summary>
-    /// Tests the retrieving of institutions for all countries and a specific country (Great Britain).
+    /// Tests the retrieving of institutions without any country filter applied.
     /// </summary>
     [Test]
     public async Task GetInstitutions()
@@ -17,6 +18,24 @@ public class InstitutionsEndpointTests
             HttpStatusCode.OK);
 
         var institutions = await apiClient.InstitutionsEndpoint.GetInstitutions();
+
+        Assert.Multiple(() =>
+        {
+            AssertionHelpers.AssertNordigenApiResponseIsSuccessful(institutions, HttpStatusCode.OK);
+            Assert.That(institutions.Result!, Has.Count.EqualTo(2));
+        });
+    }
+    
+    /// <summary>
+    /// Tests the retrieving of institutions for a specific country.
+    /// </summary>
+    [Test]
+    public async Task GetInstitutionsInBulgaria()
+    {
+        var apiClient = TestHelpers.GetMockClient(TestHelpers.MockData.InstitutionsEndpointMockData.GetInstitutions,
+            HttpStatusCode.OK);
+
+        var institutions = await apiClient.InstitutionsEndpoint.GetInstitutions(SupportedCountry.Bulgaria);
 
         Assert.Multiple(() =>
         {

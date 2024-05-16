@@ -129,8 +129,7 @@ public class NordigenClient : INordigenClient
     }
 
     private static async Task<HttpResponseMessage> ExecuteRequest(HttpClient client, HttpMethod method,
-        string requestUri,
-        CancellationToken cancellationToken, HttpContent? body = null)
+        string requestUri, CancellationToken cancellationToken, HttpContent? body = null)
     {
         if (method == HttpMethod.Get)
             return await client.GetAsync(requestUri, cancellationToken);
@@ -141,7 +140,7 @@ public class NordigenClient : INordigenClient
         if (method == HttpMethod.Put)
             return await client.PutAsync(requestUri, body, cancellationToken);
 
-        throw new NotImplementedException();
+        throw new ArgumentException($"HttpMethod {method} is not supported", nameof(method));
     }
 
     /// <summary>

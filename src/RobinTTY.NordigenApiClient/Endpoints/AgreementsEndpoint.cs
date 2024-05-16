@@ -1,4 +1,6 @@
 ﻿using System.Net.Http.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using RobinTTY.NordigenApiClient.Contracts;
 using RobinTTY.NordigenApiClient.Models.Errors;
 using RobinTTY.NordigenApiClient.Models.Requests;
@@ -38,10 +40,15 @@ public class AgreementsEndpoint : IAgreementsEndpoint
         await GetAgreementInternal(id, cancellationToken);
 
     /// <inheritdoc />
-    public async Task<NordigenApiResponse<Agreement, CreateAgreementError>> CreateAgreement(
-        CreateAgreementRequest agreement, CancellationToken cancellationToken = default)
+    public async Task<NordigenApiResponse<Agreement, CreateAgreementError>> CreateAgreement(string institutionId,
+        uint accessValidForDays = 90, uint maxHistoricalDays = 90, List<AccessScope>? accessScope = null,
+        CancellationToken cancellationToken = default)
     {
-        var body = JsonContent.Create(agreement);
+        var scope = accessScope ?? [AccessScope.Balances, AccessScope.Transactions, AccessScope.Details];
+        var agreement = new CreateAgreementRequest(institutionId, scope, maxHistoricalDays, accessValidForDays);
+        var body = JsonContent.Create(agreement,
+            options: new JsonSerializerOptions {DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull});
+
         return await _nordigenClient.MakeRequest<Agreement, CreateAgreementError>(
             NordigenEndpointUrls.AgreementsEndpoint, HttpMethod.Post, cancellationToken, body: body);
     }
@@ -58,13 +65,13 @@ public class AgreementsEndpoint : IAgreementsEndpoint
 
     /// <inheritdoc />
     public async Task<NordigenApiResponse<Agreement, BasicResponse>> AcceptAgreement(Guid id,
-        AcceptAgreementRequest metadata, CancellationToken cancellationToken = default) =>
-        await AcceptAgreementInternal(id.ToString(), metadata, cancellationToken);
+        string userAgent, string ipAddress, CancellationToken cancellationToken = default) =>
+        await AcceptAgreementInternal(id.ToString(), userAgent, ipAddress, cancellationToken);
 
     /// <inheritdoc />
     public async Task<NordigenApiResponse<Agreement, BasicResponse>> AcceptAgreement(string id,
-        AcceptAgreementRequest metadata, CancellationToken cancellationToken = default) =>
-        await AcceptAgreementInternal(id, metadata, cancellationToken);
+        string userAgent, string ipAddress, CancellationToken cancellationToken = default) =>
+        await AcceptAgreementInternal(id, userAgent, ipAddress, cancellationToken);
 
     private async Task<NordigenApiResponse<Agreement, BasicResponse>> GetAgreementInternal(string id,
         CancellationToken cancellationToken) =>
@@ -77,9 +84,10 @@ public class AgreementsEndpoint : IAgreementsEndpoint
             $"{NordigenEndpointUrls.AgreementsEndpoint}{id}/", HttpMethod.Delete, cancellationToken);
 
     private async Task<NordigenApiResponse<Agreement, BasicResponse>> AcceptAgreementInternal(string id,
-        AcceptAgreementRequest metadata, CancellationToken cancellationToken)
+        string userAgent, string ipAddress, CancellationToken cancellationToken)
     {
-        var body = JsonContent.Create(metadata);
+        var acceptAgreementRequest = new AcceptAgreementRequest(userAgent, ipAddress);
+        var body = JsonContent.Create(acceptAgreementRequest);
         return await _nordigenClient.MakeRequest<Agreement, BasicResponse>(
             $"{NordigenEndpointUrls.AgreementsEndpoint}{id}/accept/", HttpMethod.Put, cancellationToken, body: body);
     }

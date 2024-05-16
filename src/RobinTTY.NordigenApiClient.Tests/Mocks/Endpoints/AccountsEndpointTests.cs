@@ -24,9 +24,13 @@ public class AccountsEndpointTests
         var account = accountResponse.Result!;
         Assert.Multiple(() =>
         {
-            Assert.That(account.InstitutionId, Is.EqualTo("SANDBOXFINANCE_SFIN0000"));
+            Assert.That(account.Id, Is.EqualTo(new Guid("3fa85f64-5717-4562-b3fc-2c963f66afa6")));
+            Assert.That(account.Created, Is.EqualTo(DateTime.Parse("2024-04-05T21:51:12.694Z").ToUniversalTime()));
+            Assert.That(account.LastAccessed, Is.EqualTo(DateTime.Parse("2024-04-05T21:51:12.694Z").ToUniversalTime()));
             Assert.That(account.Iban, Is.EqualTo("GL2010440000010445"));
+            Assert.That(account.InstitutionId, Is.EqualTo("SANDBOXFINANCE_SFIN0000"));
             Assert.That(account.Status, Is.EqualTo(BankAccountStatus.Ready));
+            Assert.That(account.OwnerName, Is.EqualTo("John Doe"));
         });
     }
 
