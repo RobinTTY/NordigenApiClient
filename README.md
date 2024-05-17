@@ -35,7 +35,7 @@ API [here](https://developer.gocardless.com/bank-account-data/endpoints).
 3. You can now use the different endpoints through the client:
 
    ```cs
-   var response = await client.InstitutionsEndpoint.GetInstitutions(country: "GB");
+   var response = await client.InstitutionsEndpoint.GetInstitutions(SupportedCountry.UnitedKingdom);
    ```
 
    The responses that are returned always have the same structure:
@@ -59,7 +59,7 @@ example [here](src/RobinTTY.NordigenApiClient.ExampleApplication)):
 1. Get a list of institutions in your country (e.g. Great Britain):
 
     ```cs
-    var institutionsResponse = await client.InstitutionsEndpoint.GetInstitutions(country: "GB");
+    var institutionsResponse = await client.InstitutionsEndpoint.GetInstitutions(SupportedCountry.UnitedKingdom);
     if (institutionsResponse.IsSuccess)
         institutionsResponse.Result.ForEach(institution =>
         {
@@ -73,11 +73,8 @@ example [here](src/RobinTTY.NordigenApiClient.ExampleApplication)):
 
     ```cs
     var institution = "BANK_OF_SCOTLAND_BOFSGBS1";
-    var userLanguage = "EN";
-    var reference = "your-internal-reference";
     var redirect = new Uri("https://where-nordigen-will-redirect-after-authentication.com");
-    var requisitionRequest = new CreateRequisitionRequest(redirect, institution, reference, userLanguage);
-    var requisitionResponse = await client.RequisitionsEndpoint.CreateRequisition(requisitionRequest);
+    var requisitionResponse = await client.RequisitionsEndpoint.CreateRequisition(institution, redirect);
 
     if (requisitionResponse.IsSuccess)
     {
@@ -184,8 +181,8 @@ void OnTokenPairUpdated(object? sender, TokenPairUpdatedEventArgs e)
 {
     // The event args contain the updated token
     Console.WriteLine("Updated token pair:");
-    Console.WriteLine($"Access Token: {e.JsonWebTokenPair!.AccessToken.EncodedToken}");
-    Console.WriteLine($"Refresh Token: {e.JsonWebTokenPair!.RefreshToken.EncodedToken}");
+    Console.WriteLine($"Access Token: {e.JsonWebTokenPair.AccessToken.EncodedToken}");
+    Console.WriteLine($"Refresh Token: {e.JsonWebTokenPair.RefreshToken.EncodedToken}");
 }
 ```
 

@@ -1,5 +1,6 @@
 ﻿using RobinTTY.NordigenApiClient;
 using RobinTTY.NordigenApiClient.Models;
+using RobinTTY.NordigenApiClient.Models.Requests;
 
 // Create the client used to access the API
 using var httpClient = new HttpClient();
@@ -8,7 +9,7 @@ var client = new NordigenClient(httpClient, credentials);
 
 ////* Getting balances and transactions for a bank account */////
 // 1. Get a list of institutions in your country (e.g. Great Britain):
-var institutionsResponse = await client.InstitutionsEndpoint.GetInstitutions("GB");
+var institutionsResponse = await client.InstitutionsEndpoint.GetInstitutions(SupportedCountry.UnitedKingdom);
 if (institutionsResponse.IsSuccess)
     institutionsResponse.Result.ForEach(institution =>
     {
