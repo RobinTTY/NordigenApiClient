@@ -65,7 +65,8 @@ internal class AgreementsEndpointMockData(
     public CreateAgreementError CreateAgreementWithInvalidInstitutionId { get; set; } =
         createAgreementWithInvalidInstitutionId;
 
-    public CreateAgreementError CreateAgreementWithInvalidArgumentsForInstitution { get; set; } = createAgreementWithInvalidArgumentsForInstitution;
+    public CreateAgreementError CreateAgreementWithInvalidArgumentsForInstitution { get; set; } =
+        createAgreementWithInvalidArgumentsForInstitution;
 
     public CreateAgreementError CreateAgreementWithInvalidArguments { get; set; } =
         createAgreementWithInvalidArguments;

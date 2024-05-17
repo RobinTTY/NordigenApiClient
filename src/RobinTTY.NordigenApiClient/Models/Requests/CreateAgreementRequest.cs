@@ -14,13 +14,13 @@ internal class CreateAgreementRequest
     /// </summary>
     [JsonPropertyName("institution_id")]
     public string InstitutionId { get; set; }
-    
+
     /// <summary>
     /// The access scope, which defines which information can be accessed, to request.
     /// </summary>
     [JsonPropertyName("access_scope")]
     public List<AccessScope> AccessScope { get; set; }
-    
+
     /// <summary>
     /// The length of the transaction history in days to request.
     /// </summary>

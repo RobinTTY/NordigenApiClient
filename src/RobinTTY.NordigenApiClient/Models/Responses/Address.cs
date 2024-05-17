@@ -12,25 +12,25 @@ public class Address
     /// </summary>
     [JsonPropertyName("streetName")]
     public string? StreetName { get; }
-    
+
     /// <summary>
     /// The number of the building.
     /// </summary>
     [JsonPropertyName("buildingNumber")]
     public string? BuildingNumber { get; }
-    
+
     /// <summary>
     /// The postcode of the town.
     /// </summary>
     [JsonPropertyName("postCode")]
     public string? PostCode { get; }
-    
+
     /// <summary>
     /// The name of the town.
     /// </summary>
     [JsonPropertyName("townName")]
     public string? TownName { get; }
-    
+
     /// <summary>
     /// The name of the country.
     /// </summary>
@@ -38,7 +38,7 @@ public class Address
     public string? Country { get; }
 
     /// <summary>
-    /// Creates a new instance of <see cref="Address"/>.
+    /// Creates a new instance of <see cref="Address" />.
     /// </summary>
     /// <param name="streetName">The name of the street.</param>
     /// <param name="buildingNumber">The number of the building.</param>

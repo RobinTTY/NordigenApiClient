@@ -25,7 +25,7 @@ public class InstitutionsEndpointTests
             Assert.That(institutions.Result!, Has.Count.EqualTo(2));
         });
     }
-    
+
     /// <summary>
     /// Tests the retrieving of institutions for a specific country.
     /// </summary>

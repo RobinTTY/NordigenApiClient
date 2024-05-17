@@ -36,7 +36,7 @@ public class InstitutionsEndpointTests
             Assert.That(result, Has.Count.GreaterThan(result2.Count));
         });
     }
-    
+
     /// <summary>
     /// Tests the retrieving of institutions for a specific country.
     /// </summary>

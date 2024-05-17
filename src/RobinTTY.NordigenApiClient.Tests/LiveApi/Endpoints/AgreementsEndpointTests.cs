@@ -1,5 +1,4 @@
-﻿using RobinTTY.NordigenApiClient.Models.Requests;
-using RobinTTY.NordigenApiClient.Models.Responses;
+﻿using RobinTTY.NordigenApiClient.Models.Responses;
 using RobinTTY.NordigenApiClient.Tests.Shared;
 
 namespace RobinTTY.NordigenApiClient.Tests.LiveApi.Endpoints;
@@ -121,7 +120,9 @@ public class AgreementsEndpointTests
         });
 
         // Accept the agreement (should fail)
-        var acceptResponse = await _apiClient.AgreementsEndpoint.AcceptAgreement(response.Result!.Id, "example_user_agent", "192.168.178.1");
+        var acceptResponse =
+            await _apiClient.AgreementsEndpoint.AcceptAgreement(response.Result!.Id, "example_user_agent",
+                "192.168.178.1");
         AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(acceptResponse, HttpStatusCode.Forbidden);
         Assert.That(acceptResponse.Error!.Detail,
             Is.EqualTo(

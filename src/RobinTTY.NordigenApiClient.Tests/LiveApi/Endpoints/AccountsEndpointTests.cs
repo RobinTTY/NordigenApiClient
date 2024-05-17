@@ -228,8 +228,8 @@ public class AccountsEndpointTests
                 $"Starting date '{DateOnly.FromDateTime(startDate)}' is greater than end date '{DateOnly.FromDateTime(endDateBeforeStartDate)}'. When specifying date range, starting date must precede the end date."));
 #else
         var exception = Assert.ThrowsAsync<ArgumentException>(async () =>
-                await _apiClient.AccountsEndpoint.GetTransactions(_accountId, startDate, endDateBeforeStartDate));
-        
+            await _apiClient.AccountsEndpoint.GetTransactions(_accountId, startDate, endDateBeforeStartDate));
+
         Assert.That(exception.Message,
             Is.EqualTo(
                 $"Starting date '{startDate}' is greater than end date '{endDateBeforeStartDate}'. When specifying date range, starting date must precede the end date."));

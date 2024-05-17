@@ -19,25 +19,25 @@ public class AccountDetails
     /// </summary>
     [JsonPropertyName("bban")]
     public string? Bban { get; }
-    
+
     /// <summary>
     /// Primary account number (unique identifier on credit cards, debit cards, and other types of payment cards).
     /// </summary>
     [JsonPropertyName("pan")]
     public string? Pan { get; }
-    
+
     /// <summary>
     /// Masked primary account number (unique identifier on credit cards, debit cards, and other types of payment cards).
     /// </summary>
     [JsonPropertyName("maskedPan")]
     public string? MaskedPan { get; }
-    
+
     /// <summary>
     /// An alias to a payment account via a registered mobile phone number.
     /// </summary>
     [JsonPropertyName("msisdn")]
     public string? Msisdn { get; }
-    
+
     /// <summary>
     /// The currency the amount is denominated in.
     /// </summary>
@@ -45,7 +45,7 @@ public class AccountDetails
     public string Currency { get; }
 
     /// <summary>
-    /// Creates a new instance of <see cref="AccountDetails"/>.
+    /// Creates a new instance of <see cref="AccountDetails" />.
     /// </summary>
     /// <param name="iban">The IBAN of the bank account.</param>
     /// <param name="bban">Basic Bank Account Number represents a country-specific bank account number.

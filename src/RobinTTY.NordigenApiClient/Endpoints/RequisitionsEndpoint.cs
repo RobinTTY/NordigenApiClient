@@ -51,7 +51,7 @@ public class RequisitionsEndpoint : IRequisitionsEndpoint
             agreementId, socialSecurityNumber, accountSelection, redirectImmediate);
         var body = JsonContent.Create(requisition,
             options: new JsonSerializerOptions {DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull});
-        
+
         return await _nordigenClient.MakeRequest<Requisition, CreateRequisitionError>(
             NordigenEndpointUrls.RequisitionsEndpoint, HttpMethod.Post, cancellationToken, body: body);
     }

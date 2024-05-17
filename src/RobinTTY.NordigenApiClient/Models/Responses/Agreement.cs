@@ -24,19 +24,19 @@ public class Agreement
     /// </summary>
     [JsonPropertyName("accepted")]
     public DateTime? Accepted { get; }
-    
+
     /// <summary>
     /// The institution this agreement refers to.
     /// </summary>
     [JsonPropertyName("institution_id")]
     public string InstitutionId { get; set; }
-    
+
     /// <summary>
     /// The scope of information that can be accessed.
     /// </summary>
     [JsonPropertyName("access_scope")]
     public List<AccessScope> AccessScope { get; set; }
-    
+
     /// <summary>
     /// The length of the transaction history in days.
     /// </summary>
@@ -60,7 +60,8 @@ public class Agreement
     /// <param name="accessValidForDays">The length the access to the account will be valid for.</param>
     /// <param name="accessScope">The scope of information that can be accessed.</param>
     [JsonConstructor]
-    public Agreement(Guid id, DateTime created, DateTime? accepted, string institutionId, uint maxHistoricalDays, uint accessValidForDays, List<AccessScope> accessScope)
+    public Agreement(Guid id, DateTime created, DateTime? accepted, string institutionId, uint maxHistoricalDays,
+        uint accessValidForDays, List<AccessScope> accessScope)
     {
         Id = id;
         Created = created;

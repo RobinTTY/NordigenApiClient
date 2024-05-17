@@ -31,7 +31,7 @@ public class NordigenApiClientTests
 #if NET6_0_OR_GREATER
         AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(unsuccessfulRequest, HttpStatusCode.TooManyRequests);
 #else
-    AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(unsuccessfulRequest, (HttpStatusCode)429);
+        AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(unsuccessfulRequest, (HttpStatusCode) 429);
 #endif
         Assert.That(unsuccessfulRequest.Error!.Summary, Is.EqualTo("Rate limit exceeded"));
         Assert.That(unsuccessfulRequest.Error!.Detail,

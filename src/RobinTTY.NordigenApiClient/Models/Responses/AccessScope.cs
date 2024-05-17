@@ -6,7 +6,7 @@ namespace RobinTTY.NordigenApiClient.Models.Responses;
 
 /// <summary>
 /// Access scopes can be used to limit the access to the 3 major data blocks the GoCardless API is offering.
-/// This feature is not supported by all banks, check <see cref="Institution.SupportedFeatures"/> to verify if it is.
+/// This feature is not supported by all banks, check <see cref="Institution.SupportedFeatures" /> to verify if it is.
 /// </summary>
 [JsonConverter(typeof(EnumDescriptionConverter<AccessScope>))]
 public enum AccessScope
@@ -23,7 +23,7 @@ public enum AccessScope
     Balances,
 
     /// <summary>
-    /// Access scope required to access the transactions of an account. 
+    /// Access scope required to access the transactions of an account.
     /// </summary>
     [Description("transactions")]
     Transactions,

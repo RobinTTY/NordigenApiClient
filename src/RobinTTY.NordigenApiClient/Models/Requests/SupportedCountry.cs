@@ -12,187 +12,187 @@ public enum SupportedCountry
 {
     /// <summary>
     /// The country of Austria.
-    /// </summary>    
+    /// </summary>
     [Description("AT")]
     Austria,
-    
+
     /// <summary>
     /// The country of Belgium.
-    /// </summary>    
+    /// </summary>
     [Description("BE")]
     Belgium,
-    
+
     /// <summary>
     /// The country of Bulgaria.
-    /// </summary>    
+    /// </summary>
     [Description("BG")]
     Bulgaria,
-    
+
     /// <summary>
     /// The country of Croatia.
-    /// </summary>    
+    /// </summary>
     [Description("HR")]
     Croatia,
-    
+
     /// <summary>
     /// The country of Cyprus.
-    /// </summary>    
+    /// </summary>
     [Description("CY")]
     Cyprus,
-    
+
     /// <summary>
     /// The country of Czechia.
-    /// </summary>    
+    /// </summary>
     [Description("CZ")]
     Czechia,
-    
+
     /// <summary>
     /// The country of Germany.
-    /// </summary>    
+    /// </summary>
     [Description("DE")]
     Germany,
-    
+
     /// <summary>
     /// The country of Denmark.
-    /// </summary>    
+    /// </summary>
     [Description("DK")]
     Denmark,
-    
+
     /// <summary>
     /// The country of Estonia.
-    /// </summary>    
+    /// </summary>
     [Description("EE")]
     Estonia,
-    
+
     /// <summary>
     /// The country of Spain.
-    /// </summary>    
+    /// </summary>
     [Description("ES")]
     Spain,
-    
+
     /// <summary>
     /// The country of Finland.
-    /// </summary>    
+    /// </summary>
     [Description("FI")]
     Finland,
-    
+
     /// <summary>
     /// The country of France.
-    /// </summary>    
+    /// </summary>
     [Description("FR")]
     France,
-    
+
     /// <summary>
     /// The country of UnitedKingdom.
-    /// </summary>    
+    /// </summary>
     [Description("GB")]
     UnitedKingdom,
-    
+
     /// <summary>
     /// The country of Greece.
-    /// </summary>    
+    /// </summary>
     [Description("GR")]
     Greece,
-    
+
     /// <summary>
     /// The country of Hungary.
-    /// </summary>    
+    /// </summary>
     [Description("HU")]
     Hungary,
-    
+
     /// <summary>
     /// The country of Iceland.
-    /// </summary>    
+    /// </summary>
     [Description("IS")]
     Iceland,
-    
+
     /// <summary>
     /// The country of Ireland.
-    /// </summary>    
+    /// </summary>
     [Description("IE")]
     Ireland,
-    
+
     /// <summary>
     /// The country of Italy.
-    /// </summary>    
+    /// </summary>
     [Description("IT")]
     Italy,
-    
+
     /// <summary>
     /// The country of Latvia.
-    /// </summary>    
+    /// </summary>
     [Description("LV")]
     Latvia,
-    
+
     /// <summary>
     /// The country of Liechtenstein.
-    /// </summary>    
+    /// </summary>
     [Description("LI")]
     Liechtenstein,
-    
+
     /// <summary>
     /// The country of Lithuania.
-    /// </summary>    
+    /// </summary>
     [Description("LT")]
     Lithuania,
 
     /// <summary>
     /// The country of Luxembourg.
-    /// </summary>    
+    /// </summary>
     [Description("LU")]
     Luxembourg,
 
     /// <summary>
     /// The country of Malta.
-    /// </summary>    
+    /// </summary>
     [Description("MT")]
     Malta,
 
     /// <summary>
     /// The country of Netherlands.
-    /// </summary>    
+    /// </summary>
     [Description("NL")]
     Netherlands,
 
     /// <summary>
     /// The country of Norway.
-    /// </summary>    
+    /// </summary>
     [Description("NO")]
     Norway,
 
     /// <summary>
     /// The country of Poland.
-    /// </summary>    
+    /// </summary>
     [Description("PL")]
     Poland,
 
     /// <summary>
     /// The country of Portugal.
-    /// </summary>    
+    /// </summary>
     [Description("PT")]
     Portugal,
 
     /// <summary>
     /// The country of Romania.
-    /// </summary>    
+    /// </summary>
     [Description("RO")]
     Romania,
 
     /// <summary>
     /// The country of Sweden.
-    /// </summary>    
+    /// </summary>
     [Description("SE")]
     Sweden,
-    
+
     /// <summary>
     /// The country of Slovakia.
-    /// </summary>    
+    /// </summary>
     [Description("SK")]
     Slovakia,
-    
+
     /// <summary>
     /// The country of Slovenia.
-    /// </summary>    
+    /// </summary>
     [Description("SI")]
     Slovenia
 }
