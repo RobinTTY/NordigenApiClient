@@ -1,4 +1,6 @@
 ﻿using System.Net.Http.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using RobinTTY.NordigenApiClient.Contracts;
 using RobinTTY.NordigenApiClient.Models.Errors;
 using RobinTTY.NordigenApiClient.Models.Requests;
@@ -18,51 +20,59 @@ public class RequisitionsEndpoint : IRequisitionsEndpoint
     internal RequisitionsEndpoint(NordigenClient client) => _nordigenClient = client;
 
     /// <inheritdoc />
-    public async Task<NordigenApiResponse<ResponsePage<Requisition>, BasicError>> GetRequisitions(int limit, int offset,
+    public async Task<NordigenApiResponse<ResponsePage<Requisition>, BasicResponse>> GetRequisitions(int limit,
+        int offset,
         CancellationToken cancellationToken = default)
     {
         var query = new KeyValuePair<string, string>[]
             {new("limit", limit.ToString()), new("offset", offset.ToString())};
-        return await _nordigenClient.MakeRequest<ResponsePage<Requisition>, BasicError>(
+        return await _nordigenClient.MakeRequest<ResponsePage<Requisition>, BasicResponse>(
             NordigenEndpointUrls.RequisitionsEndpoint, HttpMethod.Get, cancellationToken, query);
     }
 
     /// <inheritdoc />
-    public async Task<NordigenApiResponse<Requisition, BasicError>> GetRequisition(Guid id,
+    public async Task<NordigenApiResponse<Requisition, BasicResponse>> GetRequisition(Guid id,
         CancellationToken cancellationToken = default) =>
         await GetRequisitionInternal(id.ToString(), cancellationToken);
 
     /// <inheritdoc />
-    public async Task<NordigenApiResponse<Requisition, BasicError>> GetRequisition(string id,
+    public async Task<NordigenApiResponse<Requisition, BasicResponse>> GetRequisition(string id,
         CancellationToken cancellationToken = default) =>
         await GetRequisitionInternal(id, cancellationToken);
 
-    private async Task<NordigenApiResponse<Requisition, BasicError>> GetRequisitionInternal(string id,
-        CancellationToken cancellationToken = default) =>
-        await _nordigenClient.MakeRequest<Requisition, BasicError>(
-            $"{NordigenEndpointUrls.RequisitionsEndpoint}{id}/", HttpMethod.Get, cancellationToken);
-
     /// <inheritdoc />
-    public async Task<NordigenApiResponse<Requisition, CreateRequisitionError>> CreateRequisition(
-        CreateRequisitionRequest requisition, CancellationToken cancellationToken = default)
+    public async Task<NordigenApiResponse<Requisition, CreateRequisitionError>> CreateRequisition(string institutionId,
+        Uri redirect, Guid? agreementId = null, string? reference = null, string userLanguage = "EN",
+        string? socialSecurityNumber = null, bool accountSelection = false, bool redirectImmediate = false,
+        CancellationToken cancellationToken = default)
     {
-        var body = JsonContent.Create(requisition);
+        var internalReference = reference ?? Guid.NewGuid().ToString();
+        var requisition = new CreateRequisitionRequest(institutionId, redirect, internalReference, userLanguage,
+            agreementId, socialSecurityNumber, accountSelection, redirectImmediate);
+        var body = JsonContent.Create(requisition,
+            options: new JsonSerializerOptions {DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull});
+
         return await _nordigenClient.MakeRequest<Requisition, CreateRequisitionError>(
             NordigenEndpointUrls.RequisitionsEndpoint, HttpMethod.Post, cancellationToken, body: body);
     }
 
     /// <inheritdoc />
-    public async Task<NordigenApiResponse<BasicResponse, BasicError>> DeleteRequisition(Guid id,
+    public async Task<NordigenApiResponse<BasicResponse, BasicResponse>> DeleteRequisition(Guid id,
         CancellationToken cancellationToken = default) =>
         await DeleteRequisitionInternal(id.ToString(), cancellationToken);
 
     /// <inheritdoc />
-    public async Task<NordigenApiResponse<BasicResponse, BasicError>> DeleteRequisition(string id,
+    public async Task<NordigenApiResponse<BasicResponse, BasicResponse>> DeleteRequisition(string id,
         CancellationToken cancellationToken = default) =>
         await DeleteRequisitionInternal(id, cancellationToken);
 
-    private async Task<NordigenApiResponse<BasicResponse, BasicError>> DeleteRequisitionInternal(string id,
+    private async Task<NordigenApiResponse<Requisition, BasicResponse>> GetRequisitionInternal(string id,
+        CancellationToken cancellationToken = default) =>
+        await _nordigenClient.MakeRequest<Requisition, BasicResponse>(
+            $"{NordigenEndpointUrls.RequisitionsEndpoint}{id}/", HttpMethod.Get, cancellationToken);
+
+    private async Task<NordigenApiResponse<BasicResponse, BasicResponse>> DeleteRequisitionInternal(string id,
         CancellationToken cancellationToken) =>
-        await _nordigenClient.MakeRequest<BasicResponse, BasicError>(
+        await _nordigenClient.MakeRequest<BasicResponse, BasicResponse>(
             $"{NordigenEndpointUrls.RequisitionsEndpoint}{id}/", HttpMethod.Delete, cancellationToken);
 }

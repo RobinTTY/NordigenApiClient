@@ -1,5 +1,4 @@
-﻿using System.Net;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 using System.Text.Json;
 using RobinTTY.NordigenApiClient.JsonConverters;
 using RobinTTY.NordigenApiClient.Models.Errors;
@@ -23,7 +22,7 @@ internal class TransactionTests
             Converters = {new CultureSpecificDecimalConverter()}
         };
         var transaction = JsonSerializer.Deserialize<Transaction>(json, options);
-        
+
         Assert.Multiple(() =>
         {
             Assert.That(transaction!.CurrencyExchange, Is.Not.Null);
@@ -48,10 +47,10 @@ internal class TransactionTests
 
         var options = new JsonSerializerOptions
         {
-            Converters = { new CultureSpecificDecimalConverter() }
+            Converters = {new CultureSpecificDecimalConverter()}
         };
         var transaction = JsonSerializer.Deserialize<Transaction>(json, options);
-        
+
         Assert.Multiple(() =>
         {
             Assert.That(transaction!.CurrencyExchange, Is.Not.Null);
@@ -66,7 +65,6 @@ internal class TransactionTests
     /// <summary>
     /// Tests that a malformed json throws a human readable error containing the raw json content of the API response.
     /// </summary>
-    /// <returns></returns>
     [Test]
     public async Task DeserializeWithException()
     {

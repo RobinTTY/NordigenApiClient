@@ -1,7 +1,6 @@
 ﻿using System.Net.Http.Json;
 using Microsoft.IdentityModel.JsonWebTokens;
 using RobinTTY.NordigenApiClient.Contracts;
-using RobinTTY.NordigenApiClient.Models.Errors;
 using RobinTTY.NordigenApiClient.Models.Jwt;
 using RobinTTY.NordigenApiClient.Models.Responses;
 
@@ -19,21 +18,22 @@ public class TokenEndpoint : ITokenEndpoint
     internal TokenEndpoint(NordigenClient client) => _nordigenClient = client;
 
     /// <inheritdoc />
-    public async Task<NordigenApiResponse<JsonWebTokenPair, BasicError>> GetTokenPair(
+    public async Task<NordigenApiResponse<JsonWebTokenPair, BasicResponse>> GetTokenPair(
         CancellationToken cancellationToken = default)
     {
         var requestBody = JsonContent.Create(_nordigenClient.Credentials);
-        return await _nordigenClient.MakeRequest<JsonWebTokenPair, BasicError>(
+        return await _nordigenClient.MakeRequest<JsonWebTokenPair, BasicResponse>(
             $"{NordigenEndpointUrls.TokensEndpoint}new/", HttpMethod.Post, cancellationToken, body: requestBody,
             useAuthentication: false);
     }
 
     /// <inheritdoc />
-    public async Task<NordigenApiResponse<JsonWebAccessToken, BasicError>> RefreshAccessToken(JsonWebToken refreshToken,
+    public async Task<NordigenApiResponse<JsonWebAccessToken, BasicResponse>> RefreshAccessToken(
+        JsonWebToken refreshToken,
         CancellationToken cancellationToken = default)
     {
         var requestBody = JsonContent.Create(new {refresh = refreshToken.EncodedToken});
-        return await _nordigenClient.MakeRequest<JsonWebAccessToken, BasicError>(
+        return await _nordigenClient.MakeRequest<JsonWebAccessToken, BasicResponse>(
             $"{NordigenEndpointUrls.TokensEndpoint}refresh/", HttpMethod.Post, cancellationToken, body: requestBody,
             useAuthentication: false);
     }

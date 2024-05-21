@@ -1,6 +1,5 @@
 ﻿using Microsoft.IdentityModel.JsonWebTokens;
 using RobinTTY.NordigenApiClient.Endpoints;
-using RobinTTY.NordigenApiClient.Models.Errors;
 using RobinTTY.NordigenApiClient.Models.Jwt;
 using RobinTTY.NordigenApiClient.Models.Responses;
 
@@ -22,18 +21,19 @@ public interface ITokenEndpoint
     /// A <see cref="NordigenApiResponse{TResponse, TError}" /> containing the obtained
     /// <see cref="JsonWebTokenPair" /> if the request was successful.
     /// </returns>
-    Task<NordigenApiResponse<JsonWebTokenPair, BasicError>> GetTokenPair(
+    Task<NordigenApiResponse<JsonWebTokenPair, BasicResponse>> GetTokenPair(
         CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Refreshes the JWT access token.
     /// </summary>
-    /// <param name="refreshToken">The refresh token previously obtained through the <see cref="TokenEndpoint.GetTokenPair" /> method.</param>
+    /// <param name="refreshToken">The refresh token previously obtained through the <see cref="TokenEndpoint.GetTokenPair" />
+    /// method.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
     /// <returns>
     /// A <see cref="NordigenApiResponse{TResponse, TError}" /> containing the refreshed
     /// <see cref="JsonWebAccessToken" /> if the request was successful.
     /// </returns>
-    Task<NordigenApiResponse<JsonWebAccessToken, BasicError>> RefreshAccessToken(JsonWebToken refreshToken,
+    Task<NordigenApiResponse<JsonWebAccessToken, BasicResponse>> RefreshAccessToken(JsonWebToken refreshToken,
         CancellationToken cancellationToken = default);
 }

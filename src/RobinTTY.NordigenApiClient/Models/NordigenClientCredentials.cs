@@ -26,7 +26,7 @@ public class NordigenClientCredentials
     /// <param name="secretKey">Secret Nordigen key.</param>
     public NordigenClientCredentials(string secretId, string secretKey)
     {
-        SecretId = secretId;
-        SecretKey = secretKey;
+        SecretId = secretId ?? throw new ArgumentNullException(nameof(secretId));
+        SecretKey = secretKey ?? throw new ArgumentNullException(nameof(secretKey));
     }
 }

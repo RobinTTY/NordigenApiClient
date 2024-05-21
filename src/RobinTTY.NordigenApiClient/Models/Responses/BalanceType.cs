@@ -22,7 +22,8 @@ public enum BalanceType
     /// <summary>
     /// Closing balance of amount of money that is at the disposal of the account owner on the date specified.
     /// </summary>
-    [Description("closingAvailable")] ClosingAvailable,
+    [Description("closingAvailable")]
+    ClosingAvailable,
 
     /// <summary>
     /// Balance of the account at the end of the pre-agreed account reporting period. It is the sum of the opening booked
@@ -31,7 +32,8 @@ public enum BalanceType
     /// this is composed of invoiced,
     /// but not yet paid entries.
     /// </summary>
-    [Description("closingBooked")] ClosingBooked,
+    [Description("closingBooked")]
+    ClosingBooked,
 
     /// <summary>
     /// Balance composed of booked entries and pending items known at the time of calculation, which projects the end of
@@ -49,17 +51,20 @@ public enum BalanceType
     ///     </item>
     /// </list>
     /// </summary>
-    [Description("expected")] Expected,
+    [Description("expected")]
+    Expected,
 
     /// <summary>
     /// Forward available balance of money that is at the disposal of the account owner on the date specified.
     /// </summary>
-    [Description("forwardAvailable")] ForwardAvailable,
+    [Description("forwardAvailable")]
+    ForwardAvailable,
 
     /// <summary>
     /// Balance for informational purposes.
     /// </summary>
-    [Description("information")] Information,
+    [Description("information")]
+    Information,
 
     /// <summary>
     /// Available balance calculated in the course of the account servicer's business day, at the time specified, and
@@ -76,7 +81,8 @@ public enum BalanceType
     ///     </item>
     /// </list>
     /// </summary>
-    [Description("interimAvailable")] InterimAvailable,
+    [Description("interimAvailable")]
+    InterimAvailable,
 
     /// <summary>
     /// Balance calculated in the course of the account servicer's business day, at the time specified, and subject to
@@ -84,23 +90,27 @@ public enum BalanceType
     /// business day. The interim balance is calculated on the basis of booked credit and debit items during the
     /// calculation time/period specified.
     /// </summary>
-    [Description("interimBooked")] InterimBooked,
+    [Description("interimBooked")]
+    InterimBooked,
 
     /// <summary>
     /// Only for card accounts, to be defined yet.
     /// </summary>
-    [Description("nonInvoiced")] NonInvoiced,
+    [Description("nonInvoiced")]
+    NonInvoiced,
 
     /// <summary>
     /// Book balance of the account at the beginning of the account reporting period. It always equals the closing book
     /// balance from the previous report.
     /// </summary>
-    [Description("openingBooked")] OpeningBooked,
+    [Description("openingBooked")]
+    OpeningBooked,
 
     /// <summary>
     /// Opening balance of amount of money that is at the disposal of the account owner on the date specified.
     /// </summary>
-    [Description("openingAvailable")] OpeningAvailable,
+    [Description("openingAvailable")]
+    OpeningAvailable,
 
     /// <summary>
     /// Balance of the account at the previously closed account reporting period. The opening booked balance for the new

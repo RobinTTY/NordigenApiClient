@@ -1,47 +1,59 @@
 ﻿using System.Text.Json.Serialization;
+using RobinTTY.NordigenApiClient.JsonConverters;
 using RobinTTY.NordigenApiClient.Models.Requests;
+using RobinTTY.NordigenApiClient.Models.Responses;
 
 namespace RobinTTY.NordigenApiClient.Models.Errors;
 
 /// <summary>
 /// An error description as returned by the create operation of the agreements endpoint of the Nordigen API.
 /// </summary>
-public class CreateAgreementError : BasicError
+public class CreateAgreementError : BasicResponse
 {
     /// <summary>
     /// An error that was returned related to the <see cref="CreateAgreementRequest.InstitutionId" /> property sent during
     /// the request.
     /// </summary>
     [JsonPropertyName("institution_id")]
-    public BasicError? InstitutionIdError { get; }
+    [JsonConverter(typeof(StringArrayToBasicResponseConverter))]
+    public BasicResponse? InstitutionIdError { get; }
 
     /// <summary>
     /// An error that was returned related to the <see cref="CreateAgreementRequest.AccessScope" /> property sent during
     /// the request.
     /// </summary>
     [JsonPropertyName("access_scope")]
-    public BasicError? AccessScopeError { get; }
+    [JsonConverter(typeof(StringArrayToBasicResponseConverter))]
+    public BasicResponse? AccessScopeError { get; }
 
     /// <summary>
     /// An error that was returned related to the <see cref="CreateAgreementRequest.MaxHistoricalDays" /> property sent
     /// during the request.
     /// </summary>
     [JsonPropertyName("max_historical_days")]
-    public BasicError? MaxHistoricalDaysError { get; }
+    [JsonConverter(typeof(StringArrayToBasicResponseConverter))]
+    public BasicResponse? MaxHistoricalDaysError { get; }
 
     /// <summary>
     /// An error that was returned related to the <see cref="CreateAgreementRequest.AccessValidForDays" /> property sent
     /// during the request.
     /// </summary>
     [JsonPropertyName("access_valid_for_days")]
-    public BasicError? AccessValidForDaysError { get; }
+    [JsonConverter(typeof(StringArrayToBasicResponseConverter))]
+    public BasicResponse? AccessValidForDaysError { get; }
 
     /// <summary>
     /// An error that was returned related to the <see cref="CreateAgreementRequest.InstitutionId" /> property sent during
     /// the request.
     /// </summary>
     [JsonPropertyName("agreement")]
-    public BasicError? AgreementError { get; }
+    [JsonConverter(typeof(StringArrayToBasicResponseConverter))]
+    public BasicResponse? AgreementError { get; }
+
+    /// <summary>
+    /// Creates a new instance of <see cref="CreateAgreementError" />.
+    /// </summary>
+    public CreateAgreementError() { }
 
     /// <summary>
     /// Creates a new instance of <see cref="CreateAgreementError" />.
@@ -72,11 +84,11 @@ public class CreateAgreementError : BasicError
     public CreateAgreementError(
         string summary,
         string detail,
-        BasicError? institutionIdError,
-        BasicError? accessScopeError,
-        BasicError? maxHistoricalDaysError,
-        BasicError? accessValidForDaysError,
-        BasicError? agreementError
+        BasicResponse? institutionIdError,
+        BasicResponse? accessScopeError,
+        BasicResponse? maxHistoricalDaysError,
+        BasicResponse? accessValidForDaysError,
+        BasicResponse? agreementError
     ) : base(summary, detail)
     {
         InstitutionIdError = institutionIdError;

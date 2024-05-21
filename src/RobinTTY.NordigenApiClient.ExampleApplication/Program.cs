@@ -9,7 +9,7 @@ var client = new NordigenClient(httpClient, credentials);
 
 ////* Getting balances and transactions for a bank account */////
 // 1. Get a list of institutions in your country (e.g. Great Britain):
-var institutionsResponse = await client.InstitutionsEndpoint.GetInstitutions("GB");
+var institutionsResponse = await client.InstitutionsEndpoint.GetInstitutions(SupportedCountry.UnitedKingdom);
 if (institutionsResponse.IsSuccess)
     institutionsResponse.Result.ForEach(institution =>
     {
@@ -21,11 +21,8 @@ else
 // 2. Choose the institution your bank account is registered with and create a requisition for it:
 
 var institution = "BANK_OF_SCOTLAND_BOFSGBS1";
-var userLanguage = "EN";
-var reference = "your-internal-reference";
 var redirect = new Uri("https://where-nordigen-will-redirect-after-authentication.com");
-var requisitionRequest = new CreateRequisitionRequest(redirect, institution, reference, userLanguage);
-var requisitionResponse = await client.RequisitionsEndpoint.CreateRequisition(requisitionRequest);
+var requisitionResponse = await client.RequisitionsEndpoint.CreateRequisition(institution, redirect);
 
 if (requisitionResponse.IsSuccess)
 {

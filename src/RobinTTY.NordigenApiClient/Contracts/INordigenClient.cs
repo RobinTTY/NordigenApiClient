@@ -1,5 +1,4 @@
-﻿using RobinTTY.NordigenApiClient.Endpoints;
-using RobinTTY.NordigenApiClient.Models.Jwt;
+﻿using RobinTTY.NordigenApiClient.Models.Jwt;
 
 namespace RobinTTY.NordigenApiClient.Contracts;
 

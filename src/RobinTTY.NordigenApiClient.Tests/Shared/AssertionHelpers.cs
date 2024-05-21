@@ -1,10 +1,8 @@
-﻿using System.Net;
-using RobinTTY.NordigenApiClient.Models;
-using RobinTTY.NordigenApiClient.Models.Responses;
+﻿using RobinTTY.NordigenApiClient.Models.Responses;
 
-namespace RobinTTY.NordigenApiClient.Tests;
+namespace RobinTTY.NordigenApiClient.Tests.Shared;
 
-internal static class TestExtensions
+public static class AssertionHelpers
 {
     internal static void AssertNordigenApiResponseIsSuccessful<TResponse, TError>(
         NordigenApiResponse<TResponse, TError> response, HttpStatusCode statusCode)
@@ -32,11 +30,25 @@ internal static class TestExtensions
         });
     }
 
-    internal static NordigenClient GetConfiguredClient()
+    internal static void AssertThatAgreementPageContainsAgreement(
+        NordigenApiResponse<ResponsePage<Agreement>, BasicResponse> pagedResponse, List<string> ids)
     {
-        var httpClient = new HttpClient();
-        var secrets = File.ReadAllLines("secrets.txt");
-        var credentials = new NordigenClientCredentials(secrets[0], secrets[1]);
-        return new NordigenClient(httpClient, credentials);
+        AssertNordigenApiResponseIsSuccessful(pagedResponse, HttpStatusCode.OK);
+        var page2Result = pagedResponse.Result!;
+        var page2Agreements = page2Result.Results.ToList();
+        Assert.Multiple(() =>
+        {
+            Assert.That(page2Agreements, Has.Count.EqualTo(1));
+            Assert.That(ids, Does.Contain(page2Agreements.First().Id.ToString()));
+        });
+    }
+
+    internal static void AssertBasicResponseMatchesExpectations(BasicResponse? response, string summary, string detail)
+    {
+        Assert.Multiple(() =>
+        {
+            Assert.That(response?.Summary, Is.EqualTo(summary));
+            Assert.That(response?.Detail, Is.EqualTo(detail));
+        });
     }
 }

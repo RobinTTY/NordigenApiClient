@@ -17,7 +17,7 @@ public interface IAccountsEndpoint
     /// <param name="id">The id of the account to get.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
     /// <returns>A <see cref="NordigenApiResponse{TResponse, TError}" /> which contains the specified account.</returns>
-    Task<NordigenApiResponse<BankAccount, BasicError>> GetAccount(Guid id,
+    Task<NordigenApiResponse<BankAccount, BasicResponse>> GetAccount(Guid id,
         CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -26,7 +26,7 @@ public interface IAccountsEndpoint
     /// <param name="id">The id of the account to get.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
     /// <returns>A <see cref="NordigenApiResponse{TResponse, TError}" /> which contains the specified account.</returns>
-    Task<NordigenApiResponse<BankAccount, BasicError>> GetAccount(string id,
+    Task<NordigenApiResponse<BankAccount, BasicResponse>> GetAccount(string id,
         CancellationToken cancellationToken = default);
 
     /// <summary>

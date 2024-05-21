@@ -1,5 +1,4 @@
 ﻿using RobinTTY.NordigenApiClient.Models.Errors;
-using RobinTTY.NordigenApiClient.Models.Requests;
 using RobinTTY.NordigenApiClient.Models.Responses;
 
 namespace RobinTTY.NordigenApiClient.Contracts;
@@ -22,7 +21,7 @@ public interface IAgreementsEndpoint
     /// A <see cref="NordigenApiResponse{TResponse, TError}" /> containing a <see cref="ResponsePage{T}" /> which
     /// contains a list of end user agreements.
     /// </returns>
-    Task<NordigenApiResponse<ResponsePage<Agreement>, BasicError>> GetAgreements(int limit, int offset,
+    Task<NordigenApiResponse<ResponsePage<Agreement>, BasicResponse>> GetAgreements(int limit, int offset,
         CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -31,7 +30,7 @@ public interface IAgreementsEndpoint
     /// <param name="id">The id of the agreement to retrieve.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
     /// <returns>A <see cref="NordigenApiResponse{TResponse, TError}" /> which contains the specified end user agreements.</returns>
-    Task<NordigenApiResponse<Agreement, BasicError>> GetAgreement(Guid id,
+    Task<NordigenApiResponse<Agreement, BasicResponse>> GetAgreement(Guid id,
         CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -40,25 +39,21 @@ public interface IAgreementsEndpoint
     /// <param name="id">The id of the agreement to retrieve.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
     /// <returns>A <see cref="NordigenApiResponse{TResponse, TError}" /> which contains the specified end user agreements.</returns>
-    Task<NordigenApiResponse<Agreement, BasicError>> GetAgreement(string id,
+    Task<NordigenApiResponse<Agreement, BasicResponse>> GetAgreement(string id,
         CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Creates a new end user agreement which determines the scope and length of access to data provided by institutions.
     /// </summary>
-    /// <param name="agreement">The agreement to create.</param>
+    /// <param name="institutionId">The institution this agreement will refer to.</param>
+    /// <param name="accessValidForDays">The length the access to the account will be valid for to request.</param>
+    /// <param name="maxHistoricalDays">The length of the transaction history in days to request.</param>
+    /// <param name="accessScope">The scope of information that will be available for access to request. By default all access scopes
+    /// (balances, transactions and details) will be requested.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
     /// <returns>A <see cref="NordigenApiResponse{TResponse, TError}" /> containing the created <see cref="Agreement" />.</returns>
-    Task<NordigenApiResponse<Agreement, CreateAgreementError>> CreateAgreement(
-        CreateAgreementRequest agreement, CancellationToken cancellationToken = default);
-
-    /// <summary>
-    /// Deletes the end user agreement with the given id.
-    /// </summary>
-    /// <param name="id">The id of the agreement to delete.</param>
-    /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
-    /// <returns>A <see cref="NordigenApiResponse{TResponse, TError}" /> containing a confirmation of the deletion.</returns>
-    Task<NordigenApiResponse<BasicResponse, BasicError>> DeleteAgreement(Guid id,
+    Task<NordigenApiResponse<Agreement, CreateAgreementError>> CreateAgreement(string institutionId,
+        uint accessValidForDays = 90, uint maxHistoricalDays = 90, List<AccessScope>? accessScope = null,
         CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -67,26 +62,37 @@ public interface IAgreementsEndpoint
     /// <param name="id">The id of the agreement to delete.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
     /// <returns>A <see cref="NordigenApiResponse{TResponse, TError}" /> containing a confirmation of the deletion.</returns>
-    Task<NordigenApiResponse<BasicResponse, BasicError>> DeleteAgreement(string id,
+    Task<NordigenApiResponse<BasicResponse, BasicResponse>> DeleteAgreement(Guid id,
+        CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Deletes the end user agreement with the given id.
+    /// </summary>
+    /// <param name="id">The id of the agreement to delete.</param>
+    /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
+    /// <returns>A <see cref="NordigenApiResponse{TResponse, TError}" /> containing a confirmation of the deletion.</returns>
+    Task<NordigenApiResponse<BasicResponse, BasicResponse>> DeleteAgreement(string id,
         CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Accepts an end user agreement. Only available to customers with an enterprise contract at Nordigen.
     /// </summary>
     /// <param name="id">The id of the end user agreement to accept.</param>
-    /// <param name="metadata">The metadata required to accept the end user agreement.</param>
+    /// <param name="userAgent">User agent of the client that accepts the request.</param>
+    /// <param name="ipAddress">IP address of the client that accepts the request.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
-    /// <returns></returns>
-    Task<NordigenApiResponse<Agreement, BasicError>> AcceptAgreement(Guid id,
-        AcceptAgreementRequest metadata, CancellationToken cancellationToken = default);
+    /// <returns>A <see cref="NordigenApiResponse{TResponse, TError}" /> which contains the accepted end user agreement.</returns>
+    Task<NordigenApiResponse<Agreement, BasicResponse>> AcceptAgreement(Guid id, string userAgent, string ipAddress,
+        CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Accepts an end user agreement. Only available to customers with an enterprise contract at Nordigen.
     /// </summary>
     /// <param name="id">The id of the end user agreement to accept.</param>
-    /// <param name="metadata">The metadata required to accept the end user agreement.</param>
+    /// <param name="userAgent">User agent of the client that accepts the request.</param>
+    /// <param name="ipAddress">IP address of the client that accepts the request.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
-    /// <returns></returns>
-    Task<NordigenApiResponse<Agreement, BasicError>> AcceptAgreement(string id,
-        AcceptAgreementRequest metadata, CancellationToken cancellationToken = default);
+    /// <returns>A <see cref="NordigenApiResponse{TResponse, TError}" /> which contains the accepted end user agreement.</returns>
+    Task<NordigenApiResponse<Agreement, BasicResponse>> AcceptAgreement(string id, string userAgent, string ipAddress,
+        CancellationToken cancellationToken = default);
 }

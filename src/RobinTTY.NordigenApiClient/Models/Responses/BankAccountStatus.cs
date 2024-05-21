@@ -23,30 +23,36 @@ public enum BankAccountStatus
     /// <summary>
     /// Indicates that the user has successfully authenticated and an account has been discovered.
     /// </summary>
-    [Description("DISCOVERED")] Discovered,
+    [Description("DISCOVERED")]
+    Discovered,
 
     /// <summary>
     /// Indicates that an error was encountered in processing the account.
     /// </summary>
-    [Description("ERROR")] Error,
+    [Description("ERROR")]
+    Error,
 
     /// <summary>
     /// Indicates that the access to the account has expired as defined in the end user agreement.
     /// </summary>
-    [Description("EXPIRED")] Expired,
+    [Description("EXPIRED")]
+    Expired,
 
     /// <summary>
     /// Indicates that the account is being processed by the institution.
     /// </summary>
-    [Description("PROCESSING")] Processing,
+    [Description("PROCESSING")]
+    Processing,
 
     /// <summary>
     /// Indicates that the account has been successfully processed.
     /// </summary>
-    [Description("READY")] Ready,
+    [Description("READY")]
+    Ready,
 
     /// <summary>
-    /// Indicates that the account has been suspended due to mre than 10 consecutive failed attempts to access the account.
+    /// Indicates that the account has been suspended due to more than 10 consecutive failed attempts to access the account.
     /// </summary>
-    [Description("SUSPENDED")] Suspended
+    [Description("SUSPENDED")]
+    Suspended
 }

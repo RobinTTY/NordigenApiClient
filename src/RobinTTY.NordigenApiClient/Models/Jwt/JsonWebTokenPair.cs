@@ -42,8 +42,8 @@ public class JsonWebTokenPair
     [JsonConstructor]
     public JsonWebTokenPair(JsonWebToken accessToken, JsonWebToken refreshToken, int accessExpires, int refreshExpires)
     {
-        AccessToken = accessToken;
-        RefreshToken = refreshToken;
+        AccessToken = accessToken ?? throw new ArgumentNullException(nameof(accessToken));
+        RefreshToken = refreshToken ?? throw new ArgumentNullException(nameof(refreshToken));
         AccessExpires = accessExpires;
         RefreshExpires = refreshExpires;
     }

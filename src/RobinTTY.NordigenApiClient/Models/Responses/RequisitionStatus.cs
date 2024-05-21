@@ -22,48 +22,57 @@ public enum RequisitionStatus
     /// <summary>
     /// Indicates that the requisition has been successfully created (stage 1).
     /// </summary>
-    [Description("CR")] Created,
+    [Description("CR")]
+    Created,
 
     /// <summary>
     /// Indicates that the account holder is currently in the process of giving consent through Nordigen's consent screen
     /// (stage 2).
     /// </summary>
-    [Description("GC")] GivingConsent,
+    [Description("GC")]
+    GivingConsent,
 
     /// <summary>
     /// Indicates that the account holder has been redirected to the financial institution for authentication (stage 3).
     /// </summary>
-    [Description("UA")] UndergoingAuthentication,
+    [Description("UA")]
+    UndergoingAuthentication,
 
     /// <summary>
     /// Indicates that either the SSN verification has failed or the account holder has entered incorrect credentials
     /// (stage 4).
     /// </summary>
-    [Description("RJ")] Rejected,
+    [Description("RJ")]
+    Rejected,
 
     /// <summary>
     /// Indicates that the account holder is currently in the process of selecting accounts (stage 5).
     /// </summary>
-    [Description("SA")] SelectingAccounts,
+    [Description("SA")]
+    SelectingAccounts,
 
     /// <summary>
     /// Indicates that the end user is currently in the process of granting access to their account information (stage 6).
     /// </summary>
-    [Description("GA")] GrantingAccess,
+    [Description("GA")]
+    GrantingAccess,
 
     /// <summary>
     /// Indicates that an account has been successfully linked to the requisition (stage 7).
     /// </summary>
-    [Description("LN")] Linked,
+    [Description("LN")]
+    Linked,
 
     /// <summary>
     /// Indicates that the requisition is suspended due to numerous consecutive errors that happened while accessing one of
     /// the linked accounts (stage 8).
     /// </summary>
-    [Description("SU")] Suspended,
+    [Description("SU")]
+    Suspended,
 
     /// <summary>
     /// Indicates that access to the linked accounts has expired as defined in the end user agreement (stage 9).
     /// </summary>
-    [Description("EX")] Expired
+    [Description("EX")]
+    Expired
 }

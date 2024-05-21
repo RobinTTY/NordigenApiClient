@@ -1,36 +1,24 @@
-﻿using System.Net;
-using RobinTTY.NordigenApiClient.Models;
+﻿using RobinTTY.NordigenApiClient.Models;
 using RobinTTY.NordigenApiClient.Models.Jwt;
+using RobinTTY.NordigenApiClient.Tests.Shared;
 
-namespace RobinTTY.NordigenApiClient.Tests.Endpoints;
+namespace RobinTTY.NordigenApiClient.Tests.LiveApi.Endpoints;
 
-internal class TokenEndpointTests
+public class TokenEndpointTests
 {
     private NordigenClient _apiClient = null!;
 
     [OneTimeSetUp]
     public void Setup()
     {
-        _apiClient = TestExtensions.GetConfiguredClient();
+        _apiClient = TestHelpers.GetConfiguredClient();
     }
 
-    /// <summary>
-    /// Tests the retrieving and refreshing of the JWT access tokens.
-    /// </summary>
-    /// <returns></returns>
-    [Test]
-    public async Task GetJsonWebTokenPairAndRefresh()
-    {
-        var response = await _apiClient.TokenEndpoint.GetTokenPair();
-        TestExtensions.AssertNordigenApiResponseIsSuccessful(response, HttpStatusCode.OK);
-        var response2 = await _apiClient.TokenEndpoint.RefreshAccessToken(response.Result!.RefreshToken);
-        TestExtensions.AssertNordigenApiResponseIsSuccessful(response2, HttpStatusCode.OK);
-    }
+    #region RequestsWithErrors
 
     /// <summary>
     /// Tests retrieving a token with invalid credentials.
     /// </summary>
-    /// <returns></returns>
     [Test]
     public async Task GetTokenWithInvalidCredentials()
     {
@@ -48,25 +36,37 @@ internal class TokenEndpointTests
         });
     }
 
+    #endregion
+
+    #region RequestsWithSuccessfulResponse
+
+    /// <summary>
+    /// Tests the retrieving and refreshing of the JWT access tokens.
+    /// </summary>
+    [Test]
+    public async Task GetJsonWebTokenPairAndRefresh()
+    {
+        var response = await _apiClient.TokenEndpoint.GetTokenPair();
+        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(response, HttpStatusCode.OK);
+        var response2 = await _apiClient.TokenEndpoint.RefreshAccessToken(response.Result!.RefreshToken);
+        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(response2, HttpStatusCode.OK);
+    }
+
     /// <summary>
     /// Tests using the API with an expired access token.
     /// Requires secrets.txt to contain expired access token / valid refresh token pair.
     /// </summary>
-    /// <returns></returns>
     [Test]
     public async Task ReuseExpiredToken()
     {
-#if NET6_0_OR_GREATER
-        var secrets = await File.ReadAllLinesAsync("secrets.txt");
-#else
-        var secrets = File.ReadAllLines("secrets.txt");
-#endif
         var httpClient = new HttpClient();
-        var credentials = new NordigenClientCredentials(secrets[0], secrets[1]);
-        var tokenPair = new JsonWebTokenPair(secrets[6], secrets[7]);
+        var credentials = new NordigenClientCredentials(TestHelpers.Secrets[0], TestHelpers.Secrets[1]);
+        var tokenPair = new JsonWebTokenPair(TestHelpers.Secrets[6], TestHelpers.Secrets[7]);
         var apiClient = new NordigenClient(httpClient, credentials, tokenPair);
 
         var result = await apiClient.RequisitionsEndpoint.GetRequisitions(10, 0);
-        TestExtensions.AssertNordigenApiResponseIsSuccessful(result, HttpStatusCode.OK);
+        AssertionHelpers.AssertNordigenApiResponseIsSuccessful(result, HttpStatusCode.OK);
     }
+
+    #endregion
 }

@@ -53,10 +53,16 @@ public class BankAccountDetails
     public string? OwnerName { get; }
 
     /// <summary>
-    /// Address of the legal account owner.
+    /// Address of the legal account owner in unstructured form.
     /// </summary>
     [JsonPropertyName("ownerAddressUnstructured")]
-    public string? OwnerAddressUnstructured { get; }
+    public List<string>? OwnerAddressUnstructured { get; }
+
+    /// <summary>
+    /// Address of the legal account owner.
+    /// </summary>
+    [JsonPropertyName("ownerAddressStructured")]
+    public Address? OwnerAddressStructured { get; }
 
     /// <summary>
     /// Name of the account, as assigned by the bank, in agreement with the account owner in
@@ -64,6 +70,12 @@ public class BankAccountDetails
     /// </summary>
     [JsonPropertyName("name")]
     public string? Name { get; }
+
+    /// <summary>
+    /// Name of the account as defined by the end user within online channels.
+    /// </summary>
+    [JsonPropertyName("displayName")]
+    public string? DisplayName { get; }
 
     /// <summary>
     /// Product name of the bank for this account.
@@ -125,11 +137,13 @@ public class BankAccountDetails
     /// Name of the legal account owner. If there is more than one owner, then two names might be noted
     /// here.
     /// </param>
-    /// <param name="ownerAddressUnstructured">Address of the legal account owner.</param>
+    /// <param name="ownerAddressUnstructured">Address of the legal account owner in unstructured form.</param>
+    /// <param name="ownerAddressStructured">Address of the legal account owner.</param>
     /// <param name="name">
     /// Name of the account, as assigned by the bank, in agreement with the account owner in order to provide an additional
     /// means of identification of the account.
     /// </param>
+    /// <param name="displayName">Name of the account as defined by the end user within online channels.</param>
     /// <param name="product">Product name of the bank for this account.</param>
     /// <param name="cashAccountType">External cash account type as defined by ISO 20022.</param>
     /// <param name="bic">The BIC (Business Identifier Code) associated with the account.</param>
@@ -149,10 +163,10 @@ public class BankAccountDetails
     /// of payment cards).
     /// </param>
     [JsonConstructor]
-    public BankAccountDetails(string resourceId, string iban, string? bic, string? bban, string currency,
-        string ownerName, string? ownerAddressUnstructured, string name, string product,
-        CashAccountType? cashAccountType, string? details, string? linkedAccounts, string? msisdn,
-        IsoBankAccountStatus? status, BankAccountUsage? usage, string? maskedPan)
+    public BankAccountDetails(string? resourceId, string? iban, string? bic, string? bban, string currency,
+        string? ownerName, List<string>? ownerAddressUnstructured, Address? ownerAddressStructured, string? name,
+        string? displayName, string? product, CashAccountType? cashAccountType, string? details, string? linkedAccounts,
+        string? msisdn, IsoBankAccountStatus? status, BankAccountUsage? usage, string? maskedPan)
     {
         ResourceId = resourceId;
         Iban = iban;
@@ -162,6 +176,7 @@ public class BankAccountDetails
         OwnerName = ownerName;
         OwnerAddressUnstructured = ownerAddressUnstructured;
         Name = name;
+        DisplayName = displayName;
         Product = product;
         CashAccountType = cashAccountType;
         Details = details;
@@ -170,6 +185,7 @@ public class BankAccountDetails
         Status = status;
         Usage = usage;
         MaskedPan = maskedPan;
+        OwnerAddressStructured = ownerAddressStructured;
     }
 }
 
@@ -189,8 +205,5 @@ internal class BankAccountDetailsWrapper
     /// </summary>
     /// <param name="account">Detailed information about a bank account.</param>
     [JsonConstructor]
-    public BankAccountDetailsWrapper(BankAccountDetails account)
-    {
-        Account = account;
-    }
+    public BankAccountDetailsWrapper(BankAccountDetails account) => Account = account;
 }
