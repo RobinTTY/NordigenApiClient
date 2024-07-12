@@ -16,14 +16,7 @@ function HomepageHeader() {
           {siteConfig.title}
         </Heading>
         <p className="hero__subtitle">
-          A .NET client for{" "}
-          <a
-            style={{ color: "#254ead" }}
-            href="https://gocardless.com/bank-account-data/"
-          >
-            GoCardless Bank Account Data API
-          </a>{" "}
-          (formerly Nordigen API)
+          A .NET client for the GoCardless Bank Account Data API
         </p>
         <Link className="button button--secondary button--lg" to="/docs/intro">
           Get Started
@@ -36,10 +29,7 @@ function HomepageHeader() {
 export default function Home(): JSX.Element {
   const { siteConfig } = useDocusaurusContext();
   return (
-    <Layout
-      title={`Hello from ${siteConfig.title}`}
-      description="Description will go into a meta tag in <head />"
-    >
+    <Layout description="Description will go into a meta tag in <head />">
       <HomepageHeader />
       <main>
         <HomepageFeatures />

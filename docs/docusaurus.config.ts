@@ -4,9 +4,7 @@ import type * as Preset from "@docusaurus/preset-classic";
 
 const config: Config = {
   title: "NordigenApiClient",
-  tagline:
-    "A .NET client for GoCardless bank account data (formerly Nordigen API)",
-  favicon: "img/favicon.ico",
+  favicon: "img/NordigenApiClient_no_text.ico",
 
   url: "https://github.com/",
   baseUrl: "/NordigenApiClient/",
@@ -47,7 +45,7 @@ const config: Config = {
       title: "NordigenApiClient",
       logo: {
         alt: "NordigenApiClient logo",
-        src: "img/logo.svg",
+        src: "img/NordigenApiClient_transparent_no_text.png",
       },
       items: [
         {
