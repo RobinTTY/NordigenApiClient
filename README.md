@@ -1,6 +1,6 @@
 # NordigenApiClient
 
-This project provides a .NET client for
+This library provides a .NET client for
 the [GoCardless Bank Account Data API](https://gocardless.com/bank-account-data/) (formerly Nordigen API). The following
 API endpoints are supported:
 

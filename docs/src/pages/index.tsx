@@ -15,7 +15,7 @@ function HomepageHeader() {
         <Heading as="h1" className="hero__title">
           {siteConfig.title}
         </Heading>
-        <p className="hero__subtitle">
+        <p className={clsx("hero__subtitle", styles.heroSubtitle)}>
           A .NET client for the GoCardless Bank Account Data API
         </p>
         <Link className="button button--secondary button--lg" to="/docs/intro">

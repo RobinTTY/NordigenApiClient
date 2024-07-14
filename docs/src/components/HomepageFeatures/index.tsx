@@ -4,14 +4,12 @@ import styles from "./styles.module.css";
 
 type FeatureItem = {
   title: string;
-  Svg: React.ComponentType<React.ComponentProps<"svg">>;
   description: JSX.Element;
 };
 
 const FeatureList: FeatureItem[] = [
   {
     title: "Covers All Your Needs",
-    Svg: require("@site/static/img/undraw_docusaurus_mountain.svg").default,
     description: (
       <>
         This client supports all the free endpoints provided by the GoCardless
@@ -21,7 +19,6 @@ const FeatureList: FeatureItem[] = [
   },
   {
     title: "Easy to Use",
-    Svg: require("@site/static/img/undraw_docusaurus_tree.svg").default,
     description: (
       <>
         All data returned by the API is returned as strongly typed objects, even
@@ -33,7 +30,6 @@ const FeatureList: FeatureItem[] = [
   },
   {
     title: "Free and Open Source",
-    Svg: require("@site/static/img/undraw_docusaurus_react.svg").default,
     description: (
       <>
         The client is MIT licensed and you can find the code on{" "}
@@ -48,9 +44,6 @@ const FeatureList: FeatureItem[] = [
 function Feature({ title, Svg, description }: FeatureItem) {
   return (
     <div className={clsx("col col--4")}>
-      <div className="text--center">
-        <Svg className={styles.featureSvg} role="img" />
-      </div>
       <div className="text--center padding-horiz--md">
         <Heading as="h3">{title}</Heading>
         <p>{description}</p>
