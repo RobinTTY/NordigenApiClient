@@ -134,11 +134,11 @@ example [here](src/RobinTTY.NordigenApiClient.ExampleApplication)):
 
 ## Advanced Usage
 
-### Acess/Refresh Token reuse
+### Access/Refresh Token reuse
 
-If you wan't to persist the access/refresh token used by the client you can do so by accessing the `JsonWebTokenPair`
+If you want to persist the access/refresh token used by the client you can do so by accessing the `JsonWebTokenPair`
 property of the client. After the first request that requires authentication this property will be populated with the
-access/refresh token that was automatically aquired.
+access/refresh token that was automatically acquired.
 
 ```cs
 Console.WriteLine(client.JsonWebTokenPair.AccessToken.EncodedToken);
@@ -190,7 +190,7 @@ void OnTokenPairUpdated(object? sender, TokenPairUpdatedEventArgs e)
 
 If you use this library with .NET versions older than 6.0 you will receive warnings informing you that some dependencies
 of this packet don't necessarily support your chosen .NET version. The .NET Standard version of this package is tested
-against .NET Framework 4.8 and older versions (including .NET Core) should work fine as well. You can surpress these
+against .NET Framework 4.8 and older versions (including .NET Core) should work fine as well. You can suppress these
 warnings by adding the following option to your csproj file:
 
 ```xml

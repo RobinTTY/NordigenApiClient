@@ -1,5 +1,4 @@
-﻿using RobinTTY.NordigenApiClient.Endpoints;
-using RobinTTY.NordigenApiClient.Models.Requests;
+﻿using RobinTTY.NordigenApiClient.Models.Requests;
 using RobinTTY.NordigenApiClient.Models.Responses;
 
 namespace RobinTTY.NordigenApiClient.Contracts;
@@ -144,7 +143,7 @@ public interface IInstitutionsEndpoint
     /// Gets a specific institution by id.
     /// </summary>
     /// <param name="id">The id assigned to the institution by Nordigen (can be retrieved via
-    /// <see cref="InstitutionsEndpoint.GetInstitutions" />).</param>
+    /// <see cref="o:InstitutionsEndpoint.GetInstitutions" />).</param>
     /// <param name="cancellationToken">>Optional token to signal cancellation of the operation.</param>
     /// <returns>
     /// A <see cref="NordigenApiResponse{TResponse, TError}" /> containing the institution matching the id if the

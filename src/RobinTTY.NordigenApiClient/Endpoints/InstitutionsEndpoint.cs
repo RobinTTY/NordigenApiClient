@@ -44,7 +44,8 @@ public class InstitutionsEndpoint : IInstitutionsEndpoint
             query.Add(GetSupportFlagQuery("private_accounts_supported", privateAccountsSupported.Value));
         if (readRefundAccountSupported.HasValue)
             query.Add(GetSupportFlagQuery("read_refund_account_supported", readRefundAccountSupported.Value));
-        if (paymentsEnabled.HasValue) query.Add(GetSupportFlagQuery("payments_enabled", paymentsEnabled.Value));
+        if (paymentsEnabled.HasValue)
+            query.Add(GetSupportFlagQuery("payments_enabled", paymentsEnabled.Value));
         if (paymentSubmissionSupported.HasValue)
             query.Add(GetSupportFlagQuery("payment_submission_supported", paymentSubmissionSupported.Value));
         if (pendingTransactionsSupported.HasValue)
