@@ -239,9 +239,9 @@ public class AgreementsEndpointTests
         {
             AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.BadRequest);
 
-            Assert.That(response.Error!.Detail,
+            Assert.That(response.Error!.AccessScopeError!.Detail,
                 Is.EqualTo("For this institution the following scopes are required together: ['details', 'balances']"));
-            Assert.That(response.Error!.Summary, Is.EqualTo("Institution access scope dependencies error"));
+            Assert.That(response.Error!.AccessScopeError.Summary, Is.EqualTo("Institution access scope dependencies error"));
 
             Assert.That(new[] {response.Error!.InstitutionIdError, response.Error!.AgreementError}, Has.All.Null);
         });

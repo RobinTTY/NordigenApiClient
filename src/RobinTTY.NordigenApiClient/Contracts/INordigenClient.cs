@@ -53,7 +53,8 @@ public interface INordigenClient
     IAccountsEndpoint AccountsEndpoint { get; }
 
     /// <summary>
-    /// Occurs whenever the <see cref="NordigenClient.JsonWebTokenPair" /> is updated.
+    /// Occurs whenever the <see cref="NordigenClient.JsonWebTokenPair" /> is successfully updated.
+    /// When the token is manually updated to be null, this event will not be raised.
     /// </summary>
     event EventHandler<TokenPairUpdatedEventArgs>? TokenPairUpdated;
 }

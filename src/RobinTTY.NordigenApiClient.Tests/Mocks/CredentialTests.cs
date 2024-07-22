@@ -1,4 +1,5 @@
-﻿using RobinTTY.NordigenApiClient.Tests.Shared;
+﻿using RobinTTY.NordigenApiClient.Models.Jwt;
+using RobinTTY.NordigenApiClient.Tests.Shared;
 
 namespace RobinTTY.NordigenApiClient.Tests.Mocks;
 
@@ -23,6 +24,53 @@ public class CredentialTests
             Assert.That(apiClient.JsonWebTokenPair, Is.Not.Null);
             Assert.That(apiClient.JsonWebTokenPair!.AccessToken.EncodedToken, Has.Length.GreaterThan(0));
             Assert.That(apiClient.JsonWebTokenPair!.RefreshToken.EncodedToken, Has.Length.GreaterThan(0));
+        });
+    }
+
+    /// <summary>
+    /// Tests whether the <see cref="NordigenClient.TokenPairUpdated"/> event is raised when the token pair is updated
+    /// automatically by the client itself. 
+    /// </summary>
+    [Test]
+    public async Task TokenPairUpdateIsRaisedOnInternalUpdate()
+    {
+        var apiClient = TestHelpers.GetMockClient(null, HttpStatusCode.OK);
+        TokenPairUpdatedEventArgs? eventArgs = null;
+
+        apiClient.TokenPairUpdated += (_, e) => eventArgs = e;
+
+        await apiClient.AccountsEndpoint.GetAccount(TestHelpers.Secrets.ValidAccountId);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(eventArgs, Is.Not.Null);
+            Assert.That(eventArgs!.JsonWebTokenPair, Is.Not.Null);
+            Assert.That(eventArgs.JsonWebTokenPair.AccessToken.EncodedToken, Is.Not.Empty);
+            Assert.That(eventArgs.JsonWebTokenPair.RefreshToken.EncodedToken, Is.Not.Empty);
+        });
+    }
+
+    /// <summary>
+    /// Tests whether the <see cref="NordigenClient.TokenPairUpdated"/> event is raised when the token pair is updated
+    /// by the user. 
+    /// </summary>
+    [Test]
+    public void TokenPairUpdateIsRaisedOnManualUpdate()
+    {
+        var apiClient = TestHelpers.GetMockClient(null, HttpStatusCode.OK);
+        TokenPairUpdatedEventArgs? eventArgs = null;
+
+        apiClient.TokenPairUpdated += (_, e) => eventArgs = e;
+
+        apiClient.JsonWebTokenPair = new JsonWebTokenPair(TestHelpers.Secrets.ExpiredJwtAccessToken,
+            TestHelpers.Secrets.ValidJwtRefreshToken);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(eventArgs, Is.Not.Null);
+            Assert.That(eventArgs!.JsonWebTokenPair, Is.Not.Null);
+            Assert.That(eventArgs.JsonWebTokenPair.AccessToken.EncodedToken, Is.Not.Empty);
+            Assert.That(eventArgs.JsonWebTokenPair.RefreshToken.EncodedToken, Is.Not.Empty);
         });
     }
 
