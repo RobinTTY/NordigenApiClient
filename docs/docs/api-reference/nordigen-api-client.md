@@ -11,40 +11,50 @@ public NordigenClient(HttpClient httpClient, NordigenClientCredentials credentia
         JsonWebTokenPair? jsonWebTokenPair = null)
 ```
 
-### Arguments
+### Parameters
 
 ##### `httpClient` - [HttpClient](https://learn.microsoft.com/en-us/dotnet/api/system.net.http.httpclient?view=net-8.0)
 
+The `HttpClient` instance that should be used to send all requests made by the `NordigenClient`. You can adjust the `BaseAddress` of the `HttpClient` as needed, for details see: [Using a different Base Address](/docs/using-a-different-base-address).
+
 ##### `credentials` - NordigenClientCredentials
+
+The credentials you get from the [GoCardless Bank Account Data portal](https://bankaccountdata.gocardless.com/login/) (User secrets).
 
 ##### `jsonWebTokenPair` - JsonWebTokenPair?
 
+An optional `JsonWebTokenPair` to reuse from an preceding successful authentication. These may for instance be retrieved from your database.
+
 ## Properties
 
-```csharp
-public JsonWebTokenPair? JsonWebTokenPair
-```
+#### `JsonWebTokenPair` - JsonWebTokenPair?
 
-```csharp
-public ITokenEndpoint TokenEndpoint
-```
+The JWT pair consisting of access and refresh token used to authenticate with the GoCardless API. This property can be used to set the token pair that is used when retrieving a new access/refresh token through the `TokenEndpoint`.
 
-```csharp
-public IInstitutionsEndpoint InstitutionsEndpoint
-```
+#### `TokenEndpoint` - ITokenEndpoint
 
-```csharp
-public IAgreementsEndpoint AgreementsEndpoint
-```
+Provides support for the API operations of the tokens endpoint.
 
-```csharp
-public IRequisitionsEndpoint RequisitionsEndpoint
-```
+#### `InstitutionsEndpoint` - IInstitutionsEndpoint
 
-```csharp
-public IAccountsEndpoint AccountsEndpoint
-```
+Provides support for the API operations of the institutions endpoint.
 
-```csharp
-public event EventHandler<TokenPairUpdatedEventArgs>? TokenPairUpdated
-```
+#### `AgreementsEndpoint` - IAgreementsEndpoint
+
+Provides support for the API operations of the agreements endpoint.
+
+#### `RequisitionsEndpoint` - IRequisitionsEndpoint
+
+Provides support for the API operations of the requisitions endpoint.
+
+#### `AccountsEndpoint` - IAccountsEndpoint
+
+Provides support for the API operations of the accounts endpoint.
+
+## Events
+
+#### `TokenPairUpdated` - EventHandler\<TokenPairUpdatedEventArgs\>?
+
+Occurs whenever the `JsonWebTokenPair` property is successfully updated.
+When the token is manually updated to be null, this event will not be raised.
+For more information see [Handling Authentication Tokens](/docs/handling-authentication-tokens).

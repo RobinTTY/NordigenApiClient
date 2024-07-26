@@ -6,10 +6,14 @@ const sidebars: SidebarsConfig = {
     "quickstart-guide",
     "handling-authentication-tokens",
     "using-a-different-base-address",
+    "testing",
     {
       type: "category",
       label: "API Reference",
-      items: ["api-reference/nordigen-api-client"],
+      items: [
+        "api-reference/nordigen-api-client",
+        "api-reference/token-endpoint",
+      ],
     },
   ],
 };
