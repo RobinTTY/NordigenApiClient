@@ -8,18 +8,18 @@ The `TokenEndpoint` class provides support for the API operations of the tokens 
 
 ### `GetTokenPair`
 
-Obtain a new JWT token pair from the Nordigen API.
+Obtains a new JWT token pair from the Nordigen API.
 
 ```csharp
 public async Task<NordigenApiResponse<JsonWebTokenPair, BasicResponse>>
-GetTokenPair(CancellationToken cancellationToken = default)
+  GetTokenPair(CancellationToken cancellationToken = default)
 ```
 
 #### Parameters
 
 ##### `cancellationToken` - [CancellationToken](https://learn.microsoft.com/en-us/dotnet/api/system.threading.cancellationtoken?view=net-8.0)
 
-Optional token to signal cancellation of the operation.
+A token to signal cancellation of the operation.
 
 #### Returns
 
@@ -29,11 +29,11 @@ A `NordigenApiResponse` containing the obtained `JsonWebTokenPair` if the reques
 
 ### `RefreshAccessToken`
 
-Refresh the given JWT access token using a valid refresh token.
+Refreshes the given JWT access token using a valid refresh token.
 
 ```csharp
 public async Task<NordigenApiResponse<JsonWebAccessToken, BasicResponse>>
-RefreshAccessToken(JsonWebToken refreshToken, CancellationToken cancellationToken = default)
+  RefreshAccessToken(JsonWebToken refreshToken, CancellationToken cancellationToken = default)
 ```
 
 #### Parameters
@@ -44,7 +44,7 @@ A valid refresh token that was previously obtained.
 
 ##### `cancellationToken` - [CancellationToken](https://learn.microsoft.com/en-us/dotnet/api/system.threading.cancellationtoken?view=net-8.0)
 
-Optional token to signal cancellation of the operation.
+A token to signal cancellation of the operation.
 
 #### Returns
 

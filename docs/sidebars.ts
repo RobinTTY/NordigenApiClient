@@ -13,6 +13,8 @@ const sidebars: SidebarsConfig = {
       items: [
         "api-reference/nordigen-api-client",
         "api-reference/token-endpoint",
+        "api-reference/institutions-endpoint",
+        "api-reference/agreements-endpoint",
       ],
     },
   ],

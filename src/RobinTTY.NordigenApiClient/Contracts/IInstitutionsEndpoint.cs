@@ -15,52 +15,44 @@ public interface IInstitutionsEndpoint
     /// Gets a list of institutions supported by the Nordigen API (optionally filtered by country and supported features).
     /// </summary>
     /// <param name="country">
-    /// The two-letter country code (<a href="https://wikipedia.org/wiki/ISO_3166-1">ISO 3166</a>) in
-    /// which the institutions operate. Parameter won't be sent in the query if <see langword="null" />.
+    /// If set to true filters institutions by the country in which they operate. The country has to be specified by the
+    /// two-letter country code following <a href="https://wikipedia.org/wiki/ISO_3166-1">ISO 3166</a>.
     /// </param>
     /// <param name="accessScopesSupported">
-    /// Whether or not access scopes are supported by this institution. Parameter won't be
-    /// sent in the query if <see langword="null" />.
+    /// If set to true filters institutions by whether or not access scopes are supported.
     /// </param>
     /// <param name="accountSelectionSupported">
-    /// Whether or not account selection is supported by this institution. Parameter
-    /// won't be sent in the query if <see langword="null" />.
+    /// If set to true filters institutions by whether or not account selection is supported.
     /// </param>
     /// <param name="businessAccountsSupported">
-    /// Whether or not business accounts are supported by this institution. Parameter
-    /// won't be sent in the query if <see langword="null" />.
+    /// If set to true filters institutions by whether or not business accounts are supported.
     /// </param>
     /// <param name="cardAccountsSupported">
-    /// Whether or not card accounts are supported by this institution. Parameter won't be
-    /// sent in the query if <see langword="null" />.
+    /// If set to true filters institutions by whether or not card accounts are supported by this institution.
     /// </param>
     /// <param name="corporateAccountsSupported">
-    /// Whether or not corporate accounts are supported by this institution. Parameter
-    /// won't be sent in the query if <see langword="null" />.
+    /// If set to true filters institutions by whether or not corporate accounts are supported.
     /// </param>
     /// <param name="privateAccountsSupported">
-    /// Whether or not private accounts are supported by this institution. Parameter
-    /// won't be sent in the query if <see langword="null" />.
+    /// If set to true filters institutions by whether or not private accounts is supported.
     /// </param>
     /// <param name="readRefundAccountSupported">
-    /// Whether or not read refund account is supported by this institution. Parameter
-    /// won't be sent in the query if <see langword="null" />.
+    /// If set to true filters filters institutions by whether or not read refund account is supported.
+    /// </param>
+    /// <param name="readDebtorAccountSupported">
+    /// If set to true filters institutions by whether or not the debtor account can be read before submitting payment.
     /// </param>
     /// <param name="paymentsEnabled">
-    /// Whether or not payments are enabled by this institution. Parameter won't be sent in the
-    /// query if <see langword="null" />.
+    /// If set to true filters institutions by whether or not payments are supported.
     /// </param>
     /// <param name="paymentSubmissionSupported">
-    /// Whether or not payment submission is supported by this institution. Parameter
-    /// won't be sent in the query if <see langword="null" />.
+    /// If set to true filters institutions by whether or not payment submission is supported.
     /// </param>
     /// <param name="pendingTransactionsSupported">
-    /// Whether or not pending transactions are supported by this institution.
-    /// Parameter won't be sent in the query if <see langword="null" />.
+    /// If set to true filters institutions by whether or not pending transactions are supported.
     /// </param>
     /// <param name="ssnVerificationSupported">
-    /// Whether or not SSN verification is supported by this institution. Parameter
-    /// won't be sent in the query if <see langword="null" />.
+    /// If set to true filters institutions by whether or not SSN verification is supported.
     /// </param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
     /// <returns>
@@ -69,10 +61,10 @@ public interface IInstitutionsEndpoint
     /// </returns>
     Task<NordigenApiResponse<List<Institution>, BasicResponse>> GetInstitutions(string? country = null,
         bool? accessScopesSupported = null, bool? accountSelectionSupported = null,
-        bool? businessAccountsSupported = null,
-        bool? cardAccountsSupported = null, bool? corporateAccountsSupported = null,
-        bool? privateAccountsSupported = null, bool? readRefundAccountSupported = null, bool? paymentsEnabled = null,
-        bool? paymentSubmissionSupported = null,
+        bool? businessAccountsSupported = null, bool? cardAccountsSupported = null,
+        bool? corporateAccountsSupported = null, bool? privateAccountsSupported = null,
+        bool? readRefundAccountSupported = null, bool? readDebtorAccountSupported = null,
+        bool? paymentsEnabled = null, bool? paymentSubmissionSupported = null,
         bool? pendingTransactionsSupported = null, bool? ssnVerificationSupported = null,
         CancellationToken cancellationToken = default);
 
@@ -80,51 +72,44 @@ public interface IInstitutionsEndpoint
     /// Gets a list of institutions supported by the Nordigen API (optionally filtered by country and supported features).
     /// </summary>
     /// <param name="country">
-    /// The country in which the institutions operate.
+    /// If set to true filters institutions by the country in which they operate. The country has to be specified by the
+    /// two-letter country code following <a href="https://wikipedia.org/wiki/ISO_3166-1">ISO 3166</a>.
     /// </param>
     /// <param name="accessScopesSupported">
-    /// Whether or not access scopes are supported by this institution. Parameter won't be
-    /// sent in the query if <see langword="null" />.
+    /// If set to true filters institutions by whether or not access scopes are supported.
     /// </param>
     /// <param name="accountSelectionSupported">
-    /// Whether or not account selection is supported by this institution. Parameter
-    /// won't be sent in the query if <see langword="null" />.
+    /// If set to true filters institutions by whether or not account selection is supported.
     /// </param>
     /// <param name="businessAccountsSupported">
-    /// Whether or not business accounts are supported by this institution. Parameter
-    /// won't be sent in the query if <see langword="null" />.
+    /// If set to true filters institutions by whether or not business accounts are supported.
     /// </param>
     /// <param name="cardAccountsSupported">
-    /// Whether or not card accounts are supported by this institution. Parameter won't be
-    /// sent in the query if <see langword="null" />.
+    /// If set to true filters institutions by whether or not card accounts are supported by this institution.
     /// </param>
     /// <param name="corporateAccountsSupported">
-    /// Whether or not corporate accounts are supported by this institution. Parameter
-    /// won't be sent in the query if <see langword="null" />.
+    /// If set to true filters institutions by whether or not corporate accounts are supported.
     /// </param>
     /// <param name="privateAccountsSupported">
-    /// Whether or not private accounts are supported by this institution. Parameter
-    /// won't be sent in the query if <see langword="null" />.
+    /// If set to true filters institutions by whether or not private accounts is supported.
     /// </param>
     /// <param name="readRefundAccountSupported">
-    /// Whether or not read refund account is supported by this institution. Parameter
-    /// won't be sent in the query if <see langword="null" />.
+    /// If set to true filters filters institutions by whether or not read refund account is supported.
+    /// </param>
+    /// <param name="readDebtorAccountSupported">
+    /// If set to true filters institutions by whether or not the debtor account can be read before submitting payment.
     /// </param>
     /// <param name="paymentsEnabled">
-    /// Whether or not payments are enabled by this institution. Parameter won't be sent in the
-    /// query if <see langword="null" />.
+    /// If set to true filters institutions by whether or not payments are supported.
     /// </param>
     /// <param name="paymentSubmissionSupported">
-    /// Whether or not payment submission is supported by this institution. Parameter
-    /// won't be sent in the query if <see langword="null" />.
+    /// If set to true filters institutions by whether or not payment submission is supported.
     /// </param>
     /// <param name="pendingTransactionsSupported">
-    /// Whether or not pending transactions are supported by this institution.
-    /// Parameter won't be sent in the query if <see langword="null" />.
+    /// If set to true filters institutions by whether or not pending transactions are supported.
     /// </param>
     /// <param name="ssnVerificationSupported">
-    /// Whether or not SSN verification is supported by this institution. Parameter
-    /// won't be sent in the query if <see langword="null" />.
+    /// If set to true filters institutions by whether or not SSN verification is supported.
     /// </param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
     /// <returns>
@@ -135,7 +120,8 @@ public interface IInstitutionsEndpoint
         bool? accessScopesSupported = null, bool? accountSelectionSupported = null,
         bool? businessAccountsSupported = null, bool? cardAccountsSupported = null,
         bool? corporateAccountsSupported = null, bool? privateAccountsSupported = null,
-        bool? readRefundAccountSupported = null, bool? paymentsEnabled = null, bool? paymentSubmissionSupported = null,
+        bool? readRefundAccountSupported = null, bool? readDebtorAccountSupported = null,
+        bool? paymentsEnabled = null, bool? paymentSubmissionSupported = null,
         bool? pendingTransactionsSupported = null, bool? ssnVerificationSupported = null,
         CancellationToken cancellationToken = default);
 
