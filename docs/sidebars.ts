@@ -16,6 +16,7 @@ const sidebars: SidebarsConfig = {
         "api-reference/institutions-endpoint",
         "api-reference/agreements-endpoint",
         "api-reference/requisitions-endpoint",
+        "api-reference/accounts-endpoint",
       ],
     },
   ],

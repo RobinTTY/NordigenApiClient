@@ -8,7 +8,7 @@ The `AgreementsEndpoint` class provides support for the API operations of the ag
 
 ### `GetAgreements`
 
-Gets a `ResponsePage` containing a given number of end user agreements .
+Gets a `ResponsePage` containing a given number of end user agreements.
 
 ```csharp
 public async Task<NordigenApiResponse<ResponsePage<Agreement>, BasicResponse>>
