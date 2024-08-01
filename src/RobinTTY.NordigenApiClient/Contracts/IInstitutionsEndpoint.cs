@@ -128,7 +128,7 @@ public interface IInstitutionsEndpoint
     /// <summary>
     /// Gets a specific institution by id.
     /// </summary>
-    /// <param name="id">The id assigned to the institution by Nordigen (can be retrieved via
+    /// <param name="id">The id of the institution to retrieve (can be retrieved via
     /// <see cref="o:InstitutionsEndpoint.GetInstitutions" />).</param>
     /// <param name="cancellationToken">>Optional token to signal cancellation of the operation.</param>
     /// <returns>

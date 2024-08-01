@@ -12,7 +12,7 @@ namespace RobinTTY.NordigenApiClient.Contracts;
 public interface IRequisitionsEndpoint
 {
     /// <summary>
-    /// Gets all requisitions belonging to your account.
+    /// Gets all requisitions belonging to your GoCardless account.
     /// </summary>
     /// <param name="limit">Number of results to return per page.</param>
     /// <param name="offset">The initial index from which to return the results.</param>
@@ -45,13 +45,13 @@ public interface IRequisitionsEndpoint
     /// <summary>
     /// Creates a new requisition which is a collection of inputs for creating links and retrieving accounts.
     /// </summary>
-    /// <param name="institutionId">The id of the institution the requisition will be linked to.</param>
+    /// <param name="institutionId">The id of the institution this requisition will be linked to.</param>
     /// <param name="redirect">URI where the end user will be redirected after finishing authentication.</param>
     /// <param name="agreementId">The agreement this requisition will be linked to.</param>
     /// <param name="reference">A unique ID which can be used for internal referencing. By default, set to a random
     /// <see cref="Guid" />.</param>
     /// <param name="userLanguage">Enforces a language for all end user steps hosted by GoCardless. Passed as a two-letter country code
-    /// <a href="https://wikipedia.org/wiki/ISO_639-1">(ISO 639-1)</a>. For a list of all possible languages
+    /// adhering to <a href="https://wikipedia.org/wiki/ISO_639-1">ISO 639-1</a>. For a list of all possible languages
     /// see the
     /// <a
     ///     href="https://bankaccountdata.zendesk.com/hc/en-gb/articles/11529165730332-Is-it-possible-to-change-language-for-GoCardless-consent-step">GoCardless documentation</a>

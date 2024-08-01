@@ -3,7 +3,7 @@
 namespace RobinTTY.NordigenApiClient.Contracts;
 
 /// <summary>
-/// Client used to access the Nordigen API endpoints.
+/// Client used to access the GoCardless API endpoints.
 /// </summary>
 public interface INordigenClient
 {

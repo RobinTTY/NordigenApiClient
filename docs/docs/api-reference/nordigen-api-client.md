@@ -13,7 +13,7 @@ public NordigenClient(HttpClient httpClient, NordigenClientCredentials credentia
 
 ### Parameters
 
-##### `httpClient` - [HttpClient](https://learn.microsoft.com/en-us/dotnet/api/system.net.http.httpclient?view=net-8.0)
+##### `httpClient` - [HttpClient](https://learn.microsoft.com/en-us/dotnet/api/system.net.http.httpclient)
 
 The `HttpClient` instance that should be used to send all requests made by the `NordigenClient`. You can adjust the `BaseAddress` of the `HttpClient` as needed, for details see: [Using a different Base Address](/docs/using-a-different-base-address).
 

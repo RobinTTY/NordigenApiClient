@@ -17,7 +17,7 @@ public async Task<NordigenApiResponse<JsonWebTokenPair, BasicResponse>>
 
 #### Parameters
 
-##### `cancellationToken` - [CancellationToken](https://learn.microsoft.com/en-us/dotnet/api/system.threading.cancellationtoken?view=net-8.0)
+##### `cancellationToken` - [CancellationToken](https://learn.microsoft.com/en-us/dotnet/api/system.threading.cancellationtoken)
 
 A token to signal cancellation of the operation.
 
@@ -38,11 +38,11 @@ public async Task<NordigenApiResponse<JsonWebAccessToken, BasicResponse>>
 
 #### Parameters
 
-##### `refreshToken` - [JsonWebToken](https://learn.microsoft.com/en-us/dotnet/api/microsoft.identitymodel.jsonwebtokens.jsonwebtoken?view=msal-web-dotnet-latest)
+##### `refreshToken` - [JsonWebToken](https://learn.microsoft.com/en-us/dotnet/api/microsoft.identitymodel.jsonwebtokens.jsonwebtoken)
 
 A valid refresh token that was previously obtained.
 
-##### `cancellationToken` - [CancellationToken](https://learn.microsoft.com/en-us/dotnet/api/system.threading.cancellationtoken?view=net-8.0)
+##### `cancellationToken` - [CancellationToken](https://learn.microsoft.com/en-us/dotnet/api/system.threading.cancellationtoken)
 
 A token to signal cancellation of the operation.
 

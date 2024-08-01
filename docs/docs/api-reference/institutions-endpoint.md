@@ -90,7 +90,7 @@ If set to `true` filters institutions by whether or not pending transactions are
 
 If set to `true` filters institutions by whether or not SSN verification is supported.
 
-##### `cancellationToken` - [CancellationToken](https://learn.microsoft.com/en-us/dotnet/api/system.threading.cancellationtoken?view=net-8.0)
+##### `cancellationToken` - [CancellationToken](https://learn.microsoft.com/en-us/dotnet/api/system.threading.cancellationtoken)
 
 A token to signal cancellation of the operation.
 
@@ -113,9 +113,9 @@ public async Task<NordigenApiResponse<Institution, BasicResponse>>
 
 ##### `id` - [string](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/reference-types#the-string-type)
 
-The id assigned to the institution by Nordigen (can be retrieved via the [GetInstitutions](#getinstitutions) method).
+The id of the institution to retrieve (can be retrieved via the [GetInstitutions](#getinstitutions) method).
 
-##### `cancellationToken` - [CancellationToken](https://learn.microsoft.com/en-us/dotnet/api/system.threading.cancellationtoken?view=net-8.0)
+##### `cancellationToken` - [CancellationToken](https://learn.microsoft.com/en-us/dotnet/api/system.threading.cancellationtoken)
 
 A token to signal cancellation of the operation.
 

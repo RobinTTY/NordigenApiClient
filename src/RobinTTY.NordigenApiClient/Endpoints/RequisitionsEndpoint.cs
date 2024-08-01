@@ -21,8 +21,7 @@ public class RequisitionsEndpoint : IRequisitionsEndpoint
 
     /// <inheritdoc />
     public async Task<NordigenApiResponse<ResponsePage<Requisition>, BasicResponse>> GetRequisitions(int limit,
-        int offset,
-        CancellationToken cancellationToken = default)
+        int offset, CancellationToken cancellationToken = default)
     {
         var query = new KeyValuePair<string, string>[]
             {new("limit", limit.ToString()), new("offset", offset.ToString())};
