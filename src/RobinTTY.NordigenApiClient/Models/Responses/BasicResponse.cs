@@ -4,7 +4,7 @@ using RobinTTY.NordigenApiClient.JsonConverters;
 namespace RobinTTY.NordigenApiClient.Models.Responses;
 
 /// <summary>
-/// A basic response/error returned by the Nordigen API containing a textual description of the result.
+/// A basic response/error returned by the GoCardless API containing a textual description of the result.
 /// </summary>
 public class BasicResponse
 {
