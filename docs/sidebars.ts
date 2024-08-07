@@ -50,6 +50,8 @@ const sidebars: SidebarsConfig = {
             "api-reference/responses/payment-product",
             "api-reference/responses/requisition",
             "api-reference/responses/requisition-status",
+            "api-reference/responses/response-page",
+            "api-reference/responses/transaction",
           ],
         },
       ],

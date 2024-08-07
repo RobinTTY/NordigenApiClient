@@ -2,14 +2,18 @@ import { themes as prismThemes } from "prism-react-renderer";
 import type { Config } from "@docusaurus/types";
 import type * as Preset from "@docusaurus/preset-classic";
 
+const projectName = "NordigenApiClient";
+const githubLabel = "GitHub";
+const repositoryUrl = "https://github.com/RobinTTY/NordigenApiClient";
+
 const config: Config = {
-  title: "NordigenApiClient",
+  title: projectName,
   favicon: "img/NordigenApiClient_no_text.ico",
 
   url: "https://github.com/",
-  baseUrl: "/NordigenApiClient/",
+  baseUrl: `/${projectName}/`,
   organizationName: "RobinTTY",
-  projectName: "NordigenApiClient",
+  projectName: projectName,
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
 
@@ -39,10 +43,9 @@ const config: Config = {
   ],
 
   themeConfig: {
-    // Replace with your project's social card
-    image: "img/docusaurus-social-card.jpg",
+    image: "img/NordigenApiClient_transparent_no_text.png",
     navbar: {
-      title: "NordigenApiClient",
+      title: projectName,
       logo: {
         alt: "NordigenApiClient logo",
         src: "img/NordigenApiClient_transparent_no_text.png",
@@ -56,8 +59,8 @@ const config: Config = {
         },
         { to: "/release-notes", label: "Release Notes", position: "left" },
         {
-          href: "https://github.com/facebook/docusaurus",
-          label: "GitHub",
+          href: repositoryUrl,
+          label: githubLabel,
           position: "right",
         },
       ],
@@ -82,8 +85,8 @@ const config: Config = {
           title: "Community",
           items: [
             {
-              label: "GitHub",
-              href: "https://github.com/RobinTTY/NordigenApiClient",
+              label: githubLabel,
+              href: repositoryUrl,
             },
             {
               label: "Twitter",
