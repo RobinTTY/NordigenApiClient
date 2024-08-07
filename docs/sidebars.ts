@@ -54,6 +54,15 @@ const sidebars: SidebarsConfig = {
             "api-reference/responses/transaction",
           ],
         },
+        {
+          type: "category",
+          label: "Errors",
+          items: [
+            "api-reference/errors/accounts-error",
+            "api-reference/errors/create-agreement-error",
+            "api-reference/errors/create-requisition-error",
+          ],
+        },
       ],
     },
   ],

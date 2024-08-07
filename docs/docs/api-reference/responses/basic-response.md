@@ -8,11 +8,11 @@ A basic response/error returned by the GoCardless API containing a textual descr
 
 ### `Summary` - [string](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/reference-types#the-string-type)?
 
-The summary text of the response/error.
+The summary text of the response.
 
 ### `Detail` - [string](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/reference-types#the-string-type)?
 
-The detailed description of the response/error.
+The detailed description of the response.
 
 ## Constructor
 

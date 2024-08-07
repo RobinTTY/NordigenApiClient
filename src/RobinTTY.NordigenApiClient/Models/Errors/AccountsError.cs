@@ -5,7 +5,7 @@ using RobinTTY.NordigenApiClient.Models.Responses;
 namespace RobinTTY.NordigenApiClient.Models.Errors;
 
 /// <summary>
-/// An error description as returned by some operations of the accounts endpoint of the Nordigen API.
+/// An error description as returned by some operations of the accounts endpoint of the GoCardless API.
 /// </summary>
 public class AccountsError : BasicResponse
 {
@@ -96,7 +96,7 @@ public class AccountsError : BasicResponse
     /// </param>
 #endif
     [JsonConstructor]
-    public AccountsError(string summary, string detail, string? type, BasicResponse? startDateError,
+    public AccountsError(string? summary, string? detail, string? type, BasicResponse? startDateError,
         BasicResponse? endDateError) : base(summary, detail)
     {
         Type = type;
