@@ -57,6 +57,14 @@ const sidebars: SidebarsConfig = {
         },
         {
           type: "category",
+          label: "JSON Web Tokens",
+          items: [
+            "api-reference/json-web-tokens/json-web-access-token",
+            "api-reference/json-web-tokens/json-web-token-pair",
+          ],
+        },
+        {
+          type: "category",
           label: "Errors",
           items: [
             "api-reference/errors/accounts-error",
