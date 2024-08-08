@@ -18,11 +18,11 @@ const sidebars: SidebarsConfig = {
           type: "category",
           label: "Endpoints",
           items: [
-            "api-reference/endpoints/token-endpoint",
-            "api-reference/endpoints/institutions-endpoint",
-            "api-reference/endpoints/agreements-endpoint",
-            "api-reference/endpoints/requisitions-endpoint",
             "api-reference/endpoints/accounts-endpoint",
+            "api-reference/endpoints/agreements-endpoint",
+            "api-reference/endpoints/institutions-endpoint",
+            "api-reference/endpoints/requisitions-endpoint",
+            "api-reference/endpoints/token-endpoint",
           ],
         },
         {

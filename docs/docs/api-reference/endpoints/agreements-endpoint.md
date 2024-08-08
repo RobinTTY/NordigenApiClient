@@ -31,7 +31,7 @@ A token to signal cancellation of the operation.
 
 #### Returns
 
-`Task<NordigenApiResponse<ResponsePage<Agreement>, BasicResponse>>`
+[Task](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)\<[NordigenApiResponse](/docs/api-reference/responses/nordigen-api-response)\<[ResponsePage](/docs/api-reference/responses/response-page)\<[Agreement](/docs/api-reference/responses/agreement)\>, [BasicResponse](/docs/api-reference/responses/basic-response)\>\>
 
 A `NordigenApiResponse` containing the `ResponsePage` which in turn contains the end user agreement(s) if the request was successful.
 
@@ -63,7 +63,7 @@ A token to signal cancellation of the operation.
 
 #### Returns
 
-`Task<NordigenApiResponse<Agreement, BasicResponse>>`
+[Task](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)\<[NordigenApiResponse](/docs/api-reference/responses/nordigen-api-response)\<[Agreement](/docs/api-reference/responses/agreement), [BasicResponse](/docs/api-reference/responses/basic-response)\>\>
 
 A `NordigenApiResponse` containing the end user agreement if the request was successful.
 
@@ -91,7 +91,7 @@ The length the access to the account will be valid for to request.
 
 The length of the transaction history in days to request.
 
-##### `accessScope` - List\<AccessScope\>?
+##### `accessScope` - [List](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1)\<[AccessScope](/docs/api-reference/responses/access-scope)\>?
 
 The scope of information that will be available for access to request. By default all access scopes (balances, transactions and details) will be requested.
 
@@ -101,7 +101,7 @@ A token to signal cancellation of the operation.
 
 #### Returns
 
-`Task<NordigenApiResponse<Agreement, CreateAgreementError>>`
+[Task](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)\<[NordigenApiResponse](/docs/api-reference/responses/nordigen-api-response)\<[Agreement](/docs/api-reference/responses/agreement), [CreateAgreementError](/docs/api-reference/errors/create-agreement-error)\>\>
 
 A `NordigenApiResponse` containing the create end user agreement if the request was successful.
 
@@ -133,7 +133,7 @@ A token to signal cancellation of the operation.
 
 #### Returns
 
-`Task<NordigenApiResponse<BasicResponse, BasicResponse>>`
+[Task](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)\<[NordigenApiResponse](/docs/api-reference/responses/nordigen-api-response)\<[BasicResponse](/docs/api-reference/responses/basic-response), [BasicResponse](/docs/api-reference/responses/basic-response)\>\>
 
 A `NordigenApiResponse` containing a confirmation of the deletion if the request was successful.
 
@@ -179,6 +179,6 @@ A token to signal cancellation of the operation.
 
 #### Returns
 
-`Task<NordigenApiResponse<Agreement, BasicResponse>>`
+[Task](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)\<[NordigenApiResponse](/docs/api-reference/responses/nordigen-api-response)\<[Agreement](/docs/api-reference/responses/agreement), [BasicResponse](/docs/api-reference/responses/basic-response)\>\>
 
 A `NordigenApiResponse` containing the accepted end user agreement if the request was successful.
