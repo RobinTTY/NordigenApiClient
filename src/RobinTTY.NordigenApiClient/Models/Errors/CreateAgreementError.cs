@@ -11,23 +11,21 @@ namespace RobinTTY.NordigenApiClient.Models.Errors;
 public class CreateAgreementError : BasicResponse
 {
     /// <summary>
-    /// An error that was returned related to the <see cref="CreateAgreementRequest.InstitutionId" /> property sent during
-    /// the request.
+    /// An error that was returned related to the institutionId sent during the request.
     /// </summary>
     [JsonPropertyName("institution_id")]
     [JsonConverter(typeof(StringArrayToBasicResponseConverter))]
     public BasicResponse? InstitutionIdError { get; }
 
     /// <summary>
-    /// An error that was returned related to the <see cref="CreateAgreementRequest.AccessScope" /> property sent during
-    /// the request.
+    /// An error that was returned related to the accessScope property sent during the request.
     /// </summary>
     [JsonPropertyName("access_scope")]
     [JsonConverter(typeof(StringArrayToBasicResponseConverter))]
     public BasicResponse? AccessScopeError { get; }
 
     /// <summary>
-    /// An error that was returned related to the <see cref="CreateAgreementRequest.MaxHistoricalDays" /> property sent
+    /// An error that was returned related to the maxHistoricalDays property sent during the request.
     /// during the request.
     /// </summary>
     [JsonPropertyName("max_historical_days")]
@@ -35,16 +33,14 @@ public class CreateAgreementError : BasicResponse
     public BasicResponse? MaxHistoricalDaysError { get; }
 
     /// <summary>
-    /// An error that was returned related to the <see cref="CreateAgreementRequest.AccessValidForDays" /> property sent
-    /// during the request.
+    /// An error that was returned related to the accessValidForDays property sent during the request.
     /// </summary>
     [JsonPropertyName("access_valid_for_days")]
     [JsonConverter(typeof(StringArrayToBasicResponseConverter))]
     public BasicResponse? AccessValidForDaysError { get; }
 
     /// <summary>
-    /// An error that was returned related to the <see cref="CreateAgreementRequest.InstitutionId" /> property sent during
-    /// the request.
+    /// An error that was returned related to the institutionId property sent during the request.
     /// </summary>
     [JsonPropertyName("agreement")]
     [JsonConverter(typeof(StringArrayToBasicResponseConverter))]

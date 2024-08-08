@@ -13,6 +13,7 @@ const sidebars: SidebarsConfig = {
       label: "API Reference",
       items: [
         "api-reference/nordigen-client",
+        "api-reference/supported-country",
         {
           type: "category",
           label: "Endpoints",

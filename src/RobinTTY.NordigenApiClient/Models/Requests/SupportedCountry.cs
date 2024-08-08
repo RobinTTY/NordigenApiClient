@@ -83,7 +83,7 @@ public enum SupportedCountry
     France,
 
     /// <summary>
-    /// The country of UnitedKingdom.
+    /// The country of the United Kingdom.
     /// </summary>
     [Description("GB")]
     UnitedKingdom,
