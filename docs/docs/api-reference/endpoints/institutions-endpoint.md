@@ -96,9 +96,9 @@ A token to signal cancellation of the operation.
 
 #### Returns
 
-`Task<NordigenApiResponse<JsonWebTokenPair, BasicResponse>>`
+[Task](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)\<[NordigenApiResponse](/docs/api-reference/responses/nordigen-api-response)\<[List](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1)\<[Institution](/docs/api-reference/responses/institution)\>, [BasicResponse](/docs/api-reference/responses/basic-response)\>\>
 
-A `NordigenApiResponse` containing the obtained `JsonWebTokenPair` if the request was successful.
+A `NordigenApiResponse` containing a list of supported institutions if the request was successful.
 
 ### `GetInstitution`
 
@@ -121,6 +121,6 @@ A token to signal cancellation of the operation.
 
 #### Returns
 
-`Task<NordigenApiResponse<Institution, BasicResponse>>`
+[Task](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)\<[NordigenApiResponse](/docs/api-reference/responses/nordigen-api-response)\<[Institution](/docs/api-reference/responses/institution), [BasicResponse](/docs/api-reference/responses/basic-response)\>\>
 
 A `NordigenApiResponse` containing the `Institution` matching the id if the request was successful.
