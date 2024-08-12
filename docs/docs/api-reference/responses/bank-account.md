@@ -30,7 +30,7 @@ The institution id this account belongs to.
 
 Name of the legal account owner. If there is more than one owner, then two names might be noted here.
 
-### `Status` - [BankAccountStatus](TODO)
+### `Status` - [BankAccountStatus](/docs/api-reference/responses/bank-account-status-enum)
 
 The status of the account (e.g. user has successfully authenticated and account is discovered).
 
@@ -67,6 +67,6 @@ The institution id this account belongs to.
 
 Name of the legal account owner. If there is more than one owner, then two names might be noted here.
 
-#### `status` - [BankAccountStatus](TODO)
+#### `status` - [BankAccountStatus](/docs/api-reference/responses/bank-account-status-enum)
 
 The status of the account (e.g. user has successfully authenticated and account is discovered).

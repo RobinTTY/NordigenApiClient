@@ -1,4 +1,5 @@
-﻿using RobinTTY.NordigenApiClient.Models.Jwt;
+﻿using RobinTTY.NordigenApiClient.Events;
+using RobinTTY.NordigenApiClient.Models.Jwt;
 using RobinTTY.NordigenApiClient.Tests.Shared;
 
 namespace RobinTTY.NordigenApiClient.Tests.Mocks;

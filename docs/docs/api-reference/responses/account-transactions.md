@@ -6,11 +6,11 @@ The `AccountTransactions` class holds transactions belonging to a bank account.
 
 ## Properties
 
-### `BookedTransactions` - List\<Transaction\>
+### `BookedTransactions` - [List](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1)\<[Transaction](/docs/api-reference/responses/transaction)\>
 
 Transactions which were already booked to the bank account.
 
-### `PendingTransactions` - List\<Transaction\>
+### `PendingTransactions` - [List](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1)\<[Transaction](/docs/api-reference/responses/transaction)\>
 
 Transactions which are currently pending and have not been booked yet.
 
@@ -23,10 +23,10 @@ public AccountTransactions(List<Transaction> bookedTransactions,
 
 ### Parameters
 
-#### `bookedTransactions` - List\<Transaction\>
+#### `bookedTransactions` - [List](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1)\<[Transaction](/docs/api-reference/responses/transaction)\>
 
 Transactions which were already booked to the bank account.
 
-#### `pendingTransactions` - List\<Transaction\>
+#### `pendingTransactions` - [List](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1)\<[Transaction](/docs/api-reference/responses/transaction)\>
 
 Transactions which are currently pending and have not been booked yet.

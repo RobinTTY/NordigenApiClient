@@ -12,7 +12,9 @@ The id of the requisition assigned by the Nordigen API.
 
 ### `Created` - [DateTime](https://learn.microsoft.com/en-us/dotnet/api/system.datetime)
 
-### `Status` - [RequisitionStatus](TODO)
+The time this requisition was created.
+
+### `Status` - [RequisitionStatus](/docs/api-reference/responses/requisition-status)
 
 The status of the requisition.
 
@@ -72,7 +74,9 @@ The id of the requisition assigned by the Nordigen API.
 
 #### `created` - [DateTime](https://learn.microsoft.com/en-us/dotnet/api/system.datetime)
 
-#### `status` - [RequisitionStatus](TODO)
+The time this requisition was created.
+
+#### `status` - [RequisitionStatus](/docs/api-reference/responses/requisition-status)
 
 The status of the requisition.
 

@@ -3,18 +3,18 @@
 namespace RobinTTY.NordigenApiClient.Models;
 
 /// <summary>
-/// User secrets as provided by Nordigen. Used to acquire access tokens to the API.
+/// User secrets as provided by GoCardless. Used to acquire access-tokens to the API.
 /// </summary>
 public class NordigenClientCredentials
 {
     /// <summary>
-    /// Secret Nordigen id.
+    /// Secret GoCardless API credential id.
     /// </summary>
     [JsonPropertyName("secret_id")]
     public string SecretId { get; }
 
     /// <summary>
-    /// Secret Nordigen key.
+    /// Secret GoCardless API credential key.
     /// </summary>
     [JsonPropertyName("secret_key")]
     public string SecretKey { get; }
@@ -22,8 +22,8 @@ public class NordigenClientCredentials
     /// <summary>
     /// Creates a new instance of <see cref="NordigenClientCredentials" />.
     /// </summary>
-    /// <param name="secretId">Secret Nordigen id.</param>
-    /// <param name="secretKey">Secret Nordigen key.</param>
+    /// <param name="secretId">Secret GoCardless API credential id.</param>
+    /// <param name="secretKey">Secret GoCardless API credential key.</param>
     public NordigenClientCredentials(string secretId, string secretKey)
     {
         SecretId = secretId ?? throw new ArgumentNullException(nameof(secretId));

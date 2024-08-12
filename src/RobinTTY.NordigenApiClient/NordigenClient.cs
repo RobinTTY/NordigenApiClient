@@ -2,6 +2,7 @@
 using System.Text.Json;
 using RobinTTY.NordigenApiClient.Contracts;
 using RobinTTY.NordigenApiClient.Endpoints;
+using RobinTTY.NordigenApiClient.Events;
 using RobinTTY.NordigenApiClient.JsonConverters;
 using RobinTTY.NordigenApiClient.Models;
 using RobinTTY.NordigenApiClient.Models.Jwt;
@@ -188,21 +189,4 @@ public class NordigenClient : INordigenClient
         return new NordigenApiResponse<JsonWebTokenPair, BasicResponse>(HttpStatusCode.OK, true, JsonWebTokenPair,
             null);
     }
-}
-
-/// <summary>
-/// Provides data for the <see cref="NordigenClient.TokenPairUpdated" /> event.
-/// </summary>
-public class TokenPairUpdatedEventArgs : EventArgs
-{
-    /// <summary>
-    /// The updated <see cref="Models.Jwt.JsonWebTokenPair" />.
-    /// </summary>
-    public JsonWebTokenPair JsonWebTokenPair { get; set; }
-
-    /// <summary>
-    /// Creates a new instance of <see cref="TokenPairUpdatedEventArgs" />.
-    /// </summary>
-    /// <param name="jsonWebTokenPair">The updated <see cref="Models.Jwt.JsonWebTokenPair" />.</param>
-    public TokenPairUpdatedEventArgs(JsonWebTokenPair jsonWebTokenPair) => JsonWebTokenPair = jsonWebTokenPair;
 }

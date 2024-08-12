@@ -2,7 +2,7 @@
 title: IsoBankAccountStatus Enum
 ---
 
-Identifies the status of the bank account as defined by the ISO 20022 standard.
+Identifies the status of the bank account as defined by the [ISO 20022](https://en.wikipedia.org/wiki/ISO_20022) standard.
 
 ## Fields
 

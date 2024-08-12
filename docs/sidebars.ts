@@ -14,6 +14,7 @@ const sidebars: SidebarsConfig = {
       items: [
         "api-reference/nordigen-client",
         "api-reference/supported-country",
+        "api-reference/nordigen-client-credentials",
         {
           type: "category",
           label: "Endpoints",
@@ -52,6 +53,7 @@ const sidebars: SidebarsConfig = {
             "api-reference/responses/requisition",
             "api-reference/responses/requisition-status",
             "api-reference/responses/response-page",
+            "api-reference/responses/supported-payments",
             "api-reference/responses/transaction",
           ],
         },
@@ -62,6 +64,11 @@ const sidebars: SidebarsConfig = {
             "api-reference/json-web-tokens/json-web-access-token",
             "api-reference/json-web-tokens/json-web-token-pair",
           ],
+        },
+        {
+          type: "category",
+          label: "Events",
+          items: ["api-reference/events/token-pair-updated-event-args"],
         },
         {
           type: "category",

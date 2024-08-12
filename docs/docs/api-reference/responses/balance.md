@@ -2,7 +2,7 @@
 title: Balance
 ---
 
-The `Balance` class represents a balance of a [BankAccount](TODO).
+The `Balance` class represents a balance of a [BankAccount](/docs/api-reference/responses/bank-account).
 
 ## Properties
 
@@ -10,9 +10,9 @@ The `Balance` class represents a balance of a [BankAccount](TODO).
 
 The balance amount including details about the currency the amount is denominated in.
 
-### `BalanceType` - [BalanceType](TODO)
+### `BalanceType` - [BalanceType](/docs/api-reference/responses/balance-type)
 
-Type of the balance (e.g. [BalanceType.ClosingBooked](TODO)).
+Type of the balance (e.g. [BalanceType.ClosingBooked](/docs/api-reference/responses/balance-type#closingbooked)).
 
 ### `ReferenceDate` - [DateTime](https://learn.microsoft.com/en-us/dotnet/api/system.datetime)
 
@@ -43,9 +43,9 @@ public Balance(AmountCurrencyPair balanceAmount, BalanceType balanceType, DateTi
 
 The balance amount including details about the currency the amount is denominated in.
 
-#### `balanceType` - [BalanceType](TODO)
+#### `balanceType` - [BalanceType](/docs/api-reference/responses/balance-type)
 
-Type of the balance (e.g. [BalanceType.ClosingBooked](TODO)).
+Type of the balance (e.g. [BalanceType.ClosingBooked](/docs/api-reference/responses/balance-type#closingbooked)).
 
 #### `referenceDate` - [DateTime](https://learn.microsoft.com/en-us/dotnet/api/system.datetime)
 

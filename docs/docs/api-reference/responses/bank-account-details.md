@@ -50,7 +50,7 @@ Name of the account as defined by the end user within online channels.
 
 Product name of the bank for this account.
 
-### `CashAccountType` - [CashAccountType](TODO)?
+### `CashAccountType` - [CashAccountType](/docs/api-reference/responses/cash-account-type)?
 
 Specifies the nature, or use, of the cash account as defined by ISO 20022.
 
@@ -70,11 +70,11 @@ A financial institution might name a cash account associated with pending card t
 
 An alias to a payment account via a registered mobile phone number.
 
-### `Status` - [IsoBankAccountStatus](TODO)?
+### `Status` - [IsoBankAccountStatus](/docs/api-reference/responses/iso-bank-account-status)?
 
 The status of the account.
 
-### `Usage` - [BankAccountUsage](TODO)?
+### `Usage` - [BankAccountUsage](/docs/api-reference/responses/bank-account-usage)?
 
 Specifies the usage of the account.
 
@@ -134,7 +134,7 @@ Name of the account as defined by the end user within online channels.
 
 Product name of the bank for this account.
 
-#### `cashAccountType` - [CashAccountType](TODO)?
+#### `cashAccountType` - [CashAccountType](/docs/api-reference/responses/cash-account-type)?
 
 Specifies the nature, or use, of the cash account as defined by ISO 20022.
 
@@ -154,10 +154,10 @@ A financial institution might name a cash account associated with pending card t
 
 An alias to a payment account via a registered mobile phone number.
 
-#### `status` - [IsoBankAccountStatus](TODO)?
+#### `status` - [IsoBankAccountStatus](/docs/api-reference/responses/iso-bank-account-status)?
 
 The status of the account.
 
-#### `usage` - [BankAccountUsage](TODO)?
+#### `usage` - [BankAccountUsage](/docs/api-reference/responses/bank-account-usage)?
 
 Specifies the usage of the account.

@@ -30,17 +30,17 @@ The countries the institution operates in.
 
 A URI for the logo of the institution.
 
-### `SupportedPayments` - [SupportedPayments](TODO)
+### `SupportedPayments` - [SupportedPayments](/docs/api-reference/responses/supported-payments)
 
-Supported payment products for this institution. Only populated when calling [`InstitutionsEndpoint.GetInstitution`](TODO).
+Supported payment products for this institution. Only populated when calling [`InstitutionsEndpoint.GetInstitution`](/docs/api-reference/endpoints/institutions-endpoint#getinstitution).
 
 ### `SupportedFeatures` - [List](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1)\<[string](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/reference-types#the-string-type)\>?
 
-Supported features for this institution. Only populated when calling [`InstitutionsEndpoint.GetInstitution`](TODO).
+Supported features for this institution. Only populated when calling [`InstitutionsEndpoint.GetInstitution`](/docs/api-reference/endpoints/institutions-endpoint#getinstitution).
 
 ### `IdentificationCodes` - [List](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1)\<[string](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/reference-types#the-string-type)\>?
 
-Undocumented field returned by the GoCardless API. Only populated when calling [`InstitutionsEndpoint.GetInstitution`](TODO).
+Undocumented field returned by the GoCardless API. Only populated when calling [`InstitutionsEndpoint.GetInstitution`](/docs/api-reference/endpoints/institutions-endpoint#getinstitution).
 
 ## Constructor
 
@@ -76,14 +76,14 @@ The countries the institution operates in.
 
 A URI for the logo of the institution.
 
-#### `supportedPayments` - [SupportedPayments](TODO)
+#### `supportedPayments` - [SupportedPayments](/docs/api-reference/responses/supported-payments)
 
-Supported payment products for this institution. Only populated when calling [`InstitutionsEndpoint.GetInstitution`](TODO).
+Supported payment products for this institution. Only populated when calling [`InstitutionsEndpoint.GetInstitution`](/docs/api-reference/endpoints/institutions-endpoint#getinstitution).
 
 #### `supportedFeatures` - [List](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1)\<[string](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/reference-types#the-string-type)\>?
 
-Supported features for this institution. Only populated when calling [`InstitutionsEndpoint.GetInstitution`](TODO).
+Supported features for this institution. Only populated when calling [`InstitutionsEndpoint.GetInstitution`](/docs/api-reference/endpoints/institutions-endpoint#getinstitution).
 
 #### `identificationCodes` - [List](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1)\<[string](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/reference-types#the-string-type)\>?
 
-Undocumented field returned by the GoCardless API. Only populated when calling [`InstitutionsEndpoint.GetInstitution`](TODO).
+Undocumented field returned by the GoCardless API. Only populated when calling [`InstitutionsEndpoint.GetInstitution`](/docs/api-reference/endpoints/institutions-endpoint#getinstitution).
