@@ -31,7 +31,7 @@ A token to signal cancellation of the operation.
 
 #### Returns
 
-`Task<NordigenApiResponse<ResponsePage<Requisition>, BasicResponse>>`
+[Task](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)\<[NordigenApiResponse](/docs/api-reference/responses/nordigen-api-response)\<[ResponsePage](/docs/api-reference/responses/response-page)\<[Requisition](/docs/api-reference/responses/requisition)>, [BasicResponse](/docs/api-reference/responses/basic-response)>>
 
 A `NordigenApiResponse` containing a `ResponsePage` which contains contains a list of requisitions if the request was successful.
 
@@ -63,7 +63,7 @@ A token to signal cancellation of the operation.
 
 #### Returns
 
-`Task<NordigenApiResponse<Requisition, BasicResponse>>`
+[Task](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)\<[NordigenApiResponse](/docs/api-reference/responses/nordigen-api-response)\<[Requisition](/docs/api-reference/responses/requisition), [BasicResponse](/docs/api-reference/responses/basic-response)\>\>
 
 A `NordigenApiResponse` which contains the specified requisition if the request was successful.
 
@@ -119,7 +119,7 @@ A token to signal cancellation of the operation.
 
 #### Returns
 
-`Task<NordigenApiResponse<Requisition, CreateRequisitionError>>`
+[Task](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)\<[NordigenApiResponse](/docs/api-reference/responses/nordigen-api-response)\<[Requisition](/docs/api-reference/responses/requisition), [CreateRequisitionError](/docs/api-reference/errors/create-requisition-error)\>\>
 
 A `NordigenApiResponse` which contains the created requisition if the request was successful.
 
@@ -151,6 +151,6 @@ A token to signal cancellation of the operation.
 
 #### Returns
 
-`Task<NordigenApiResponse<BasicResponse, BasicResponse>>`
+[Task](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)\<[NordigenApiResponse](/docs/api-reference/responses/nordigen-api-response)\<[BasicResponse](/docs/api-reference/responses/basic-response), [BasicResponse](/docs/api-reference/responses/basic-response)>>
 
 A `NordigenApiResponse` containing a confirmation of the deletion if the request was successful.

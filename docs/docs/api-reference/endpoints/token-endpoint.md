@@ -23,7 +23,7 @@ A token to signal cancellation of the operation.
 
 #### Returns
 
-`Task<NordigenApiResponse<JsonWebTokenPair, BasicResponse>>`
+[Task](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)\<[NordigenApiResponse](/docs/api-reference/responses/nordigen-api-response)\<[JsonWebTokenPair](/docs/api-reference/json-web-tokens/json-web-token-pair), [BasicResponse](/docs/api-reference/responses/basic-response)\>\>
 
 A `NordigenApiResponse` containing the obtained `JsonWebTokenPair` if the request was successful.
 
@@ -48,6 +48,6 @@ A token to signal cancellation of the operation.
 
 #### Returns
 
-`Task<NordigenApiResponse<JsonWebAccessToken, BasicResponse>>`
+[Task](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)\<[NordigenApiResponse](/docs/api-reference/responses/nordigen-api-response)\<[JsonWebAccessToken](/docs/api-reference/json-web-tokens/json-web-access-token), [BasicResponse](/docs/api-reference/responses/basic-response)>>
 
 A `NordigenApiResponse` containing the refreshed `JsonWebAccessToken` if the request was successful.

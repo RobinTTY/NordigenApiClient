@@ -38,7 +38,7 @@ public async Task<NordigenApiResponse<List<Institution>, BasicResponse>>
 
 #### Parameters
 
-##### `country` - [string](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/reference-types#the-string-type)? | SupportedCountry
+##### `country` - [string](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/reference-types#the-string-type)? | [SupportedCountry](/docs/api-reference/supported-country)
 
 If set to `true` filters institutions by the country in which they operate. The country has to be specified by the two-letter country code following [ISO 3166](https://wikipedia.org/wiki/ISO_3166-1).
 
