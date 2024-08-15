@@ -34,6 +34,7 @@ const config: Config = {
           routeBasePath: "release-notes",
           path: "release-notes",
           showReadingTime: true,
+          onUntruncatedBlogPosts: "ignore",
         },
         theme: {
           customCss: "./src/css/custom.css",

@@ -6,19 +6,19 @@ The `NordigenApiResponse` class is the common type for all responses returned fr
 
 ## Properties
 
-### `statusCode` - [HttpStatusCode](https://learn.microsoft.com/en-us/dotnet/api/system.net.httpstatuscode)
+### `StatusCode` - [HttpStatusCode](https://learn.microsoft.com/en-us/dotnet/api/system.net.httpstatuscode)
 
 The status code returned by the API.
 
-### `isSuccess` - [bool](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool)
+### `IsSuccess` - [bool](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool)
 
 Indicates whether the HTTP response was successful.
 
-### `result` - TResult?
+### `Result` - TResult?
 
 The result returned by the API. Null if the the HTTP response was not successful.
 
-### `apiError` - TError?
+### `Error` - TError?
 
 The error returned by the API. Null if the HTTP response was successful.
 
@@ -30,19 +30,19 @@ public NordigenApiResponse(HttpStatusCode statusCode, bool isSuccess, TResult? r
 
 ### Parameters
 
-#### `StatusCode` - [HttpStatusCode](https://learn.microsoft.com/en-us/dotnet/api/system.net.httpstatuscode)
+#### `statusCode` - [HttpStatusCode](https://learn.microsoft.com/en-us/dotnet/api/system.net.httpstatuscode)
 
 The status code returned by the API.
 
-#### `IsSuccess` - [bool](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool)
+#### `isSuccess` - [bool](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool)
 
 Indicates whether the HTTP response was successful.
 
-#### `Result` - TResult?
+#### `result` - TResult?
 
 The result returned by the API. Null if the the HTTP response was not successful.
 
-#### `Error` - TError?
+#### `error` - TError?
 
 The error returned by the API. Null if the HTTP response was successful.
 
