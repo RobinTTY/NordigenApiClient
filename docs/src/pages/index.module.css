@@ -1,13 +1,31 @@
 .heroBanner {
+  background-color: var(--ifm-background-color);
+}
+
+.container {
+  max-width: 1148px;
+  min-height: 600px;
+
   padding: 12rem 0;
   text-align: center;
   position: relative;
   overflow: hidden;
+  background-image: url("../../static/img/nordigen-api-client-banner.webp");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.heroTitle {
   color: white;
-  background-image: linear-gradient(to right, #f83600 0%, #f9d423 100%);
+  text-shadow: 0.03em 0 #1d1e22, 0 0.03em #1d1e22, -0.03em 0 #1d1e22,
+    0 -0.03em #1d1e22;
 }
 
 .heroSubtitle {
+  color: white;
+  text-shadow: 0.03em 0 #1d1e22, 0 0.03em #1d1e22, -0.03em 0 #1d1e22,
+    0 -0.03em #1d1e22;
   font-weight: bold;
 }
 
@@ -21,4 +39,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
+  text-shadow: 0;
 }

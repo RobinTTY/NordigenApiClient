@@ -8,7 +8,7 @@ const repositoryUrl = "https://github.com/RobinTTY/NordigenApiClient";
 
 const config: Config = {
   title: projectName,
-  favicon: "img/NordigenApiClient_no_text.ico",
+  favicon: "img/nordigen-logo-min.ico",
 
   url: "https://github.com/",
   baseUrl: `/${projectName}/`,
@@ -44,12 +44,12 @@ const config: Config = {
   ],
 
   themeConfig: {
-    image: "img/NordigenApiClient_transparent_no_text.png",
+    image: "img/nordigen-logo-min.png",
     navbar: {
       title: projectName,
       logo: {
         alt: "NordigenApiClient logo",
-        src: "img/NordigenApiClient_transparent_no_text.png",
+        src: "img/nordigen-logo-min.png",
       },
       items: [
         {
