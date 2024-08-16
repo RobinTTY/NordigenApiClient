@@ -193,11 +193,7 @@ public class AgreementsEndpointTests
             Assert.That(response.Error!.InstitutionIdError!.Summary, Is.EqualTo("This field is required."));
             Assert.That(response.Error!.InstitutionIdError!.Detail, Is.EqualTo("This field is required."));
 
-            Assert.That(response.Error!.AccessValidForDaysError!.Summary,
-                Is.EqualTo("Incorrect access_valid_for_days"));
-            Assert.That(response.Error!.AccessValidForDaysError!.Detail,
-                Is.EqualTo("access_valid_for_days must be > 0 and <= 180"));
-
+            Assert.That(response.Error!.AccessValidForDaysError!, Is.Null);
             Assert.That(response.Error!.AgreementError, Is.Null);
             Assert.That(response.Error!.AccessScopeError, Is.Null);
             Assert.That(response.Error!.MaxHistoricalDaysError, Is.Null);

@@ -77,8 +77,8 @@ public class CredentialTests
         Assert.Multiple(() =>
         {
             AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.Unauthorized);
-            AssertionHelpers.AssertBasicResponseMatchesExpectations(response.Error, "Invalid token",
-                "Token is invalid or expired");
+            AssertionHelpers.AssertBasicResponseMatchesExpectations(response.Error, "Authentication failed",
+                "No active account found with the given credentials");
         });
     }
 

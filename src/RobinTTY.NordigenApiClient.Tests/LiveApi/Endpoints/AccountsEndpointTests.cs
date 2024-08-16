@@ -91,7 +91,7 @@ public class AccountsEndpointTests
             {
                 var matchesAll = true;
                 matchesAll &= t.BankTransactionCode == "PMNT";
-                matchesAll &= t.DebtorAccount?.Iban == "GL2010440000010445";
+                matchesAll &= t.DebtorAccount?.Iban == "GL8240830000040838";
                 matchesAll &= t.DebtorName == "MON MOTHMA";
                 matchesAll &= t.RemittanceInformationUnstructured ==
                               "For the support of Restoration of the Republic foundation";
