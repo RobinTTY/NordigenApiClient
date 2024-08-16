@@ -1,5 +1,5 @@
 <p align="center">
-   <img src="https://github.com/user-attachments/assets/bb7afc04-63cc-48b5-9885-624caea0ad0b" width="30%">
+   <img src="docs/static/img/nordigen-api-client-logo.png" width="30%">
 </p>
 
 # NordigenApiClient
