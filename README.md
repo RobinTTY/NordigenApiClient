@@ -1,3 +1,7 @@
+<p align="center">
+   <img src="https://github.com/user-attachments/assets/bb7afc04-63cc-48b5-9885-624caea0ad0b" width="50%">
+</p>
+
 # NordigenApiClient
 
 This library provides a .NET client for
