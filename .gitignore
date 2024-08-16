@@ -35,7 +35,6 @@ Desktop.ini
 
 ## Web
 # ignore all files starting with . or ~
-.*
 ~*
 
 # ignore node/grunt dependency directories

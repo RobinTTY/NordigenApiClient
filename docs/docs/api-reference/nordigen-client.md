@@ -34,7 +34,7 @@ Provides support for the API operations of the accounts endpoint.
 
 #### `TokenPairUpdated` - [EventHandler](https://learn.microsoft.com/en-us/dotnet/api/system.eventhandler)\<[TokenPairUpdatedEventArgs](/docs/api-reference/events/token-pair-updated-event-args)\>?
 
-Occurs whenever the `JsonWebTokenPair` property is successfully updated.
+Raised whenever the `JsonWebTokenPair` property is successfully updated.
 When the token is manually updated to be null, this event will not be raised.
 For more information see [Handling Authentication Tokens](/docs/handling-authentication-tokens).
 
