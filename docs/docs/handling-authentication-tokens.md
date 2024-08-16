@@ -2,13 +2,13 @@
 title: Handling Authentication Tokens
 ---
 
-The [`NordigenClient`](api-reference/nordigen-api-client) class manages the authentication tokens used to access most of the endpoints for you. It acquires the access and refresh token initially and refreshes the access token when needed.
+The [`NordigenClient`](/docs/api-reference/nordigen-client) class manages the authentication tokens used to access most of the endpoints for you. It acquires the access and refresh token initially and refreshes the access token when needed.
 
 You can manage certain aspects of the token handling yourself. These aspects are described in the following sections.
 
 ## Using the Token Endpoint
 
-Access and refresh tokens for the GoCardless API are automatically acquired through the [`TokenEndpoint`](api-reference/token-endpoint) by the client. You can use it to manually acquire them as well:
+Access and refresh tokens for the GoCardless API are automatically acquired through the [`TokenEndpoint`](/docs/api-reference/endpoints/token-endpoint) by the client. You can use it to manually acquire them as well:
 
 ```csharp
 var response = await client.TokenEndpoint.GetTokenPair();
