@@ -7,6 +7,7 @@ const sidebars: SidebarsConfig = {
     "handling-api-responses",
     "handling-authentication-tokens",
     "using-a-different-base-address",
+    "usage-with-older-dotnet-versions",
     "testing",
     {
       type: "category",
