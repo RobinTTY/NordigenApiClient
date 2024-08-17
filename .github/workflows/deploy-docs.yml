@@ -35,6 +35,9 @@ jobs:
   deploy:
     name: Deploy to GitHub Pages
     needs: build
+    defaults:
+      run:
+        working-directory: ./docs/
 
     permissions:
       pages: write

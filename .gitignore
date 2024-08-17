@@ -41,6 +41,7 @@ Desktop.ini
 node_modules/
 
 # Ignore build directories.
+/build
 /dist
 
 # ignore composer vendor directory
