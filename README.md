@@ -12,7 +12,7 @@ This library provides a .NET client for the [GoCardless Bank Account Data API](h
 - Requisitions
 - Accounts
 
-You can get started with the Quickstart Guide below or take a look at the [full documentation](https://robintty.github.io/NordigenApiClient/).
+You can get started with the Quickstart Guide below or take a look at the [full documentation](https://robintty.github.io/NordigenApiClient/). You can find the nuget package [here](https://www.nuget.org/packages/RobinTTY.NordigenApiClient).
 
 ## Quickstart Guide
 
