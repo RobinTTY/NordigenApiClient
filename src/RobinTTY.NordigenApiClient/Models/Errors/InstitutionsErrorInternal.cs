@@ -4,7 +4,7 @@ using RobinTTY.NordigenApiClient.Models.Responses;
 namespace RobinTTY.NordigenApiClient.Models.Errors;
 
 /// <summary>
-/// Representation of the institutions error as returned by the Nordigen API.
+/// Representation of the institutions error as returned by the GoCardless API.
 /// Since this representation doesn't add any useful information (only extra encapsulation)
 /// it is transformed to align this error with other errors returned by the API.
 /// </summary>

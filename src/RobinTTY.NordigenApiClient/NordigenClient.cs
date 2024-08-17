@@ -2,6 +2,7 @@
 using System.Text.Json;
 using RobinTTY.NordigenApiClient.Contracts;
 using RobinTTY.NordigenApiClient.Endpoints;
+using RobinTTY.NordigenApiClient.Events;
 using RobinTTY.NordigenApiClient.JsonConverters;
 using RobinTTY.NordigenApiClient.Models;
 using RobinTTY.NordigenApiClient.Models.Jwt;
@@ -13,6 +14,7 @@ namespace RobinTTY.NordigenApiClient;
 /// <inheritdoc />
 public class NordigenClient : INordigenClient
 {
+    private JsonWebTokenPair? _jsonWebTokenPair;
     private static readonly SemaphoreSlim TokenSemaphore = new(1, 1);
     private readonly HttpClient _httpClient;
     private readonly JsonSerializerOptions _serializerOptions;
@@ -37,9 +39,9 @@ public class NordigenClient : INordigenClient
             }
         };
         _httpClient.BaseAddress ??= new Uri(NordigenEndpointUrls.Base);
+        _jsonWebTokenPair = jsonWebTokenPair;
 
         Credentials = credentials;
-        JsonWebTokenPair = jsonWebTokenPair;
         TokenEndpoint = new TokenEndpoint(this);
         InstitutionsEndpoint = new InstitutionsEndpoint(this);
         AgreementsEndpoint = new AgreementsEndpoint(this);
@@ -48,7 +50,16 @@ public class NordigenClient : INordigenClient
     }
 
     /// <inheritdoc />
-    public JsonWebTokenPair? JsonWebTokenPair { get; set; }
+    public JsonWebTokenPair? JsonWebTokenPair
+    {
+        get => _jsonWebTokenPair;
+        set
+        {
+            _jsonWebTokenPair = value;
+            if (value is not null)
+                TokenPairUpdated?.Invoke(this, new TokenPairUpdatedEventArgs(value));
+        }
+    }
 
     /// <inheritdoc />
     public ITokenEndpoint TokenEndpoint { get; }
@@ -157,11 +168,7 @@ public class NordigenClient : INordigenClient
         // Request a new token if it is null or if the refresh token has expired
         if (JsonWebTokenPair == null || JsonWebTokenPair.RefreshToken.IsExpired(TimeSpan.FromMinutes(1)))
         {
-            var response = await TokenEndpoint.GetTokenPair(cancellationToken);
-            if (response.IsSuccess)
-                TokenPairUpdated?.Invoke(this, new TokenPairUpdatedEventArgs(response.Result));
-
-            return response;
+            return await TokenEndpoint.GetTokenPair(cancellationToken);
         }
 
         // Refresh the current access token if it's expired (or valid for less than a minute)
@@ -173,34 +180,13 @@ public class NordigenClient : INordigenClient
                 ? new JsonWebTokenPair(response.Result.AccessToken, JsonWebTokenPair.RefreshToken,
                     response.Result!.AccessExpires, JsonWebTokenPair.RefreshExpires)
                 : null;
-            var tokenPairResponse = new NordigenApiResponse<JsonWebTokenPair, BasicResponse>(response.StatusCode,
-                response.IsSuccess, token, response.Error);
-
-            if (token is not null)
-                TokenPairUpdated?.Invoke(this, new TokenPairUpdatedEventArgs(token));
-
-            return tokenPairResponse;
+            
+            return new NordigenApiResponse<JsonWebTokenPair, BasicResponse>(response.StatusCode, response.IsSuccess,
+                token, response.Error);
         }
 
         // Token pair is still valid and can be returned - wrap in NordigenApiResponse
         return new NordigenApiResponse<JsonWebTokenPair, BasicResponse>(HttpStatusCode.OK, true, JsonWebTokenPair,
             null);
     }
-}
-
-/// <summary>
-/// Provides data for the <see cref="NordigenClient.TokenPairUpdated" /> event.
-/// </summary>
-public class TokenPairUpdatedEventArgs : EventArgs
-{
-    /// <summary>
-    /// The updated <see cref="Models.Jwt.JsonWebTokenPair" />.
-    /// </summary>
-    public JsonWebTokenPair JsonWebTokenPair { get; set; }
-
-    /// <summary>
-    /// Creates a new instance of <see cref="TokenPairUpdatedEventArgs" />.
-    /// </summary>
-    /// <param name="jsonWebTokenPair">The updated <see cref="Models.Jwt.JsonWebTokenPair" />.</param>
-    public TokenPairUpdatedEventArgs(JsonWebTokenPair jsonWebTokenPair) => JsonWebTokenPair = jsonWebTokenPair;
 }

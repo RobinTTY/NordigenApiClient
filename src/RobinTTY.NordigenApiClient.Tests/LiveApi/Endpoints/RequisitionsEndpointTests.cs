@@ -189,10 +189,6 @@ public class RequisitionsEndpointTests
         {
             AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.BadRequest);
 
-            Assert.That(response.Error!.AccountSelectionError!.Summary, Is.EqualTo("Account selection not supported"));
-            Assert.That(response.Error!.AccountSelectionError!.Detail,
-                Is.EqualTo("Account selection not supported for "));
-
             Assert.That(response.Error!.AgreementError!.Summary, Is.EqualTo("Incorrect Institution ID "));
             Assert.That(response.Error!.AgreementError!.Detail,
                 Is.EqualTo(
@@ -203,11 +199,6 @@ public class RequisitionsEndpointTests
 
             Assert.That(response.Error!.ReferenceError!.Summary, Is.EqualTo("This field may not be blank."));
             Assert.That(response.Error!.ReferenceError!.Detail, Is.EqualTo("This field may not be blank."));
-
-            Assert.That(response.Error!.SocialSecurityNumberError!.Summary,
-                Is.EqualTo("SSN verification not supported"));
-            Assert.That(response.Error!.SocialSecurityNumberError!.Detail,
-                Is.EqualTo("SSN verification not supported for "));
 
             Assert.That(response.Error!.UserLanguageError!.Summary,
                 Is.EqualTo("Provided user_language is invalid or not supported"));

@@ -13,7 +13,7 @@ public class AccountsEndpointTests
     [OneTimeSetUp]
     public void Setup()
     {
-        _accountId = Guid.Parse(TestHelpers.Secrets[9]);
+        _accountId = Guid.Parse(TestHelpers.Secrets.ValidAccountId);
         _nonExistingAccountId = Guid.Parse("f1d53c46-260d-4556-82df-4e5fed58e37c");
         _apiClient = TestHelpers.GetConfiguredClient();
     }
@@ -69,7 +69,7 @@ public class AccountsEndpointTests
         var details = detailsResponse.Result!;
         Assert.Multiple(() =>
         {
-            Assert.That(details.Iban, Is.EqualTo("GL2010440000010445"));
+            Assert.That(details.Iban, Is.EqualTo("GL6837980000037983"));
             Assert.That(details.Name, Is.EqualTo("Main Account"));
             Assert.That(details.OwnerName, Is.EqualTo("Jane Doe"));
             Assert.That(details.CashAccountType, Is.EqualTo(CashAccountType.Current));
@@ -91,7 +91,7 @@ public class AccountsEndpointTests
             {
                 var matchesAll = true;
                 matchesAll &= t.BankTransactionCode == "PMNT";
-                matchesAll &= t.DebtorAccount?.Iban == "GL2010440000010445";
+                matchesAll &= t.DebtorAccount?.Iban == "GL8240830000040838";
                 matchesAll &= t.DebtorName == "MON MOTHMA";
                 matchesAll &= t.RemittanceInformationUnstructured ==
                               "For the support of Restoration of the Republic foundation";
@@ -188,10 +188,10 @@ public class AccountsEndpointTests
 
         // Returns AccountsError
 #if NET6_0_OR_GREATER
-        var transactionsResponse = await _apiClient.AccountsEndpoint.GetTransactions(TestHelpers.Secrets[9],
+        var transactionsResponse = await _apiClient.AccountsEndpoint.GetTransactions(TestHelpers.Secrets.ValidAccountId,
             DateOnly.FromDateTime(startDate), DateOnly.FromDateTime(endDate));
 #else
-        var transactionsResponse = await _apiClient.AccountsEndpoint.GetTransactions(TestHelpers.Secrets[9],
+        var transactionsResponse = await _apiClient.AccountsEndpoint.GetTransactions(TestHelpers.Secrets.ValidAccountId,
             startDate, endDate);
 #endif
 

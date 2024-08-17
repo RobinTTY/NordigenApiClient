@@ -332,7 +332,7 @@ public class Transaction
     /// <param name="checkId">Identification of a check.</param>
     /// <param name="currencyExchange">Array of the report exchange rate.</param>
     /// <param name="entryReference">The identification of the transaction as used for reference by the financial institution.</param>
-    /// <param name="internalTransactionId">Transaction identifier given by Nordigen.</param>
+    /// <param name="internalTransactionId">Transaction identifier given by GoCardless.</param>
     /// <param name="merchantCategoryCode">Merchant category code as defined by the card issuer.</param>
     /// <param name="bookingDateTime">The date and time when the transaction was posted to the account.</param>
     [JsonConstructor]

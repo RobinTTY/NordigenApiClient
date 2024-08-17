@@ -5,7 +5,7 @@ using RobinTTY.NordigenApiClient.JsonConverters;
 namespace RobinTTY.NordigenApiClient.Models.Responses;
 
 /// <summary>
-/// Identifies the status of the bank account in reference to the Nordigen platform.
+/// Identifies the status of the bank account in reference to the GoCardless platform.
 /// <para>
 /// Reference:
 /// <see

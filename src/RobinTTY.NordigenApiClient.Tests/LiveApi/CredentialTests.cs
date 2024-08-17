@@ -68,7 +68,8 @@ public class CredentialTests
         using var httpClient = new HttpClient();
         var invalidCredentials = new NordigenClientCredentials("01234567-89ab-cdef-0123-456789abcdef",
             "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef");
-        var token = new JsonWebTokenPair(TestHelpers.Secrets[14], TestHelpers.Secrets[14]);
+        var token = new JsonWebTokenPair(TestHelpers.Secrets.UnauthorizedJwtToken,
+            TestHelpers.Secrets.UnauthorizedJwtToken);
         var apiClient = new NordigenClient(httpClient, invalidCredentials, token);
 
         var response = await apiClient.InstitutionsEndpoint.GetInstitutions();
@@ -76,8 +77,8 @@ public class CredentialTests
         Assert.Multiple(() =>
         {
             AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.Unauthorized);
-            AssertionHelpers.AssertBasicResponseMatchesExpectations(response.Error, "Invalid token",
-                "Token is invalid or expired");
+            AssertionHelpers.AssertBasicResponseMatchesExpectations(response.Error, "Authentication failed",
+                "No active account found with the given credentials");
         });
     }
 
@@ -88,7 +89,8 @@ public class CredentialTests
     public async Task ExecuteRequestWithUnauthorizedIp()
     {
         using var httpClient = new HttpClient();
-        var credentials = new NordigenClientCredentials(TestHelpers.Secrets[11], TestHelpers.Secrets[12]);
+        var credentials = new NordigenClientCredentials(TestHelpers.Secrets.ValidSecretIdWithWhitelist,
+            TestHelpers.Secrets.ValidSecretKeyWithWhitelist);
         var apiClient = new NordigenClient(httpClient, credentials);
 
         var externalIp = await httpClient.GetStringAsync("https://ipinfo.io/ip");

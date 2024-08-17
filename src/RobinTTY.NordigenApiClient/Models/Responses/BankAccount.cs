@@ -12,7 +12,7 @@ namespace RobinTTY.NordigenApiClient.Models.Responses;
 public class BankAccount : MinimalBankAccount
 {
     /// <summary>
-    /// The unique id of the account assigned by the Nordigen API.
+    /// The unique id of the account assigned by GoCardless.
     /// </summary>
     [JsonPropertyName("id")]
     public Guid Id { get; }

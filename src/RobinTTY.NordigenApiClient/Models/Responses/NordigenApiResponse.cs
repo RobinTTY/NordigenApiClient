@@ -7,7 +7,7 @@ using System.Text.Json;
 namespace RobinTTY.NordigenApiClient.Models.Responses;
 
 /// <summary>
-/// A response returned by the Nordigen API.
+/// A response returned by the GoCardless API.
 /// </summary>
 /// <typeparam name="TResult">The type of the returned result.</typeparam>
 /// <typeparam name="TError">The type of the returned error.</typeparam>

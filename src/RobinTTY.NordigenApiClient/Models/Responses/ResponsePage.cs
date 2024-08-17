@@ -3,7 +3,7 @@
 namespace RobinTTY.NordigenApiClient.Models.Responses;
 
 /// <summary>
-/// A paged response from the Nordigen API.
+/// A paged response from the GoCardless API.
 /// </summary>
 /// <typeparam name="T">The contained response type.</typeparam>
 public class ResponsePage<T>

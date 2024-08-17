@@ -22,7 +22,8 @@ public class InstitutionsEndpoint : IInstitutionsEndpoint
         bool? accessScopesSupported = null, bool? accountSelectionSupported = null,
         bool? businessAccountsSupported = null, bool? cardAccountsSupported = null,
         bool? corporateAccountsSupported = null, bool? privateAccountsSupported = null,
-        bool? readRefundAccountSupported = null, bool? paymentsEnabled = null, bool? paymentSubmissionSupported = null,
+        bool? readRefundAccountSupported = null, bool? readDebtorAccountSupported = null,
+        bool? paymentsEnabled = null, bool? paymentSubmissionSupported = null,
         bool? pendingTransactionsSupported = null, bool? ssnVerificationSupported = null,
         CancellationToken cancellationToken = default)
     {
@@ -44,7 +45,10 @@ public class InstitutionsEndpoint : IInstitutionsEndpoint
             query.Add(GetSupportFlagQuery("private_accounts_supported", privateAccountsSupported.Value));
         if (readRefundAccountSupported.HasValue)
             query.Add(GetSupportFlagQuery("read_refund_account_supported", readRefundAccountSupported.Value));
-        if (paymentsEnabled.HasValue) query.Add(GetSupportFlagQuery("payments_enabled", paymentsEnabled.Value));
+        if (readDebtorAccountSupported.HasValue)
+            query.Add(GetSupportFlagQuery("read_debtor_account_supported", readDebtorAccountSupported.Value));
+        if (paymentsEnabled.HasValue)
+            query.Add(GetSupportFlagQuery("payments_enabled", paymentsEnabled.Value));
         if (paymentSubmissionSupported.HasValue)
             query.Add(GetSupportFlagQuery("payment_submission_supported", paymentSubmissionSupported.Value));
         if (pendingTransactionsSupported.HasValue)
@@ -65,13 +69,14 @@ public class InstitutionsEndpoint : IInstitutionsEndpoint
         bool? accessScopesSupported = null, bool? accountSelectionSupported = null,
         bool? businessAccountsSupported = null, bool? cardAccountsSupported = null,
         bool? corporateAccountsSupported = null, bool? privateAccountsSupported = null,
-        bool? readRefundAccountSupported = null, bool? paymentsEnabled = null, bool? paymentSubmissionSupported = null,
+        bool? readRefundAccountSupported = null, bool? readDebtorAccountSupported = null,
+        bool? paymentsEnabled = null, bool? paymentSubmissionSupported = null,
         bool? pendingTransactionsSupported = null, bool? ssnVerificationSupported = null,
         CancellationToken cancellationToken = default) =>
         await GetInstitutions(country.GetDescription(), accessScopesSupported, accountSelectionSupported,
             businessAccountsSupported, cardAccountsSupported, corporateAccountsSupported, privateAccountsSupported,
-            readRefundAccountSupported, paymentsEnabled, paymentSubmissionSupported, pendingTransactionsSupported,
-            ssnVerificationSupported, cancellationToken);
+            readRefundAccountSupported, readDebtorAccountSupported, paymentsEnabled, paymentSubmissionSupported,
+            pendingTransactionsSupported, ssnVerificationSupported, cancellationToken);
 
     /// <inheritdoc />
     public async Task<NordigenApiResponse<Institution, BasicResponse>> GetInstitution(string id,

@@ -53,8 +53,7 @@ public class Institution
     public SupportedPayments? SupportedPayments { get; }
 
     /// <summary>
-    /// Supported features for this institution. Only populated when calling <see cref="InstitutionsEndpoint.GetInstitution" />
-    /// .
+    /// Supported features for this institution. Only populated when calling <see cref="InstitutionsEndpoint.GetInstitution" />.
     /// </summary>
     [JsonPropertyName("supported_features")]
     public List<string>? SupportedFeatures { get; }
@@ -93,22 +92,4 @@ public class Institution
         SupportedFeatures = supportedFeatures;
         IdentificationCodes = identificationCodes;
     }
-}
-
-/// <summary>
-/// The payment products supported by an institution.
-/// </summary>
-public class SupportedPayments
-{
-    /// <summary>
-    /// Supported payment products in the single-payment category.
-    /// </summary>
-    [JsonPropertyName("single-payment")]
-    public List<PaymentProduct> SinglePayment { get; }
-
-    /// <summary>
-    /// Creates a new instance of <see cref="SupportedPayments" />
-    /// </summary>
-    /// <param name="singlePayment">Supported payment products in the single-payment category.</param>
-    public SupportedPayments(List<PaymentProduct> singlePayment) => SinglePayment = singlePayment;
 }

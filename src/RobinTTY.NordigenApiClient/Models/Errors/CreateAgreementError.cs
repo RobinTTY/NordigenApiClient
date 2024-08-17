@@ -6,28 +6,26 @@ using RobinTTY.NordigenApiClient.Models.Responses;
 namespace RobinTTY.NordigenApiClient.Models.Errors;
 
 /// <summary>
-/// An error description as returned by the create operation of the agreements endpoint of the Nordigen API.
+/// An error description as returned by the create operation of the agreements endpoint of the GoCardless API.
 /// </summary>
 public class CreateAgreementError : BasicResponse
 {
     /// <summary>
-    /// An error that was returned related to the <see cref="CreateAgreementRequest.InstitutionId" /> property sent during
-    /// the request.
+    /// An error that was returned related to the institutionId sent during the request.
     /// </summary>
     [JsonPropertyName("institution_id")]
     [JsonConverter(typeof(StringArrayToBasicResponseConverter))]
     public BasicResponse? InstitutionIdError { get; }
 
     /// <summary>
-    /// An error that was returned related to the <see cref="CreateAgreementRequest.AccessScope" /> property sent during
-    /// the request.
+    /// An error that was returned related to the accessScope property sent during the request.
     /// </summary>
     [JsonPropertyName("access_scope")]
     [JsonConverter(typeof(StringArrayToBasicResponseConverter))]
     public BasicResponse? AccessScopeError { get; }
 
     /// <summary>
-    /// An error that was returned related to the <see cref="CreateAgreementRequest.MaxHistoricalDays" /> property sent
+    /// An error that was returned related to the maxHistoricalDays property sent during the request.
     /// during the request.
     /// </summary>
     [JsonPropertyName("max_historical_days")]
@@ -35,16 +33,14 @@ public class CreateAgreementError : BasicResponse
     public BasicResponse? MaxHistoricalDaysError { get; }
 
     /// <summary>
-    /// An error that was returned related to the <see cref="CreateAgreementRequest.AccessValidForDays" /> property sent
-    /// during the request.
+    /// An error that was returned related to the accessValidForDays property sent during the request.
     /// </summary>
     [JsonPropertyName("access_valid_for_days")]
     [JsonConverter(typeof(StringArrayToBasicResponseConverter))]
     public BasicResponse? AccessValidForDaysError { get; }
 
     /// <summary>
-    /// An error that was returned related to the <see cref="CreateAgreementRequest.InstitutionId" /> property sent during
-    /// the request.
+    /// An error that was returned related to the institutionId property sent during the request.
     /// </summary>
     [JsonPropertyName("agreement")]
     [JsonConverter(typeof(StringArrayToBasicResponseConverter))]
@@ -61,29 +57,24 @@ public class CreateAgreementError : BasicResponse
     /// <param name="summary">The summary of the API error.</param>
     /// <param name="detail">The detailed description of the API error.</param>
     /// <param name="institutionIdError">
-    /// An error that was returned related to the
-    /// <see cref="CreateAgreementRequest.InstitutionId" /> property sent during the request.
+    /// An error that was returned related to the institutionId sent during the request.
     /// </param>
     /// <param name="accessScopeError">
-    /// An error that was returned related to the
-    /// <see cref="CreateAgreementRequest.AccessScope" /> property sent during the request.
+    /// An error that was returned related to the accessScope property sent during the request.
     /// </param>
     /// <param name="maxHistoricalDaysError">
-    /// An error that was returned related to the
-    /// <see cref="CreateAgreementRequest.MaxHistoricalDays" /> property sent during the request.
+    /// An error that was returned related to the maxHistoricalDays property sent during the request.
     /// </param>
     /// <param name="accessValidForDaysError">
-    /// An error that was returned related to the
-    /// <see cref="CreateAgreementRequest.AccessValidForDays" /> property sent during the request.
+    /// An error that was returned related to the accessValidForDays property sent during the request.
     /// </param>
     /// <param name="agreementError">
-    /// An error that was returned related to the
-    /// <see cref="CreateAgreementRequest.InstitutionId" /> property sent during the request.
+    /// An error that was returned related to the institutionId property sent during the request.
     /// </param>
     [JsonConstructor]
     public CreateAgreementError(
-        string summary,
-        string detail,
+        string? summary,
+        string? detail,
         BasicResponse? institutionIdError,
         BasicResponse? accessScopeError,
         BasicResponse? maxHistoricalDaysError,

@@ -1,8 +1,10 @@
+<p align="center">
+   <img src="docs/static/img/nordigen-api-client-logo.png" width="30%">
+</p>
+
 # NordigenApiClient
 
-This project provides a C# client for
-the [GoCardless Bank Account Data API](https://gocardless.com/bank-account-data/) (formerly Nordigen API). The following
-API endpoints are supported:
+This library provides a .NET client for the [GoCardless Bank Account Data API](https://gocardless.com/bank-account-data/) (formerly Nordigen API). The following API endpoints are supported:
 
 - Token
 - Institutions
@@ -10,14 +12,13 @@ API endpoints are supported:
 - Requisitions
 - Accounts
 
-You can find the official GoCardless documentation for the
-API [here](https://developer.gocardless.com/bank-account-data/endpoints).
+You can get started with the Quickstart Guide below or take a look at the [full documentation](https://robintty.github.io/NordigenApiClient/).
 
-## Getting started
+## Quickstart Guide
 
 1. To get started install the package via the package manager:
 
-   ```ps
+   ```powershell
    Install-Package RobinTTY.NordigenApiClient
    ```
 
@@ -29,174 +30,84 @@ API [here](https://developer.gocardless.com/bank-account-data/endpoints).
    var client = new NordigenClient(httpClient, credentials);
    ```
 
-   Note: The client will obtain the required JWT access/refresh token itself and manage it accordingly, for
-   access/refresh token reuse see the advanced section.
-
-3. You can now use the different endpoints through the client:
+3. Then we need the list of banking institutions in your country (e.g. United Kingdom)
 
    ```cs
-   var response = await client.InstitutionsEndpoint.GetInstitutions(SupportedCountry.UnitedKingdom);
-   ```
-
-   The responses that are returned always have the same structure:
-
-   ```cs
-   // If the request was successful "Result" will contain the returned data (Error will be null)
-   if(response.IsSuccess){
-      var institutions = response.Result;
-      institutions.ForEach(institution => Console.WriteLine(institution.Name));
-   }
-   // If the request was not successful "Error" will contain the reason it failed (Result will be null)
+   var institutionsResponse = await client.InstitutionsEndpoint.GetInstitutions(SupportedCountry.UnitedKingdom);
+   if (institutionsResponse.IsSuccess)
+       institutionsResponse.Result.ForEach(institution =>
+       {
+           Console.WriteLine($"Institution: {institution.Name}, Id: {institution.Id}");
+       });
    else
-      Console.WriteLine(response.Error.Summary);
+       Console.WriteLine($"Couldn't retrieve institutions, error: {institutionsResponse.Error.Summary}");
    ```
 
-## Getting balances and transactions for a bank account
+4. Choose the institution your bank account is registered with and create a requisition for it:
 
-Here is how you would go about retrieving the balances and transactions for a bank account (you can find this full
-example [here](src/RobinTTY.NordigenApiClient.ExampleApplication)):
+   ```cs
+   // Use the id of the bank you want to connect to here (we acquired it in the last step)
+   var institution = "BANK_OF_SCOTLAND_BOFSGBS1";
+   var redirect = new Uri("https://where-nordigen-will-redirect-after-authentication.com");
+   var requisitionResponse = await client.RequisitionsEndpoint.CreateRequisition(institution, redirect);
 
-1. Get a list of institutions in your country (e.g. Great Britain):
+   if (requisitionResponse.IsSuccess)
+   {
+       Console.WriteLine($"Requisition id: {requisitionResponse.Result.Id}");
+       Console.WriteLine($"Start authentication: {requisitionResponse.Result.AuthenticationLink}");
+   }
 
-    ```cs
-    var institutionsResponse = await client.InstitutionsEndpoint.GetInstitutions(SupportedCountry.UnitedKingdom);
-    if (institutionsResponse.IsSuccess)
-        institutionsResponse.Result.ForEach(institution =>
-        {
-            Console.WriteLine($"Institution: {institution.Name}, Id: {institution.Id}");
-        });
-    else
-        Console.WriteLine($"Couldn't retrieve institutions, error: {institutionsResponse.Error.Summary}");
-    ```
+   else
+       Console.WriteLine($"Requisition couldn't be created: {requisitionResponse.Error.Summary}");
+   ```
 
-2. Choose the institution your bank account is registered with and create a requisition for it:
+5. You will now need to accept the end user agreement by following the authentication link you got in the last step. The authentication flow will roughly look like this:
 
-    ```cs
-    var institution = "BANK_OF_SCOTLAND_BOFSGBS1";
-    var redirect = new Uri("https://where-nordigen-will-redirect-after-authentication.com");
-    var requisitionResponse = await client.RequisitionsEndpoint.CreateRequisition(institution, redirect);
+   ![authentication-flow](docs/static/img/authentication_flow.png)
 
-    if (requisitionResponse.IsSuccess)
-    {
-        Console.WriteLine($"Requisition id: {requisitionResponse.Result.Id}");
-        Console.WriteLine($"Start authentication: {requisitionResponse.Result.AuthenticationLink}");
-    }
+6. Now that you have accepted the agreement we once again need to retrieve the requisition we created in step 4. This time the response will include the accounts you are now able to access.
 
-    else
-        Console.WriteLine($"Requisition couldn't be created: {requisitionResponse.Error.Summary}");
-    ```
+   ```cs
+   var requisitionId = "your-requisition-id";
+   var accountsResponse = await client.RequisitionsEndpoint.GetRequisition(requisitionId);
+   if (accountsResponse.IsSuccess)
+       accountsResponse.Result.Accounts.ForEach(accountId =>
+       {
+           Console.WriteLine($"Account id: {accountId}");
+       });
+   else
+       Console.WriteLine($"Accounts couldn't be retrieved: {accountsResponse.Error.Summary}");
+   ```
 
-3. You will now need to accept the end user agreement by following the authentication link. After that you will be able
-   to retrieve the accounts linked to your bank account:
+7. Now you can retrieve details about your bank account and the balances/transactions using the account ID(s) we just acquired:
 
-    ```cs
-    var requisitionId = "your-requisition-id";
-    var accountsResponse = await client.RequisitionsEndpoint.GetRequisition(requisitionId);
-    if (accountsResponse.IsSuccess)
-        accountsResponse.Result.Accounts.ForEach(accountId =>
-        {
-            Console.WriteLine($"Account id: {accountId}");
-        });
-    else
-        Console.WriteLine($"Accounts couldn't be retrieved: {accountsResponse.Error.Summary}");
-    ```
+   ```cs
+   var accountId = "your-account-id";
+   var bankAccountDetailsResponse = await client.AccountsEndpoint.GetAccountDetails(accountId);
+   if (bankAccountDetailsResponse.IsSuccess)
+   {
+       Console.WriteLine($"IBAN: {bankAccountDetailsResponse.Result.Iban}");
+       Console.WriteLine($"Account name: {bankAccountDetailsResponse.Result.Name}");
+   }
 
-4. Now you can retrieve details about the bank account and the balances/transactions:
+   var balancesResponse = await client.AccountsEndpoint.GetBalances(accountId);
+   if (balancesResponse.IsSuccess)
+       balancesResponse.Result.ForEach(balance =>
+       {
+           var balanceAmount = balance.BalanceAmount;
+           Console.WriteLine($"Type: {balance.BalanceType}");
+           Console.WriteLine($"Balance: {balanceAmount.Amount} {balanceAmount.Currency}");
+       });
 
-    ```cs
-    var accountId = "your-account-id";
-    var bankAccountDetailsResponse = await client.AccountsEndpoint.GetAccountDetails(accountId);
-    if (bankAccountDetailsResponse.IsSuccess)
-    {
-        Console.WriteLine($"IBAN: {bankAccountDetailsResponse.Result.Iban}");
-        Console.WriteLine($"Account name: {bankAccountDetailsResponse.Result.Name}");
-    }
+   var transactionsResponse = await client.AccountsEndpoint.GetTransactions(accountId);
+   if (transactionsResponse.IsSuccess)
+       transactionsResponse.Result.BookedTransactions.ForEach(transaction =>
+       {
+           var transactionAmount = transaction.TransactionAmount;
+           Console.WriteLine($"Remittance: {transaction.RemittanceInformationUnstructured}");
+           Console.WriteLine($"Booking date:{transaction.ValueDate}");
+           Console.WriteLine($"Amount: {transactionAmount.Amount} {transactionAmount.Currency}");
+       });
+   ```
 
-    var balancesResponse = await client.AccountsEndpoint.GetBalances(accountId);
-    if (balancesResponse.IsSuccess)
-        balancesResponse.Result.ForEach(balance =>
-        {
-            var balanceAmount = balance.BalanceAmount;
-            Console.WriteLine($"Type: {balance.BalanceType}");
-            Console.WriteLine($"Balance: {balanceAmount.Amount} {balanceAmount.Currency}");
-        });
-
-    var transactionsResponse = await client.AccountsEndpoint.GetTransactions(accountId);
-    if (transactionsResponse.IsSuccess)
-        transactionsResponse.Result.BookedTransactions.ForEach(transaction =>
-        {
-            var transactionAmount = transaction.TransactionAmount;
-            Console.WriteLine($"Remittance: {transaction.RemittanceInformationUnstructured}");
-            Console.WriteLine($"Booking date:{transaction.ValueDate}");
-            Console.WriteLine($"Amount: {transactionAmount.Amount} {transactionAmount.Currency}");
-        });
-    ```
-
-## Advanced Usage
-
-### Acess/Refresh Token reuse
-
-If you wan't to persist the access/refresh token used by the client you can do so by accessing the `JsonWebTokenPair`
-property of the client. After the first request that requires authentication this property will be populated with the
-access/refresh token that was automatically aquired.
-
-```cs
-Console.WriteLine(client.JsonWebTokenPair.AccessToken.EncodedToken);
-Console.WriteLine(client.JsonWebTokenPair.RefreshToken.EncodedToken);
-```
-
-The next time you instantiate the client you can pass the access/refresh token to the client constructor:
-
-```cs
-using var httpClient = new HttpClient();
-var credentials = new NordigenClientCredentials("my-secret-id", "my-secret-key");
-var tokenPair = new JsonWebTokenPair("encoded-access-token", "encoded-refresh-token");
-var client = new NordigenClient(httpClient, credentials, tokenPair);
-```
-
-The client will now use the given token pair and refresh it automatically if it is expired.
-
-Alternatively you can also use the tokens endpoint directly:
-
-```cs
-var response = await client.TokenEndpoint.GetTokenPair();
-if (response.IsSuccess)
-{
-    Console.WriteLine($"Access token: {response.Result.AccessToken.EncodedToken}");
-    Console.WriteLine($"Refresh token: {response.Result.RefreshToken.EncodedToken}");
-}
-
-// Set the token pair on the client
-client.JsonWebTokenPair = response.Result;
-```
-
-### Getting notified when the Access/Refresh Token is updated
-
-To get notified whenever the token pair is updated you can subscribe to the ```TokenPairUpdated``` event:
-
-```cs
-client.TokenPairUpdated += OnTokenPairUpdated;
-
-void OnTokenPairUpdated(object? sender, TokenPairUpdatedEventArgs e)
-{
-    // The event args contain the updated token
-    Console.WriteLine("Updated token pair:");
-    Console.WriteLine($"Access Token: {e.JsonWebTokenPair.AccessToken.EncodedToken}");
-    Console.WriteLine($"Refresh Token: {e.JsonWebTokenPair.RefreshToken.EncodedToken}");
-}
-```
-
-## Usage with Frameworks older than .NET 6.0
-
-If you use this library with .NET versions older than 6.0 you will receive warnings informing you that some dependencies
-of this packet don't necessarily support your chosen .NET version. The .NET Standard version of this package is tested
-against .NET Framework 4.8 and older versions (including .NET Core) should work fine as well. You can surpress these
-warnings by adding the following option to your csproj file:
-
-```xml
-<PropertyGroup>
-   ...
-   <SuppressTfmSupportBuildWarnings>true</SuppressTfmSupportBuildWarnings>
-   ...
-</PropertyGroup>
-```
+That's it! You are now able to retrieve the account details, balances and transactions of your bank account. If you wanna learn more about this library please refer to the [full documentation](https://robintty.github.io/NordigenApiClient/).

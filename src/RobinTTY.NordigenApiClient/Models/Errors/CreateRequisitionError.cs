@@ -6,12 +6,12 @@ using RobinTTY.NordigenApiClient.Models.Responses;
 namespace RobinTTY.NordigenApiClient.Models.Errors;
 
 /// <summary>
-/// An error description as returned by the create operation of the requisitions endpoint of the Nordigen API.
+/// An error description as returned by the create operation of the requisitions endpoint of the GoCardless API.
 /// </summary>
 public class CreateRequisitionError : BasicResponse
 {
     /// <summary>
-    /// An error that was returned related to the <see cref="CreateRequisitionRequest.Reference" /> property sent during
+    /// An error that was returned related to the reference property sent during
     /// the request.
     /// </summary>
     [JsonPropertyName("reference")]
@@ -19,7 +19,7 @@ public class CreateRequisitionError : BasicResponse
     public BasicResponse? ReferenceError { get; }
 
     /// <summary>
-    /// An error that was returned related to the <see cref="CreateRequisitionRequest.UserLanguage" /> property sent during
+    /// An error that was returned related to the userLanguage property sent during
     /// the request.
     /// </summary>
     [JsonPropertyName("user_language")]
@@ -27,7 +27,7 @@ public class CreateRequisitionError : BasicResponse
     public BasicResponse? UserLanguageError { get; }
 
     /// <summary>
-    /// An error that was returned related to the <see cref="CreateRequisitionRequest.AgreementId" /> property sent during
+    /// An error that was returned related to the agreementId property sent during
     /// the request.
     /// </summary>
     [JsonPropertyName("agreement")]
@@ -35,7 +35,7 @@ public class CreateRequisitionError : BasicResponse
     public BasicResponse? AgreementError { get; }
 
     /// <summary>
-    /// An error that was returned related to the <see cref="CreateRequisitionRequest.Redirect" /> property sent during the
+    /// An error that was returned related to the redirect property sent during the
     /// request.
     /// </summary>
     [JsonPropertyName("redirect")]
@@ -43,7 +43,7 @@ public class CreateRequisitionError : BasicResponse
     public BasicResponse? RedirectError { get; }
 
     /// <summary>
-    /// An error that was returned related to the <see cref="CreateRequisitionRequest.SocialSecurityNumber" /> property
+    /// An error that was returned related to the socialSecurityNumber property
     /// sent during the request.
     /// </summary>
     [JsonPropertyName("ssn")]
@@ -51,7 +51,7 @@ public class CreateRequisitionError : BasicResponse
     public BasicResponse? SocialSecurityNumberError { get; }
 
     /// <summary>
-    /// An error that was returned related to the <see cref="CreateRequisitionRequest.AccountSelection" /> property sent
+    /// An error that was returned related to the accountSelection property sent
     /// during the request.
     /// </summary>
     [JsonPropertyName("account_selection")]
@@ -59,7 +59,7 @@ public class CreateRequisitionError : BasicResponse
     public BasicResponse? AccountSelectionError { get; }
 
     /// <summary>
-    /// An error that was returned related to the <see cref="CreateRequisitionRequest.InstitutionId" /> property sent
+    /// An error that was returned related to the institutionId property sent
     /// during the request.
     /// </summary>
     [JsonPropertyName("institution_id")]
@@ -77,35 +77,28 @@ public class CreateRequisitionError : BasicResponse
     /// <param name="summary">The summary of the API error.</param>
     /// <param name="detail">The detailed description of the API error.</param>
     /// <param name="referenceError">
-    /// An error that was returned related to the
-    /// <see cref="CreateRequisitionRequest.Reference" /> property sent during the request.
+    /// An error that was returned related to the reference property sent during the request.
     /// </param>
     /// <param name="userLanguageError">
-    /// An error that was returned related to the
-    /// <see cref="CreateRequisitionRequest.UserLanguage" /> property sent during the request.
+    /// An error that was returned related to the userLanguage property sent during the request.
     /// </param>
     /// <param name="agreementError">
-    /// An error that was returned related to the
-    /// <see cref="CreateRequisitionRequest.AgreementId" /> property sent during the request.
+    /// An error that was returned related to the agreementId property sent during the request.
     /// </param>
     /// <param name="redirectError">
-    /// An error that was returned related to the <see cref="CreateRequisitionRequest.Redirect" />
-    /// property sent during the request.
+    /// An error that was returned related to the redirect property sent during the request.
     /// </param>
     /// <param name="socialSecurityNumberError">
-    /// An error that was returned related to the
-    /// <see cref="CreateRequisitionRequest.SocialSecurityNumber" /> property sent during the request.
+    /// An error that was returned related to the socialSecurityNumber property sent during the request.
     /// </param>
     /// <param name="accountSelectionError">
-    /// An error that was returned related to the
-    /// <see cref="CreateRequisitionRequest.AccountSelection" /> property sent during the request.
+    /// An error that was returned related to the accountSelection property sent during the request.
     /// </param>
     /// <param name="institutionIdError">
-    /// An error that was returned related to the
-    /// <see cref="CreateRequisitionRequest.InstitutionId" /> property sent during the request.
+    /// An error that was returned related to the institutionId property sent during the request.
     /// </param>
     [JsonConstructor]
-    public CreateRequisitionError(string summary, string detail, BasicResponse? referenceError,
+    public CreateRequisitionError(string? summary, string? detail, BasicResponse? referenceError,
         BasicResponse? userLanguageError, BasicResponse? agreementError,
         BasicResponse? redirectError, BasicResponse? socialSecurityNumberError, BasicResponse? accountSelectionError,
         BasicResponse? institutionIdError) : base(summary, detail)

@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using FakeItEasy;
+using Microsoft.Extensions.Configuration;
 using RobinTTY.NordigenApiClient.Endpoints;
 using RobinTTY.NordigenApiClient.JsonConverters;
 using RobinTTY.NordigenApiClient.Models;
@@ -11,7 +12,7 @@ namespace RobinTTY.NordigenApiClient.Tests.Shared;
 internal static class TestHelpers
 {
     private static readonly JsonSerializerOptions JsonSerializerOptions;
-    public static readonly string[] Secrets = File.ReadAllLines("secrets.txt");
+    public static TestSecrets Secrets { get; }
     public static MockResponsesModel MockData { get; }
 
     static TestHelpers()
@@ -27,6 +28,7 @@ internal static class TestHelpers
         };
         MockData = JsonSerializer.Deserialize<MockResponsesModel>(json, JsonSerializerOptions) ??
                    throw new InvalidOperationException("Could not deserialize mock Data");
+        Secrets = GetSecrets() ?? throw new InvalidOperationException("Could not get secrets");
     }
 
     internal static NordigenClient GetConfiguredClient(string? baseAddress = null)
@@ -34,15 +36,15 @@ internal static class TestHelpers
         var address = baseAddress ?? NordigenEndpointUrls.Base;
         var httpClient = new HttpClient();
         httpClient.BaseAddress = new Uri(address);
-        var credentials = new NordigenClientCredentials(Secrets[0], Secrets[1]);
+        var credentials = new NordigenClientCredentials(Secrets.ValidSecretId, Secrets.ValidSecretKey);
         return new NordigenClient(httpClient, credentials);
     }
 
-    internal static NordigenClient GetMockClient(object value, HttpStatusCode statusCode,
-        bool addDefaultAuthToken = true) => GetMockClient([new ValueTuple<object, HttpStatusCode>(value, statusCode)],
+    internal static NordigenClient GetMockClient(object? value, HttpStatusCode statusCode,
+        bool addDefaultAuthToken = true) => GetMockClient([new ValueTuple<object?, HttpStatusCode>(value, statusCode)],
         addDefaultAuthToken);
 
-    private static NordigenClient GetMockClient(List<(object Value, HttpStatusCode StatusCode)> responses,
+    private static NordigenClient GetMockClient(List<(object? Value, HttpStatusCode StatusCode)> responses,
         bool addDefaultAuthToken = true)
     {
         var fakeHttpMessageHandler = A.Fake<FakeHttpMessageHandler>();
@@ -50,8 +52,8 @@ internal static class TestHelpers
         var token = new HttpResponseMessage(HttpStatusCode.OK)
         {
             Content = new StringContent(
-                $"{{\n  \"access\": \"{Secrets[4]}\",\n  \"access_expires\": 86400,\n" +
-                $" \"refresh\": \"{Secrets[5]}\",\n  \"refresh_expires\": 2592000\n}}")
+                $"{{\n  \"access\": \"{Secrets.ExpiredJwtAccessToken}\",\n  \"access_expires\": 86400,\n" +
+                $" \"refresh\": \"{Secrets.ValidJwtRefreshToken}\",\n  \"refresh_expires\": 2592000\n}}")
         };
 
         if (addDefaultAuthToken)
@@ -74,7 +76,13 @@ internal static class TestHelpers
             .ReturnsNextFromSequence(httpResponseMessages.ToArray());
 
         var mockHttpClient = new HttpClient(fakeHttpMessageHandler);
-        var credentials = new NordigenClientCredentials(Secrets[0], Secrets[1]);
+        var credentials = new NordigenClientCredentials(Secrets.ValidSecretId, Secrets.ValidSecretKey);
         return new NordigenClient(mockHttpClient, credentials);
     }
+    
+    private static TestSecrets? GetSecrets() =>
+        new ConfigurationBuilder()
+            .AddJsonFile("appsettings.test.json")
+            .AddUserSecrets<TestSecrets>()
+            .Build().Get<TestSecrets>();
 }
