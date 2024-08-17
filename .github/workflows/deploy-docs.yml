@@ -30,14 +30,11 @@ jobs:
       - name: Upload Build Artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: build
+          path: ./docs/build
 
   deploy:
     name: Deploy to GitHub Pages
     needs: build
-    defaults:
-      run:
-        working-directory: ./docs/
 
     permissions:
       pages: write
