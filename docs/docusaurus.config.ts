@@ -14,8 +14,10 @@ const config: Config = {
   baseUrl: `/${projectName}/`,
   organizationName: "RobinTTY",
   projectName: projectName,
+  deploymentBranch: "docs",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
+  trailingSlash: false,
 
   i18n: {
     defaultLocale: "en",
