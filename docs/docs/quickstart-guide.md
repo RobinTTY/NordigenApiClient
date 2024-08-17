@@ -5,7 +5,7 @@ title: The Quickstart Guide
 You are looking to integrate with the GoCardless API quickly? This guide will help you getting your first real bank account data in no time.
 
 :::info
-To get a more thorough understanding of this client and its capabilities, please refer to the [full documentation](/docs/intro), which will lead you through the different endpoints and their usage.
+To get a more thorough understanding of this client and its capabilities, please refer to the [full documentation](/docs/api-reference/nordigen-client), which will lead you through the different endpoints and their usage.
 :::
 
 1. To get started install the package via the package manager:
