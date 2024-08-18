@@ -1,2 +1,2 @@
-﻿Add the ability to check newly introduced rate limits in the GoCardless API.
+﻿Added the ability to check newly introduced rate limits in the GoCardless API.
 Also see: https://bankaccountdata.zendesk.com/hc/en-gb/articles/11529584398236-Bank-API-Rate-Limits-and-Rate-Limit-Headers
