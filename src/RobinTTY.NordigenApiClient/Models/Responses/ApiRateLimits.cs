@@ -1,4 +1,5 @@
-﻿using RobinTTY.NordigenApiClient.Endpoints;
+﻿using System.Net.Http.Headers;
+using RobinTTY.NordigenApiClient.Endpoints;
 
 namespace RobinTTY.NordigenApiClient.Models.Responses;
 
@@ -56,5 +57,26 @@ public class ApiRateLimits
         MaxAccountRequests = maxAccountRequests;
         RemainingAccountRequests = remainingAccountRequests;
         RemainingSecondsInAccountTimeWindow = remainingTimeInAccountTimeWindow;
+    }
+    
+    /// <summary>
+    /// Creates a new instance of <see cref="ApiRateLimits" />.
+    /// </summary>
+    /// <param name="headers">The headers of the HTTP response containing the rate limit information.</param>
+    public ApiRateLimits(HttpResponseHeaders headers)
+    {
+        headers.TryGetValues("HTTP_X_RATELIMIT_LIMIT", out var requestLimitInTimeWindow);
+        headers.TryGetValues("HTTP_X_RATELIMIT_REMAINING", out var remainingRequestsInTimeWindow);
+        headers.TryGetValues("HTTP_X_RATELIMIT_RESET", out var remainingTimeInTimeWindow);
+        headers.TryGetValues("HTTP_X_RATELIMIT_ACCOUNT_SUCCESS_LIMIT", out var maxAccountRequestsInTimeWindow);
+        headers.TryGetValues("HTTP_X_RATELIMIT_ACCOUNT_SUCCESS_REMAINING", out var remainingAccountRequestsInTimeWindow);
+        headers.TryGetValues("HTTP_X_RATELIMIT_ACCOUNT_SUCCESS_RESET", out var remainingTimeInAccountTimeWindow);
+
+        RequestLimit = requestLimitInTimeWindow != null ? int.Parse(requestLimitInTimeWindow.First()) : 0;
+        RemainingRequests = remainingRequestsInTimeWindow != null ? int.Parse(remainingRequestsInTimeWindow.First()) : 0;
+        RemainingSecondsInTimeWindow = remainingTimeInTimeWindow != null ? int.Parse(remainingTimeInTimeWindow.First()) : 0;
+        MaxAccountRequests = maxAccountRequestsInTimeWindow != null ? int.Parse(maxAccountRequestsInTimeWindow.First()) : 0;
+        RemainingAccountRequests = remainingAccountRequestsInTimeWindow != null ? int.Parse(remainingAccountRequestsInTimeWindow.First()) : 0;
+        RemainingSecondsInAccountTimeWindow = remainingTimeInAccountTimeWindow != null ? int.Parse(remainingTimeInAccountTimeWindow.First()) : 0;
     }
 }

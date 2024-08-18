@@ -68,7 +68,6 @@ public class NordigenApiResponse<TResult, TError> where TResult : class where TE
     internal static async Task<NordigenApiResponse<TResult, TError>> FromHttpResponse(HttpResponseMessage response,
         JsonSerializerOptions? options = null, CancellationToken cancellationToken = default)
     {
-        var rateLimits = GetRateLimits(response);
 #if NET6_0_OR_GREATER
         var responseJson = await response.Content.ReadAsStringAsync(cancellationToken);
 #else
@@ -80,13 +79,13 @@ public class NordigenApiResponse<TResult, TError> where TResult : class where TE
             {
                 var result = await response.Content.ReadFromJsonAsync<TResult>(options, cancellationToken);
                 return new NordigenApiResponse<TResult, TError>(response.StatusCode, response.IsSuccessStatusCode,
-                    result, null, rateLimits);
+                    result, null, new ApiRateLimits(response.Headers));
             }
             else
             {
                 var result = await response.Content.ReadFromJsonAsync<TError>(options, cancellationToken);
                 return new NordigenApiResponse<TResult, TError>(response.StatusCode, response.IsSuccessStatusCode,
-                    null, result, rateLimits);
+                    null, result, new ApiRateLimits(response.Headers));
             }
         }
         catch (JsonException ex)
@@ -95,23 +94,5 @@ public class NordigenApiResponse<TResult, TError> where TResult : class where TE
                 $"Deserialization failed, please report this issue to the library author: https://github.com/RobinTTY/NordigenApiClient/issues\n" +
                 $"The following JSON content caused the problem: {responseJson}", ex);
         }
-    }
-
-    private static ApiRateLimits GetRateLimits(HttpResponseMessage response)
-    {
-        response.Headers.TryGetValues("HTTP_X_RATELIMIT_LIMIT", out var requestLimitInTimeWindow);
-        response.Headers.TryGetValues("HTTP_X_RATELIMIT_REMAINING", out var remainingRequestsInTimeWindow);
-        response.Headers.TryGetValues("HTTP_X_RATELIMIT_RESET", out var remainingTimeInTimeWindow);
-        response.Headers.TryGetValues("HTTP_X_RATELIMIT_ACCOUNT_SUCCESS_LIMIT", out var maxAccountRequestsInTimeWindow);
-        response.Headers.TryGetValues("HTTP_X_RATELIMIT_ACCOUNT_SUCCESS_REMAINING", out var remainingAccountRequestsInTimeWindow);
-        response.Headers.TryGetValues("HTTP_X_RATELIMIT_ACCOUNT_SUCCESS_RESET", out var remainingTimeInAccountTimeWindow);
-
-        return new ApiRateLimits(
-            requestLimitInTimeWindow != null ? int.Parse(requestLimitInTimeWindow.First()) : 0,
-            remainingRequestsInTimeWindow != null ? int.Parse(remainingRequestsInTimeWindow.First()) : 0,
-            remainingTimeInTimeWindow != null ? int.Parse(remainingTimeInTimeWindow.First()) : 0,
-            maxAccountRequestsInTimeWindow != null ? int.Parse(maxAccountRequestsInTimeWindow.First()) : 0,
-            remainingAccountRequestsInTimeWindow != null ? int.Parse(remainingAccountRequestsInTimeWindow.First()) : 0,
-            remainingTimeInAccountTimeWindow != null ? int.Parse(remainingTimeInAccountTimeWindow.First()) : 0);
     }
 }
