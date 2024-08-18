@@ -1,2 +1,2 @@
 ﻿This version improves many aspects of the library. Since this version contains breaking changes please check the release notes before updating.
-For the full release notes please see: https://github.com/RobinTTY/NordigenApiClient/releases/tag/v9.0.0
+For the full release notes please see: https://github.com/RobinTTY/NordigenApiClient/releases/tag/v10.0.0
