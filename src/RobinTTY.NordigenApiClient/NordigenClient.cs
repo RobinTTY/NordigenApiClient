@@ -119,7 +119,8 @@ public class NordigenClient : INordigenClient
                     JsonWebTokenPair = tokenResponse.Result;
                 else
                     return new NordigenApiResponse<TResponse, TError>(tokenResponse.StatusCode, tokenResponse.IsSuccess,
-                        null, new TError {Summary = tokenResponse.Error.Summary, Detail = tokenResponse.Error.Detail});
+                        null, new TError {Summary = tokenResponse.Error.Summary, Detail = tokenResponse.Error.Detail},
+                        tokenResponse.RateLimits);
             }
             finally
             {
@@ -180,13 +181,13 @@ public class NordigenClient : INordigenClient
                 ? new JsonWebTokenPair(response.Result.AccessToken, JsonWebTokenPair.RefreshToken,
                     response.Result!.AccessExpires, JsonWebTokenPair.RefreshExpires)
                 : null;
-            
+
             return new NordigenApiResponse<JsonWebTokenPair, BasicResponse>(response.StatusCode, response.IsSuccess,
-                token, response.Error);
+                token, response.Error, response.RateLimits);
         }
 
         // Token pair is still valid and can be returned - wrap in NordigenApiResponse
         return new NordigenApiResponse<JsonWebTokenPair, BasicResponse>(HttpStatusCode.OK, true, JsonWebTokenPair,
-            null);
+            null, new ApiRateLimits(-1, -1, -1, -1, 0, -1));
     }
 }

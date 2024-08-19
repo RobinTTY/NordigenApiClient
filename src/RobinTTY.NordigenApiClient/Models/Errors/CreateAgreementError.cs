@@ -1,6 +1,5 @@
 ﻿using System.Text.Json.Serialization;
 using RobinTTY.NordigenApiClient.JsonConverters;
-using RobinTTY.NordigenApiClient.Models.Requests;
 using RobinTTY.NordigenApiClient.Models.Responses;
 
 namespace RobinTTY.NordigenApiClient.Models.Errors;

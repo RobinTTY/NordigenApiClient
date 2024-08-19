@@ -22,10 +22,15 @@ The result returned by the API. Null if the the HTTP response was not successful
 
 The error returned by the API. Null if the HTTP response was successful.
 
+### `RateLimits` - [ApiRateLimits](/docs/api-reference/responses/api-rate-limits)
+
+The rate limits of the GoCardless API.
+
 ## Constructor
 
 ```csharp
-public NordigenApiResponse(HttpStatusCode statusCode, bool isSuccess, TResult? result, TError? apiError)
+public NordigenApiResponse(HttpStatusCode statusCode, bool isSuccess,
+      TResult? result, TError? apiError,  ApiRateLimits rateLimits)
 ```
 
 ### Parameters
@@ -45,6 +50,10 @@ The result returned by the API. Null if the the HTTP response was not successful
 #### `error` - TError?
 
 The error returned by the API. Null if the HTTP response was successful.
+
+#### `rateLimits` - [ApiRateLimits](/docs/api-reference/responses/api-rate-limits)
+
+The rate limits of the GoCardless API.
 
 ## Handling the `NordigenApiResponse` type
 
