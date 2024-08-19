@@ -1,5 +1,5 @@
 <p align="center">
-   <img src="docs/static/img/nordigen-api-client-logo.png" width="30%">
+   <img src="https://raw.githubusercontent.com/RobinTTY/NordigenApiClient/main/docs/static/img/nordigen-api-client-logo.png" width="30%">
 </p>
 
 # NordigenApiClient
