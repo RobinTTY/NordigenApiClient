@@ -53,7 +53,8 @@ public class Institution
     public SupportedPayments? SupportedPayments { get; }
 
     /// <summary>
-    /// Supported features for this institution. Only populated when calling <see cref="InstitutionsEndpoint.GetInstitution" />.
+    /// Supported features for this institution. Only populated when calling
+    /// <see cref="InstitutionsEndpoint.GetInstitution" />.
     /// </summary>
     [JsonPropertyName("supported_features")]
     public List<string>? SupportedFeatures { get; }

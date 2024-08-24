@@ -25,7 +25,9 @@ public class BasicResponse
     /// <summary>
     /// Creates a new instance of <see cref="BasicResponse" />.
     /// </summary>
-    public BasicResponse() { }
+    public BasicResponse()
+    {
+    }
 
     /// <summary>
     /// Creates a new instance of <see cref="BasicResponse" />.

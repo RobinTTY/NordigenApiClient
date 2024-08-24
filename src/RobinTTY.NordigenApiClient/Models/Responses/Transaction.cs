@@ -6,7 +6,8 @@ namespace RobinTTY.NordigenApiClient.Models.Responses;
 /// <summary>
 /// A financial transaction.
 /// <para>
-/// Reference: <a href="https://developer.gocardless.com/bank-account-data/transactions">GoCardless Documentation</a>
+/// Reference:
+/// <a href="https://developer.gocardless.com/bank-account-data/transactions">GoCardless Documentation</a>
 /// </para>
 /// </summary>
 public class Transaction

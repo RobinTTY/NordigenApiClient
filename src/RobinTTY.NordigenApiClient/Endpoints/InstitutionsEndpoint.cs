@@ -83,6 +83,6 @@ public class InstitutionsEndpoint : IInstitutionsEndpoint
         await _nordigenClient.MakeRequest<Institution, BasicResponse>(
             $"{NordigenEndpointUrls.InstitutionsEndpoint}{id}/", HttpMethod.Get, cancellationToken);
 
-    private static KeyValuePair<string, string> GetSupportFlagQuery(string flag, bool value)
-        => new(flag, value.ToString().ToLower());
+    private static KeyValuePair<string, string> GetSupportFlagQuery(string flag, bool value) =>
+        new(flag, value.ToString().ToLower());
 }

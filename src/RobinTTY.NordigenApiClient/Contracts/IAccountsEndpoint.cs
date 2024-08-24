@@ -34,7 +34,10 @@ public interface IAccountsEndpoint
     /// </summary>
     /// <param name="accountId">The id of the account for which to get the balances.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
-    /// <returns>A <see cref="NordigenApiResponse{TResponse, TError}" /> which contains a <see cref="List{T}"/> of the balances for the specified account.</returns>
+    /// <returns>
+    /// A <see cref="NordigenApiResponse{TResponse, TError}" /> which contains a <see cref="List{T}" /> of the
+    /// balances for the specified account.
+    /// </returns>
     Task<NordigenApiResponse<List<Balance>, AccountsError>> GetBalances(Guid accountId,
         CancellationToken cancellationToken = default);
 
@@ -43,7 +46,10 @@ public interface IAccountsEndpoint
     /// </summary>
     /// <param name="accountId">The id of the account for which to get the balances.</param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
-    /// <returns>A <see cref="NordigenApiResponse{TResponse, TError}" /> which contains a <see cref="List{T}"/> of the balances for the specified account.</returns>
+    /// <returns>
+    /// A <see cref="NordigenApiResponse{TResponse, TError}" /> which contains a <see cref="List{T}" /> of the
+    /// balances for the specified account.
+    /// </returns>
     Task<NordigenApiResponse<List<Balance>, AccountsError>> GetBalances(string accountId,
         CancellationToken cancellationToken = default);
 

@@ -46,7 +46,7 @@ public class AccountsEndpoint : IAccountsEndpoint
     {
         var response = await _nordigenClient.MakeRequest<BalanceJsonWrapper, AccountsError>(
             $"{NordigenEndpointUrls.AccountsEndpoint}{accountId}/balances/", HttpMethod.Get, cancellationToken);
-        
+
         return new NordigenApiResponse<List<Balance>, AccountsError>(response.StatusCode, response.IsSuccess,
             response.Result?.Balances, response.Error, response.RateLimits);
     }
@@ -66,7 +66,7 @@ public class AccountsEndpoint : IAccountsEndpoint
     {
         var response = await _nordigenClient.MakeRequest<BankAccountDetailsWrapper, AccountsError>(
             $"{NordigenEndpointUrls.AccountsEndpoint}{id}/details/", HttpMethod.Get, cancellationToken);
-        
+
         return new NordigenApiResponse<BankAccountDetails, AccountsError>(response.StatusCode, response.IsSuccess,
             response.Result?.Account, response.Error, response.RateLimits);
     }
@@ -113,7 +113,7 @@ public class AccountsEndpoint : IAccountsEndpoint
 
         var response = await _nordigenClient.MakeRequest<AccountTransactionsWrapper, AccountsError>(
             $"{NordigenEndpointUrls.AccountsEndpoint}{id}/transactions/", HttpMethod.Get, cancellationToken, query);
-        
+
         return new NordigenApiResponse<AccountTransactions, AccountsError>(response.StatusCode, response.IsSuccess,
             response.Result?.Transactions, response.Error, response.RateLimits);
     }

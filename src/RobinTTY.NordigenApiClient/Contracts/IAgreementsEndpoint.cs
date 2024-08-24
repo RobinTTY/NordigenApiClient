@@ -48,8 +48,10 @@ public interface IAgreementsEndpoint
     /// <param name="institutionId">The institution this agreement will refer to.</param>
     /// <param name="accessValidForDays">The length the access to the account will be valid for to request.</param>
     /// <param name="maxHistoricalDays">The length of the transaction history in days to request.</param>
-    /// <param name="accessScope">The scope of information that will be available for access to request. By default all access scopes
-    /// (balances, transactions and details) will be requested.</param>
+    /// <param name="accessScope">
+    /// The scope of information that will be available for access to request. By default all access scopes
+    /// (balances, transactions and details) will be requested.
+    /// </param>
     /// <param name="cancellationToken">Optional token to signal cancellation of the operation.</param>
     /// <returns>A <see cref="NordigenApiResponse{TResponse, TError}" /> containing the created <see cref="Agreement" />.</returns>
     Task<NordigenApiResponse<Agreement, CreateAgreementError>> CreateAgreement(string institutionId,

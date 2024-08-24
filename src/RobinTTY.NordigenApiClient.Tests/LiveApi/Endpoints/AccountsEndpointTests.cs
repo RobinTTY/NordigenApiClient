@@ -210,7 +210,8 @@ public class AccountsEndpointTests
     }
 
     /// <summary>
-    /// Tests the retrieval of transactions within a specific time frame where the date range is incorrect, since the endDate is before the startDate. This should throw an exception.
+    /// Tests the retrieval of transactions within a specific time frame where the date range is incorrect, since the
+    /// endDate is before the startDate. This should throw an exception.
     /// </summary>
     [Test]
     public void GetTransactionRangeWithIncorrectRange()

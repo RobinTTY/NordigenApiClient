@@ -28,8 +28,8 @@ public class CurrencyExchange
     public string TargetCurrency { get; }
 
     /// <summary>
-    /// Currency in which the rate of exchange is expressed in a currency exchange. In the example 1 EUR = xxx USD, the unit
-    /// currency is EUR. ISO 4217 Alpha 3 currency code (e.g. "USD").
+    /// Currency in which the rate of exchange is expressed in a currency exchange. In the example 1 EUR = xxx USD, the
+    /// unit currency is EUR. ISO 4217 Alpha 3 currency code (e.g. "USD").
     /// </summary>
     [JsonPropertyName("unitCurrency")]
     public string UnitCurrency { get; }

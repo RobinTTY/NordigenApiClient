@@ -201,7 +201,8 @@ public class AgreementsEndpointTests
     }
 
     /// <summary>
-    /// Tests the creation of an end user agreement with invalid accessValidForDays and maxHistoricalDays for that particular institution.
+    /// Tests the creation of an end user agreement with invalid accessValidForDays and maxHistoricalDays for that
+    /// particular institution.
     /// </summary>
     [Test]
     public async Task CreateAgreementWithInvalidArgumentsForInstitution()
@@ -237,7 +238,8 @@ public class AgreementsEndpointTests
 
             Assert.That(response.Error!.AccessScopeError!.Detail,
                 Is.EqualTo("For this institution the following scopes are required together: ['details', 'balances']"));
-            Assert.That(response.Error!.AccessScopeError.Summary, Is.EqualTo("Institution access scope dependencies error"));
+            Assert.That(response.Error!.AccessScopeError.Summary,
+                Is.EqualTo("Institution access scope dependencies error"));
 
             Assert.That(new[] {response.Error!.InstitutionIdError, response.Error!.AgreementError}, Has.All.Null);
         });

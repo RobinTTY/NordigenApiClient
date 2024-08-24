@@ -48,10 +48,18 @@ public class AccountDetails
     /// Creates a new instance of <see cref="AccountDetails" />.
     /// </summary>
     /// <param name="iban">The IBAN of the bank account.</param>
-    /// <param name="bban">Basic Bank Account Number represents a country-specific bank account number.
-    /// This data element is used for payment accounts which have no IBAN.</param>
-    /// <param name="pan">Primary account number (unique identifier on credit cards, debit cards, and other types of payment cards).</param>
-    /// <param name="maskedPan">Masked primary account number (unique identifier on credit cards, debit cards, and other types of payment cards).</param>
+    /// <param name="bban">
+    /// Basic Bank Account Number represents a country-specific bank account number.
+    /// This data element is used for payment accounts which have no IBAN.
+    /// </param>
+    /// <param name="pan">
+    /// Primary account number (unique identifier on credit cards, debit cards, and other types of payment
+    /// cards).
+    /// </param>
+    /// <param name="maskedPan">
+    /// Masked primary account number (unique identifier on credit cards, debit cards, and other types
+    /// of payment cards).
+    /// </param>
     /// <param name="msisdn">An alias to a payment account via a registered mobile phone number.</param>
     /// <param name="currency">The currency the amount is denominated in.</param>
     [JsonConstructor]

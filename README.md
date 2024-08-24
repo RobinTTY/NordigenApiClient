@@ -4,7 +4,9 @@
 
 # NordigenApiClient
 
-This library provides a .NET client for the [GoCardless Bank Account Data API](https://gocardless.com/bank-account-data/) (formerly Nordigen API). The following API endpoints are supported:
+This library provides a .NET client for
+the [GoCardless Bank Account Data API](https://gocardless.com/bank-account-data/) (formerly Nordigen API). The following
+API endpoints are supported:
 
 - Token
 - Institutions
@@ -12,7 +14,9 @@ This library provides a .NET client for the [GoCardless Bank Account Data API](h
 - Requisitions
 - Accounts
 
-You can get started with the Quickstart Guide below or take a look at the [full documentation](https://robintty.github.io/NordigenApiClient/). You can find the nuget package [here](https://www.nuget.org/packages/RobinTTY.NordigenApiClient).
+You can get started with the Quickstart Guide below or take a look at
+the [full documentation](https://robintty.github.io/NordigenApiClient/). You can find the nuget
+package [here](https://www.nuget.org/packages/RobinTTY.NordigenApiClient).
 
 ## Quickstart Guide
 
@@ -61,11 +65,13 @@ You can get started with the Quickstart Guide below or take a look at the [full 
        Console.WriteLine($"Requisition couldn't be created: {requisitionResponse.Error.Summary}");
    ```
 
-5. You will now need to accept the end user agreement by following the authentication link you got in the last step. The authentication flow will roughly look like this:
+5. You will now need to accept the end user agreement by following the authentication link you got in the last step. The
+   authentication flow will roughly look like this:
 
    ![authentication-flow](docs/static/img/authentication_flow.png)
 
-6. Now that you have accepted the agreement we once again need to retrieve the requisition we created in step 4. This time the response will include the accounts you are now able to access.
+6. Now that you have accepted the agreement we once again need to retrieve the requisition we created in step 4. This
+   time the response will include the accounts you are now able to access.
 
    ```cs
    var requisitionId = "your-requisition-id";
@@ -79,7 +85,8 @@ You can get started with the Quickstart Guide below or take a look at the [full 
        Console.WriteLine($"Accounts couldn't be retrieved: {accountsResponse.Error.Summary}");
    ```
 
-7. Now you can retrieve details about your bank account and the balances/transactions using the account ID(s) we just acquired:
+7. Now you can retrieve details about your bank account and the balances/transactions using the account ID(s) we just
+   acquired:
 
    ```cs
    var accountId = "your-account-id";
@@ -110,4 +117,6 @@ You can get started with the Quickstart Guide below or take a look at the [full 
        });
    ```
 
-That's it! You are now able to retrieve the account details, balances and transactions of your bank account. If you wanna learn more about this library please refer to the [full documentation](https://robintty.github.io/NordigenApiClient/).
+That's it! You are now able to retrieve the account details, balances and transactions of your bank account. If you
+wanna learn more about this library please refer to
+the [full documentation](https://robintty.github.io/NordigenApiClient/).

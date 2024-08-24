@@ -14,11 +14,11 @@ namespace RobinTTY.NordigenApiClient;
 /// <inheritdoc />
 public class NordigenClient : INordigenClient
 {
-    private JsonWebTokenPair? _jsonWebTokenPair;
     private static readonly SemaphoreSlim TokenSemaphore = new(1, 1);
     private readonly HttpClient _httpClient;
     private readonly JsonSerializerOptions _serializerOptions;
     internal readonly NordigenClientCredentials Credentials;
+    private JsonWebTokenPair? _jsonWebTokenPair;
 
     /// <summary>
     /// Creates a new instance of <see cref="NordigenClient" />.
@@ -168,9 +168,7 @@ public class NordigenClient : INordigenClient
     {
         // Request a new token if it is null or if the refresh token has expired
         if (JsonWebTokenPair == null || JsonWebTokenPair.RefreshToken.IsExpired(TimeSpan.FromMinutes(1)))
-        {
             return await TokenEndpoint.GetTokenPair(cancellationToken);
-        }
 
         // Refresh the current access token if it's expired (or valid for less than a minute)
         if (JsonWebTokenPair.AccessToken.IsExpired(TimeSpan.FromMinutes(1)))

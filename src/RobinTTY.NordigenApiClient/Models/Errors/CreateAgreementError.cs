@@ -48,7 +48,9 @@ public class CreateAgreementError : BasicResponse
     /// <summary>
     /// Creates a new instance of <see cref="CreateAgreementError" />.
     /// </summary>
-    public CreateAgreementError() { }
+    public CreateAgreementError()
+    {
+    }
 
     /// <summary>
     /// Creates a new instance of <see cref="CreateAgreementError" />.

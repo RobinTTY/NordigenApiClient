@@ -68,7 +68,9 @@ public class CreateRequisitionError : BasicResponse
     /// <summary>
     /// Creates a new instance of <see cref="CreateRequisitionError" />.
     /// </summary>
-    public CreateRequisitionError() { }
+    public CreateRequisitionError()
+    {
+    }
 
     /// <summary>
     /// Creates a new instance of <see cref="CreateRequisitionError" />.

@@ -34,7 +34,7 @@ public class NordigenApiResponse<TResult, TError> where TResult : class where TE
     /// The error returned by the API. Null if the HTTP response was successful.
     /// </summary>
     public TError? Error { get; }
-    
+
     /// <summary>
     /// The rate limits of the GoCardless API.
     /// </summary>
