@@ -20,6 +20,33 @@ public class NordigenClient : INordigenClient
     internal readonly NordigenClientCredentials Credentials;
     private JsonWebTokenPair? _jsonWebTokenPair;
 
+    /// <inheritdoc />
+    public JsonWebTokenPair? JsonWebTokenPair
+    {
+        get => _jsonWebTokenPair;
+        set
+        {
+            _jsonWebTokenPair = value;
+            if (value is not null)
+                TokenPairUpdated?.Invoke(this, new TokenPairUpdatedEventArgs(value));
+        }
+    }
+
+    /// <inheritdoc />
+    public ITokenEndpoint TokenEndpoint { get; }
+
+    /// <inheritdoc />
+    public IInstitutionsEndpoint InstitutionsEndpoint { get; }
+
+    /// <inheritdoc />
+    public IAgreementsEndpoint AgreementsEndpoint { get; }
+
+    /// <inheritdoc />
+    public IRequisitionsEndpoint RequisitionsEndpoint { get; }
+
+    /// <inheritdoc />
+    public IAccountsEndpoint AccountsEndpoint { get; }
+
     /// <summary>
     /// Creates a new instance of <see cref="NordigenClient" />.
     /// </summary>
@@ -48,33 +75,6 @@ public class NordigenClient : INordigenClient
         RequisitionsEndpoint = new RequisitionsEndpoint(this);
         AccountsEndpoint = new AccountsEndpoint(this);
     }
-
-    /// <inheritdoc />
-    public JsonWebTokenPair? JsonWebTokenPair
-    {
-        get => _jsonWebTokenPair;
-        set
-        {
-            _jsonWebTokenPair = value;
-            if (value is not null)
-                TokenPairUpdated?.Invoke(this, new TokenPairUpdatedEventArgs(value));
-        }
-    }
-
-    /// <inheritdoc />
-    public ITokenEndpoint TokenEndpoint { get; }
-
-    /// <inheritdoc />
-    public IInstitutionsEndpoint InstitutionsEndpoint { get; }
-
-    /// <inheritdoc />
-    public IAgreementsEndpoint AgreementsEndpoint { get; }
-
-    /// <inheritdoc />
-    public IRequisitionsEndpoint RequisitionsEndpoint { get; }
-
-    /// <inheritdoc />
-    public IAccountsEndpoint AccountsEndpoint { get; }
 
     /// <inheritdoc />
     public event EventHandler<TokenPairUpdatedEventArgs>? TokenPairUpdated;
