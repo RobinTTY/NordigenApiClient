@@ -22,13 +22,15 @@ public enum PaymentProduct
     Target2Payments,
 
     /// <summary>
-    /// SEPA Credit Transfer, more commonly abbreviated as SCT, is a payment processing scheme used for making one-time, euro-denominated fund transfers between banks and payment service providers (PSPs) in the SEPA area.
+    /// SEPA Credit Transfer, more commonly abbreviated as SCT, is a payment processing scheme used for making one-time,
+    /// euro-denominated fund transfers between banks and payment service providers (PSPs) in the SEPA area.
     /// </summary>
     [Description("SCT")]
     SepaCreditTransfers,
 
     /// <summary>
-    /// Instant SEPA Credit Transfer supports money transfers of up to €100,000 between participating banks or PSPs in the SEPA area in real or near-real time.
+    /// Instant SEPA Credit Transfer supports money transfers of up to €100,000 between participating banks or PSPs in the
+    /// SEPA area in real or near-real time.
     /// </summary>
     [Description("ISCT")]
     InstantSepaCreditTransfer,
@@ -40,19 +42,24 @@ public enum PaymentProduct
     CrossBorderCreditTransfers,
 
     /// <summary>
-    /// Bacs Payment Schemes Limited (Bacs), previously known as Bankers' Automated Clearing System, is responsible for the clearing and settlement of UK automated direct debit and Bacs Direct Credit and the provision of third-party services.
+    /// Bacs Payment Schemes Limited (Bacs), previously known as Bankers' Automated Clearing System, is responsible for the
+    /// clearing and settlement of UK automated direct debit and Bacs Direct Credit and the provision of third-party
+    /// services.
     /// </summary>
     [Description("BACS")]
     BacsPaymentSchemesLimited,
 
     /// <summary>
-    /// The Clearing House Automated Payment System (CHAPS) is a real-time gross settlement payment system used for sterling transactions in the United Kingdom.
+    /// The Clearing House Automated Payment System (CHAPS) is a real-time gross settlement payment system used for
+    /// sterling transactions in the United Kingdom.
     /// </summary>
     [Description("CHAPS")]
     ClearingHouseAutomatedPaymentSystem,
 
     /// <summary>
-    /// The Faster Payments Service (FPS) is a United Kingdom banking initiative to reduce payment times between different banks' customer accounts to typically a few seconds, from the three working days that transfers usually take using the long-established BACS system.
+    /// The Faster Payments Service (FPS) is a United Kingdom banking initiative to reduce payment times between different
+    /// banks' customer accounts to typically a few seconds, from the three working days that transfers usually take using
+    /// the long-established BACS system.
     /// </summary>
     [Description("FPS")]
     FasterPaymentScheme,
@@ -64,7 +71,8 @@ public enum PaymentProduct
     SwiftPaymentService,
 
     /// <summary>
-    /// A balance transfer is the transfer of the balance in an account to another account, often held at another institution. It is most commonly used when describing a credit card balance transfer.
+    /// A balance transfer is the transfer of the balance in an account to another account, often held at another
+    /// institution. It is most commonly used when describing a credit card balance transfer.
     /// </summary>
     [Description("BT")]
     BalanceTransfer,
@@ -82,7 +90,8 @@ public enum PaymentProduct
     DomesticCreditTransfer,
 
     /// <summary>
-    /// An instant domestic transfer is a transfer completed between accounts that are held in the same country in real-time.
+    /// An instant domestic transfer is a transfer completed between accounts that are held in the same country in
+    /// real-time.
     /// </summary>
     [Description("IDCT")]
     InstantDomesticCreditTransfer

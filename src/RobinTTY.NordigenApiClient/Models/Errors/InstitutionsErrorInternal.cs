@@ -16,7 +16,9 @@ internal class InstitutionsErrorInternal : BasicResponse
     /// <summary>
     /// Creates a new instance of <see cref="InstitutionsErrorInternal" />.
     /// </summary>
-    public InstitutionsErrorInternal() { }
+    public InstitutionsErrorInternal()
+    {
+    }
 
     /// <summary>
     /// Creates a new instance of <see cref="InstitutionsErrorInternal" />.

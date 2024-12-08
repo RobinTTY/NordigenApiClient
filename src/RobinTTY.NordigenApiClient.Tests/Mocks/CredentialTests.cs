@@ -9,7 +9,8 @@ public class CredentialTests
     #region RequestsWithSuccessfulResponse
 
     /// <summary>
-    /// Tests that <see cref="NordigenClient.JsonWebTokenPair" /> is populated after the first authenticated request is made.
+    /// Tests that <see cref="NordigenClient.JsonWebTokenPair" /> is populated after the first authenticated request is
+    /// made.
     /// </summary>
     [Test]
     public async Task CheckValidTokensAfterRequest()
@@ -29,8 +30,8 @@ public class CredentialTests
     }
 
     /// <summary>
-    /// Tests whether the <see cref="NordigenClient.TokenPairUpdated"/> event is raised when the token pair is updated
-    /// automatically by the client itself. 
+    /// Tests whether the <see cref="NordigenClient.TokenPairUpdated" /> event is raised when the token pair is updated
+    /// automatically by the client itself.
     /// </summary>
     [Test]
     public async Task TokenPairUpdateIsRaisedOnInternalUpdate()
@@ -52,8 +53,8 @@ public class CredentialTests
     }
 
     /// <summary>
-    /// Tests whether the <see cref="NordigenClient.TokenPairUpdated"/> event is raised when the token pair is updated
-    /// by the user. 
+    /// Tests whether the <see cref="NordigenClient.TokenPairUpdated" /> event is raised when the token pair is updated
+    /// by the user.
     /// </summary>
     [Test]
     public void TokenPairUpdateIsRaisedOnManualUpdate()

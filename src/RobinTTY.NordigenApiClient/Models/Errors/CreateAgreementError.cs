@@ -1,6 +1,5 @@
 ﻿using System.Text.Json.Serialization;
 using RobinTTY.NordigenApiClient.JsonConverters;
-using RobinTTY.NordigenApiClient.Models.Requests;
 using RobinTTY.NordigenApiClient.Models.Responses;
 
 namespace RobinTTY.NordigenApiClient.Models.Errors;
@@ -49,7 +48,9 @@ public class CreateAgreementError : BasicResponse
     /// <summary>
     /// Creates a new instance of <see cref="CreateAgreementError" />.
     /// </summary>
-    public CreateAgreementError() { }
+    public CreateAgreementError()
+    {
+    }
 
     /// <summary>
     /// Creates a new instance of <see cref="CreateAgreementError" />.

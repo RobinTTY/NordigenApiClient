@@ -14,11 +14,38 @@ namespace RobinTTY.NordigenApiClient;
 /// <inheritdoc />
 public class NordigenClient : INordigenClient
 {
-    private JsonWebTokenPair? _jsonWebTokenPair;
     private static readonly SemaphoreSlim TokenSemaphore = new(1, 1);
     private readonly HttpClient _httpClient;
     private readonly JsonSerializerOptions _serializerOptions;
     internal readonly NordigenClientCredentials Credentials;
+    private JsonWebTokenPair? _jsonWebTokenPair;
+
+    /// <inheritdoc />
+    public JsonWebTokenPair? JsonWebTokenPair
+    {
+        get => _jsonWebTokenPair;
+        set
+        {
+            _jsonWebTokenPair = value;
+            if (value is not null)
+                TokenPairUpdated?.Invoke(this, new TokenPairUpdatedEventArgs(value));
+        }
+    }
+
+    /// <inheritdoc />
+    public ITokenEndpoint TokenEndpoint { get; }
+
+    /// <inheritdoc />
+    public IInstitutionsEndpoint InstitutionsEndpoint { get; }
+
+    /// <inheritdoc />
+    public IAgreementsEndpoint AgreementsEndpoint { get; }
+
+    /// <inheritdoc />
+    public IRequisitionsEndpoint RequisitionsEndpoint { get; }
+
+    /// <inheritdoc />
+    public IAccountsEndpoint AccountsEndpoint { get; }
 
     /// <summary>
     /// Creates a new instance of <see cref="NordigenClient" />.
@@ -48,33 +75,6 @@ public class NordigenClient : INordigenClient
         RequisitionsEndpoint = new RequisitionsEndpoint(this);
         AccountsEndpoint = new AccountsEndpoint(this);
     }
-
-    /// <inheritdoc />
-    public JsonWebTokenPair? JsonWebTokenPair
-    {
-        get => _jsonWebTokenPair;
-        set
-        {
-            _jsonWebTokenPair = value;
-            if (value is not null)
-                TokenPairUpdated?.Invoke(this, new TokenPairUpdatedEventArgs(value));
-        }
-    }
-
-    /// <inheritdoc />
-    public ITokenEndpoint TokenEndpoint { get; }
-
-    /// <inheritdoc />
-    public IInstitutionsEndpoint InstitutionsEndpoint { get; }
-
-    /// <inheritdoc />
-    public IAgreementsEndpoint AgreementsEndpoint { get; }
-
-    /// <inheritdoc />
-    public IRequisitionsEndpoint RequisitionsEndpoint { get; }
-
-    /// <inheritdoc />
-    public IAccountsEndpoint AccountsEndpoint { get; }
 
     /// <inheritdoc />
     public event EventHandler<TokenPairUpdatedEventArgs>? TokenPairUpdated;
@@ -119,7 +119,8 @@ public class NordigenClient : INordigenClient
                     JsonWebTokenPair = tokenResponse.Result;
                 else
                     return new NordigenApiResponse<TResponse, TError>(tokenResponse.StatusCode, tokenResponse.IsSuccess,
-                        null, new TError {Summary = tokenResponse.Error.Summary, Detail = tokenResponse.Error.Detail});
+                        null, new TError {Summary = tokenResponse.Error.Summary, Detail = tokenResponse.Error.Detail},
+                        tokenResponse.RateLimits);
             }
             finally
             {
@@ -167,9 +168,7 @@ public class NordigenClient : INordigenClient
     {
         // Request a new token if it is null or if the refresh token has expired
         if (JsonWebTokenPair == null || JsonWebTokenPair.RefreshToken.IsExpired(TimeSpan.FromMinutes(1)))
-        {
             return await TokenEndpoint.GetTokenPair(cancellationToken);
-        }
 
         // Refresh the current access token if it's expired (or valid for less than a minute)
         if (JsonWebTokenPair.AccessToken.IsExpired(TimeSpan.FromMinutes(1)))
@@ -180,13 +179,13 @@ public class NordigenClient : INordigenClient
                 ? new JsonWebTokenPair(response.Result.AccessToken, JsonWebTokenPair.RefreshToken,
                     response.Result!.AccessExpires, JsonWebTokenPair.RefreshExpires)
                 : null;
-            
+
             return new NordigenApiResponse<JsonWebTokenPair, BasicResponse>(response.StatusCode, response.IsSuccess,
-                token, response.Error);
+                token, response.Error, response.RateLimits);
         }
 
         // Token pair is still valid and can be returned - wrap in NordigenApiResponse
         return new NordigenApiResponse<JsonWebTokenPair, BasicResponse>(HttpStatusCode.OK, true, JsonWebTokenPair,
-            null);
+            null, new ApiRateLimits(-1, -1, -1, -1, 0, -1));
     }
 }

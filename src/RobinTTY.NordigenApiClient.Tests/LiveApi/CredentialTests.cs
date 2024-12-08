@@ -17,7 +17,8 @@ public class CredentialTests
     #region RequestsWithSuccessfulResponse
 
     /// <summary>
-    /// Tests that <see cref="NordigenClient.JsonWebTokenPair" /> is populated after the first authenticated request is made.
+    /// Tests that <see cref="NordigenClient.JsonWebTokenPair" /> is populated after the first authenticated request is
+    /// made.
     /// </summary>
     [Test]
     public async Task CheckValidTokensAfterRequest()

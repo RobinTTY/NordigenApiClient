@@ -7,6 +7,6 @@ public abstract class FakeHttpMessageHandler : HttpMessageHandler
 
     // sealed so FakeItEasy won't intercept calls to this method
     protected sealed override Task<HttpResponseMessage> SendAsync(
-        HttpRequestMessage request, CancellationToken cancellationToken)
-        => FakeSendAsync(request, cancellationToken);
+        HttpRequestMessage request, CancellationToken cancellationToken) =>
+        FakeSendAsync(request, cancellationToken);
 }

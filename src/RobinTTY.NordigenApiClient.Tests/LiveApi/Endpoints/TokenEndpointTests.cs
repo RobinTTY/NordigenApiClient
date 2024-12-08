@@ -48,8 +48,8 @@ public class TokenEndpointTests
     }
 
     /// <summary>
-    /// Tests whether the <see cref="NordigenClient.TokenPairUpdated"/> event is raised when the token pair is updated
-    /// automatically by the client itself. 
+    /// Tests whether the <see cref="NordigenClient.TokenPairUpdated" /> event is raised when the token pair is updated
+    /// automatically by the client itself.
     /// </summary>
     [Test]
     public async Task TokenPairUpdateIsRaisedOnInternalUpdate()
@@ -68,10 +68,10 @@ public class TokenEndpointTests
             Assert.That(eventArgs.JsonWebTokenPair.RefreshToken.EncodedToken, Is.Not.Empty);
         });
     }
-    
+
     /// <summary>
-    /// Tests whether the <see cref="NordigenClient.TokenPairUpdated"/> event is raised when the token pair is updated
-    /// by the user. 
+    /// Tests whether the <see cref="NordigenClient.TokenPairUpdated" /> event is raised when the token pair is updated
+    /// by the user.
     /// </summary>
     [Test]
     public void TokenPairUpdateIsRaisedOnManualUpdate()

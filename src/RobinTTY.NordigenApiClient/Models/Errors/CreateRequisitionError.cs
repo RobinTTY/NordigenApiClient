@@ -1,6 +1,5 @@
 ﻿using System.Text.Json.Serialization;
 using RobinTTY.NordigenApiClient.JsonConverters;
-using RobinTTY.NordigenApiClient.Models.Requests;
 using RobinTTY.NordigenApiClient.Models.Responses;
 
 namespace RobinTTY.NordigenApiClient.Models.Errors;
@@ -69,7 +68,9 @@ public class CreateRequisitionError : BasicResponse
     /// <summary>
     /// Creates a new instance of <see cref="CreateRequisitionError" />.
     /// </summary>
-    public CreateRequisitionError() { }
+    public CreateRequisitionError()
+    {
+    }
 
     /// <summary>
     /// Creates a new instance of <see cref="CreateRequisitionError" />.

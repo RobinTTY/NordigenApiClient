@@ -72,7 +72,8 @@ public class Requisition
     /// Some European banks allow sending an end-user's SSN to check whether the SSN is valid.
     /// <para>
     /// For bank availability check:
-    /// <a href="https://nordigen.zendesk.com/hc/en-gb/articles/6761166365085-SSN-verification-feature-for-specific-banks">
+    /// <a
+    ///     href="https://nordigen.zendesk.com/hc/en-gb/articles/6761166365085-SSN-verification-feature-for-specific-banks">
     /// GoCardless
     /// Documentation
     /// </a>
@@ -136,7 +137,8 @@ public class Requisition
     /// Some European banks allow sending an end-user's SSN to check whether the SSN is valid.
     /// <para>
     /// For bank availability check:
-    /// <a href="https://nordigen.zendesk.com/hc/en-gb/articles/6761166365085-SSN-verification-feature-for-specific-banks">
+    /// <a
+    ///     href="https://nordigen.zendesk.com/hc/en-gb/articles/6761166365085-SSN-verification-feature-for-specific-banks">
     /// GoCardless
     /// Documentation
     /// </a>

@@ -12,6 +12,7 @@ namespace RobinTTY.NordigenApiClient.Tests.Shared;
 internal static class TestHelpers
 {
     private static readonly JsonSerializerOptions JsonSerializerOptions;
+
     public static TestSecrets Secrets { get; }
     public static MockResponsesModel MockData { get; }
 
@@ -41,8 +42,9 @@ internal static class TestHelpers
     }
 
     internal static NordigenClient GetMockClient(object? value, HttpStatusCode statusCode,
-        bool addDefaultAuthToken = true) => GetMockClient([new ValueTuple<object?, HttpStatusCode>(value, statusCode)],
-        addDefaultAuthToken);
+        bool addDefaultAuthToken = true) =>
+        GetMockClient([new ValueTuple<object?, HttpStatusCode>(value, statusCode)],
+            addDefaultAuthToken);
 
     private static NordigenClient GetMockClient(List<(object? Value, HttpStatusCode StatusCode)> responses,
         bool addDefaultAuthToken = true)
@@ -79,7 +81,7 @@ internal static class TestHelpers
         var credentials = new NordigenClientCredentials(Secrets.ValidSecretId, Secrets.ValidSecretKey);
         return new NordigenClient(mockHttpClient, credentials);
     }
-    
+
     private static TestSecrets? GetSecrets() =>
         new ConfigurationBuilder()
             .AddJsonFile("appsettings.test.json")

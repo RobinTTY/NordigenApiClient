@@ -36,18 +36,26 @@ public class NordigenApiResponse<TResult, TError> where TResult : class where TE
     public TError? Error { get; }
 
     /// <summary>
+    /// The rate limits of the GoCardless API.
+    /// </summary>
+    public ApiRateLimits RateLimits { get; }
+
+    /// <summary>
     /// Creates a new instance of <see cref="NordigenApiResponse{TResult, TError}" />.
     /// </summary>
     /// <param name="statusCode">The status code returned by the API.</param>
     /// <param name="isSuccess">Indicates whether the HTTP response was successful.</param>
     /// <param name="result">The result returned by the API. Null if the the HTTP response was not successful.</param>
     /// <param name="apiError">The error returned by the API. Null if the HTTP response was successful.</param>
-    public NordigenApiResponse(HttpStatusCode statusCode, bool isSuccess, TResult? result, TError? apiError)
+    /// <param name="rateLimits">The rate limits of the GoCardless API.</param>
+    public NordigenApiResponse(HttpStatusCode statusCode, bool isSuccess, TResult? result,
+        TError? apiError, ApiRateLimits rateLimits)
     {
         StatusCode = statusCode;
         IsSuccess = isSuccess;
         Result = result;
         Error = apiError;
+        RateLimits = rateLimits;
     }
 
     /// <summary>
@@ -65,20 +73,19 @@ public class NordigenApiResponse<TResult, TError> where TResult : class where TE
 #else
         var responseJson = await response.Content.ReadAsStringAsync();
 #endif
-
         try
         {
             if (response.IsSuccessStatusCode)
             {
                 var result = await response.Content.ReadFromJsonAsync<TResult>(options, cancellationToken);
                 return new NordigenApiResponse<TResult, TError>(response.StatusCode, response.IsSuccessStatusCode,
-                    result, null);
+                    result, null, new ApiRateLimits(response.Headers));
             }
             else
             {
                 var result = await response.Content.ReadFromJsonAsync<TError>(options, cancellationToken);
                 return new NordigenApiResponse<TResult, TError>(response.StatusCode, response.IsSuccessStatusCode,
-                    null, result);
+                    null, result, new ApiRateLimits(response.Headers));
             }
         }
         catch (JsonException ex)

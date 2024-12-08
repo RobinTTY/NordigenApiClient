@@ -60,8 +60,7 @@ public class InstitutionsEndpoint : IInstitutionsEndpoint
             NordigenEndpointUrls.InstitutionsEndpoint, HttpMethod.Get, cancellationToken, query);
 
         return new NordigenApiResponse<List<Institution>, BasicResponse>(response.StatusCode, response.IsSuccess,
-            response.Result,
-            response.Error);
+            response.Result, response.Error, response.RateLimits);
     }
 
     /// <inheritdoc />
@@ -84,6 +83,6 @@ public class InstitutionsEndpoint : IInstitutionsEndpoint
         await _nordigenClient.MakeRequest<Institution, BasicResponse>(
             $"{NordigenEndpointUrls.InstitutionsEndpoint}{id}/", HttpMethod.Get, cancellationToken);
 
-    private static KeyValuePair<string, string> GetSupportFlagQuery(string flag, bool value)
-        => new(flag, value.ToString().ToLower());
+    private static KeyValuePair<string, string> GetSupportFlagQuery(string flag, bool value) =>
+        new(flag, value.ToString().ToLower());
 }

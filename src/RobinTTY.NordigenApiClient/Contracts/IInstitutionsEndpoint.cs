@@ -128,8 +128,10 @@ public interface IInstitutionsEndpoint
     /// <summary>
     /// Gets a specific institution by id.
     /// </summary>
-    /// <param name="id">The id of the institution to retrieve (can be retrieved via
-    /// <see cref="o:InstitutionsEndpoint.GetInstitutions" />).</param>
+    /// <param name="id">
+    /// The id of the institution to retrieve (can be retrieved via
+    /// <see cref="o:InstitutionsEndpoint.GetInstitutions" />).
+    /// </param>
     /// <param name="cancellationToken">>Optional token to signal cancellation of the operation.</param>
     /// <returns>
     /// A <see cref="NordigenApiResponse{TResponse, TError}" /> containing the institution matching the id if the

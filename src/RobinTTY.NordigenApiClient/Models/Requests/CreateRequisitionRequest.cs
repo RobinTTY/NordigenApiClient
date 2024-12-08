@@ -36,7 +36,9 @@ internal class CreateRequisitionRequest
     /// <a href="https://wikipedia.org/wiki/ISO_639-1">(ISO 639-1)</a>. For a list of all possible languages
     /// see the
     /// <a
-    ///     href="https://bankaccountdata.zendesk.com/hc/en-gb/articles/11529165730332-Is-it-possible-to-change-language-for-GoCardless-consent-step">GoCardless documentation</a>
+    ///     href="https://bankaccountdata.zendesk.com/hc/en-gb/articles/11529165730332-Is-it-possible-to-change-language-for-GoCardless-consent-step">
+    /// GoCardless documentation
+    /// </a>
     /// .
     /// </summary>
     [JsonPropertyName("user_language")]
@@ -68,9 +70,12 @@ internal class CreateRequisitionRequest
     public bool AccountSelection { get; set; }
 
     /// <summary>
-    /// Enables you to redirect end users back to your app immediately after they have given their consent to access the account
-    /// information data from the bank, instead of waiting for transaction data being processed. Accounts endpoint status will be
-    /// PROCESSING and you have to wait until account status is READY before you're able to query the transactions. For details see the
+    /// Enables you to redirect end users back to your app immediately after they have given their consent to access the
+    /// account
+    /// information data from the bank, instead of waiting for transaction data being processed. Accounts endpoint status
+    /// will be
+    /// PROCESSING and you have to wait until account status is READY before you're able to query the transactions. For
+    /// details see the
     /// <a
     ///     href="https://nordigen.zendesk.com/hc/en-gb/articles/6772857816477-Immediate-end-user-redirect-from-bank-after-consent">
     /// GoCardless
@@ -96,7 +101,8 @@ internal class CreateRequisitionRequest
     /// Some European banks allow sending an end-user's SSN to check whether the SSN is valid.
     /// <para>
     /// For bank availability check:
-    /// <a href="https://nordigen.zendesk.com/hc/en-gb/articles/6761166365085-SSN-verification-feature-for-specific-banks/">
+    /// <a
+    ///     href="https://nordigen.zendesk.com/hc/en-gb/articles/6761166365085-SSN-verification-feature-for-specific-banks/">
     /// GoCardless
     /// Documentation
     /// </a>

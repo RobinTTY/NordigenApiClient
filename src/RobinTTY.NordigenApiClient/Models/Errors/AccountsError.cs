@@ -54,7 +54,9 @@ public class AccountsError : BasicResponse
     /// <summary>
     /// Creates a new instance of <see cref="AccountsError" />.
     /// </summary>
-    public AccountsError() { }
+    public AccountsError()
+    {
+    }
 
 #if NET6_0_OR_GREATER
     /// <summary>
