@@ -186,6 +186,6 @@ public class NordigenClient : INordigenClient
 
         // Token pair is still valid and can be returned - wrap in NordigenApiResponse
         return new NordigenApiResponse<JsonWebTokenPair, BasicResponse>(HttpStatusCode.OK, true, JsonWebTokenPair,
-            null, new ApiRateLimits(-1, -1, -1, -1, 0, -1));
+            null, new ApiRateLimits(-1, -1, -1, -1, -1, -1));
     }
 }
