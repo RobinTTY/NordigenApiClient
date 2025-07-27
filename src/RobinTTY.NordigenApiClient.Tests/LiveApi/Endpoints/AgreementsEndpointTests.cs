@@ -220,7 +220,7 @@ public class AgreementsEndpointTests
                 Is.EqualTo(
                     "max_historical_days must be > 0 and <= SANDBOXFINANCE_SFIN0000 transaction_total_days (90)"));
 
-            Assert.That(new[] {result.InstitutionIdError, result.AgreementError, result.AccessScopeError},
+            Assert.That(new[] { result.InstitutionIdError, result.AgreementError, result.AccessScopeError },
                 Has.All.Null);
         });
     }
@@ -241,7 +241,7 @@ public class AgreementsEndpointTests
             Assert.That(response.Error!.AccessScopeError.Summary,
                 Is.EqualTo("Institution access scope dependencies error"));
 
-            Assert.That(new[] {response.Error!.InstitutionIdError, response.Error!.AgreementError}, Has.All.Null);
+            Assert.That(new[] { response.Error!.InstitutionIdError, response.Error!.AgreementError }, Has.All.Null);
         });
     }
 

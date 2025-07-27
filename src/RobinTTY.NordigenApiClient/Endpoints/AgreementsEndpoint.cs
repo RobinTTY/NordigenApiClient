@@ -24,7 +24,7 @@ public class AgreementsEndpoint : IAgreementsEndpoint
         CancellationToken cancellationToken = default)
     {
         var query = new KeyValuePair<string, string>[]
-            {new("limit", limit.ToString()), new("offset", offset.ToString())};
+            { new("limit", limit.ToString()), new("offset", offset.ToString()) };
         return await _nordigenClient.MakeRequest<ResponsePage<Agreement>, BasicResponse>(
             NordigenEndpointUrls.AgreementsEndpoint, HttpMethod.Get, cancellationToken, query);
     }
@@ -42,12 +42,13 @@ public class AgreementsEndpoint : IAgreementsEndpoint
     /// <inheritdoc />
     public async Task<NordigenApiResponse<Agreement, CreateAgreementError>> CreateAgreement(string institutionId,
         uint accessValidForDays = 90, uint maxHistoricalDays = 90, List<AccessScope>? accessScope = null,
-        CancellationToken cancellationToken = default)
+        bool reconfirmationSupported = false, CancellationToken cancellationToken = default)
     {
         var scope = accessScope ?? [AccessScope.Balances, AccessScope.Transactions, AccessScope.Details];
-        var agreement = new CreateAgreementRequest(institutionId, scope, maxHistoricalDays, accessValidForDays);
+        var agreement = new CreateAgreementRequest(institutionId, scope, maxHistoricalDays, accessValidForDays,
+            reconfirmationSupported);
         var body = JsonContent.Create(agreement,
-            options: new JsonSerializerOptions {DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull});
+            options: new JsonSerializerOptions { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull });
 
         return await _nordigenClient.MakeRequest<Agreement, CreateAgreementError>(
             NordigenEndpointUrls.AgreementsEndpoint, HttpMethod.Post, cancellationToken, body: body);
@@ -73,6 +74,27 @@ public class AgreementsEndpoint : IAgreementsEndpoint
         string userAgent, string ipAddress, CancellationToken cancellationToken = default) =>
         await AcceptAgreementInternal(id, userAgent, ipAddress, cancellationToken);
 
+    /// <inheritdoc />
+    public async Task<NordigenApiResponse<Reconfirmation, BasicResponse>> GetReconfirmationDetails(Guid agreementId,
+        CancellationToken cancellationToken = default) =>
+        await GetReconfirmationDetailsInternal(agreementId.ToString(), cancellationToken);
+
+    /// <inheritdoc />
+    public async Task<NordigenApiResponse<Reconfirmation, BasicResponse>> GetReconfirmationDetails(string agreementId,
+        CancellationToken cancellationToken = default) =>
+        await GetReconfirmationDetailsInternal(agreementId, cancellationToken);
+
+    /// <inheritdoc />
+    public async Task<NordigenApiResponse<Reconfirmation, BasicResponse>> ReconfirmAgreement(Guid agreementId,
+        Uri? redirect = null, CancellationToken cancellationToken = default) =>
+        await ReconfirmAgreementInternal(agreementId.ToString(), redirect, cancellationToken);
+
+    /// <inheritdoc />
+    public async Task<NordigenApiResponse<Reconfirmation, BasicResponse>> ReconfirmAgreement(string agreementId,
+        Uri? redirect = null,
+        CancellationToken cancellationToken = default) =>
+        await ReconfirmAgreementInternal(agreementId, redirect, cancellationToken);
+
     private async Task<NordigenApiResponse<Agreement, BasicResponse>> GetAgreementInternal(string id,
         CancellationToken cancellationToken) =>
         await _nordigenClient.MakeRequest<Agreement, BasicResponse>(
@@ -90,5 +112,20 @@ public class AgreementsEndpoint : IAgreementsEndpoint
         var body = JsonContent.Create(acceptAgreementRequest);
         return await _nordigenClient.MakeRequest<Agreement, BasicResponse>(
             $"{NordigenEndpointUrls.AgreementsEndpoint}{id}/accept/", HttpMethod.Put, cancellationToken, body: body);
+    }
+
+    private async Task<NordigenApiResponse<Reconfirmation, BasicResponse>>
+        GetReconfirmationDetailsInternal(string id, CancellationToken cancellationToken) =>
+        await _nordigenClient.MakeRequest<Reconfirmation, BasicResponse>(
+            $"{NordigenEndpointUrls.AgreementsEndpoint}{id}/reconfirm/", HttpMethod.Get, cancellationToken);
+
+    private async Task<NordigenApiResponse<Reconfirmation, BasicResponse>>
+        ReconfirmAgreementInternal(string id, Uri? redirect = null, CancellationToken cancellationToken = default)
+    {
+        var reconfirmAgreementRequest = new ReconfirmAgreementRequest(redirect);
+        var body = JsonContent.Create(reconfirmAgreementRequest);
+        return await _nordigenClient.MakeRequest<Reconfirmation, BasicResponse>(
+            $"{NordigenEndpointUrls.AgreementsEndpoint}{id}/reconfirm/", HttpMethod.Post, cancellationToken,
+            body: body);
     }
 }
