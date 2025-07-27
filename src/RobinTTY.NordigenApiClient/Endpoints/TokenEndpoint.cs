@@ -1,5 +1,7 @@
-﻿using System.Net.Http.Json;
+﻿using System.Net;
+using System.Net.Http.Json;
 using Microsoft.IdentityModel.JsonWebTokens;
+using Microsoft.IdentityModel.Tokens;
 using RobinTTY.NordigenApiClient.Contracts;
 using RobinTTY.NordigenApiClient.Models.Jwt;
 using RobinTTY.NordigenApiClient.Models.Responses;
@@ -21,6 +23,14 @@ public class TokenEndpoint : ITokenEndpoint
     public async Task<NordigenApiResponse<JsonWebTokenPair, BasicResponse>> GetTokenPair(
         CancellationToken cancellationToken = default)
     {
+        if (_nordigenClient.Credentials.SecretId.IsNullOrEmpty() ||
+            _nordigenClient.Credentials.SecretKey.IsNullOrEmpty())
+        {
+            return new NordigenApiResponse<JsonWebTokenPair, BasicResponse>(HttpStatusCode.BadRequest, isSuccess: false,
+                result: null, apiError: new BasicResponse("No SecretId or SecretKey provided.", "Please provide a valid SecretId and SecretKey."),
+                rateLimits: new ApiRateLimits(-1, -1, -1, -1, -1, -1));
+        }
+
         var requestBody = JsonContent.Create(_nordigenClient.Credentials);
         return await _nordigenClient.MakeRequest<JsonWebTokenPair, BasicResponse>(
             $"{NordigenEndpointUrls.TokensEndpoint}new/", HttpMethod.Post, cancellationToken, body: requestBody,
@@ -32,7 +42,7 @@ public class TokenEndpoint : ITokenEndpoint
         JsonWebToken refreshToken,
         CancellationToken cancellationToken = default)
     {
-        var requestBody = JsonContent.Create(new {refresh = refreshToken.EncodedToken});
+        var requestBody = JsonContent.Create(new { refresh = refreshToken.EncodedToken });
         return await _nordigenClient.MakeRequest<JsonWebAccessToken, BasicResponse>(
             $"{NordigenEndpointUrls.TokensEndpoint}refresh/", HttpMethod.Post, cancellationToken, body: requestBody,
             useAuthentication: false);
