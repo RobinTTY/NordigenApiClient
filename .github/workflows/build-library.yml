@@ -16,6 +16,6 @@ jobs:
         with:
           dotnet-version: | 
             6.x
-            8.x
+            9.x
       - name: Build project
         run: dotnet build --configuration Release src/
