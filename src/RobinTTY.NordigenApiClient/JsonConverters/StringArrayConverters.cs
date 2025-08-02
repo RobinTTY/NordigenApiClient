@@ -44,9 +44,9 @@ internal class StringArrayMergeConverter : JsonConverter<string>
 /// <summary>
 /// For some errors (so far only seen when creating requisitions) the GoCardless API returns a simple array of strings
 /// as response to a field in the <see cref="CreateRequisitionRequest" /> having an invalid value. To bring them in
-/// line
-/// with errors from other fields in the response this converter converts them to the <see cref="BasicResponse" />
+/// line with errors from other fields in the response this converter converts them to the <see cref="BasicResponse" />
 /// type.
+/// Update 02.08.2025: now the API also returns simple strings instead sometimes, this is again not documented...
 /// </summary>
 internal class StringArrayToBasicResponseConverter : JsonConverter<BasicResponse>
 {
@@ -66,6 +66,8 @@ internal class StringArrayToBasicResponseConverter : JsonConverter<BasicResponse
                 }
 
                 return new BasicResponse(list.First(), string.Join("; ", list));
+            case JsonTokenType.String:
+                return new BasicResponse(reader.GetString(), reader.GetString());
             default:
                 return JsonSerializer.Deserialize<BasicResponse>(ref reader, options);
         }

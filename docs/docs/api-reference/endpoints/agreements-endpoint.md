@@ -156,7 +156,7 @@ public async Task<NordigenApiResponse<Agreement, BasicResponse>>
 ```
 
 :::danger Information
-This functionality is only available to customers with an enterprise contract at GoCardless.
+This functionality is only available to customers with an enterprise contract at GoCardless. Therefore this method is untested. Please open an issue if you encounter any problems.
 :::
 
 #### Parameters
@@ -182,3 +182,79 @@ A token to signal cancellation of the operation.
 [Task](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)\<[NordigenApiResponse](/docs/api-reference/responses/nordigen-api-response)\<[Agreement](/docs/api-reference/responses/agreement), [BasicResponse](/docs/api-reference/responses/basic-response)\>\>
 
 A `NordigenApiResponse` containing the accepted end user agreement if the request was successful.
+
+### `GetReconfirmationDetails`
+
+Retrieves a [Reconfirmation](/docs/api-reference/responses/reconfirmation) for a specific agreement.
+
+```csharp
+public async Task<NordigenApiResponse<Reconfirmation, BasicResponse>> GetReconfirmationDetails(
+  Guid agreementId, CancellationToken cancellationToken = default);
+```
+
+Overloaded `agreementId` parameter using the `string` type:
+
+```csharp
+public async Task<NordigenApiResponse<Reconfirmation, BasicResponse>> GetReconfirmationDetails(
+  string agreementId, CancellationToken cancellationToken = default);
+```
+
+#### Parameters
+
+##### `agreementId` - [Guid](https://learn.microsoft.com/en-us/dotnet/api/system.guid) | [string](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/reference-types#the-string-type)
+
+The unique identifier of the agreement to retrieve the reconfirmation details for.
+
+##### `cancellationToken` - [CancellationToken](https://learn.microsoft.com/en-us/dotnet/api/system.threading.cancellationtoken)
+
+A token to signal cancellation of the operation.
+
+#### Returns
+
+[Task](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)\<[NordigenApiResponse](/docs/api-reference/responses/nordigen-api-response)\<[Reconfirmation](/docs/api-reference/responses/reconfirmation), [BasicResponse](/docs/api-reference/responses/basic-response)\>\>
+
+A `NordigenApiResponse` containing the reconfirmation details if the request was successful.
+
+:::danger Information
+This functionality is only available to customers with an enterprise contract at GoCardless. Therefore this method is untested. Please open an issue if you encounter any problems.
+:::
+
+### `ReconfirmAgreement`
+
+Reconfirms an existing agreement based on the provided identifier.
+
+```csharp
+public async Task<NordigenApiResponse<Reconfirmation, BasicResponse>> ReconfirmAgreement(
+  Guid agreementId, Uri? redirect = null, CancellationToken cancellationToken = default);
+```
+
+Overloaded `agreementId` parameter using the `string` type:
+
+```csharp
+public async Task<NordigenApiResponse<Reconfirmation, BasicResponse>> ReconfirmAgreement(
+  string agreementId, Uri? redirect = null, CancellationToken cancellationToken = default);
+```
+
+#### Parameters
+
+##### `agreementId` - [Guid](https://learn.microsoft.com/en-us/dotnet/api/system.guid) | [string](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/reference-types#the-string-type)
+
+The unique identifier of the agreement to be reconfirmed.
+
+##### `redirect` - [Uri](https://learn.microsoft.com/en-us/dotnet/api/system.uri)? (optional)
+
+Optional URL overriding the requisition's redirect.
+
+##### `cancellationToken` - [CancellationToken](https://learn.microsoft.com/en-us/dotnet/api/system.threading.cancellationtoken)
+
+A token to signal cancellation of the operation.
+
+#### Returns
+
+[Task](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)\<[NordigenApiResponse](/docs/api-reference/responses/nordigen-api-response)\<[Reconfirmation](/docs/api-reference/responses/reconfirmation), [BasicResponse](/docs/api-reference/responses/basic-response)\>\>
+
+A `NordigenApiResponse` containing the reconfirmation details if the request was successful.
+
+:::danger Information
+This functionality is only available to customers with an enterprise contract at GoCardless. Therefore this method is untested. Please open an issue if you encounter any problems.
+:::

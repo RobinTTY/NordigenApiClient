@@ -13,12 +13,12 @@ Gets a list of institutions supported by the Nordigen API. The list can be filte
 ```csharp
 public async Task<NordigenApiResponse<List<Institution>, BasicResponse>>
   GetInstitutions(
-        string? country = null, bool? accessScopesSupported = null,
+        string? country = null, bool? accessScopesSupported = null, 
         bool? accountSelectionSupported = null, bool? businessAccountsSupported = null,
         bool? cardAccountsSupported = null, bool? corporateAccountsSupported = null,
         bool? privateAccountsSupported = null, bool? readRefundAccountSupported = null,
-        bool? paymentsEnabled = null, bool? paymentSubmissionSupported = null,
-        bool? pendingTransactionsSupported = null, bool? ssnVerificationSupported = null,
+        bool? readDebtorAccountSupported = null, bool? pendingTransactionsSupported = null,
+        bool? ssnVerificationSupported = null, bool? separateContinuousHistoryConsentSupported = null,
         CancellationToken cancellationToken = default)
 ```
 
@@ -27,12 +27,12 @@ Overloaded `country` parameter using the `SupportedCountry` type:
 ```csharp
 public async Task<NordigenApiResponse<List<Institution>, BasicResponse>>
   GetInstitutions(
-        SupportedCountry country, bool? accessScopesSupported = null,
+        SupportedCountry country, bool? accessScopesSupported = null, 
         bool? accountSelectionSupported = null, bool? businessAccountsSupported = null,
         bool? cardAccountsSupported = null, bool? corporateAccountsSupported = null,
         bool? privateAccountsSupported = null, bool? readRefundAccountSupported = null,
-        bool? paymentsEnabled = null, bool? paymentSubmissionSupported = null,
-        bool? pendingTransactionsSupported = null, bool? ssnVerificationSupported = null,
+        bool? readDebtorAccountSupported = null, bool? pendingTransactionsSupported = null,
+        bool? ssnVerificationSupported = null, bool? separateContinuousHistoryConsentSupported = null,
         CancellationToken cancellationToken = default)
 ```
 
@@ -74,14 +74,6 @@ If set to `true` filters filters institutions by whether or not read refund acco
 
 If set to `true` filters institutions by whether or not the debtor account can be read before submitting payment.
 
-##### `paymentsEnabled` - [bool](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool)
-
-If set to `true` filters institutions by whether or not payments are supported.
-
-##### `paymentSubmissionSupported` - [bool](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool)
-
-If set to `true` filters institutions by whether or not payment submission is supported.
-
 ##### `pendingTransactionsSupported` - [bool](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool)
 
 If set to `true` filters institutions by whether or not pending transactions are supported.
@@ -89,6 +81,10 @@ If set to `true` filters institutions by whether or not pending transactions are
 ##### `ssnVerificationSupported` - [bool](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool)
 
 If set to `true` filters institutions by whether or not SSN verification is supported.
+
+#### `separateContinuousHistoryConsentSupported` - [bool](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool)
+
+If set to `true`, filters institutions by whether separate consent for continuous history is supported
 
 ##### `cancellationToken` - [CancellationToken](https://learn.microsoft.com/en-us/dotnet/api/system.threading.cancellationtoken)
 

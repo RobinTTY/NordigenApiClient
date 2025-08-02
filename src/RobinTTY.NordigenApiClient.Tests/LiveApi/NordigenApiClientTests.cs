@@ -56,6 +56,7 @@ public class NordigenApiClientTests
     /// Executes a request to the Nordigen API using a custom base address.
     /// </summary>
     [Test]
+    [Ignore("Alternative URL no longer valid.")]
     public async Task ExecuteRequestWithCustomBaseAddress()
     {
         var apiClient = TestHelpers.GetConfiguredClient("https://ob.gocardless.com/api/v2/");

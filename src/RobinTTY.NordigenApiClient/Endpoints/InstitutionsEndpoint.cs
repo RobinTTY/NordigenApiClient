@@ -23,9 +23,8 @@ public class InstitutionsEndpoint : IInstitutionsEndpoint
         bool? businessAccountsSupported = null, bool? cardAccountsSupported = null,
         bool? corporateAccountsSupported = null, bool? privateAccountsSupported = null,
         bool? readRefundAccountSupported = null, bool? readDebtorAccountSupported = null,
-        bool? paymentsEnabled = null, bool? paymentSubmissionSupported = null,
         bool? pendingTransactionsSupported = null, bool? ssnVerificationSupported = null,
-        CancellationToken cancellationToken = default)
+        bool? separateContinuousHistoryConsentSupported = null, CancellationToken cancellationToken = default)
     {
         var query = new List<KeyValuePair<string, string>>();
         if (country != null) query.Add(new KeyValuePair<string, string>("country", country));
@@ -41,20 +40,19 @@ public class InstitutionsEndpoint : IInstitutionsEndpoint
             query.Add(GetSupportFlagQuery("card_accounts_supported", cardAccountsSupported.Value));
         if (corporateAccountsSupported.HasValue)
             query.Add(GetSupportFlagQuery("corporate_accounts_supported", corporateAccountsSupported.Value));
-        if (privateAccountsSupported.HasValue)
-            query.Add(GetSupportFlagQuery("private_accounts_supported", privateAccountsSupported.Value));
-        if (readRefundAccountSupported.HasValue)
-            query.Add(GetSupportFlagQuery("read_refund_account_supported", readRefundAccountSupported.Value));
-        if (readDebtorAccountSupported.HasValue)
-            query.Add(GetSupportFlagQuery("read_debtor_account_supported", readDebtorAccountSupported.Value));
-        if (paymentsEnabled.HasValue)
-            query.Add(GetSupportFlagQuery("payments_enabled", paymentsEnabled.Value));
-        if (paymentSubmissionSupported.HasValue)
-            query.Add(GetSupportFlagQuery("payment_submission_supported", paymentSubmissionSupported.Value));
         if (pendingTransactionsSupported.HasValue)
             query.Add(GetSupportFlagQuery("pending_transactions_supported", pendingTransactionsSupported.Value));
+        if (privateAccountsSupported.HasValue)
+            query.Add(GetSupportFlagQuery("private_accounts_supported", privateAccountsSupported.Value));
+        if (readDebtorAccountSupported.HasValue)
+            query.Add(GetSupportFlagQuery("read_debtor_account_supported", readDebtorAccountSupported.Value));
+        if (readRefundAccountSupported.HasValue)
+            query.Add(GetSupportFlagQuery("read_refund_account_supported", readRefundAccountSupported.Value));
         if (ssnVerificationSupported.HasValue)
             query.Add(GetSupportFlagQuery("ssn_verification_supported", ssnVerificationSupported.Value));
+        if (separateContinuousHistoryConsentSupported.HasValue)
+            query.Add(GetSupportFlagQuery("separate_continuous_history_consent_supported",
+                separateContinuousHistoryConsentSupported.Value));
 
         var response = await _nordigenClient.MakeRequest<List<Institution>, InstitutionsErrorInternal>(
             NordigenEndpointUrls.InstitutionsEndpoint, HttpMethod.Get, cancellationToken, query);
@@ -69,13 +67,12 @@ public class InstitutionsEndpoint : IInstitutionsEndpoint
         bool? businessAccountsSupported = null, bool? cardAccountsSupported = null,
         bool? corporateAccountsSupported = null, bool? privateAccountsSupported = null,
         bool? readRefundAccountSupported = null, bool? readDebtorAccountSupported = null,
-        bool? paymentsEnabled = null, bool? paymentSubmissionSupported = null,
         bool? pendingTransactionsSupported = null, bool? ssnVerificationSupported = null,
-        CancellationToken cancellationToken = default) =>
+        bool? separateContinuousHistoryConsentSupported = null, CancellationToken cancellationToken = default) =>
         await GetInstitutions(country.GetDescription(), accessScopesSupported, accountSelectionSupported,
             businessAccountsSupported, cardAccountsSupported, corporateAccountsSupported, privateAccountsSupported,
-            readRefundAccountSupported, readDebtorAccountSupported, paymentsEnabled, paymentSubmissionSupported,
-            pendingTransactionsSupported, ssnVerificationSupported, cancellationToken);
+            readRefundAccountSupported, readDebtorAccountSupported, pendingTransactionsSupported,
+            ssnVerificationSupported, separateContinuousHistoryConsentSupported, cancellationToken);
 
     /// <inheritdoc />
     public async Task<NordigenApiResponse<Institution, BasicResponse>> GetInstitution(string id,

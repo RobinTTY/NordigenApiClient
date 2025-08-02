@@ -192,10 +192,13 @@ public class AgreementsEndpointTests
             Assert.That(response.Error!.InstitutionIdError, Is.Not.Null);
             Assert.That(response.Error!.InstitutionIdError!.Summary, Is.EqualTo("This field is required."));
             Assert.That(response.Error!.InstitutionIdError!.Detail, Is.EqualTo("This field is required."));
-
+            
+            Assert.That(response.Error!.AccessScopeError, Is.Not.Null);
+            Assert.That(response.Error!.AccessScopeError!.Summary, Is.EqualTo("Field 'access_scope' may not be an empty list."));
+            Assert.That(response.Error!.AccessScopeError!.Detail, Is.EqualTo("Please choose one or several of ['balances', 'details', 'transactions']."));
+            
             Assert.That(response.Error!.AccessValidForDaysError!, Is.Null);
             Assert.That(response.Error!.AgreementError, Is.Null);
-            Assert.That(response.Error!.AccessScopeError, Is.Null);
             Assert.That(response.Error!.MaxHistoricalDaysError, Is.Null);
         });
     }

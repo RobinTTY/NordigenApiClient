@@ -26,14 +26,16 @@ public class AccountsEndpointTests
     [Test]
     public async Task GetAccount()
     {
+        var req = await _apiClient.RequisitionsEndpoint.GetRequisition("1169fa68-8d98-4478-a1ba-72134fba7de2");
+        
         var accountResponse = await _apiClient.AccountsEndpoint.GetAccount(_accountId);
         AssertionHelpers.AssertNordigenApiResponseIsSuccessful(accountResponse, HttpStatusCode.OK);
         var account = accountResponse.Result!;
         Assert.Multiple(() =>
         {
             Assert.That(account.Id, Is.EqualTo(_accountId));
-            Assert.That(account.Created, Is.EqualTo(DateTime.Parse("2023-07-30 23:23:47.958711Z").ToUniversalTime()));
-            Assert.That(account.Iban, Is.EqualTo("GL2010440000010445"));
+            Assert.That(account.Created, Is.EqualTo(DateTime.Parse("2025-03-02 09:46:36.6339Z").ToUniversalTime()));
+            Assert.That(account.Iban, Is.EqualTo("GL6837980000037983"));
             Assert.That(account.InstitutionId, Is.EqualTo("SANDBOXFINANCE_SFIN0000"));
             Assert.That(account.Status, Is.EqualTo(BankAccountStatus.Ready));
             Assert.That(account.OwnerName, Is.EqualTo("Jane Doe"));
@@ -91,12 +93,12 @@ public class AccountsEndpointTests
             {
                 var matchesAll = true;
                 matchesAll &= t.BankTransactionCode == "PMNT";
-                matchesAll &= t.DebtorAccount?.Iban == "GL8240830000040838";
-                matchesAll &= t.DebtorName == "MON MOTHMA";
+                matchesAll &= t.CreditorName == "Liam Brown";
                 matchesAll &= t.RemittanceInformationUnstructured ==
-                              "For the support of Restoration of the Republic foundation";
-                matchesAll &= t.TransactionAmount.Amount == (decimal) 45.00;
+                              "Water invoice #5678";
+                matchesAll &= t.TransactionAmount.Amount == (decimal) -35.56;
                 matchesAll &= t.TransactionAmount.Currency == "EUR";
+                matchesAll &= t.ProprietaryBankTransactionCode == "TRANSFER";
                 return matchesAll;
             }));
             Assert.That(transactions.PendingTransactions, Has.Count.GreaterThanOrEqualTo(1));
@@ -155,7 +157,7 @@ public class AccountsEndpointTests
         Assert.Multiple(() =>
         {
             AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(accountResponse, HttpStatusCode.NotFound);
-            AssertionHelpers.AssertBasicResponseMatchesExpectations(accountResponse.Error, "Not found.", "Not found.");
+            AssertionHelpers.AssertBasicResponseMatchesExpectations(accountResponse.Error, "No Account matches the given query.", "No Account matches the given query.");
         });
     }
 
