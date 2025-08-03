@@ -74,7 +74,8 @@ Creates a new end user agreement which determines the scope and length of access
 ```csharp
 public async Task<NordigenApiResponse<Agreement, CreateAgreementError>>
   CreateAgreement(string institutionId, uint accessValidForDays = 90, uint maxHistoricalDays = 90,
-        List<AccessScope>? accessScope = null, CancellationToken cancellationToken = default)
+        List<AccessScope>? accessScope = null, bool reconfirmationSupported = false,
+        CancellationToken cancellationToken = default)
 ```
 
 #### Parameters
@@ -94,6 +95,10 @@ The length of the transaction history in days to request.
 ##### `accessScope` - [List](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1)\<[AccessScope](/docs/api-reference/responses/access-scope)\>?
 
 The scope of information that will be available for access to request. By default all access scopes (balances, transactions and details) will be requested.
+
+##### `reconfirmationSupported` - [bool](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool)
+
+Whether this agreement should be extendable. Supported by British banks only.
 
 ##### `cancellationToken` - [CancellationToken](https://learn.microsoft.com/en-us/dotnet/api/system.threading.cancellationtoken)
 

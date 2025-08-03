@@ -40,51 +40,51 @@ public async Task<NordigenApiResponse<List<Institution>, BasicResponse>>
 
 ##### `country` - [string](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/reference-types#the-string-type)? | [SupportedCountry](/docs/api-reference/supported-country)
 
-If set to `true` filters institutions by the country in which they operate. The country has to be specified by the two-letter country code following [ISO 3166](https://wikipedia.org/wiki/ISO_3166-1).
+If set to `true`, filters institutions by the country in which they operate. The country has to be specified by the two-letter country code following [ISO 3166](https://wikipedia.org/wiki/ISO_3166-1).
 
 ##### `accessScopesSupported` - [bool](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool)
 
-If set to `true` filters institutions by whether or not access scopes are supported.
+If set to `true`, filters institutions by whether access scopes are supported.
 
 ##### `accountSelectionSupported` - [bool](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool)
 
-If set to `true` filters institutions by whether or not account selection is supported.
+If set to `true`, filters institutions by whether account selection is supported.
 
 ##### `businessAccountsSupported` - [bool](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool)
 
-If set to `true` filters institutions by whether or not business accounts are supported.
+If set to `true`, filters institutions by whether business accounts are supported.
 
 ##### `cardAccountsSupported` - [bool](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool)
 
-If set to `true` filters institutions by whether or not card accounts are supported by this institution.
+If set to `true`, filters institutions by whether card accounts are supported by this institution.
 
 ##### `corporateAccountsSupported` - [bool](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool)
 
-If set to `true` filters institutions by whether or not corporate accounts are supported.
+If set to `true`, filters institutions by whether corporate accounts are supported.
 
 ##### `privateAccountsSupported` - [bool](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool)
 
-If set to `true` filters institutions by whether or not private accounts is supported.
+If set to `true`, filters institutions by whether private accounts is supported.
 
 ##### `readRefundAccountSupported` - [bool](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool)
 
-If set to `true` filters filters institutions by whether or not read refund account is supported.
+If set to `true`, filters filters institutions by whether read refund account is supported.
 
 ##### `readDebtorAccountSupported` - [bool](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool)
 
-If set to `true` filters institutions by whether or not the debtor account can be read before submitting payment.
+If set to `true`, filters institutions by whether the debtor account can be read before submitting payment.
 
 ##### `pendingTransactionsSupported` - [bool](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool)
 
-If set to `true` filters institutions by whether or not pending transactions are supported.
+If set to `true`, filters institutions by whether pending transactions are supported.
 
 ##### `ssnVerificationSupported` - [bool](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool)
 
-If set to `true` filters institutions by whether or not SSN verification is supported.
+If set to `true`, filters institutions by whether SSN verification is supported.
 
 #### `separateContinuousHistoryConsentSupported` - [bool](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool)
 
-If set to `true`, filters institutions by whether separate consent for continuous history is supported
+If set to `true`,, filters institutions by whether separate consent for continuous history is supported
 
 ##### `cancellationToken` - [CancellationToken](https://learn.microsoft.com/en-us/dotnet/api/system.threading.cancellationtoken)
 

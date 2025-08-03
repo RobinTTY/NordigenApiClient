@@ -54,6 +54,8 @@ const sidebars: SidebarsConfig = {
             "api-reference/responses/minimal-bank-account",
             "api-reference/responses/nordigen-api-response",
             "api-reference/responses/payment-product",
+            "api-reference/responses/reconfirmation",
+            "api-reference/responses/reconfirmation-timestamps",
             "api-reference/responses/requisition",
             "api-reference/responses/requisition-status",
             "api-reference/responses/response-page",

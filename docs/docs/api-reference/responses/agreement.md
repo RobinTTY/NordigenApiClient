@@ -34,11 +34,15 @@ The length of the transaction history in days.
 
 The length the access to the account is valid for.
 
+### `ReconfirmationSupported` - [bool](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool)
+
+Whether this agreement can be extended. Supported by British banks only.
+
 ## Constructor
 
 ```csharp
 public Agreement(Guid id, DateTime created, DateTime? accepted, string institutionId,
-      uint maxHistoricalDays, uint accessValidForDays, List<AccessScope> accessScope)
+      uint maxHistoricalDays, uint accessValidForDays, List<AccessScope> accessScope, bool reconfirmationSupported = false)
 ```
 
 ### Parameters
@@ -70,3 +74,7 @@ The length the access to the account is valid for.
 #### `accessScope` - [List](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1)\<[AccessScope](/docs/api-reference/responses/access-scope)\>
 
 The scope of information that can be accessed.
+
+#### `reconfirmationSupported` - [bool](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool)
+
+Whether this agreement can be extended. Supported by British banks only. Default is `false`.
