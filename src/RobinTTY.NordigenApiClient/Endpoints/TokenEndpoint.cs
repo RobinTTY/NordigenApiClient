@@ -23,8 +23,8 @@ public class TokenEndpoint : ITokenEndpoint
     public async Task<NordigenApiResponse<JsonWebTokenPair, BasicResponse>> GetTokenPair(
         CancellationToken cancellationToken = default)
     {
-        if (_nordigenClient.Credentials.SecretId.IsNullOrEmpty() ||
-            _nordigenClient.Credentials.SecretKey.IsNullOrEmpty())
+        if (string.IsNullOrEmpty(_nordigenClient.Credentials.SecretId) ||
+            string.IsNullOrEmpty(_nordigenClient.Credentials.SecretKey))
         {
             return new NordigenApiResponse<JsonWebTokenPair, BasicResponse>(HttpStatusCode.BadRequest, isSuccess: false,
                 result: null,
