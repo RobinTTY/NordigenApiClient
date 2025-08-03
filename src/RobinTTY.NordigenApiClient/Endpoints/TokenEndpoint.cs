@@ -27,8 +27,10 @@ public class TokenEndpoint : ITokenEndpoint
             _nordigenClient.Credentials.SecretKey.IsNullOrEmpty())
         {
             return new NordigenApiResponse<JsonWebTokenPair, BasicResponse>(HttpStatusCode.BadRequest, isSuccess: false,
-                result: null, apiError: new BasicResponse("No SecretId or SecretKey provided.", "Please provide a valid SecretId and SecretKey."),
-                rateLimits: new ApiRateLimits(-1, -1, -1, -1, -1, -1));
+                result: null,
+                apiError: new BasicResponse("No SecretId or SecretKey provided.",
+                    "Please provide a valid SecretId and SecretKey."),
+                rateLimits: new ApiRateLimits(null, null, null, null, null, null));
         }
 
         var requestBody = JsonContent.Create(_nordigenClient.Credentials);

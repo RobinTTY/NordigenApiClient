@@ -5,7 +5,7 @@ namespace RobinTTY.NordigenApiClient.Models.Requests;
 /// <summary>
 /// The required information to reconfirm an end user agreement.
 /// </summary>
-public class ReconfirmAgreementRequest
+internal class ReconfirmAgreementRequest
 {
     /// <summary>
     /// Optional redirect URL for reconfirmation to override requisition's redirect.

@@ -47,7 +47,7 @@ public class Reconfirmation
     /// Redirect URL for reconfirmation to override requisition's redirect.
     /// </summary>
     [JsonPropertyName("redirect")]
-    public Uri RedirectUrl { get; set; }
+    public Uri? RedirectUrl { get; set; }
 
     /// <summary>
     /// Dictionary of account IDs and their reconfirm and reject timestamps.
@@ -68,7 +68,7 @@ public class Reconfirmation
     /// <param name="accounts">Dictionary of account IDs and their reconfirm and reject timestamps.</param>
     [JsonConstructor]
     public Reconfirmation(Uri reconfirmationUrl, DateTime created, DateTime urlValidFrom, DateTime urlValidTo,
-        DateTime? lastAccessed, DateTime? lastSubmitted, Uri redirectUrl,
+        DateTime? lastAccessed, DateTime? lastSubmitted, Uri? redirectUrl,
         Dictionary<string, ReconfirmationTimestamps> accounts)
     {
         ReconfirmationUrl = reconfirmationUrl;
