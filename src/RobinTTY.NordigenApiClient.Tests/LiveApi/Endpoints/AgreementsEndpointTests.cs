@@ -192,10 +192,13 @@ public class AgreementsEndpointTests
             Assert.That(response.Error!.InstitutionIdError, Is.Not.Null);
             Assert.That(response.Error!.InstitutionIdError!.Summary, Is.EqualTo("This field is required."));
             Assert.That(response.Error!.InstitutionIdError!.Detail, Is.EqualTo("This field is required."));
-
+            
+            Assert.That(response.Error!.AccessScopeError, Is.Not.Null);
+            Assert.That(response.Error!.AccessScopeError!.Summary, Is.EqualTo("Field 'access_scope' may not be an empty list."));
+            Assert.That(response.Error!.AccessScopeError!.Detail, Is.EqualTo("Please choose one or several of ['balances', 'details', 'transactions']."));
+            
             Assert.That(response.Error!.AccessValidForDaysError!, Is.Null);
             Assert.That(response.Error!.AgreementError, Is.Null);
-            Assert.That(response.Error!.AccessScopeError, Is.Null);
             Assert.That(response.Error!.MaxHistoricalDaysError, Is.Null);
         });
     }
@@ -220,7 +223,7 @@ public class AgreementsEndpointTests
                 Is.EqualTo(
                     "max_historical_days must be > 0 and <= SANDBOXFINANCE_SFIN0000 transaction_total_days (90)"));
 
-            Assert.That(new[] {result.InstitutionIdError, result.AgreementError, result.AccessScopeError},
+            Assert.That(new[] { result.InstitutionIdError, result.AgreementError, result.AccessScopeError },
                 Has.All.Null);
         });
     }
@@ -241,7 +244,7 @@ public class AgreementsEndpointTests
             Assert.That(response.Error!.AccessScopeError.Summary,
                 Is.EqualTo("Institution access scope dependencies error"));
 
-            Assert.That(new[] {response.Error!.InstitutionIdError, response.Error!.AgreementError}, Has.All.Null);
+            Assert.That(new[] { response.Error!.InstitutionIdError, response.Error!.AgreementError }, Has.All.Null);
         });
     }
 

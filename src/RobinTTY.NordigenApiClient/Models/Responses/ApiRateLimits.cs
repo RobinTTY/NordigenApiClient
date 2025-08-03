@@ -5,6 +5,10 @@ namespace RobinTTY.NordigenApiClient.Models.Responses;
 
 /// <summary>
 /// The rate limits of the GoCardless API.
+/// <para>
+/// The rate limits can be <see langword="null"/> if a request fails due to validation errors before being sent to the API
+/// (e.g., no secretId/secretKey provided). So no actual API request was performed and no rate limits can be returned.
+/// </para>
 /// </summary>
 public class ApiRateLimits
 {

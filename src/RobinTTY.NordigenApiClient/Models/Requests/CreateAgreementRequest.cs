@@ -32,6 +32,12 @@ internal class CreateAgreementRequest
     /// </summary>
     [JsonPropertyName("access_valid_for_days")]
     public uint AccessValidForDays { get; set; }
+    
+    /// <summary>
+    /// Whether this agreement should be extendable. Supported by British banks only.
+    /// </summary>
+    [JsonPropertyName("reconfirmation")]
+    public bool ReconfirmationSupported { get; set; }
 
     /// <summary>
     /// Creates a new instance of <see cref="CreateAgreementRequest" />.
@@ -40,13 +46,15 @@ internal class CreateAgreementRequest
     /// <param name="accessScope">The access scope, which defines which information can be accessed, to request.</param>
     /// <param name="maxHistoricalDays">The length of the transaction history in days to request.</param>
     /// <param name="accessValidForDays">The length the access to the account will be valid for to request.</param>
+    /// <param name="reconfirmationSupported">Whether this agreement should be extendable. Supported by British banks only.</param>
     [JsonConstructor]
     public CreateAgreementRequest(string institutionId, List<AccessScope> accessScope, uint maxHistoricalDays = 90,
-        uint accessValidForDays = 90)
+        uint accessValidForDays = 90, bool reconfirmationSupported = false)
     {
         MaxHistoricalDays = maxHistoricalDays;
         AccessValidForDays = accessValidForDays;
         AccessScope = accessScope;
         InstitutionId = institutionId;
+        ReconfirmationSupported = reconfirmationSupported;
     }
 }

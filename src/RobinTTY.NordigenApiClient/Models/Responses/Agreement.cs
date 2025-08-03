@@ -48,6 +48,12 @@ public class Agreement
     /// </summary>
     [JsonPropertyName("access_valid_for_days")]
     public uint AccessValidForDays { get; set; }
+    
+    /// <summary>
+    /// Whether this agreement can be extended. Supported by British banks only.
+    /// </summary>
+    [JsonPropertyName("reconfirmation")]
+    public bool ReconfirmationSupported { get; set; }
 
     /// <summary>
     /// Creates a new instance of <see cref="Agreement" />.
@@ -59,9 +65,10 @@ public class Agreement
     /// <param name="maxHistoricalDays">The length of the transaction history in days.</param>
     /// <param name="accessValidForDays">The length the access to the account will be valid for.</param>
     /// <param name="accessScope">The scope of information that can be accessed.</param>
+    /// <param name="reconfirmationSupported">Whether this agreement can be extended. Supported by British banks only.</param>
     [JsonConstructor]
     public Agreement(Guid id, DateTime created, DateTime? accepted, string institutionId, uint maxHistoricalDays,
-        uint accessValidForDays, List<AccessScope> accessScope)
+        uint accessValidForDays, List<AccessScope> accessScope, bool reconfirmationSupported = false)
     {
         Id = id;
         Created = created;
@@ -70,5 +77,6 @@ public class Agreement
         AccessScope = accessScope;
         MaxHistoricalDays = maxHistoricalDays;
         AccessValidForDays = accessValidForDays;
+        ReconfirmationSupported = reconfirmationSupported;
     }
 }

@@ -3,7 +3,7 @@
 namespace RobinTTY.NordigenApiClient.Models.Requests;
 
 /// <summary>
-/// The metadata required to accept an end user agreement via the Nordigen API.
+/// The metadata required to accept an end user agreement.
 /// </summary>
 internal class AcceptAgreementRequest
 {

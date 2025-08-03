@@ -3,7 +3,7 @@
 namespace RobinTTY.NordigenApiClient.Models.Requests;
 
 /// <summary>
-/// The parts of a requisition that are necessary to create it via the Nordigen API.
+/// The necessary information to create a requisition.
 /// </summary>
 internal class CreateRequisitionRequest
 {
@@ -101,12 +101,8 @@ internal class CreateRequisitionRequest
     /// Some European banks allow sending an end-user's SSN to check whether the SSN is valid.
     /// <para>
     /// For bank availability check:
-    /// <a
-    ///     href="https://nordigen.zendesk.com/hc/en-gb/articles/6761166365085-SSN-verification-feature-for-specific-banks/">
-    /// GoCardless
-    /// Documentation
-    /// </a>
-    /// .
+    /// <a href="https://nordigen.zendesk.com/hc/en-gb/articles/6761166365085-SSN-verification-feature-for-specific-banks/">
+    /// GoCardless Documentation</a>.
     /// </para>
     /// </param>
     /// <param name="accountSelection">
@@ -115,26 +111,17 @@ internal class CreateRequisitionRequest
     /// <para>
     /// For details see:
     /// <a href="https://nordigen.zendesk.com/hc/en-gb/articles/6760703821725-Account-selection-feature">
-    /// GoCardless
-    /// Documentation
-    /// </a>
-    /// .
+    /// GoCardless Documentation</a>.
     /// </para>
     /// </param>
     /// <param name="redirectImmediate">
     /// Enables you to redirect end users back to your app immediately after they have given their consent to access the
-    /// account information data from the bank,
-    /// instead of waiting for transaction data being processed. Accounts endpoint status will be PROCESSING and you have
-    /// to wait until account status is READY
-    /// before you're able to query the transactions.
+    /// account information data from the bank, instead of waiting for transaction data being processed. Accounts endpoint
+    /// status will be PROCESSING and you have to wait until account status is READY before you're able to query the transactions.
     /// <para>
     /// For details see:
-    /// <a
-    ///     href="https://nordigen.zendesk.com/hc/en-gb/articles/6772857816477-Immediate-end-user-redirect-from-bank-after-consent">
-    /// GoCardless
-    /// Documentation
-    /// </a>
-    /// .
+    /// <a href="https://nordigen.zendesk.com/hc/en-gb/articles/6772857816477-Immediate-end-user-redirect-from-bank-after-consent">
+    /// GoCardless Documentation</a>.
     /// </para>
     /// </param>
     public CreateRequisitionRequest(string institutionId, Uri redirect, string reference, string userLanguage,

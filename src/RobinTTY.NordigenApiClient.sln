@@ -9,6 +9,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RobinTTY.NordigenApiClient.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RobinTTY.NordigenApiClient.ExampleApplication", "RobinTTY.NordigenApiClient.ExampleApplication\RobinTTY.NordigenApiClient.ExampleApplication.csproj", "{17689184-F1F5-4C66-8BC5-76B52094DF44}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{233B7029-BB12-4F40-A01F-43437BF4A579}"
+	ProjectSection(SolutionItems) = preProject
+		..\.github\workflows\build-library.yml = ..\.github\workflows\build-library.yml
+		..\.github\workflows\codeql.yml = ..\.github\workflows\codeql.yml
+		..\.github\workflows\deploy-docs.yml = ..\.github\workflows\deploy-docs.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

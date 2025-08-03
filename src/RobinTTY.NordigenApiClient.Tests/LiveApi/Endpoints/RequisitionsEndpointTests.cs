@@ -1,4 +1,5 @@
-﻿using RobinTTY.NordigenApiClient.Models.Requests;
+﻿using RobinTTY.NordigenApiClient.Models.Errors;
+using RobinTTY.NordigenApiClient.Models.Requests;
 using RobinTTY.NordigenApiClient.Models.Responses;
 using RobinTTY.NordigenApiClient.Tests.Shared;
 
@@ -53,6 +54,10 @@ public class RequisitionsEndpointTests
         // Get existing requisitions
         var existingRequisitions = await _apiClient.RequisitionsEndpoint.GetRequisitions(100, 0);
         AssertionHelpers.AssertNordigenApiResponseIsSuccessful(existingRequisitions, HttpStatusCode.OK);
+        
+        // Cleanup if necessary
+        var requisitionsToDelete = existingRequisitions.Result!.Results.Where(req => req.Reference.StartsWith("reference_")).ToList();
+        requisitionsToDelete.ForEach(req => _apiClient.RequisitionsEndpoint.DeleteRequisition(req.Id).Wait());        
 
         // Create 3 example requisitions
         var redirect = new Uri("https://github.com/RobinTTY/NordigenApiClient");
@@ -60,11 +65,23 @@ public class RequisitionsEndpointTests
 
         var existingIds = existingRequisitions.Result!.Results.Select(agreement => agreement.Id.ToString()).ToList();
         ids.AddRange(existingIds);
-        for (var i = 3; i < 6; i++)
+        for (var i = 0; i < 3; i++)
         {
-            var createResponse =
-                await _apiClient.RequisitionsEndpoint.CreateRequisition(institutionId, redirect, agreementId,
-                    $"reference_{i}");
+            NordigenApiResponse<Requisition, CreateRequisitionError> createResponse;
+            
+            if (i == 0)
+            {
+                createResponse =
+                    await _apiClient.RequisitionsEndpoint.CreateRequisition(institutionId, redirect, agreementId,
+                        $"reference_{i}");
+            }
+            else
+            {
+                createResponse =
+                    await _apiClient.RequisitionsEndpoint.CreateRequisition(institutionId, redirect, agreementId: null,
+                        $"reference_{i}");
+            }
+
             AssertionHelpers.AssertNordigenApiResponseIsSuccessful(createResponse, HttpStatusCode.Created);
             ids.Add(createResponse.Result!.Id.ToString());
         }
@@ -165,9 +182,9 @@ public class RequisitionsEndpointTests
         AssertionHelpers.AssertNordigenApiResponseIsUnsuccessful(response, HttpStatusCode.BadRequest);
         Assert.Multiple(() =>
         {
-            Assert.That(response.Error!.Summary, Is.EqualTo("Invalid  ID"));
-            Assert.That(response.Error!.Detail,
-                Is.EqualTo("00000000-0000-0000-0000-000000000000 is not a valid  UUID. "));
+            Assert.That(response.Error!.AgreementError!.Summary, Is.EqualTo("Invalid End User Agreement (EUA) ID"));
+            Assert.That(response.Error.AgreementError.Detail,
+                Is.EqualTo("00000000-0000-0000-0000-000000000000 is not a valid End User Agreement (EUA) UUID. "));
         });
     }
 
@@ -194,8 +211,8 @@ public class RequisitionsEndpointTests
                 Is.EqualTo(
                     "Provided Institution ID: '' for requisition does not match EUA institution ID 'SANDBOXFINANCE_SFIN0000'. Please provide correct institution ID: 'SANDBOXFINANCE_SFIN0000'"));
 
-            Assert.That(response.Error!.InstitutionIdError!.Summary, Is.EqualTo("This field may not be blank."));
-            Assert.That(response.Error!.InstitutionIdError!.Detail, Is.EqualTo("This field may not be blank."));
+            Assert.That(response.Error!.InstitutionIdError!.Summary, Is.EqualTo("Unknown Institution ID "));
+            Assert.That(response.Error!.InstitutionIdError!.Detail, Is.EqualTo("Get Institution IDs from /institutions/?country={$COUNTRY_CODE}"));
 
             Assert.That(response.Error!.ReferenceError!.Summary, Is.EqualTo("This field may not be blank."));
             Assert.That(response.Error!.ReferenceError!.Detail, Is.EqualTo("This field may not be blank."));

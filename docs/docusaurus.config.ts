@@ -37,6 +37,8 @@ const config: Config = {
           path: "release-notes",
           showReadingTime: true,
           onUntruncatedBlogPosts: "ignore",
+          blogSidebarTitle: 'Releases',
+          blogSidebarCount: 'ALL',
         },
         theme: {
           customCss: "./src/css/custom.css",
