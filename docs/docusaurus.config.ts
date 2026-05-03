@@ -16,8 +16,13 @@ const config: Config = {
   projectName: projectName,
   deploymentBranch: "docs",
   onBrokenLinks: "throw",
-  onBrokenMarkdownLinks: "warn",
   trailingSlash: false,
+
+  markdown: {
+    hooks: {
+      onBrokenMarkdownLinks: "warn",
+    },
+  },
 
   i18n: {
     defaultLocale: "en",
