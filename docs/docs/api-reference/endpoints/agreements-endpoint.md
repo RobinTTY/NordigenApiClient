@@ -86,7 +86,7 @@ The institution this agreement will refer to.
 
 ##### `accessValidForDays` - [uint](https://learn.microsoft.com/en-us/dotnet/api/system.uint32)
 
-The length the access to the account will be valid for to request.
+The length the access to the account will be valid for to request. The maximum value supported by an institution is available via [`Institution.MaxAccessValidForDays`](/docs/api-reference/responses/institution#maxaccessvalidfordays---uint).
 
 ##### `maxHistoricalDays` - [uint](https://learn.microsoft.com/en-us/dotnet/api/system.uint32)
 

@@ -34,9 +34,9 @@ public class AccountsEndpointTests
         Assert.Multiple(() =>
         {
             Assert.That(account.Id, Is.EqualTo(_accountId));
-            Assert.That(account.Created, Is.EqualTo(DateTime.Parse("2025-03-02 09:46:36.6339Z").ToUniversalTime()));
-            Assert.That(account.Iban, Is.EqualTo("GL6837980000037983"));
-            Assert.That(account.InstitutionId, Is.EqualTo("SANDBOXFINANCE_SFIN0000"));
+            Assert.That(account.Created, Is.EqualTo(DateTime.Parse("2024-02-08 14:44:21.588555Z").ToUniversalTime()));
+            Assert.That(account.Iban, Is.EqualTo("DE63600697100987654321"));
+            Assert.That(account.InstitutionId, Is.EqualTo("SANDBOXFINANCE_GENODES1RGF"));
             Assert.That(account.Status, Is.EqualTo(BankAccountStatus.Ready));
             Assert.That(account.OwnerName, Is.EqualTo("Jane Doe"));
         });

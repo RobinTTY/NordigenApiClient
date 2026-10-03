@@ -99,7 +99,7 @@ public class Institution
     [JsonConstructor]
     public Institution(string id, string name, string bic, uint transactionTotalDays, List<string> countries,
         Uri logo, SupportedPayments? supportedPayments, List<string>? supportedFeatures,
-        List<string>? identificationCodes, uint maxAccessValidForDays = 0, uint? maxAccessValidForDaysReconfirmation = null)
+        List<string>? identificationCodes, uint maxAccessValidForDays, uint? maxAccessValidForDaysReconfirmation)
     {
         Id = id;
         Name = name;
