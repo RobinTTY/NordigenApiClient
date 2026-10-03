@@ -255,6 +255,8 @@
         "name": "N26 Bank",
         "bic": "NTSBDEB1",
         "transaction_total_days": "90",
+        "max_access_valid_for_days": "180",
+        "max_access_valid_for_days_reconfirmation": null,
         "countries": [
           "GB",
           "NO",
@@ -296,6 +298,8 @@
         "name": "N26 Bank",
         "bic": "NTSBDEB1",
         "transaction_total_days": "90",
+        "max_access_valid_for_days": "180",
+        "max_access_valid_for_days_reconfirmation": null,
         "countries": [
           "GB",
           "NO",
@@ -338,6 +342,8 @@
       "name": "N26 Bank",
       "bic": "NTSBDEB1",
       "transaction_total_days": "90",
+      "max_access_valid_for_days": "90",
+      "max_access_valid_for_days_reconfirmation": "730",
       "countries": [
         "GB",
         "NO",

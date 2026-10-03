@@ -22,6 +22,14 @@ The Business Identifier Code (BIC) of the institution.
 
 The days for which the transaction history is available.
 
+### `MaxAccessValidForDays` - [uint](https://learn.microsoft.com/en-us/dotnet/api/system.uint32)
+
+The maximum number of days an end user agreement with this institution can give access to the account (the highest allowed `accessValidForDays` when [creating an agreement](/docs/api-reference/endpoints/agreements-endpoint#createagreement)).
+
+### `MaxAccessValidForDaysReconfirmation` - [uint](https://learn.microsoft.com/en-us/dotnet/api/system.uint32)?
+
+The maximum number of days of access when the agreement supports reconfirmation. Only provided for institutions that support consent reconfirmation, otherwise `null`.
+
 ### `Countries` - [List](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1)\<[string](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/reference-types#the-string-type)\>?
 
 The countries the institution operates in.
@@ -47,7 +55,8 @@ Undocumented field returned by the GoCardless API. Only populated when calling [
 ```csharp
 public Institution(string id, string name, string bic, uint transactionTotalDays,
       List<string> countries, Uri logo, SupportedPayments? supportedPayments,
-      List<string>? supportedFeatures, List<string>? identificationCodes)
+      List<string>? supportedFeatures, List<string>? identificationCodes,
+      uint maxAccessValidForDays, uint? maxAccessValidForDaysReconfirmation)
 ```
 
 ### Parameters
@@ -87,3 +96,11 @@ Supported features for this institution. Only populated when calling [`Instituti
 #### `identificationCodes` - [List](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1)\<[string](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/reference-types#the-string-type)\>?
 
 Undocumented field returned by the GoCardless API. Only populated when calling [`InstitutionsEndpoint.GetInstitution`](/docs/api-reference/endpoints/institutions-endpoint#getinstitution).
+
+#### `maxAccessValidForDays` - [uint](https://learn.microsoft.com/en-us/dotnet/api/system.uint32)
+
+The maximum number of days an end user agreement with this institution can give access to the account.
+
+#### `maxAccessValidForDaysReconfirmation` - [uint](https://learn.microsoft.com/en-us/dotnet/api/system.uint32)?
+
+The maximum number of days of access when the agreement supports reconfirmation. Only provided for institutions that support consent reconfirmation, otherwise `null`.

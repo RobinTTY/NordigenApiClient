@@ -5,7 +5,7 @@
 # NordigenApiClient
 
 This library provides a .NET client for
-the [GoCardless Bank Account Data API](https://gocardless.com/bank-account-data/) (formerly Nordigen API). The following
+the [GoCardless Bank Account Data API](https://docs.gocardless.com/docs/bank-account-data) (formerly Nordigen API). The following
 API endpoints are supported:
 
 - Token
@@ -17,6 +17,8 @@ API endpoints are supported:
 You can get started with the Quickstart Guide below or take a look at
 the [full documentation](https://robintty.github.io/NordigenApiClient/). You can find the nuget
 package [here](https://www.nuget.org/packages/RobinTTY.NordigenApiClient).
+
+**Important Note:** GoCardless no longer offers free access to new users of the Bank Account Data API.
 
 ## Quickstart Guide
 

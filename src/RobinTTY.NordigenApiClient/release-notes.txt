@@ -1,2 +1,4 @@
-﻿Changes to align the client with GoCardless Banking API changes, removing deprecated payment-related filters and adding support for agreement reconfirmation functionality.
-Please refer to the documentation for the full release notes: https://robintty.github.io/NordigenApiClient/release-notes/v11.0.0
+﻿Adds the two fields `max_access_valid_for_days` and `max_access_valid_for_days_reconfirmation` to the `Institution` class.
+These fields can be used to determine the maximum number of days an end user agreement may be used for this institution.
+
+Please refer to the documentation for the full release notes: https://robintty.github.io/NordigenApiClient/release-notes/v11.1.0

@@ -34,6 +34,22 @@ public class Institution
     public uint TransactionTotalDays { get; }
 
     /// <summary>
+    /// The maximum number of days an end user agreement with this institution can give access to the account
+    /// (the highest allowed <c>access_valid_for_days</c> when creating an agreement).
+    /// </summary>
+    [JsonNumberHandling(JsonNumberHandling.AllowReadingFromString)]
+    [JsonPropertyName("max_access_valid_for_days")]
+    public uint MaxAccessValidForDays { get; }
+
+    /// <summary>
+    /// The maximum number of days of access when the agreement supports reconfirmation.
+    /// Only provided for institutions that support consent reconfirmation, otherwise <see langword="null" />.
+    /// </summary>
+    [JsonNumberHandling(JsonNumberHandling.AllowReadingFromString)]
+    [JsonPropertyName("max_access_valid_for_days_reconfirmation")]
+    public uint? MaxAccessValidForDaysReconfirmation { get; }
+
+    /// <summary>
     /// The countries the institution operates in.
     /// </summary>
     [JsonPropertyName("countries")]
@@ -78,10 +94,12 @@ public class Institution
     /// <param name="supportedPayments">Supported payment products for this institution.</param>
     /// <param name="supportedFeatures">Supported features for this institution.</param>
     /// <param name="identificationCodes">Undocumented field returned by the GoCardless API.</param>
+    /// <param name="maxAccessValidForDays">The maximum number of days an end user agreement can give access to the account.</param>
+    /// <param name="maxAccessValidForDaysReconfirmation">The maximum number of days of access when the agreement supports reconfirmation.</param>
     [JsonConstructor]
     public Institution(string id, string name, string bic, uint transactionTotalDays, List<string> countries,
         Uri logo, SupportedPayments? supportedPayments, List<string>? supportedFeatures,
-        List<string>? identificationCodes)
+        List<string>? identificationCodes, uint maxAccessValidForDays, uint? maxAccessValidForDaysReconfirmation)
     {
         Id = id;
         Name = name;
@@ -92,5 +110,7 @@ public class Institution
         SupportedPayments = supportedPayments;
         SupportedFeatures = supportedFeatures;
         IdentificationCodes = identificationCodes;
+        MaxAccessValidForDays = maxAccessValidForDays;
+        MaxAccessValidForDaysReconfirmation = maxAccessValidForDaysReconfirmation;
     }
 }
