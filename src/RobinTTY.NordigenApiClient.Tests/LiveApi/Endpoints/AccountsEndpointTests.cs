@@ -216,13 +216,13 @@ public class AccountsEndpointTests
     /// endDate is before the startDate. This should throw an exception.
     /// </summary>
     [Test]
-    public void GetTransactionRangeWithIncorrectRange()
+    public async Task GetTransactionRangeWithIncorrectRange()
     {
         var startDate = DateTime.Now.AddMonths(-1);
         var endDateBeforeStartDate = startDate.AddDays(-1);
 
 #if NET6_0_OR_GREATER
-        var exception = Assert.ThrowsAsync<ArgumentException>(async () =>
+        var exception = await Assert.ThrowsAsync<ArgumentException>(async () =>
             await _apiClient.AccountsEndpoint.GetTransactions(_accountId, DateOnly.FromDateTime(startDate),
                 DateOnly.FromDateTime(endDateBeforeStartDate)));
 
@@ -230,7 +230,7 @@ public class AccountsEndpointTests
             Is.EqualTo(
                 $"Starting date '{DateOnly.FromDateTime(startDate)}' is greater than end date '{DateOnly.FromDateTime(endDateBeforeStartDate)}'. When specifying date range, starting date must precede the end date."));
 #else
-        var exception = Assert.ThrowsAsync<ArgumentException>(async () =>
+        var exception = await Assert.ThrowsAsync<ArgumentException>(async () =>
             await _apiClient.AccountsEndpoint.GetTransactions(_accountId, startDate, endDateBeforeStartDate));
 
         Assert.That(exception.Message,
