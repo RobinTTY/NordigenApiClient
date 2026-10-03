@@ -104,6 +104,7 @@ public class InstitutionsEndpointTests
             Assert.That(response.Result!.Id, Is.EqualTo("SANDBOXFINANCE_SFIN0000"));
             Assert.That(response.Result!.Name, Is.EqualTo("Sandbox Finance"));
             Assert.That(response.Result!.TransactionTotalDays, Is.EqualTo(90));
+            Assert.That(response.Result!.MaxAccessValidForDays, Is.GreaterThan(0));
         });
     }
 

@@ -23,6 +23,8 @@ public class InstitutionsEndpointTests
         {
             AssertionHelpers.AssertNordigenApiResponseIsSuccessful(institutions, HttpStatusCode.OK);
             Assert.That(institutions.Result!, Has.Count.EqualTo(2));
+            Assert.That(institutions.Result![0].MaxAccessValidForDays, Is.EqualTo(180));
+            Assert.That(institutions.Result![0].MaxAccessValidForDaysReconfirmation, Is.Null);
         });
     }
 
@@ -71,6 +73,8 @@ public class InstitutionsEndpointTests
             Assert.That(institution.Result!.Id, Is.EqualTo("N26_NTSBDEB1"));
             Assert.That(institution.Result!.Name, Is.EqualTo("N26 Bank"));
             Assert.That(institution.Result!.TransactionTotalDays, Is.EqualTo(90));
+            Assert.That(institution.Result!.MaxAccessValidForDays, Is.EqualTo(90));
+            Assert.That(institution.Result!.MaxAccessValidForDaysReconfirmation, Is.EqualTo(730));
 
             Assert.That(institution.Result!.SupportedPayments?.SinglePayment,
                 Contains.Item(PaymentProduct.SepaCreditTransfers));
